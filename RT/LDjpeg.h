@@ -26,7 +26,7 @@
  * File Name: LDjpeg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  *
  *******************************************************************************/
 
@@ -36,7 +36,7 @@
 
 #include "SHAREDglobalDefs.h"
 #ifdef USE_OR
-	#include "ORglobalDefs.h"
+	#include "ATORglobalDefs.h"
 #include "SHAREDvars.h"
 #include "jpeglib.h"
 #include "jmemsys.h"

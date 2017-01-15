@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  *
  *******************************************************************************/
 
@@ -40,7 +40,7 @@
 
 
 
-static char errmessage[] = "Usage:  OpenRT.exe [options]"
+static char errmessage[] = "Usage:  RT.exe [options]"
 "\n"
 "\n\twhere options are any of the following"
 "\n"
@@ -72,7 +72,7 @@ static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n\t-lightcol [string]: light point source colour (def: white)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables; OpenRT.exe (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables; RT.exe (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-version          : print version"
@@ -267,7 +267,7 @@ int main(const int argc, const char** argv)
 
 		if(SHAREDvarsClass().argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3j1b 14-January-2017" << endl;
+			cout << "RT.exe - Project Version: 3j1c 14-January-2017" << endl;
 			exit(1);
 		}
 	}

@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -39,20 +39,20 @@
 	SOURCE PROJECT VARIABLES;
 	***********/
 
-	//current/active tests;
+	//current/active projects;
 //#define COMPILE_CF
-#define COMPILE_NLC
-//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
-//#define COMPILE_GIA_WITH_CE
-//#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
-//#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
-//#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
-//#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
-//#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe
-//#define COMPILE_LRRC		//compileLRRC.bat -> OpenLRRC.exe
+//#define COMPILE_NLC
+//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+//#define COMPILE_GIA_WITH_CE	//makefile.GIAwithCE -> GIAwithCE.exe
+#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
+//#define COMPILE_CS		//makefile.CS -> CS.exe
+//#define COMPILE_RT		//makefile.RT -> RT.exe
+//#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANNwithRT.exe
+//#define COMPILE_ANN		//makefile.ANN -> ANN.exe
+//#define COMPILE_LRRC		//compileLRRC.bat -> LRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
 
-//inactive tests;
+	//inactive tests;
 //#define COMPILE_TH_OR_IMAGE_CATEGORISTION_NN	//ORTHimageCategorisationNN.exe
 //#define COMPILE_LRRC_WITH_ANN		[compilation broken; requires updating]
 //#define COMPILE_TH_ANN_WITH_LRRC	[compilation broken; requires updating]
