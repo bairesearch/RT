@@ -1,0 +1,102 @@
+/*******************************************************************************
+ *
+ * File Name: LDsprite.h
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Project: Generic Construct Functions
+ * Project Version: 3a5g 01-Nov-2011
+ * Description: Contains common sprite commands
+ *
+ *******************************************************************************/
+
+#ifndef HEADER_LD_SPRITE
+#define HEADER_LD_SPRITE
+
+#include "LDreferenceClass.h"
+
+#define CPLUSPLUSERRORCORRECTION2 (500)
+
+
+#define CHAR_PLUS ('+')
+#define CHAR_MINUS ('-')
+#define CHAR_EQUALS ('=')
+#define CHAR_FULLSTOP ('.')
+
+#define DEFAULT_LDRAW_SUBMODEL_COLOUR (16)
+
+
+#define ANN_OR_LRRC_SPRITE_HEADER_NAME "\n0 Start ann.exe Sprites\n"
+#define ANN_OR_LRRC_SPRITE_TRAILER_NAME "0 End ann.exe Sprites\n"
+#define ANN_OR_LRRC_SPRITE_HEADER_NUM_LINES (2)
+#define ANN_OR_LRRC_SPRITE_TRAILER_NUM_LINES (1)
+#define ANN_OR_LRRC_SPRITE_HEADER_LENGTH 25
+#define ANN_OR_LRRC_SPRITE_TRAILER_LENGTH 22
+
+
+
+
+
+#define SPRITE_CHARACTER_DICE_OFFSET (192)
+#define SPRITE_CHARACTER_NUM_OFFSET (48)
+#define MAX_ATTACK_DEFENCE_LEVEL (6)
+#define MAX_DICE_ATTACK_DEFENCE_VALUE_SUPPORTED (5)			/*CHECK THIS: this will change once more spritetextdx.dat files are created - ie spritetextd12.dat [change to 6] and spritetextd20.dat [change to 10] are created*/
+#define MIN_DICE_ATTACK_DEFENCE_VALUE_SUPPORTED (2)			/*CHECK THIS: this will change once more spritetextd2.dat file is created [change to 1]*/
+
+
+
+#define ANSI_DECIMAL_DIFF_BETWEEN_CASE_TEXT (32)
+#define ANSI_NUMBER_CHARACTERS (256)
+
+#define SPRITE_INDEX_MAGNITUDE (5)
+
+#define SPRITE_TEXT_DICE_SCALE_FACTOR_NAME "SPRITE_TEXT_DICE_SCALE_FACTOR" //assume dice have already been appropriately scaled
+#define SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT_NAME "SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT"
+#define SPRITE_DICE_WIDTH_IN_LDRAW_UNITS_NAME "SPRITE_DICE_WIDTH_IN_LDRAW_UNITS"
+#define SPRITE_TEXT_DICE_Y_OFFSET_NAME "SPRITE_TEXT_DICE_Y_OFFSET"
+
+#define SPRITE_TEXT_SCALE_FACTOR_NAME "SPRITE_TEXT_SCALE_FACTOR"	//this can easily be changed
+#define SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS_NAME "SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS"
+#define SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS_NAME "SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS"
+#define SPRITE_CHAR_SPACING_RATIO_NAME "SPRITE_CHAR_SPACING_RATIO"
+#define SPRITE_TEXT_PADDING_IN_LDRAW_UNITS_NAME "SPRITE_TEXT_PADDING_IN_LDRAW_UNITS"
+
+#define SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS_NAME "SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS"
+#define SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS_NAME "SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS"
+
+
+#define SPRITES_DISPLAY_DICE
+//#define SPRITE_ALWAYS_ADD_TEXT
+
+
+#define SPRITE_NAME_START_NAME "SPRITE_NAME_START"
+#define SPRITE_EXTENSION_NAME  "SPRITE_EXTENSION"
+#define SPRITE_CHARACTER_START_NAME "SPRITE_CHARACTER_START"
+#define SPRITE_CHARACTER_EXTENSION_NAME "SPRITE_CHARACTER_EXTENSION"		//sprite submodel extension
+/*
+#define SPRITE_NAME_START "sprite"
+#define SPRITE_EXTENSION  ".ldr"
+#define SPRITE_CHARACTER_START "spritetext"
+#define SPRITE_CHARACTER_EXTENSION ".dat"		//sprite submodel extension
+*/
+
+
+#define SPRITE_DEFAULT_COLOUR_NAME "SPRITE_DEFAULT_COLOUR"
+//#define SPRITE_DEFAULT_COLOUR (DAT_FILE_DEFAULT_COLOUR)
+
+extern int SPRITE_DEFAULT_COLOUR;
+
+void fillInLDSpriteExternVariables();
+
+void LDcreateSpriteReferenceName(char * spriteReferenceFileName, int spriteIndex, char * sceneFileName);
+Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReference, string * spriteTextString, int spriteColourArray[], Reference * spriteSubmodelInitialReference, int spriteNumberOfLines, int * numSpritesAdded, bool addIndividualSprites);
+Reference * LDaddBasicTextualSpriteStringToReferenceList(string * spriteTextString, Reference * currentReference, vec * position, int * numSpritesAdded, bool addIndividualSprites, int colour, double scale);
+
+
+bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, Reference * spriteListInitialReference, char * spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor);
+
+bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char * sceneFileNameWithSprites, char * spriteListByteArray, int spriteListByteArraySize, int spriteListByteArrayLines);
+
+/*low level sprite routines*/
+void LDgenerateSpriteRotationMatrix(vec * spriteSceneCoords, vec * eyeCoords, mat * spriteRotationMatrix);
+void LDspriteSubmodelFillTextualReference(Reference * spriteSubmodelCurrentReference, vec * spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale);
+
+#endif

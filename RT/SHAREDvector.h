@@ -1,0 +1,165 @@
+/*******************************************************************************
+ *
+ * File Name: SHAREDvector.h
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Project: Generic Construct Functions
+ * Project Version: 3a5g 01-Nov-2011
+ *
+ *******************************************************************************/
+
+
+#ifndef HEADER_SHARED_VECTOR
+#define HEADER_SHARED_VECTOR
+
+
+
+#include "SHAREDvars.h"
+#include "SHAREDglobalDefs.h"		//needed so as to know if USE_RT is defined
+
+#ifdef USE_RT
+#define RELAXED_DOUBLE_MIN_PRECISION 0.03
+#endif
+
+#define PI (3.14159265)
+#define ZERO 0.0
+#define ONE 1.0
+#define NOT_FOUND -1
+
+#define AXIS_X (1)
+#define AXIS_Y (2)
+#define AXIS_Z (3)
+
+void initialiseVector(vec * vect);
+
+void calculateNormalOfTri(vec * pt1, vec * pt2, vec * pt3, vec * normal);
+
+void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * rotationVector);
+
+double calculateInteriorAngleOfAPolygonVertex(vec * pt1centre, vec * pt2, vec * pt3);
+
+double calculateAreaOfTriangle3D(vec * pt1, vec * pt2, vec * pt3);
+double calculateAreaOfTriangle(vec * pt1, vec * pt2, vec * pt3);
+	double calculateDeterminant3by3(mat* matrix);
+
+double absDouble2(double val);
+
+
+void createRotationMatrix2D(mat* matrix, double rotation);
+void createXAxisShearMatrix2D(mat* matrix, double shear);
+double calculateAngleBetweenVectors2D(vec * vect1, vec * vect2);
+void createScaleMatrix2D(mat* matrix, double scaleFactor);
+void createYAxisScaleMatrix2D(mat* matrix, double scaleFactor);
+
+void calculateMidPointBetweenTwoPoints(vec * pt1, vec * pt2, vec * midPoint);
+	void calculateMidDiffBetweenTwoPoints(vec * pt1, vec * pt2, vec * midDiff);
+void calculateNormal(vec * pt1, vec * pt2, vec * normal);
+
+	//from RToperations.h
+
+void subtractVectorsRT(vec *vect1, vec *vect2, vec *vect);
+	/*vect = vect1 - vect2*/
+
+void addVectorsRT(vec *vect1, vec *vect2, vec* vect);
+	/*adds 2 vectors together*/
+
+void multiplyVectorByScalarRT(vec* vect1, double multiplyer, vec* vect);
+	/*multiply a vector by a scalar*/
+
+void divideVectorByScalarRT(vec* vect1, double divisor, vec* vect);
+
+void copyVectorRT(vec * vecNew, vec * vecbToCopy);
+
+void normaliseVectorRT(vec *vect1, vec *vect);
+
+
+void normaliseVector(vec *vect1);
+	/*normalises a vector*/
+
+void negativeVector(vec *vect1, vec* vect);
+	/*finds the negative of a vector*/
+
+double dotproduct(vec *vect1, vec *vect2);
+	/*finds the dot product of 2 vectors*/
+
+void crossProduct(vec* vect1, vec* vect2, vec* vect);
+	/*vect = vect1 x vect2; finds the cross product of 2 vectors*/
+
+void makeMatrix(vec* vect1, vec* vect2, vec* vect3, mat* matx);
+	/*creates a 3x3 matrix from 3 vectors*/
+
+void multMatrixByVector(mat* matx, vec* vect1, vec* vect);
+	/*multiplies a matrix by a vector*/
+
+void createVector(vec* vec);
+
+//double magnitudeVector(vec *vect);
+
+void createIdentityMatrixRT(mat* matx);
+
+double findMagnitudeOfVector(vec * vect1);
+
+
+
+
+
+
+
+
+bool compareVectors(vec * veca, vec * vecb);
+bool compareVectorsArbitraryError(vec * veca, vec * vecb, double error);
+
+bool compareMatricies(mat * mata, mat * matb);
+void copyVectors(vec * vecNew, vec * vecbToCopy);
+void copyMatricies(mat * matNew, mat * matToCopy);
+void multiplyVectorByMatrix(vec * vecNew, vec * vecToMultiply, mat * matrix);
+
+	//semi shared
+void multiplyMatricies(mat * matNew, mat * mat1, mat * mat2);
+void subtractVectors(vec * vecNew, vec * a, vec * b);
+void addVectors(vec * vecNew, vec * a, vec * b);
+void multiplyVectorByScalar(vec * vec, double scalar);
+void createIdentityMatrix(mat* matrix);
+
+double calculateTheDistanceBetweenTwoPointsXYOnly(vec * positionOfUnit1, vec * positionOfUnit2);
+double calculateTheDistanceBetweenTwoPoints(vec * positionOfUnit1, vec * positionOfUnit2);
+	double calculateTheDistanceBetweenTwoPoints(double positionXOfUnit1, double positionXOfUnit2, double positionYOfUnit1, double positionYOfUnit2, double positionZOfUnit1, double positionZOfUnit2);
+	double calculateTheDistanceBetweenTwoPoints2D(double positionXOfUnit1, double positionXOfUnit2, double positionYOfUnit1, double positionYOfUnit2);
+
+
+void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadians);
+void createRotationxMatrix(mat* matrix, double rotation);
+void createRotationyMatrix(mat* matrix, double rotation);
+void createRotationzMatrix(mat* matrix, double rotation);
+double convertDegreesToRadian(double degrees);
+//void rotateMatrix(mat * matrix, char rotationAxis, double rotationDegrees);
+void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2);
+void scaleMatrix(mat * matrix, double scaleFactor);
+
+double calculateAngleOfVector3D(vec * vect1, int axis);
+
+
+
+
+
+//From OLCoperations.h
+
+void find2DIntersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound);	//NB an interception may be a line and not a point
+	double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2);
+	bool solve2DLineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i);
+	bool determineIfPointLiesOnLine2D(double x1, double y1, double x2, double y2, double x3, double y3);
+	bool find2DIntersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection);
+	bool twoPointsAreTheSame2D(double x1, double y1, double x2, double y2);
+	bool determineIfPointLiesOnAKnownLine2D(double m1, double i1, double x3, double y3);
+
+#ifdef USE_RT
+	//required for raytracing operations
+bool compareDoublesRelaxed(double a, double b);
+bool determineIfPointLiesOnAKnownLine2DRelaxed(double m1, double i1, double x3, double y3);
+bool twoPointsAreTheSame2DRelaxed(double x1, double y1, double x2, double y2);
+#endif
+
+#endif
+
+
+
+
