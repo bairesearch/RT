@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2a 29-August-2014
+ * Project Version: 3e2b 29-August-2014
  *
  *******************************************************************************/
 
@@ -273,7 +273,7 @@ void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesR
 	glutMainLoopEvent();
 }
 
-void draw2DquadsPrimitivesReferenceListToOpenGL()
+static void draw2DquadsPrimitivesReferenceListToOpenGL()
 {
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -349,7 +349,7 @@ void draw2DquadsPrimitivesReferenceListToOpenGL()
 }
 
 
-void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
+static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
@@ -483,7 +483,7 @@ void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 }
 
 
-void draw3DtrisPrimitivesReferenceListToOpenGL()
+static void draw3DtrisPrimitivesReferenceListToOpenGL()
 {
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -541,7 +541,7 @@ void draw3DtrisPrimitivesReferenceListToOpenGL()
 }
 
 //not required for 3D - can use viewport instead of rotating model
-void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
+static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
@@ -668,7 +668,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstRe
 	glutPostRedisplay();
 }
 
-void draw3DprimitivesReferenceListToOpenGLwithRecursion()
+static void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 {
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use white background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -687,7 +687,7 @@ void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 }
 
 
-void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer)
+static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer)
 {
 	Reference * currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
@@ -784,7 +784,7 @@ void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLa
 
 
 
-void draw3DprimitivesReferenceListToOpenGL()
+static void draw3DprimitivesReferenceListToOpenGL()
 {
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -857,7 +857,7 @@ void draw3DprimitivesReferenceListToOpenGL()
 	glFlush();
 }
 
-void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
+static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 {
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

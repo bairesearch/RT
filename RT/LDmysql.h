@@ -26,7 +26,7 @@
  * File Name: LDmysql.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2a 29-August-2014
+ * Project Version: 3e2b 29-August-2014
  *
  *******************************************************************************/
 

@@ -26,7 +26,7 @@
  * File Name: LDopengl.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2a 29-August-2014
+ * Project Version: 3e2b 29-August-2014
  *
  *******************************************************************************/
 
@@ -112,17 +112,17 @@ void setViewPort3Dortho(double left, double right, double bottom, double top, do
 
 void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODmatrixOperations);
 void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
-	void draw2DquadsPrimitivesReferenceListToOpenGL();
-	void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
-	void draw3DtrisPrimitivesReferenceListToOpenGL();
-	void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+	static void draw2DquadsPrimitivesReferenceListToOpenGL();
+	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+	static void draw3DtrisPrimitivesReferenceListToOpenGL();
+	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
 void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap);
-	void draw3DprimitivesReferenceListToOpenGLwithRecursion();
-		void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer);
+	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
+		static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer);
 
-void draw3DprimitivesReferenceListToOpenGL();
-void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
+static void draw3DprimitivesReferenceListToOpenGL();
+static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
 
 	void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap);
 	void writeScreenToDepthMap(int width, int height, double * depthMap);
