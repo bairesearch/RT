@@ -26,7 +26,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d4a 08-June-2014
+ * Project Version: 3d5a 18-July-2014
  *
  * to test sql connection;
  * 1. uncomment int main()
