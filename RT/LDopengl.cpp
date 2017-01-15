@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e3a 01-September-2014
+ * Project Version: 3e3b 01-September-2014
  *
  *******************************************************************************/
 
@@ -78,7 +78,7 @@ Reference * firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
-int initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings)
+bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings)
 {
 	int argc =0;
 	glutInit(&argc, NULL);	//&argc, argv
@@ -99,9 +99,19 @@ int initiateOpenGL(int width, int height, int windowPositionX, int windowPositio
 		glutCreateWindow("BAI OpenGL Hardware Acceleration");
 	}
 	glEnable(GL_DEPTH_TEST);
-
+		
 	return 1;
 
+}
+
+bool exitOpenGL()
+{
+	glutDestroyWindow(glutGetWindow());
+	
+	#ifdef FREEGLUT_MUST_ENTER_MAINLOOP
+	glutMainLoop();	//required for ATI only? - sourceforge Freeglut bug #206
+	glutLeaveMainLoop();	
+	#endif
 }
 
 

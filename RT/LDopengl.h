@@ -26,7 +26,7 @@
  * File Name: LDopengl.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e3a 01-September-2014
+ * Project Version: 3e3b 01-September-2014
  *
  *******************************************************************************/
 
@@ -100,7 +100,8 @@ extern double opengl3DmatrixTransformation3TranslationFactorX;
 extern double opengl3DmatrixTransformation3TranslationFactorY;
 extern double opengl3DmatrixTransformation3TranslationFactorZ;
 
-int initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings);
+bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings);
+bool exitOpenGL();
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
 void setViewPort2Dortho(double left, double right, double bottom, double top);
 void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);

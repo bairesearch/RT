@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e3a 01-September-2014
+ * Project Version: 3e3b 01-September-2014
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -52,10 +52,10 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-#define COMPILE_NLC
+//#define COMPILE_NLC
 //#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
-//#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
+#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
 //#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
@@ -86,7 +86,7 @@ using namespace std;
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
 	//#include <windows.h>	//incompatible with LDjpeg.h (must only include windows.h when need to)
 #endif
-
+#define FREEGLUT_MUST_ENTER_MAINLOOP
 
 
 
