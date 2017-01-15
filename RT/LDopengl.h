@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -99,36 +99,36 @@ extern double opengl3DmatrixTransformation3TranslationFactorX;
 extern double opengl3DmatrixTransformation3TranslationFactorY;
 extern double opengl3DmatrixTransformation3TranslationFactorZ;
 
-bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings);
+bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings);
 bool exitOpenGL();
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
-void setViewPort2Dortho(double left, double right, double bottom, double top);
-void setViewPort3D(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
-void setViewPort3Ddynamic(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
-double maxDouble2(double float1, double float2);
+void setViewPort2Dortho(const double left, const double right, const double bottom, const double top);
+void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth);
+void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
+double maxDouble2(double float1, const double float2);
 void setViewPort3Dbasic();
-void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
+void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations);
 	static void draw2DquadsPrimitivesReferenceListToOpenGL();
 	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 	static void draw3DtrisPrimitivesReferenceListToOpenGL();
 	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap);
 	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
 		static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firstReferenceInLayer);
 
 static void draw3DprimitivesReferenceListToOpenGL();
 static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
 
-	void writeScreenToRGBMap(int width, int height, unsigned char* rgbMap);
-	void writeScreenToDepthMap(int width, int height, double* depthMap);
+	void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap);
+	void writeScreenToDepthMap(int width, const int height, double* depthMap);
 	void updateScreen();
 
-void shearMatrix(float shearX, float shearY);
+void shearMatrix(const float shearX, const float shearY);
 
 #endif
 

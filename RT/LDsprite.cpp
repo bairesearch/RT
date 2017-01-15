@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDsprite.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -224,7 +224,7 @@ void fillInLDspriteExternVariables()
 
 /*Secondary sprite routines*/
 
-string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
+string LDcreateSpriteReferenceName(const int spriteIndex, string sceneFileName)
 {
 	string spriteReferenceFileName = "";
 
@@ -249,7 +249,7 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 	return spriteReferenceFileName;
 }
 
-LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, bool addIndividualSprites, int colour, double scale)
+LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, const bool addIndividualSprites, int colour, double scale)
 {
 	bool result = true;
 
@@ -338,7 +338,7 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 
 
 
-LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, int spriteNumberOfLines, int* numSpritesAdded, bool addIndividualSprites)
+LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, const int spriteNumberOfLines, int* numSpritesAdded, const bool addIndividualSprites)
 {
 	bool result = true;
 
@@ -467,7 +467,7 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 
 
 
-bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LDreference* spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor)
+bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* eyeCoords, LDreference* spriteListInitialReference, const string spriteReferenceFileName, const int spriteDefaultColour, double spriteScaleFactor)
 {
 	//add sprite to spriteByteArray (replace sprite of sprite index, spriteIndex, if it already exists)
 
@@ -520,14 +520,14 @@ bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LD
 
 
 /*this is not complete yet - just use an Identity matrix - ie do not rotate the sprite according to the user POV*/
-void LDgenerateSpriteRotationMatrix(vec* spriteSceneCoords, vec* eyeCoords, mat* spriteRotationMatrix)
+void LDgenerateSpriteRotationMatrix(const vec* spriteSceneCoords, const vec* eyeCoords, mat* spriteRotationMatrix)
 {
 	//TEMP - this is not complete
 	createIdentityMatrix(spriteRotationMatrix);		//CHECK THIS
 }
 
 
-void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale)
+void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, const char characterToWrite, int spriteColour, double scale)
 {
 	string referenceNameStart = SPRITE_CHARACTER_START;
 	string referenceNameEnd = SPRITE_CHARACTER_EXTENSION;

@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTppm.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 #include "RTppm.h"
 
 /*new 24bit pixmap*/
-pixmap* newPixmap(int wide, int high)
+pixmap* newPixmap(const int wide, const int high)
 {
 	pixmap* pm = (pixmap*)malloc(sizeof(pixmap));
 	if(!pm)
@@ -60,7 +60,7 @@ void freePixmap(pixmap* pm)
 	free(pm);
 }
 
-pixmap* loadPPM(string fname)
+pixmap* loadPPM(const string fname)
 {
 	FILE* f;
 	int high, wide;
@@ -119,7 +119,7 @@ pixmap* loadPPM(string fname)
 	return npm;
 }
 
-void writePPM(string fname, pixmap* pm)
+void writePPM(const string fname, const pixmap* pm)
 {
 	FILE* f;
 
@@ -141,12 +141,12 @@ void writePPM(string fname, pixmap* pm)
 	fclose(f);
 }
 
-unsigned char* calcPixelAddress(pixmap* pm, int x, int y)
+unsigned char* calcPixelAddress(const pixmap* pm, const int x, const int y)
 {
 	return &pm->pix[((long)pm->wide*y + x)*3];
 }
 
-void placepointPPM(pixmap* pm, int x, int y, int r, int g, int b)
+void placepointPPM(pixmap* pm, const int x, const int y, int r, int g, int b)
 {
 	int position = y*(pm->wide)*3+x*3;
 

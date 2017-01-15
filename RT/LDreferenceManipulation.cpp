@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceManipulation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -62,11 +62,11 @@ LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInLis
 
 
 
-bool search1DrefListFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList)
+bool search1DrefListFindRef(const LDreference* referenceToFind, const LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	LDreference* currentReference = initialReferenceInList;
+	const LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -81,11 +81,11 @@ bool search1DrefListFindRef(LDreference* referenceToFind, LDreference* initialRe
 	return foundReference;
 }
 
-bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList)
+bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, const LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	LDreference* currentReference = initialReferenceInList;
+	const LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -100,7 +100,7 @@ bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, LDreferen
 	return foundReference;
 }
 
-bool search1DrefListReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList)
+bool search1DrefListReplaceRef(const LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
@@ -173,7 +173,7 @@ bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreferenc
 
 
 
-bool compareReferenceNameAndColour(LDreference* reference, string referenceName, int referenceColour)
+bool compareReferenceNameAndColour(const LDreference* reference, const string referenceName, const int referenceColour)
 {
 	bool result = true;
 
@@ -208,7 +208,7 @@ bool compareSubmodelReferencesNameAndColour(LDreference* reference1, LDreference
 */
 
 
-bool compareReferences(LDreference* reference1, LDreference* reference2, int type)
+bool compareReferences(const LDreference* reference1, const LDreference* reference2, const int type)
 {
 	bool result = true;
 
@@ -268,7 +268,7 @@ bool compareReferences(LDreference* reference1, LDreference* reference2, int typ
 	return result;
 }
 
-void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int type)
+void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, const int type)
 {
 	referenceNew->type = referenceToCopy->type;
 	referenceNew->colour = referenceToCopy->colour;
@@ -303,7 +303,7 @@ void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int
 
 
 
-string convertPositionCoordinatesToString(vec* spriteSceneCoords)
+string convertPositionCoordinatesToString(const vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
 
@@ -321,7 +321,7 @@ string convertPositionCoordinatesToString(vec* spriteSceneCoords)
 	return positionCoordinatesString;
 }
 
-string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* spriteSceneCoords)
+string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(const vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
 
@@ -360,7 +360,7 @@ string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* sprit
 
 
 
-bool write2DreferenceListCollapsedTo1DtoFile(string fileName, LDreference* firstReference)
+bool write2DreferenceListCollapsedTo1DtoFile(const string fileName, LDreference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -418,7 +418,7 @@ bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* 
 }
 
 
-bool writeReferencesToFile(string fileName, LDreference* firstReference)
+bool writeReferencesToFile(const string fileName, LDreference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -622,7 +622,7 @@ bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentRef
 
 
 
-bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream* writeFileObject)
+bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject)
 {
 	bool result = true;
 	char c;	//current character being read in
@@ -670,7 +670,7 @@ bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream* w
 
 
 
-bool readFileIntoString(string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize)
+bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize)
 {
 	char* fileNamecharstar = const_cast<char*>(fileName.c_str());
 
@@ -709,7 +709,7 @@ bool readFileIntoString(string fileName, string* fileContentsString, int* fileNu
 
 
 
-void copyFiles(string newFileName, string fileToCopyName)
+void copyFiles(const string newFileName, const string fileToCopyName)
 {
 	ofstream writeFileObject(newFileName.c_str());
 
@@ -722,7 +722,7 @@ void copyFiles(string newFileName, string fileToCopyName)
 
 
 
-bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, int spriteListByteArrayLines)
+bool addSpriteReferenceListToSceneFile(const string sceneFileName, const string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, const int spriteListByteArrayLines)
 {
 	bool result = true;
 
@@ -789,7 +789,7 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 /*sprite routines*/
 
 
-string convertRotationMatrixToString(mat* rotationMatrix)
+string convertRotationMatrixToString(const mat* rotationMatrix)
 {
 	string rotationMatrixString = "";
 

@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceManipulation.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -60,33 +60,33 @@
 #endif
 
 LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInList);
-bool search1DrefListFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList);		//not currently used
-bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList);
-bool search1DrefListReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);	//not currently used
+bool search1DrefListFindRef(const LDreference* referenceToFind, const LDreference* initialReferenceInList);		//not currently used
+bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, const LDreference* initialReferenceInList);
+bool search1DrefListReplaceRef(const LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);	//not currently used
 bool search1DrefListNameAndColourReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);
 bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreference* referenceToAdd);
-bool compareReferenceNameAndColour(LDreference* reference, string referenceName, int referenceColour);
-void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int type);
-bool compareReferences(LDreference* reference1, LDreference* reference2, int type);
+bool compareReferenceNameAndColour(const LDreference* reference, const string referenceName, const int referenceColour);
+void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, const int type);
+bool compareReferences(const LDreference* reference1, const LDreference* reference2, const int type);
 
 
-string convertPositionCoordinatesToString(vec* spriteSceneCoords);
-string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* spriteSceneCoords);
+string convertPositionCoordinatesToString(const vec* spriteSceneCoords);
+string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(const vec* spriteSceneCoords);
 
-bool writeReferencesToFile(string fileName, LDreference* firstReference);
+bool writeReferencesToFile(const string fileName, LDreference* firstReference);
 bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
 	bool convertReferenceToString(LDreference* currentReference, string* referenceString);
-bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream* writeFileObject);
+bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
 
-bool readFileIntoString(string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
-void copyFiles(string newFileName, string fileToCopyName);
+bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
+void copyFiles(const string newFileName, const string fileToCopyName);
 
 /*sprite routines*/
-string convertRotationMatrixToString(mat* rotationMatrix);
+string convertRotationMatrixToString(const mat* rotationMatrix);
 
-bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, int spriteListByteArrayLines);
+bool addSpriteReferenceListToSceneFile(const string sceneFileName, const string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, const int spriteListByteArrayLines);
 
-bool write2DreferenceListCollapsedTo1DtoFile(string fileName, LDreference* firstReference);
+bool write2DreferenceListCollapsedTo1DtoFile(const string fileName, LDreference* firstReference);
 	bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
 
 bool joinReferenceLists(LDreference* initialReferenceInMainList, LDreference* initialReferenceInAdditionalList);

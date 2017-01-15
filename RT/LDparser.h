@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDparser.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -47,13 +47,13 @@
 #define LD_PARSER_ALLOW_WHITE_SPACE (true)
 
 //generic parser
-bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, bool recurseIntoPartsDir);
+bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, const bool recurseIntoPartsDir);
 
-double calcModXPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix);
-double calcModYPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix);
-double calcModZPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix);
+double calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
+double calcModYPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
+double calcModZPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
 
-string removeWhiteSpaceFromString(string s);
+string removeWhiteSpaceFromString(const string s);
 
 
 #endif

@@ -1,1 +1,0 @@
-g++ -W --no-warn -oRT.exe RTmain.cpp RTscene.cpp RToperations.cpp RTparser.cpp RTppm.cpp RTraytracer.cpp RTreferenceManipulation.cpp RTpixelMaps.cpp RTviewinfo.cpp LDparser.cpp LDreferenceManipulation.cpp LDreferenceClass.cpp SHAREDglobalDefs.cpp SHAREDvars.cpp SHAREDvector.cpp

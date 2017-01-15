@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvector.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -118,7 +118,7 @@ double calculateInteriorAngleOfAPolygonVertex(vec* pt1Centre, vec* pt2, vec* pt3
 }
 
 
-double calculateAreaOfTriangle3D(vec* pt1, vec* pt2, vec* pt3)
+double calculateAreaOfTriangle3D(const vec* pt1, const vec* pt2, const vec* pt3)
 {
 	mat matrix;
 
@@ -136,7 +136,7 @@ double calculateAreaOfTriangle3D(vec* pt1, vec* pt2, vec* pt3)
 }
 
 
-double calculateAreaOfTriangle(vec* pt1, vec* pt2, vec* pt3)
+double calculateAreaOfTriangle(const vec* pt1, const vec* pt2, const vec* pt3)
 {
 	mat matrix;
 
@@ -154,7 +154,7 @@ double calculateAreaOfTriangle(vec* pt1, vec* pt2, vec* pt3)
 }
 
 
-double calculateDeterminant3By3(mat* matrix)
+double calculateDeterminant3By3(const mat* matrix)
 {
 	double a = matrix->a.x;
 	double b = matrix->b.x;
@@ -169,7 +169,7 @@ double calculateDeterminant3By3(mat* matrix)
 	return (a*((e*i)-(f*h)) - b*((d*i)-(f*g)) + c*((d*h)-(e*g)));
 }
 
-double absDouble2(double val)
+double absDouble2(const double val)
 {
 	if(val < 0.0)
 	{
@@ -250,7 +250,7 @@ void createYAxisScaleMatrix2D(mat* matrix, double scaleFactor)
 
 
 
-double calculateAngleBetweenVectors2D(vec* vect1, vec* vect2)
+double calculateAngleBetweenVectors2D(const vec* vect1, const vec* vect2)
 {
 	double angleBetweenVectors2D;
 	//tan angleBetweenVectors2D =  (y2-y1) / (x2 - x1)
@@ -268,7 +268,7 @@ double calculateAngleBetweenVectors2D(vec* vect1, vec* vect2)
 
 }
 
-double calculateAngleOfVector3D(vec* vect1, int axis)
+double calculateAngleOfVector3D(const vec* vect1, const int axis)
 {
 	double angle;
 
@@ -343,7 +343,7 @@ void multiplyVectorByMatrix(vec* vecNew, vec* vecToMultiply, mat* matrix)
 
 
 
-double findMagnitudeOfVector(vec* vect1)
+double findMagnitudeOfVector(const vec* vect1)
 {
 	return sqrt(pow(vect1->x, 2) + pow(vect1->y,2) + pow(vect1->z,2));
 }
@@ -384,14 +384,14 @@ void normaliseVectorRT(vec* vect1, vec* vect)
 }
 
 
-void addVectorsRT(vec* vect1, vec* vect2, vec* vect)
+void addVectorsRT(const vec* vect1, const vec* vect2, vec* vect)
 {
 	vect->x = vect1->x + vect2->x;
 	vect->y = vect1->y + vect2->y;
 	vect->z = vect1->z + vect2->z;
 }
 
-void subtractVectorsRT(vec* vect1, vec* vect2, vec* vect)
+void subtractVectorsRT(const vec* vect1, const vec* vect2, vec* vect)
 {
 	vect->x = vect1->x - vect2->x;
 	vect->y = vect1->y - vect2->y;
@@ -405,20 +405,20 @@ void negativeVector(vec* vect1, vec* vect)
 	vect->z = -(vect1->z);
 }
 
-double dotProduct(vec* vect1, vec* vect2)
+double dotProduct(const vec* vect1, const vec* vect2)
 {
 	double scalar = vect1->x*vect2->x + vect1->y*vect2->y + vect1->z*vect2->z;
 	return scalar;
 }
 
-void multiplyVectorByScalarRT(vec* vect1, double multiplyer, vec* vect)
+void multiplyVectorByScalarRT(const vec* vect1, const double multiplyer, vec* vect)
 {
 	vect->x = vect1->x*multiplyer;
 	vect->y = vect1->y*multiplyer;
 	vect->z = vect1->z*multiplyer;
 }
 
-void divideVectorByScalarRT(vec* vect1, double divisor, vec* vect)
+void divideVectorByScalarRT(const vec* vect1, const double divisor, vec* vect)
 {
 	vect->x = vect1->x/divisor;
 	vect->y = vect1->y/divisor;
@@ -471,7 +471,7 @@ void createIdentityMatrixRT(mat* matx)
 	matx->c.z = ONE;
 }
 
-void copyVectorRT(vec* vecNew, vec* vecToCopy)
+void copyVectorRT(vec* vecNew, const vec* vecToCopy)
 {
 
 	vecNew->x = vecToCopy->x;
@@ -482,7 +482,7 @@ void copyVectorRT(vec* vecNew, vec* vecToCopy)
 
 
 
-bool compareVectorsArbitraryError(vec* vecA, vec* vecB, double error)
+bool compareVectorsArbitraryError(const vec* vecA, const vec* vecB, const double error)
 {
 	bool result = true;
 	if(!compareDoublesArbitraryError(vecA->x, vecB->x, error))
@@ -503,7 +503,7 @@ bool compareVectorsArbitraryError(vec* vecA, vec* vecB, double error)
 
 
 
-bool compareVectors(vec* vecA, vec* vecB)
+bool compareVectors(const vec* vecA, const vec* vecB)
 {
 	bool result = true;
 	if(!compareDoubles(vecA->x, vecB->x))
@@ -521,7 +521,7 @@ bool compareVectors(vec* vecA, vec* vecB)
 	return result;
 }
 
-bool compareMatricies(mat* matA, mat* matB)
+bool compareMatricies(const mat* matA, const mat* matB)
 {
 	bool result = true;
 	if(!compareVectors(&(matA->a), &(matB->a)))
@@ -539,7 +539,7 @@ bool compareMatricies(mat* matA, mat* matB)
 	return result;
 }
 
-void copyVectors(vec* vecNew, vec* vecToCopy)
+void copyVectors(vec* vecNew, const vec* vecToCopy)
 {
 
 	vecNew->x = vecToCopy->x;
@@ -547,7 +547,7 @@ void copyVectors(vec* vecNew, vec* vecToCopy)
 	vecNew->z = vecToCopy->z;
 }
 
-void copyMatricies(mat* matNew, mat* matToCopy)
+void copyMatricies(mat* matNew, const mat* matToCopy)
 {
 	copyVectors(&(matNew->a), &(matToCopy->a));
 	copyVectors(&(matNew->b), &(matToCopy->b));
@@ -595,17 +595,17 @@ void multiplyVectorByScalar(vec* vec, double scalar)
 }
 
 
-double calculateTheDistanceBetweenTwoPoints(vec* positionOfUnit1, vec* positionOfUnit2)
+double calculateTheDistanceBetweenTwoPoints(const vec* positionOfUnit1, const vec* positionOfUnit2)
 {
 	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, positionOfUnit1->z, positionOfUnit2->z);
 }
 
-double calculateTheDistanceBetweenTwoPointsXYOnly(vec* positionOfUnit1, vec* positionOfUnit2)
+double calculateTheDistanceBetweenTwoPointsXYOnly(const vec* positionOfUnit1, const vec* positionOfUnit2)
 {
 	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, 0, 0);
 }
 
-double calculateTheDistanceBetweenTwoPoints(double positionXOfUnit1, double positionXOfUnit2, double positionYOfUnit1, double positionYOfUnit2, double positionZOfUnit1, double positionZOfUnit2)
+double calculateTheDistanceBetweenTwoPoints(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2, const double positionZOfUnit1, const double positionZOfUnit2)
 {
 	double xDistanceBetweenTheTwoUnits = positionXOfUnit1 - positionXOfUnit2; //fabs((positionXOfUnit1) - (positionXOfUnit2));
 	double yDistanceBetweenTheTwoUnits = positionYOfUnit1 - positionYOfUnit2; //fabs((positionYOfUnit1) - (positionYOfUnit2));
@@ -615,7 +615,7 @@ double calculateTheDistanceBetweenTwoPoints(double positionXOfUnit1, double posi
 	return distanceBetweenTheTwoUnits;
 }
 
-double calculateTheDistanceBetweenTwoPoints2D(double positionXOfUnit1, double positionXOfUnit2, double positionYOfUnit1, double positionYOfUnit2)
+double calculateTheDistanceBetweenTwoPoints2D(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2)
 {
 	double xDistanceBetweenTheTwoUnits = positionXOfUnit1 - positionXOfUnit2; //fabs((positionXOfUnit1) - (positionXOfUnit2));
 	double yDistanceBetweenTheTwoUnits = positionYOfUnit1 - positionYOfUnit2; //fabs((positionYOfUnit1) - (positionYOfUnit2));
@@ -656,12 +656,12 @@ void createRotationMatrixZ(mat* matrix, double rotation)
 	matrix->b.y = cos(rotation);
 }
 
-double convertDegreesToRadian(double degrees)
+double convertDegreesToRadian(const double degrees)
 {
 	return (degrees/180*PI);
 }
 
-double convertRadianToDegrees(double radian)
+double convertRadianToDegrees(const double radian)
 {
 	return (radian*180/PI);
 }
@@ -702,7 +702,7 @@ void scaleMatrix(mat* matrix, double scaleFactor)
 }
 
 
-void createRotatationMatrix(mat* matrix, int rotationAxis, double rotationRadians)
+void createRotatationMatrix(mat* matrix, const int rotationAxis, double rotationRadians)
 {
 	if(rotationAxis == AXIS_X)
 	{
@@ -748,7 +748,7 @@ void createRotatationMatrix(mat* matrix, int rotationAxis, double rotationRadian
 //void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* xinterceptionPointFound, bool* yinterceptionPointFound)	//NB an interception may be a line and not a point
 
 //NB uses 0 is the centre of the quad drawn by the 4 points. a, b, c, d.
-void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound)	//NB an interception may be a line and not a point
+void find2DintersectionPoint(double ax, double ay, double bx, double by, const double cx, const double cy, const double dx, const double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound)	//NB an interception may be a line and not a point
 {
 	//try for analytical solution
 
@@ -935,7 +935,7 @@ void find2DintersectionPoint(double ax, double ay, double bx, double by, double 
 
 
 
-bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double* xIntersection, double* yIntersection)
+bool find2DintersectionPointOfTwoLines(double m1, double i1, const double m2, const double i2, double* xIntersection, double* yIntersection)
 {
 	bool result;
 
@@ -972,7 +972,7 @@ bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i
 }
 
 
-double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2)
+double calcDistanceBetweenTwoPoints2D(const double x1, const double y1, const double x2, const double y2)
 {
 	double xDistanceBetweenTheTwoPoints = x1 -  x2;
 	double yDistanceBetweenTheTwoPoints = y1 -  y2;
@@ -980,7 +980,7 @@ double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2
 }
 
 
-bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double* m, double* i)
+bool solve2DlineEquationWithTwoPoints(double x1, double y1, const double x2, const double y2, double* m, double* i)
 {
 	bool result;
 
@@ -1014,7 +1014,7 @@ bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2
 	return result;
 }
 
-bool determineIfPointLiesOnLine2D(double x1, double y1, double x2, double y2, double x3, double y3)
+bool determineIfPointLiesOnLine2D(double x1, double y1, const double x2, const double y2, const double x3, const double y3)
 {
 	bool result = false;
 
@@ -1039,7 +1039,7 @@ bool determineIfPointLiesOnLine2D(double x1, double y1, double x2, double y2, do
 }
 
 
-bool determineIfPointLiesOnAKnownLine2D(double m1, double i1, double x3, double y3)
+bool determineIfPointLiesOnAKnownLine2D(const double m1, const double i1, const double x3, const double y3)
 {//preconditions: m != infinity
 	bool result = false;
 
@@ -1056,7 +1056,7 @@ bool determineIfPointLiesOnAKnownLine2D(double m1, double i1, double x3, double 
 
 
 
-bool twoPointsAreTheSame2D(double x1, double y1, double x2, double y2)
+bool twoPointsAreTheSame2D(const double x1, const double y1, const double x2, const double y2)
 {
 	bool result;
 
@@ -1076,7 +1076,7 @@ bool twoPointsAreTheSame2D(double x1, double y1, double x2, double y2)
 #ifdef USE_RT
 
 
-bool compareDoublesRelaxed(double a, double b)	//required for raytracing operations
+bool compareDoublesRelaxed(const double a, const double b)	//required for raytracing operations
 {
 	bool result;
 	if((a < (b+RELAXED_DOUBLE_MIN_PRECISION)) && (a > (b-RELAXED_DOUBLE_MIN_PRECISION)))
@@ -1092,7 +1092,7 @@ bool compareDoublesRelaxed(double a, double b)	//required for raytracing operati
 }
 
 
-bool determineIfPointLiesOnAKnownLine2Drelaxed(double m1, double i1, double x3, double y3)
+bool determineIfPointLiesOnAKnownLine2Drelaxed(const double m1, const double i1, const double x3, const double y3)
 {//preconditions: m != infinity
 	bool result = false;
 
@@ -1107,7 +1107,7 @@ bool determineIfPointLiesOnAKnownLine2Drelaxed(double m1, double i1, double x3, 
 	return result;
 }
 
-bool twoPointsAreTheSame2Drelaxed(double x1, double y1, double x2, double y2)
+bool twoPointsAreTheSame2Drelaxed(const double x1, const double y1, const double x2, const double y2)
 {
 	bool result;
 

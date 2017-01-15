@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTreferenceManipulation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -37,7 +37,7 @@
 #include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, string lightSourceColour)
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
 {
 	ofstream writeFileObject;
 	writeFileObject.open(fileName.c_str());
@@ -58,7 +58,7 @@ bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDre
 
 
 
-bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, string lightSourceColour)
+bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
 {
 	/*
 	#ifdef COMPILE_TH_RT

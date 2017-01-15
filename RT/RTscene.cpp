@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTscene.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -58,12 +58,12 @@ RTlightingInfo::~RTlightingInfo(void)
 	delete nextLight;
 }
 
-void setLightingMode(int newLightingMode)
+void setLightingMode(const int newLightingMode)
 {
 	lightingMode = newLightingMode;
 }
 
-void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew)
+void setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew)
 {
 	lightingAmbientRed = lightingAmbientRedNew;
 	lightingAmbientGreen = lightingAmbientGreenNew;
@@ -74,7 +74,7 @@ void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbie
 
 	/*used to store the original scene in the list*/
 
-int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	#ifndef USE_OR
 	fillInRTRulesExternVariables();
@@ -117,7 +117,7 @@ int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles
 
 }
 
-int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	int result = TRUE;
 
@@ -328,7 +328,7 @@ RTlightingInfo* addLightToEnd(RTlightingInfo* li_orig, RTlightingInfo* new_node)
 }
 
 
-void parseTalFileInitialiseParser(string talFileName)
+void parseTalFileInitialiseParser(const string talFileName)
 {
 
  	FILE* f;
@@ -477,7 +477,7 @@ RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 	return si;
 }
 
-void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li)
+void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li)
 {
 
 
@@ -619,9 +619,9 @@ void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap,
 
 
 
-void calculateBasicColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
-	RTsceneInfo* nd;
+	const RTsceneInfo* nd;
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -722,10 +722,10 @@ int compare_tin(RTsceneInfo* p, RTsceneInfo* q, void* pointer)
 
 
 
-void calculateTransparencyColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb)
+void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb)
 {
-	RTsceneInfo* nd_orig;
-	RTsceneInfo* nd;
+	const RTsceneInfo* nd_orig;
+	const RTsceneInfo* nd;
 
 	/*temporarily, TRANSPARENCY is a global variable coverting all bricktypes.
 	This can easily be changed to individual brick/piece types but the current .tal
@@ -821,7 +821,7 @@ void calculateTransparencyColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo
 	/* calculateAmbientDiffuseSpecular is a modified version
 	of shading.c's get_point_value method*/
 
-void calculateAmbientDiffuseSpecular(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
 		/*light info declarations*/
 
@@ -842,14 +842,14 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, RTsceneInfo* si, RTlighting
 	double ambientGreen = lightingAmbientGreen;
 	double ambientBlue = lightingAmbientBlue;
 	colourAdvanced col;
-	RTlightingInfo* nd2;
+	const RTlightingInfo* nd2;
 	vec tmp, tmp2, tmp3;
 	double diff_amt, spec_amt;
 
 
 		/*for scene info traversing declarations..*/
 
-	RTsceneInfo* nd;	/*stands for 'node'*/
+	const RTsceneInfo* nd;	/*stands for 'node'*/
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -1018,7 +1018,7 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, RTsceneInfo* si, RTlighting
 
 
 
-void calculateUVNScalars(RTviewInfo* vi, vec* uvn, int x, int y)
+void calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int y)
 {
 	double u, v, n;
 
@@ -1035,7 +1035,7 @@ void calculateUVNScalars(RTviewInfo* vi, vec* uvn, int x, int y)
 	return;
 }
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi)
+void calculatePointMapValue(const double xPos, const double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi)
 {
 	//this function requires viewAt, viewUp and eye vectors to be defined
 
@@ -1075,7 +1075,7 @@ void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzW
 
 }
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  RTviewInfo* vi)
+void createPointMapUsingDepthMap(const int imageWidth, const int imageHeight, double* pointMap, const double* depthMap,  RTviewInfo* vi)
 {
 	for(int y = 0; y < (imageHeight); y++)
 	{

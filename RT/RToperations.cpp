@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RToperations.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -142,7 +142,7 @@ void createScaleMatrix(double width, double length, double height, advancedMat* 
 	/*matx->d.w = 1 --> because it is a vertex not a vector*/
 }
 
-void createInverseScaleMatrix(double width, double length, double height, advancedMat* matx)
+void createInverseScaleMatrix(const double width, const double length, const double height, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->a.x = 1/width;
@@ -228,7 +228,7 @@ void transposeAdvancedMatrix(advancedMat* matx)
 	matx->d.z = tmp;
 }
 
-double toRadians(double degrees)
+double toRadians(const double degrees)
 {
 	return degrees/180*PI;
 }
@@ -262,7 +262,7 @@ void fromAdvancedVector(advancedVec* vecAdv, vec* vec)
 
 
 
-double findSmallestValueAdvanced(double val1, double val2)
+double findSmallestValueAdvanced(double val1, const double val2)
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
@@ -283,7 +283,7 @@ double findSmallestValueAdvanced(double val1, double val2)
 }
 
 
-double findSmallestValue(double val1, double val2)
+double findSmallestValue(double val1, const double val2)
 {
 	if(val1 < val2)
 	{
@@ -295,7 +295,7 @@ double findSmallestValue(double val1, double val2)
 	}
 }
 
-double findGreatestValueAdvanced(double val1, double val2)
+double findGreatestValueAdvanced(double val1, const double val2)
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
@@ -316,7 +316,7 @@ double findGreatestValueAdvanced(double val1, double val2)
 }
 
 
-double findGreatestValue(double val1, double val2)
+double findGreatestValue(double val1, const double val2)
 {
 	if(val1 > val2)
 	{
@@ -331,7 +331,7 @@ double findGreatestValue(double val1, double val2)
 
 
 
-double findSmallestValue(double val1, double val2, double val3)
+double findSmallestValue(const double val1, const double val2, double val3)
 {
 	if(val1 > val2)
 	{
@@ -357,7 +357,7 @@ double findSmallestValue(double val1, double val2, double val3)
 	}
 }
 
-double findGreatestValue(double val1, double val2, double val3)
+double findGreatestValue(const double val1, const double val2, double val3)
 {
 	if(val1 < val2)
 	{
@@ -386,7 +386,7 @@ double findGreatestValue(double val1, double val2, double val3)
 
 
 
-int findPositionOfSmallestValueAdvanced(double* array, unsigned int size)
+int findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -414,7 +414,7 @@ int findPositionOfSmallestValueAdvanced(double* array, unsigned int size)
 	}
 	return position;
 }
-int findPositionOfGreatestValueAdvanced(double* array, unsigned int size)
+int findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -446,7 +446,7 @@ int findPositionOfGreatestValueAdvanced(double* array, unsigned int size)
 
 
 
-int findPositionOfSmallestValueWhichHits(double* array, int* hitsArray, unsigned int size)
+int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_LARGE_DOUBLE;
@@ -463,7 +463,7 @@ int findPositionOfSmallestValueWhichHits(double* array, int* hitsArray, unsigned
 }
 
 
-int findPositionOfGreatestValueWhichHits(double* array, int* hitsArray, unsigned int size)
+int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_SMALL_DOUBLE;
@@ -482,7 +482,7 @@ int findPositionOfGreatestValueWhichHits(double* array, int* hitsArray, unsigned
 
 
 
-int findIntersectLineWithLine(vec* linept1, vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, vec* norm, double* t)
+int findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, const vec* norm, double* t)
 {
 	if(findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
 	{
@@ -566,7 +566,7 @@ int findIntersectLineWithLine(vec* linept1, vec* linept2, vec* povpt1, vec* povp
 
 
 
-bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec* pt_int)
+bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec* linept1, const vec* linept2, vec* pt_int)
 {
 	bool result;
 
@@ -728,7 +728,7 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 #define SAME_CLOCKNESS 1
 #define DIFF_CLOCKNESS 0
 
-int findIntersectLineWithTri(vec* pt1, vec* pt2, vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
+int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	double V1x, V1y, V1z;
 	double V2x, V2y, V2z;
@@ -845,7 +845,7 @@ int findIntersectLineWithTri(vec* pt1, vec* pt2, vec* pt3, vec* linept1, vec* li
 }
 
 
-int checkSameClockDir(vec* pt1, vec* pt2, vec* pt3, vec* norm)
+int checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec* norm)
 {
 	double testi, testj, testk;
 	double dotprod;
@@ -870,7 +870,7 @@ int checkSameClockDir(vec* pt1, vec* pt2, vec* pt3, vec* norm)
 
 
 
-int findIntersectLineWithQuad(vec* pt1, vec* pt2, vec* pt3, vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
+int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, const vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	//NB a quad is formed out of 2 tris
 

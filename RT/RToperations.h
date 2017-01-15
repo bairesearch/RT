@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RToperations.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -55,7 +55,7 @@ void createIdentityMatrixAdvanced(advancedMat* matx);
 void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx);
 void createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx);
 void createScaleMatrix(double width, double length, double height, advancedMat* matx);
-void createInverseScaleMatrix(double width, double length, double height, advancedMat* matx);
+void createInverseScaleMatrix(const double width, const double length, const double height, advancedMat* matx);
 void createRotationxMatrix(double rotation, advancedMat* matx);
 void createInverseRotationxMatrix(double rotation, advancedMat* matx);
 void createRotationyMatrix(double rotation, advancedMat* matx);
@@ -65,33 +65,33 @@ void createInverseRotationzMatrix(double rotation, advancedMat* matx);
 void invertAdvancedMatrix(advancedMat* matx);
 void transposeAdvancedMatrix(advancedMat* matx);
 void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv);
-double toRadians(double degrees);
+double toRadians(const double degrees);
 void toAdvancedVector(vec* vec, int type, advancedVec* vecAdv);
 void fromAdvancedVector(advancedVec* vecAdv, vec* vec);
 void createAdvancedVector(advancedVec* vec);
 
 
-double findSmallestValue(double val1, double val2, double val3);
-double findGreatestValue(double val1, double val2, double val3);
+double findSmallestValue(const double val1, const double val2, double val3);
+double findGreatestValue(const double val1, const double val2, double val3);
 	/*finds the smallest/largest value of 3 given scalars*/
 
-int findPositionOfSmallestValueAdvanced(double* array, unsigned int size);
-int findPositionOfGreatestValueAdvanced(double* array, unsigned int size);
+int findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size);
+int findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size);
 
-int findIntersectLineWithTri(vec* pt1, vec* pt2, vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
-	int checkSameClockDir(vec* pt1, vec* pt2, vec* pt3, vec* norm);
-int findIntersectLineWithLine(vec* linept1, vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, vec* norm, double* t);
-	bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec* pt_int);
-int findIntersectLineWithQuad(vec* pt1, vec* pt2, vec* pt3, vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
+int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
+	int checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec* norm);
+int findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, const vec* norm, double* t);
+	bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec* linept1, const vec* linept2, vec* pt_int);
+int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, const vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
 
 
 
-double findSmallestValueAdvanced(double val1, double val2);
-double findSmallestValue(double val1, double val2);
-double findGreatestValueAdvanced(double val1, double val2);
-double findGreatestValue(double val1, double val2);
+double findSmallestValueAdvanced(double val1, const double val2);
+double findSmallestValue(double val1, const double val2);
+double findGreatestValueAdvanced(double val1, const double val2);
+double findGreatestValue(double val1, const double val2);
 
-int findPositionOfSmallestValueWhichHits(double* array, int* hitsArray, unsigned int size);
-int findPositionOfGreatestValueWhichHits(double* array, int* hitsArray, unsigned int size);
+int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size);
+int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size);
 
 #endif

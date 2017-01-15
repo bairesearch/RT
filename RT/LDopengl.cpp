@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -69,7 +69,7 @@ const LDreference* firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
-bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings)
+bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings)
 {
 	bool result = true;
 
@@ -130,14 +130,14 @@ void setViewPort(double width, double height, double xCentre, double yCentre)
 }
 */
 
-void setViewPort2Dortho(double left, double right, double bottom, double top)
+void setViewPort2Dortho(const double left, const double right, const double bottom, const double top)
 {
 	glMatrixMode(GL_PROJECTION);		//shouldnt this be modelview???
 	glLoadIdentity();
 	gluOrtho2D(left, right, bottom, top);
 }
 
-void setViewPort3D(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
+void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -150,7 +150,7 @@ void setViewPort3D(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingP
 
 }
 
-void setViewPort3Ddynamic(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
+void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -163,7 +163,7 @@ void setViewPort3Ddynamic(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUp
 
 }
 
-double maxDouble2(double float1, double float2)
+double maxDouble2(double float1, const double float2)
 {
 	if(float1 > float2)
 	{
@@ -183,7 +183,7 @@ void setViewPort3Dbasic()
 
 }
 
-void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward)
+void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -203,7 +203,7 @@ void setViewPort3Dortho(double left, double right, double bottom, double top, do
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -247,7 +247,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* first
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -667,7 +667,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -974,7 +974,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 
 
-void writeScreenToRGBMap(int width, int height, unsigned char* rgbMap)
+void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap)
 {
 	const int bytesPerPixel = 3;	// RGB
 	const int imageSizeInBytes = bytesPerPixel* width* height;
@@ -1028,7 +1028,7 @@ void writeScreenToRGBMap(int width, int height, unsigned char* rgbMap)
 
 }
 
-void writeScreenToDepthMap(int width, int height, double* depthMap)
+void writeScreenToDepthMap(int width, const int height, double* depthMap)
 {
 	GLfloat* pixels = new GLfloat[width* height];
 	//GLuint* pixels = new GLuint[width* height];
@@ -1105,7 +1105,7 @@ void updateScreen()
 //        m1, m2, m3, m4 represent m11, m21, m31, m41
 //        m5, m6, m7, m8 represent m12, m22, m32, m42
 //        etc...
-void shearMatrix(float shearX, float shearY)
+void shearMatrix(const float shearX, const float shearY)
 {
 	float m[] = {
 		1.0, shearY, 0.0, 0.0,

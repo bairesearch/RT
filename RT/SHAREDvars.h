@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvars.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -77,22 +77,22 @@ typedef struct { vec a; vec b; vec c; } mat;
 
 long getTimeAsLong();
 
-bool compareDoubles(double a, double b);
-bool compareDoublesArbitraryError(double a, double b, double error);
+bool compareDoubles(const double a, const double b);
+bool compareDoublesArbitraryError(const double a, const double b, const double error);
 
-int maxInt(int a, int b);	//should be turned into a macro instead
-int minInt(int a, int b);	//should be turned into a macro instead
+int maxInt(int a, const int b);	//should be turned into a macro instead
+int minInt(int a, const int b);	//should be turned into a macro instead
 
-double minDouble(double a, double b);	//should be turned into a macro instead
-double maxDouble(double a, double b);	//should be turned into a macro instead
+double minDouble(double a, const double b);	//should be turned into a macro instead
+double maxDouble(double a, const double b);	//should be turned into a macro instead
 
-double absDouble(double val);
+double absDouble(const double val);
 
-bool argumentExists(int argc, char** argv, string keystr);
-float getFloatArgument(int argc, char** argv, string keystr);
-string getStringArgument(int argc, char** argv, string keystr);
-void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>* inputFileNamesVector);
-void changeDirectory(string newDirectory);
+bool argumentExists(const int argc, const char** argv, const string keystr);
+float getFloatArgument(const int argc, const char** argv, const string keystr);
+string getStringArgument(const int argc, const char** argv, const string keystr);
+void getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector);
+void changeDirectory(const string newDirectory);
 
 string getCurrentDirectory();
 void setCurrentDirectory(string folder);
@@ -102,39 +102,39 @@ bool directoryExists(string* folder);
 
 void copyColours(colour* colToModify, colour* colToCopy);
 
-bool isWhiteSpace(char c);
-string convertStringToLowerCase(string* arbitraryCaseString);
+bool isWhiteSpace(const char c);
+string convertStringToLowerCase(const string* arbitraryCaseString);
 
-string convertFloatToString(float number, string format);
-string convertDoubleToString(double number, string format);
-string convertIntToString(int number);
-string convertUnsignedIntToString(int number);
-string convertBoolToString(bool number);
-string convertLongToString(long number);
+string convertFloatToString(const float number, const string format);
+string convertDoubleToString(const double number, const string format);
+string convertIntToString(const int number);
+string convertUnsignedIntToString(const int number);
+string convertBoolToString(const bool number);
+string convertLongToString(const long number);
 
-int convertStringToInt(string number);
+int convertStringToInt(const string number);
 bool convertStringToBool(string number);
-long convertStringToLong(string number);
-float convertStringToFloat(string number);
-double convertStringToDouble(string number);
+long convertStringToLong(const string number);
+float convertStringToFloat(const string number);
+double convertStringToDouble(const string number);
 
 
-bool textInTextArray(string text, string* textArray, int arraySize);
-bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound);
-bool charInCharArray(char c, char* charArray, int arraySize);
-bool intInIntArray(int iTest, int* intArray, int arraySize);
-string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString);
-string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
+bool textInTextArray(const string text, const string* textArray, const int arraySize);
+bool textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound);
+bool charInCharArray(const char c, const char* charArray, const int arraySize);
+bool intInIntArray(const int iTest, const int* intArray, const int arraySize);
+string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString);
+string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
 
-void writeByteArrayToFile(string fileName, char* fileByteArray, int fileByteArraySize);
+void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize);
 void writeStringToFileObject(string s, ofstream* writeFileObject);
-void writeStringToFile(string fileName, string* s);
-void appendStringToFile(string fileName, string* s);
-void prependStringToFile(string fileName, string* s);
+void writeStringToFile(const string fileName, string* s);
+void appendStringToFile(const string fileName, string* s);
+void prependStringToFile(const string fileName, const string* s);
 
-string getFileContents(string inputFileName);
-	string getFileContents(string inputFileName, int* numberLines);
-bool fileExists(string inputFileName);
+string getFileContents(const string inputFileName);
+	string getFileContents(const string inputFileName, int* numberLines);
+bool fileExists(const string inputFileName);
 
 
 #endif

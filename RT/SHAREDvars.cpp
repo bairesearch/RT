@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvars.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -91,7 +91,7 @@ void copyColours(colour* colToModify, colour* colToCopy)
 }
 
 
-bool compareDoublesArbitraryError(double a, double b, double error)
+bool compareDoublesArbitraryError(const double a, const double b, const double error)
 {
 	bool result;
 	if((a < (b+error)) && (a > (b-error)))
@@ -107,7 +107,7 @@ bool compareDoublesArbitraryError(double a, double b, double error)
 }
 
 
-bool compareDoubles(double a, double b)
+bool compareDoubles(const double a, const double b)
 {
 	bool result;
 	if((a < (b+DOUBLE_MIN_PRECISION)) && (a > (b-DOUBLE_MIN_PRECISION)))
@@ -125,7 +125,7 @@ bool compareDoubles(double a, double b)
 
 //generic functions
 
-int maxInt(int a, int b)
+int maxInt(int a, const int b)
 {
 	if(a > b)
 	{
@@ -137,7 +137,7 @@ int maxInt(int a, int b)
 	}
 }
 
-int minInt(int a, int b)
+int minInt(int a, const int b)
 {
 	if(a < b)
 	{
@@ -149,7 +149,7 @@ int minInt(int a, int b)
 	}
 }
 
-double minDouble(double a, double b)
+double minDouble(double a, const double b)
 {
 	if(a < b)
 	{
@@ -160,7 +160,7 @@ double minDouble(double a, double b)
 		return b;
 	}
 }
-double maxDouble(double a, double b)
+double maxDouble(double a, const double b)
 {
 	if(a > b)
 	{
@@ -172,7 +172,7 @@ double maxDouble(double a, double b)
 	}
 }
 
-double absDouble(double val)
+double absDouble(const double val)
 {
 	if(val < 0.0)
 	{
@@ -184,7 +184,7 @@ double absDouble(double val)
 	}
 }
 
-bool argumentExists(int argc, char** argv, string keystr)
+bool argumentExists(const int argc, const char** argv, const string keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
@@ -196,7 +196,7 @@ bool argumentExists(int argc, char** argv, string keystr)
 	return false;
 }
 
-float getFloatArgument(int argc, char** argv, string keystr)
+float getFloatArgument(const int argc, const char** argv, const string keystr)
 {
 	float result=0.0;
 	bool foundArgument = false;
@@ -224,7 +224,7 @@ float getFloatArgument(int argc, char** argv, string keystr)
 	}
 }
 
-string getStringArgument(int argc, char** argv, string keystr)
+string getStringArgument(const int argc, const char** argv, const string keystr)
 {
 	string stringArgument = "";
 	bool foundArgument = false;
@@ -246,7 +246,7 @@ string getStringArgument(int argc, char** argv, string keystr)
 	return stringArgument;
 }
 
-void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>* inputFileNamesVector)
+void getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector)
 {
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
@@ -272,7 +272,7 @@ void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>
 	}
 }
 
-void changeDirectory(string newDirectory)
+void changeDirectory(const string newDirectory)
 {
 	char* newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
 	#ifdef LINUX
@@ -350,7 +350,7 @@ bool directoryExists(string* folder)
 	return folderExists;
 }
 
-bool isWhiteSpace(char c)
+bool isWhiteSpace(const char c)
 {
 	bool result = false;
 	if((c == CHAR_SPACE) || (c == CHAR_TAB))
@@ -360,7 +360,7 @@ bool isWhiteSpace(char c)
 	return result;
 }
 
-string convertStringToLowerCase(string* arbitraryCaseString)
+string convertStringToLowerCase(const string* arbitraryCaseString)
 {
 	string lowerCaseString = *arbitraryCaseString;
 	for(int i=0; i<arbitraryCaseString->length(); i++)
@@ -370,31 +370,31 @@ string convertStringToLowerCase(string* arbitraryCaseString)
 	return lowerCaseString;
 }
 
-string convertFloatToString(float number, string format)
+string convertFloatToString(const float number, const string format)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
-string convertDoubleToString(double number, string format)
+string convertDoubleToString(const double number, const string format)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
-string convertIntToString(int number)
+string convertIntToString(const int number)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, "%d", number);
 	return string(stringCharStar);
 }
-string convertUnsignedIntToString(int number)
+string convertUnsignedIntToString(const int number)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, "%u", number);
 	return string(stringCharStar);
 }
-string convertBoolToString(bool number)
+string convertBoolToString(const bool number)
 {
 	if(number)
 	{
@@ -405,7 +405,7 @@ string convertBoolToString(bool number)
 		return "false";
 	}
 }
-string convertLongToString(long number)
+string convertLongToString(const long number)
 {
 	//return to_string(number);	//C++11
 
@@ -414,7 +414,7 @@ string convertLongToString(long number)
 	return string(tempString);
 }
 
-int convertStringToInt(string number)
+int convertStringToInt(const string number)
 {
 	return atoi(number.c_str());
 }
@@ -451,15 +451,15 @@ bool convertStringToBool(string number)
 
 	return boolean;
 }
-long convertStringToLong(string number)
+long convertStringToLong(const string number)
 {
 	return atol(number.c_str());
 }
-float convertStringToFloat(string number)
+float convertStringToFloat(const string number)
 {
 	return (float)convertStringToDouble(number);
 }
-double convertStringToDouble(string number)
+double convertStringToDouble(const string number)
 {
 	return atof(number.c_str());
 }
@@ -469,13 +469,13 @@ double convertStringToDouble(string number)
 
 
 
-bool textInTextArray(string text, string* textArray, int arraySize)
+bool textInTextArray(const string text, const string* textArray, const int arraySize)
 {
 	int arrayIndexOfResultFound = INT_DEFAULT_VALUE;
 	return textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
 }
 
-bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound)
+bool textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -489,7 +489,7 @@ bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIn
 	return result;
 }
 
-bool charInCharArray(char c, char* charArray, int arraySize)
+bool charInCharArray(const char c, const char* charArray, const int arraySize)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -502,7 +502,7 @@ bool charInCharArray(char c, char* charArray, int arraySize)
 	return result;
 }
 
-bool intInIntArray(int iTest, int* intArray, int arraySize)
+bool intInIntArray(const int iTest, const int* intArray, const int arraySize)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -516,14 +516,14 @@ bool intInIntArray(int iTest, int* intArray, int arraySize)
 }
 
 
-string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString)
+string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString)
 {
 	bool foundAtLeastOneInstance = false;
 	string text = replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
 	return text;
 }
 
-string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
+string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
 {
 	*foundAtLeastOneInstance = false;
 	string text = *textOrig;
@@ -543,7 +543,7 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 	return text;
 }
 
-void writeByteArrayToFile(string fileName, char* fileByteArray, int fileByteArraySize)
+void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize)
 {
 	ofstream parseFileObject(fileName.c_str());
 
@@ -563,7 +563,7 @@ void writeStringToFileObject(string s, ofstream* writeFileObject)
 	}
 }
 
-void writeStringToFile(string fileName, string* s)
+void writeStringToFile(const string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -576,7 +576,7 @@ void writeStringToFile(string fileName, string* s)
 	writeFileObject.close();
 }
 
-void appendStringToFile(string fileName, string* s)
+void appendStringToFile(const string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str(), ofstream::app);
 
@@ -590,20 +590,20 @@ void appendStringToFile(string fileName, string* s)
 }
 
 //inefficient
-void prependStringToFile(string fileName, string* s)
+void prependStringToFile(const string fileName, const string* s)
 {
 	string fileString = getFileContents(fileName);
 	fileString = fileString + *s;
 	writeStringToFile(fileName, &fileString);
 }
 
-string getFileContents(string inputFileName)
+string getFileContents(const string inputFileName)
 {
 	int numberLines = 0;
 	return getFileContents(inputFileName, &numberLines);
 }
 
-string getFileContents(string inputFileName, int* numberLines)
+string getFileContents(const string inputFileName, int* numberLines)
 {
 	string fileContents = "";
 
@@ -634,7 +634,7 @@ string getFileContents(string inputFileName, int* numberLines)
 	return fileContents;
 }
 
-bool fileExists(string inputFileName)
+bool fileExists(const string inputFileName)
 {
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());

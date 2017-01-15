@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTmain.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  *******************************************************************************/
 
@@ -86,7 +86,7 @@ static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n"
 "\n";
 
-int main(int argc,char* *argv)
+int main(const int argc,const char* *argv)
 {
 	bool result = true;
 
@@ -271,7 +271,7 @@ int main(int argc,char* *argv)
 
 		if(argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3i19e 15-December-2016" << endl;
+			cout << "OpenRT.exe - Project Version: 3j1a 14-January-2017" << endl;
 			exit(1);
 		}
 	}

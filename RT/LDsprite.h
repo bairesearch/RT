@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDsprite.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -110,15 +110,15 @@ extern int SPRITE_DEFAULT_COLOUR;
 
 void fillInLDspriteExternVariables();
 
-string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName);
-LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, int spriteNumberOfLines, int* numSpritesAdded, bool addIndividualSprites);
-LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, bool addIndividualSprites, int colour, double scale);
+string LDcreateSpriteReferenceName(const int spriteIndex, string sceneFileName);
+LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, const int spriteNumberOfLines, int* numSpritesAdded, const bool addIndividualSprites);
+LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, const bool addIndividualSprites, int colour, double scale);
 
 
-bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LDreference* spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor);
+bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* eyeCoords, LDreference* spriteListInitialReference, const string spriteReferenceFileName, const int spriteDefaultColour, double spriteScaleFactor);
 
 /*low level sprite routines*/
-void LDgenerateSpriteRotationMatrix(vec* spriteSceneCoords, vec* eyeCoords, mat* spriteRotationMatrix);
-void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale);
+void LDgenerateSpriteRotationMatrix(const vec* spriteSceneCoords, const vec* eyeCoords, mat* spriteRotationMatrix);
+void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, const char characterToWrite, int spriteColour, double scale);
 
 #endif

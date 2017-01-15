@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDmysql.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -55,14 +55,14 @@ void testMySQLserverConnection()
 {
 	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
-	char* sqlCommand = "SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )";
+	const char* sqlCommand = "SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )";
 	performSQLselectQuery(sqlCommand, sqlCommandOutput);
 	cout << "sqlCommandOutput = " << sqlCommandOutput << endl;
 	endMySQLserverConnection();
 }
 
 
-bool initiateMySQLserverConnection(char* mysqlServerIpAddressAndPort, char* username, char* password, char* databaseName)
+bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName)
 {
 
 	mysql_init(&mysql);
@@ -77,7 +77,7 @@ bool initiateMySQLserverConnection(char* mysqlServerIpAddressAndPort, char* user
 }
 
 //not complete - debug only
-bool performSQLselectQuery(char* sqlCommand, char* sqlCommandOutput)
+bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -101,7 +101,7 @@ bool performSQLselectQuery(char* sqlCommand, char* sqlCommandOutput)
 	return true;
 }
 
-bool performSQLselectQuery(char* sqlCommand)
+bool performSQLselectQuery(const char* sqlCommand)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -116,7 +116,7 @@ bool performSQLselectQuery(char* sqlCommand)
 	return true;
 }
 
-bool performSQLrealSelectQuery(char* sqlCommand, unsigned long stringLength)
+bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -134,7 +134,7 @@ bool performSQLrealSelectQuery(char* sqlCommand, unsigned long stringLength)
 
 
 //long performSQLgetNumRowsQuery(string tableName, string columnName)
-long performSQLgetNumRowsQuery(string tableName)
+long performSQLgetNumRowsQuery(const string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -172,7 +172,7 @@ long performSQLgetNumRowsQuery(string tableName)
 }
 
 
-void performSQLdeleteAllRowsQuery(string tableName)
+void performSQLdeleteAllRowsQuery(const string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -199,7 +199,7 @@ void performSQLdeleteAllRowsQuery(string tableName)
 
 
 
-bool performSQLinsertQuery(char* sqlCommand)
+bool performSQLinsertQuery(const char* sqlCommand)
 {
 	int query_state;
 
@@ -218,7 +218,7 @@ bool performSQLinsertQuery(char* sqlCommand)
 }
 
 
-bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength)
+bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength)
 {
 	int query_state;
 
