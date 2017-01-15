@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -78,7 +78,7 @@ void fillInLDspriteExternVariables()
 	#elif defined USE_GIA
 		XMLrulesClass* currentReferenceRulesClass = GIArulesSprite;
 	#elif defined USE_LRRC
-		XMLrulesClass* currentReferenceRulesClass = LRRCrulesSprite;		
+		XMLrulesClass* currentReferenceRulesClass = LRRCrulesSprite;
 	#else
 		XMLrulesClass* currentReferenceRulesClass = ANNrulesSprite;
 	#endif
@@ -229,7 +229,7 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 	string spriteReferenceFileName = "";
 
 	//creates sprite reference name spriteReferenceName = [SPRITE_NAME_START][spriteIndex][sceneFileName]
-	
+
 	spriteReferenceFileName = sceneFileName;
 	int positionOfFullStop = sceneFileName.find(CHAR_FULLSTOP);
 	if(positionOfFullStop != CPP_STRING_FIND_RESULT_FAIL_VALUE)
@@ -238,7 +238,7 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 		//cout << "sceneFileName = " << sceneFileName << endl;
 		//cout << "spriteReferenceFileName without fullstop = " << spriteReferenceFileName << endl;
 	}
-	
+
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_NAME_START;
 	spriteReferenceFileName = spriteReferenceFileName + convertIntToString(spriteIndex);
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_EXTENSION;

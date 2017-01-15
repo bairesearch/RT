@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -240,14 +240,14 @@ LDreference::LDreference(string referenceName, int referenceColour, bool createN
 	{
 		#ifdef USE_LRRC
 		subModelDetails = new ModelDetails();
-		#endif	
+		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
 		#ifdef USE_LRRC
 		subModelDetails = NULL;
-		#endif	
+		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 }
@@ -345,14 +345,14 @@ LDreference::LDreference(bool createNewSubmodel)
 	{
 		#ifdef USE_LRRC
 		subModelDetails = new ModelDetails();
-		#endif	
+		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
 		#ifdef USE_LRRC
 		subModelDetails = NULL;
-		#endif	
+		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 }

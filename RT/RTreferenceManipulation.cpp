@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -366,7 +366,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 	writeFileObject->put(CHAR_SPACE);
 
 
-	
+
 
 	//write reference colour
 	string referenceColourString = "";
@@ -431,7 +431,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 		referenceColourString = TAL_FILE_COLOUR_RED;
 	}
 	else if(currentReference->colour >= DAT_FILE_FIRST_RGB_COLOUR)
-	{		
+	{
 		unsigned int colourExtracted = currentReference->colour;
 		colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 		char colourValueString[100];

@@ -26,7 +26,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -808,11 +808,11 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						{
 							//cout << "successfully parsed; currentReference->name = " <<  currentReference->name << endl;
 							currentReference->isSubModelReference = true;
-							
+
 							#ifdef USE_LRRC
 							//NEW 26-3-06 copy environment relevant child object values into parent object
 							copyEnvironmentRelevantChildUnitDetailsIntoParentObject(parentReference->subModelDetails, currentReference->subModelDetails);
-							#endif								
+							#endif
 						}
 						else
 						{
@@ -820,7 +820,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 							//2. As a custom submodel was not detected, the program updates the unitDetails object based upon LDreference name (subPartFileName)
 							updateUnitDetails(subPartFileName, parentReference->subModelDetails);
 							currentReference->subModelDetails = NULL;	//added aug 08
-							#endif						
+							#endif
 							/*clear memory of currentReference->subModelReference and currentReference->subModelDetails as submodel does not exist*/
 							delete subModelReference;
 							currentReference->firstReferenceWithinSubModel = NULL;	//added aug 08

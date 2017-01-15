@@ -26,7 +26,7 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -230,12 +230,12 @@ static void next_command()
 {
 	int c;
 
-	while((current_command = read_string())) 
+	while((current_command = read_string()))
 	{
 		if(current_command != NULL
 		 && (strcmp(current_command, "COMMENT") == 0
 		 || strcmp(current_command, "comment") == 0
-		 || strcmp(current_command, "#") == 0)) 
+		 || strcmp(current_command, "#") == 0))
 		{
 
 			/* discard rest of line*/
@@ -246,8 +246,8 @@ static void next_command()
 					break;
 				}
 			}
-		} 
-		else 
+		}
+		else
 		{
 			/* this is a non-comment command*/
 			sprintf(com_buf, "%s", current_command);
@@ -289,62 +289,62 @@ static RTunknownInfo _unknown_info;
 int readViewport()
 {
 	next_command();
-	if(string_is(current_command, "IMAGESIZE", "imagesize")) 
+	if(string_is(current_command, "IMAGESIZE", "imagesize"))
 	{
 		_view_info.imageWidth = read_int();
 		_view_info.imageHeight = read_int();
-	} 
+	}
 	else
 	{
 		return parse_error("IMAGESIZE expected");
 	}
 
 	next_command();
-	if(string_is(current_command, "EYE", "eye")) 
+	if(string_is(current_command, "EYE", "eye"))
 	{
 		_view_info.eye = read_vec();
-	} 
+	}
 	else
 	{
 		return parse_error("EYE expected");
 	}
 
 	next_command();
-	if(string_is(current_command, "VIEWAT", "viewAt")) 
+	if(string_is(current_command, "VIEWAT", "viewAt"))
 	{
 		_view_info.viewAt = read_vec();
-	} 
+	}
 	else
 	{
 		return parse_error("VIEWAT expected");
 	}
 
 	next_command();
-	if(string_is(current_command, "VIEWUP", "viewUp")) 
+	if(string_is(current_command, "VIEWUP", "viewUp"))
 	{
 		_view_info.viewUp = read_vec();
-	} 
+	}
 	else
 	{
 		return parse_error("VIEWUP expected");
 	}
 
 	next_command();
-	if(string_is(current_command, "FOCAL", "focal")) 
+	if(string_is(current_command, "FOCAL", "focal"))
 	{
 		_view_info.focalLength = read_double();
-	} 
+	}
 	else
 	{
 		return parse_error("FOCAL expected");
 	}
 
 	next_command();
-	if(string_is(current_command, "VIEWSIZE", "viewsize")) 
+	if(string_is(current_command, "VIEWSIZE", "viewsize"))
 	{
 		_view_info.viewWidth = read_double();
 		_view_info.viewHeight = read_double();
-	} 
+	}
 	else
 	{
 		return parse_error("VIEWSIZE expected");
@@ -369,7 +369,7 @@ int nextLightSource()
 		_light_source.type = POINTSOURCE;
 	}
 	else if(string_is(current_command, "DIRECTIONAL", "directional"))
-	{	
+	{
 		_light_source.type = DIRECTIONAL;
 	}
 	else
@@ -404,10 +404,10 @@ int nextSceneCommand()
 		return 0;
 	}
 	if (string_is(current_command, TAL_FILE_TYPE_BRICK, "brick"))
-	{	
+	{
 		_piece_info.type = BRICK;
 	}
-	else if(string_is(current_command, TAL_FILE_TYPE_PLATE, "plate")) 
+	else if(string_is(current_command, TAL_FILE_TYPE_PLATE, "plate"))
 	{
 		_piece_info.type = PLATE;
 	}
@@ -499,7 +499,7 @@ int nextSceneCommand()
 		read_options(_piece_info.type);
 	}
 
-	while(!string_is(current_option, "END", "end")) 
+	while(!string_is(current_option, "END", "end"))
 	{
 		next_option();
 	}
@@ -601,21 +601,21 @@ void read_options(pieceType type)
 	}
 }
 
-RTdimensionsInfo* getDimensionsInfo() 
-{ 
-	return &_dimensions_info; 
+RTdimensionsInfo* getDimensionsInfo()
+{
+	return &_dimensions_info;
 }
-RTpieceInfo* getPieceInfo() 
-{ 
-	return &_piece_info; 
+RTpieceInfo* getPieceInfo()
+{
+	return &_piece_info;
 }
 
 	//not tested
-RTdecalInfo* getDecalInfo() 
-{ 
-	return &_decal_info; 
+RTdecalInfo* getDecalInfo()
+{
+	return &_decal_info;
 }
-RTunknownInfo* getUnknownInfo() 
-{ 
-	return &_unknown_info; 
+RTunknownInfo* getUnknownInfo()
+{
+	return &_unknown_info;
 }

@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -258,7 +258,7 @@ bool stripExtension(string filenameWithExtension, string* filenameWithoutExtensi
 {
 	bool result = true;
 	int i = 0;
-	
+
 	*filenameWithoutExtension = filenameWithExtension;
 	int positionOfFullStop = filenameWithExtension.find(CHAR_FULLSTOP);
 	if(positionOfFullStop != CPP_STRING_FIND_RESULT_FAIL_VALUE)
@@ -270,7 +270,7 @@ bool stripExtension(string filenameWithExtension, string* filenameWithoutExtensi
 	{
 		result = false;
 	}
-	
+
 	return result;
 
 }
@@ -341,7 +341,7 @@ void parseTalFileInitialiseParser(string talFileName)
 	{
    		 f = stdin;
 	}
-	
+
   	if(!f)
 	{
 		printf("error; no file name specified in code execution, and no standard input given to OpenRT.exe executable");

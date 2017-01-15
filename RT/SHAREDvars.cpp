@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -427,7 +427,7 @@ int convertStringToInt(string number)
 bool convertStringToBool(string number)
 {
 	bool boolean = false;
-	
+
 	for(int i=0; i<number.length(); i++)
 	{
 		number[i] = tolower(number[i]);
@@ -452,9 +452,9 @@ bool convertStringToBool(string number)
 	else
 	{
 		cout << "convertStringToBool{} error: number != \"true\" or  \"false\" or  \"1\" or  \"0\"" << endl;
-		cout << "number = " << number << endl;	
+		cout << "number = " << number << endl;
 	}
-	
+
 	return boolean;
 }
 long convertStringToLong(string number)
@@ -532,7 +532,7 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
 {
 	*foundAtLeastOneInstance = false;
-	string text = *textOrig; 
+	string text = *textOrig;
 	int pos = 0;
 	while((pos = text.find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{
@@ -572,7 +572,7 @@ void writeStringToFileObject(string s, ofstream* writeFileObject)
 void writeStringToFile(string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str());
-	
+
 	//writeFileObject.write(*s);
 	for(int i=0; i < s->size(); i++)
 	{
@@ -585,7 +585,7 @@ void writeStringToFile(string fileName, string* s)
 void appendStringToFile(string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str(), ofstream::app);
-	
+
 	//writeFileObject.write(*s);
 	for(int i=0; i < s->size(); i++)
 	{
@@ -604,7 +604,7 @@ string getFileContents(string inputFileName)
 string getFileContents(string inputFileName, int* numberLines)
 {
 	string fileContents = "";
-	
+
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());
 	if(!parseFileObject.rdbuf()->is_open())
@@ -628,12 +628,12 @@ string getFileContents(string inputFileName, int* numberLines)
 	#ifdef CS_DEBUG_GENERATE_OBJECT_ORIENTED_CODE
 	//cout << "fileContents = " << fileContents << endl;
 	#endif
-	
+
 	return fileContents;
 }
 
 bool fileExists(string inputFileName)
-{	
+{
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());
 	if(!parseFileObject.rdbuf()->is_open())
@@ -644,7 +644,7 @@ bool fileExists(string inputFileName)
 	{
 		parseFileObject.close();
 	}
-	
+
 	return result;
 }
 

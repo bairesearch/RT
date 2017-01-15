@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -92,7 +92,7 @@ bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositi
 		glutCreateWindow("BAI OpenGL Hardware Acceleration");
 	}
 	glEnable(GL_DEPTH_TEST);
-		
+
 	return result;
 
 }
@@ -100,11 +100,11 @@ bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositi
 bool exitOpenGL()
 {
 	bool result = true;
-	
+
 	glutDestroyWindow(glutGetWindow());
 
 	/*
-	Attempt to work around Sourceforge freeglut bug #206: apply freeglut patch instead	
+	Attempt to work around Sourceforge freeglut bug #206: apply freeglut patch instead
 	#ifdef FREEGLUT_MUST_ENTER_MAINLOOP
 	//glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	//glutSetOption(GLUT_ACTION_GLUTMAINLOOP_RETURNS, GLUT_ACTION_CONTINUE_EXECUTION)
@@ -112,7 +112,7 @@ bool exitOpenGL()
 	glutLeaveMainLoop();
 	#endif
 	*/
-	
+
 	return result;
 }
 

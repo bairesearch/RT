@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -306,25 +306,25 @@ void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int
 string convertPositionCoordinatesToString(vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
-	
+
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
-	
+
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
 
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
-	
+
 	return positionCoordinatesString;
 }
 
 string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
-	
+
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
@@ -341,9 +341,9 @@ string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* sprit
 	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
 	positionCoordinatesString = positionCoordinatesString + dataValueString;
-	
+
 	//cout << "positionCoordinatesString = " << positionCoordinatesString << endl;
-	
+
 	return positionCoordinatesString;
 }
 
@@ -804,7 +804,7 @@ string convertRotationMatrixToString(mat* rotationMatrix)
 	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->a.z, "%0.4f") + CHAR_SPACE;
 	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->b.z, "%0.4f") + CHAR_SPACE;
 	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->c.z, "%0.4f") + CHAR_SPACE;
-	
+
 	return rotationMatrixString;
 }
 

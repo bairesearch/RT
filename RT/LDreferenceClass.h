@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3h15b 29-February-2016
  *
  *******************************************************************************/
 
@@ -235,7 +235,7 @@ public:
 	bool isSubModelReference;
 	#ifdef USE_LRRC
 	ModelDetails* subModelDetails;
-	#endif		
+	#endif
 	LDreference* firstReferenceWithinSubModel;
 };
 
