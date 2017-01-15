@@ -237,12 +237,14 @@ extern string tempFolder;
 #define CHAR_APOSTROPHE '\''
 #define CHAR_BACKSLASH '\\'
 #define CHAR_EQUALS '='
+#define CHAR_INVERTEDCOMMAS '"'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
 #define STRING_SPACE " "
 #define STRING_FULLSTOP "."
 #define STRING_COMMA ","
+#define STRING_INVERTEDCOMMAS "\""
 
 #define TM_STRUCT_YEAR_OFFSET 1900
 
