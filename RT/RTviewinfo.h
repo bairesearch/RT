@@ -26,7 +26,7 @@
  * File Name: RTviewinfo.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f4a 11-July-2015
+ * Project Version: 3f5a 21-July-2015
  *
  *******************************************************************************/
 

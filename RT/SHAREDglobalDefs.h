@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f4a 11-July-2015
+ * Project Version: 3f5a 21-July-2015
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -41,8 +41,8 @@
 
 	//current/active tests;
 //#define COMPILE_CF
-#define COMPILE_NLC
-//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_NLC
+#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe

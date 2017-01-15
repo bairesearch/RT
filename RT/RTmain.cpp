@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f4a 11-July-2015
+ * Project Version: 3f5a 21-July-2015
  *
  *******************************************************************************/
 
@@ -76,7 +76,7 @@ static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n\t-lightcol [string]: light point source colour (def: white)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables OpenRT.exe and (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables; OpenRT.exe (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-version          : print version"
@@ -231,7 +231,7 @@ int main(int argc,char* *argv)
 
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3f4a 11-July-2015" << endl;
+			cout << "OpenRT.exe - Project Version: 3f5a 21-July-2015" << endl;
 			exit(1);
 		}
 	}
