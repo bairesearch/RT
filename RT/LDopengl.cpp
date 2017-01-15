@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e5a 03-September-2014
+ * Project Version: 3e5b 03-September-2014
  *
  *******************************************************************************/
 
@@ -80,6 +80,8 @@ Reference * firstReferenceInPrimitivesReferenceListGlobal;
 
 bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings)
 {
+	bool result = true;
+
 	int argc =0;
 	glutInit(&argc, NULL);	//&argc, argv
 	if(LD_OPENGL_PRINT_ALGORITHM_PROGRESS)
@@ -100,18 +102,27 @@ bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositi
 	}
 	glEnable(GL_DEPTH_TEST);
 		
-	return 1;
+	return result;
 
 }
 
 bool exitOpenGL()
 {
-	glutDestroyWindow(glutGetWindow());
+	bool result = true;
 	
+	glutDestroyWindow(glutGetWindow());
+
+	/*
+	Attempt to work around Sourceforge freeglut bug #206: apply freeglut patch instead	
 	#ifdef FREEGLUT_MUST_ENTER_MAINLOOP
+	//glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+	//glutSetOption(GLUT_ACTION_GLUTMAINLOOP_RETURNS, GLUT_ACTION_CONTINUE_EXECUTION)
 	glutMainLoop();	//required for ATI only? - sourceforge Freeglut bug #206
-	glutLeaveMainLoop();	
+	glutLeaveMainLoop();
 	#endif
+	*/
+	
+	return result;
 }
 
 
