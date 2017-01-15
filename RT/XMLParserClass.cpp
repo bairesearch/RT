@@ -3,7 +3,7 @@
  * File Name: XMLParserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a5g 01-Nov-2011
+ * Project Version: 3a6a 20-Mar-2012
  *
  *******************************************************************************/
 
@@ -130,12 +130,27 @@ bool writeXMLFileInefficient(string xmlFileName, XMLParserTag * firstTagInXMLFil
 	return result;
 }
 
+
+void writeXMLHeader(ofstream * writeFileObject)
+{
+	string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	for(int i = 0; i<headerString.length(); i++)
+	{
+		writeFileObject->put(headerString[i]);
+	}
+}
+
+
 bool writeXMLFile(string xmlFileName, XMLParserTag * firstTagInXMLFile)
 {
 	bool result = true;
 
 	ofstream writeFileObject(xmlFileName.c_str());
 
+	#ifdef XML_WRITE_STANDARD_XML_HEADER
+	writeXMLHeader(&writeFileObject);
+	#endif
+	
 	if(!addTagLayerToFileObject(firstTagInXMLFile, &writeFileObject, 0))
 	{
 		result = false;
@@ -550,7 +565,9 @@ bool parseTagComment(ifstream * parseFileObject)
 		else
 		{
 			//display comments when parsing:
+			#ifdef XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
 			cout << currentToken;
+			#endif
 		}
 	}
 	return result;

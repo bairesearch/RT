@@ -3,7 +3,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a5g 01-Nov-2011
+ * Project Version: 3a6a 20-Mar-2012
  *
  *******************************************************************************/
 
@@ -1121,7 +1121,7 @@ int initiateOpenGL(int width, int height)
 	}
 	else
 	{
-		glutCreateWindow("CONFIDENTIAL - Object Recognition OpenGL Hardware Acceleration - CONFIDENTIAL");
+		glutCreateWindow("BAI OpenGL Hardware Acceleration");
 	}
 	glEnable(GL_DEPTH_TEST);
 

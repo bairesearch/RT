@@ -3,7 +3,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a5g 01-Nov-2011
+ * Project Version: 3a6a 20-Mar-2012
  *
  *******************************************************************************/
 
@@ -479,6 +479,7 @@ void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
 	unsigned char g;
 	unsigned char b;
 
+	
 	if(dataFileColour == DAT_FILE_COLOUR_BLACK)
 	{
 		r = DAT_FILE_COLOUR_BLACK_RGB_R;
@@ -557,6 +558,30 @@ void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
 		g = DAT_FILE_COLOUR_PURPLE_RGB_G;
 		b = DAT_FILE_COLOUR_PURPLE_RGB_B;
 	}
+	else if(dataFileColour == DAT_FILE_COLOUR_DARKBLUE)
+	{
+		r = DAT_FILE_COLOUR_DARKBLUE_RGB_R;
+		g = DAT_FILE_COLOUR_DARKBLUE_RGB_G;
+		b = DAT_FILE_COLOUR_DARKBLUE_RGB_B;
+	}
+	else if(dataFileColour == DAT_FILE_COLOUR_DARKGREEN)
+	{
+		r = DAT_FILE_COLOUR_DARKGREEN_RGB_R;
+		g = DAT_FILE_COLOUR_DARKGREEN_RGB_G;
+		b = DAT_FILE_COLOUR_DARKGREEN_RGB_B;
+	}
+	else if(dataFileColour == DAT_FILE_COLOUR_DARKRED)
+	{
+		r = DAT_FILE_COLOUR_DARKRED_RGB_R;
+		g = DAT_FILE_COLOUR_DARKRED_RGB_G;
+		b = DAT_FILE_COLOUR_DARKRED_RGB_B;
+	}
+	else if(dataFileColour == DAT_FILE_COLOUR_AQUA)
+	{			
+		r = DAT_FILE_COLOUR_AQUA_RGB_R;
+		g = DAT_FILE_COLOUR_AQUA_RGB_G;
+		b = DAT_FILE_COLOUR_AQUA_RGB_B;
+	}		
 	else
 	{
 		cout << "invalid dat file colour for conversion to RGB" << endl;

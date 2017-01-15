@@ -3,7 +3,7 @@
  * File Name: XMLParserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a5g 01-Nov-2011
+ * Project Version: 3a6a 20-Mar-2012
  *
  *******************************************************************************/
 
@@ -24,6 +24,10 @@
 using namespace std;
 
 #include "SHAREDglobalDefs.h"
+
+#define XML_WRITE_STANDARD_XML_HEADER
+
+//#define XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
 
 #ifdef USE_GIA
 	/*yet untested without GIA;
