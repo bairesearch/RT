@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f6a 27-July-2015
+ * Project Version: 3f7a 16-August-2015
  *
  *******************************************************************************/
 
@@ -572,6 +572,19 @@ void writeStringToFileObject(string s, ofstream* writeFileObject)
 void writeStringToFile(string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str());
+	
+	//writeFileObject.write(*s);
+	for(int i=0; i < s->size(); i++)
+	{
+		writeFileObject.put((*s)[i]);
+	}
+
+	writeFileObject.close();
+}
+
+void appendStringToFile(string fileName, string* s)
+{
+	ofstream writeFileObject(fileName.c_str(), ofstream::app);
 	
 	//writeFileObject.write(*s);
 	for(int i=0; i < s->size(); i++)
