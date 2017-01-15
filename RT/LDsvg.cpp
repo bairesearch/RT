@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a13a 24-Sept-2012
+ * Project Version: 3c1a 11-October-2012
  *
  *******************************************************************************/
 
@@ -39,6 +39,30 @@
 using namespace std;
 
 #include "LDsvg.h"
+
+bool writeSVGFile(string xmlFileName, XMLParserTag * firstTagInXMLFile)
+{
+	bool result = true;
+
+	ofstream writeFileObject(xmlFileName.c_str());
+
+	writeSVGHeader(&writeFileObject);
+
+	if(!addTagLayerToFileObject(firstTagInXMLFile, &writeFileObject, 0))
+	{
+		result = false;
+	}
+
+	writeSVGFooter(&writeFileObject);
+
+	//Added by RBB 30 August 2009 - required for Windows SW to re-read xml files
+	writeFileObject.put(CHAR_NEWLINE); //(s.cStr())[i]
+
+	writeFileObject.close();
+
+	return result;
+}
+
 
 void writeSVGHeader(ofstream * writeFileObject)
 {
@@ -61,7 +85,7 @@ void writeSVGFooter(ofstream * writeFileObject)
 
 
 
-void writeSVGBox(ofstream * writeFileObject, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse)
+void writeSVGBox(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -104,20 +128,83 @@ void writeSVGBox(ofstream * writeFileObject, vec * pos, double width, double hei
 
 	if(useEllipse)
 	{
-		svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
+		XMLParserTag * currentTagInBlock = *currentTag;
+		currentTagInBlock->name = "ellipse";
+		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		currentAttributeInBlock->name = "cx";
+		currentAttributeInBlock->value = xPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "cy";
+		currentAttributeInBlock->value = yPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "rx";
+		currentAttributeInBlock->value = widthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "ry";
+		currentAttributeInBlock->value = heightString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill";
+		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke";
+		currentAttributeInBlock->value = "black";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke-width";
+		currentAttributeInBlock->value = boxOutlineWidthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+								
+		(*currentTag)->nextTag = new XMLParserTag();
+		(*currentTag) = (*currentTag)->nextTag;
+
+		//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
 	}
 	else
 	{
-		svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
-	}
-
-	for(int i = 0; i<svgText.length(); i++)
-	{
-		writeFileObject->put(svgText[i]);
+		XMLParserTag * currentTagInBlock = *currentTag;
+		currentTagInBlock->name = "rect";
+		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		currentAttributeInBlock->name = "x";
+		currentAttributeInBlock->value = xPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "y";
+		currentAttributeInBlock->value = yPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "width";
+		currentAttributeInBlock->value = widthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "height";
+		currentAttributeInBlock->value = heightString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill";
+		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke";
+		currentAttributeInBlock->value = "black";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke-width";
+		currentAttributeInBlock->value = boxOutlineWidthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+	
+		(*currentTag)->nextTag = new XMLParserTag();
+		(*currentTag) = (*currentTag)->nextTag;
+			
+		//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
 	}
 }
 
-void writeSVGBoxTransparent(ofstream * writeFileObject, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity)
+void writeSVGBoxTransparent(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -164,23 +251,94 @@ void writeSVGBoxTransparent(ofstream * writeFileObject, vec * pos, double width,
 
 	if(useEllipse)
 	{
-		svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
+		XMLParserTag * currentTagInBlock = *currentTag;
+		currentTagInBlock->name = "ellipse";
+		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		currentAttributeInBlock->name = "cx";
+		currentAttributeInBlock->value = xPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "cy";
+		currentAttributeInBlock->value = yPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "rx";
+		currentAttributeInBlock->value = widthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "ry";
+		currentAttributeInBlock->value = heightString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill";
+		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke";
+		currentAttributeInBlock->value = "black";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke-width";
+		currentAttributeInBlock->value = boxOutlineWidthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill-opacity";
+		currentAttributeInBlock->value = fillOpacityString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+								
+		(*currentTag)->nextTag = new XMLParserTag();
+		(*currentTag) = (*currentTag)->nextTag;
+
+		//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
 	}
 	else
 	{
-		svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
-	}
-
-	for(int i = 0; i<svgText.length(); i++)
-	{
-		writeFileObject->put(svgText[i]);
+		XMLParserTag * currentTagInBlock = *currentTag;
+		currentTagInBlock->name = "rect";
+		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		currentAttributeInBlock->name = "x";
+		currentAttributeInBlock->value = xPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "y";
+		currentAttributeInBlock->value = yPosString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "width";
+		currentAttributeInBlock->value = widthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "height";
+		currentAttributeInBlock->value = heightString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill";
+		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke";
+		currentAttributeInBlock->value = "black";
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "stroke-width";
+		currentAttributeInBlock->value = boxOutlineWidthString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+		currentAttributeInBlock->name = "fill-opacity";
+		currentAttributeInBlock->value = fillOpacityString;
+		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+		
+		(*currentTag)->nextTag = new XMLParserTag();
+		(*currentTag) = (*currentTag)->nextTag;			
+	
+		//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
 	}
 }
 
 
 
 
-void writeSVGLine(ofstream * writeFileObject, vec * pos1, vec * pos2, int col)
+void writeSVGLine(XMLParserTag ** currentTag, vec * pos1, vec * pos2, int col)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -214,18 +372,48 @@ void writeSVGLine(ofstream * writeFileObject, vec * pos1, vec * pos2, int col)
 	gString = gStringcharstar;
 	bString = bStringcharstar;
 
-	string svgText = "<g stroke=\"rgb(" + rString + "," + gString + "," + bString + ")\"><line x1=\"" + xPosString + "\" y1=\"" + yPosString + "\" x2=\"" + xPos2String + "\" y2=\"" + yPos2String + "\" stroke-width=\"1\" /></g>";
-
-	for(int i = 0; i<svgText.length(); i++)
-	{
-		writeFileObject->put(svgText[i]);
-	}
+	XMLParserTag * currentTagInBlock = *currentTag;
+	currentTagInBlock->name = "g";
+	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "stroke";
+	currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	
+	currentTagInBlock->firstLowerLevelTag = new XMLParserTag();
+	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+	currentTagInBlock->nextTag = new XMLParserTag();	
+	currentTagInBlock->name = "line";
+	currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "x1";
+	currentAttributeInBlock->value = xPosString;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	currentAttributeInBlock->name = "y1";
+	currentAttributeInBlock->value = yPosString;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	currentAttributeInBlock->name = "x2";
+	currentAttributeInBlock->value = xPos2String;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	currentAttributeInBlock->name = "y2";
+	currentAttributeInBlock->value = yPos2String;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();			
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	currentAttributeInBlock->name = "stroke-width";
+	currentAttributeInBlock->value = "1";
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+			
+	(*currentTag)->nextTag = new XMLParserTag();
+	(*currentTag) = (*currentTag)->nextTag;
+	
+	//string svgText = "<g stroke=\"rgb(" + rString + "," + gString + "," + bString + ")\"><line x1=\"" + xPosString + "\" y1=\"" + yPosString + "\" x2=\"" + xPos2String + "\" y2=\"" + yPos2String + "\" stroke-width=\"1\" /></g>";
 
 }
 
 
 
-void writeSVGText(ofstream * writeFileObject, string text, vec * pos, int fontSize, int col)
+void writeSVGText(XMLParserTag ** currentTag, string text, vec * pos, int fontSize, int col)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -254,14 +442,46 @@ void writeSVGText(ofstream * writeFileObject, string text, vec * pos, int fontSi
 	rString = rStringcharstar;
 	gString = gStringcharstar;
 	bString = bStringcharstar;
+	
+	XMLParserTag * currentTagInBlock = *currentTag;
+	currentTagInBlock->name = "g";
+	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "style";
+	currentAttributeInBlock->value = "font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400";
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	
+	currentTagInBlock->firstLowerLevelTag = new XMLParserTag();
+	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+	currentTagInBlock->nextTag = new XMLParserTag();	
+	currentTagInBlock->name = "g";
+	currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "style";
+	currentAttributeInBlock->value = "stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")";
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 
-	string svgText = "<g style=\"font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400\"><g style=\"stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")\"><text><tspan x=\"" + xPosString + "\" y=\"" + yPosString + "\">" + text + "</tspan></text></g></g>";
+	currentTagInBlock->firstLowerLevelTag = new XMLParserTag();
+	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+	currentTagInBlock->nextTag = new XMLParserTag();	
+	currentTagInBlock->name = "text";
 
-	for(int i = 0; i<svgText.length(); i++)
-	{
-		writeFileObject->put(svgText[i]);
-	}
-
+	currentTagInBlock->firstLowerLevelTag = new XMLParserTag();
+	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+	currentTagInBlock->nextTag = new XMLParserTag();	
+	currentTagInBlock->name = "tspan";
+	currentTagInBlock->value = text;
+	currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "x";
+	currentAttributeInBlock->value = xPosString;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();		
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	currentAttributeInBlock->name = "y";
+	currentAttributeInBlock->value = yPosString;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();	
+	
+	(*currentTag)->nextTag = new XMLParserTag();
+	(*currentTag) = (*currentTag)->nextTag;
+	 		
+	//string svgText = "<g style=\"font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400\"><g style=\"stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")\"><text><tspan x=\"" + xPosString + "\" y=\"" + yPosString + "\">" + text + "</tspan></text></g></g>";
 }
 
 

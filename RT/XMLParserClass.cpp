@@ -23,7 +23,7 @@
  * File Name: XMLParserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a13a 24-Sept-2012
+ * Project Version: 3c1a 11-October-2012
  *
  *******************************************************************************/
 
@@ -220,7 +220,6 @@ bool addTagLayerToFileObject(XMLParserTag * firstTagInCurrentLayer, ofstream * w
 
 	while(currentTag->nextTag != NULL)
 	{
-
 		bool tagHasAttributes = false;
 		bool tagHasValue = false;
 		bool tagHasLowerLevelTags = false;

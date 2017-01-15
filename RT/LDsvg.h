@@ -23,7 +23,7 @@
  * File Name: LDsvg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a13a 24-Sept-2012
+ * Project Version: 3c1a 11-October-2012
  *
  *******************************************************************************/
 
@@ -35,13 +35,15 @@
 #include "SHAREDglobalDefs.h"
 #include "SHAREDvars.h"
 #include "LDreferenceClass.h"
+#include "XMLParserClass.h"
 
+bool writeSVGFile(string xmlFileName, XMLParserTag * firstTagInXMLFile);
 void writeSVGFooter(ofstream * writeFileObject);
 void writeSVGHeader(ofstream * writeFileObject);
-void writeSVGLine(ofstream * writeFileObject, vec * pos1, vec * pos2, int col);
-void writeSVGBox(ofstream * writeFileObject, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
-void writeSVGText(ofstream * writeFileObject, string text, vec * pos, int fontSize, int col);
-void writeSVGBoxTransparent(ofstream * writeFileObject, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
+void writeSVGLine(XMLParserTag ** currentTag, vec * pos1, vec * pos2, int col);
+void writeSVGBox(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
+void writeSVGText(XMLParserTag ** currentTag, string text, vec * pos, int fontSize, int col);
+void writeSVGBoxTransparent(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
 
 #endif
 
