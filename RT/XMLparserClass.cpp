@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3h1c 14-November-2015
+ * Project Version: 3h1d 14-November-2015
  *
  *******************************************************************************/
 
@@ -167,7 +167,7 @@ bool writeXMLfileInefficient(string xmlFileName, XMLparserTag* firstTagInXMLfile
 	XMLfileByteArray[XMLfileByteArrayCurrentPosition] = CHAR_NEWLINE;	//need to add a new line onto the end of the file
 	XMLfileByteArrayCurrentPosition++;
 
-	writeByteArrayToFile(xmlFileName.c_str(), XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+	writeByteArrayToFile(xmlFileName, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 
 	delete XMLfileByteArray;
 

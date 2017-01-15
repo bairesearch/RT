@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h1c 14-November-2015
+ * Project Version: 3h1d 14-November-2015
  *
  *******************************************************************************/
 
@@ -549,9 +549,9 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 	return text;
 }
 
-void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByteArraySize)
+void writeByteArrayToFile(string fileName, char* fileByteArray, int fileByteArraySize)
 {
-	ofstream parseFileObject(fileName);
+	ofstream parseFileObject(fileName.c_str());
 
 	// Exactly 8 bytes written
 	parseFileObject.write(fileByteArray, (sizeof(char)*fileByteArraySize));
