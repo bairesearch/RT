@@ -49,7 +49,7 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-#define COMPILE_NLPI
+#define COMPILE_NLC
 //#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
@@ -107,8 +107,8 @@ extern string tempFolder;
 #ifdef COMPILE_CF
 	#define USE_CF
 #endif
-#ifdef COMPILE_NLPI
-	#define USE_NLPI
+#ifdef COMPILE_NLC
+	#define USE_NLC
 	#define USE_GIA
 #endif
 #ifdef COMPILE_GIA_WITH_CE
