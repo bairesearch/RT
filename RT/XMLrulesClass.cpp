@@ -26,12 +26,13 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
 
 #include "XMLrulesClass.h"
+#include "SHAREDvars.h"
 
 //xml comments not yet supported by this parser
 
@@ -402,7 +403,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->fractionalValue = atof(currentAttribute->value.c_str());
+				currentReferenceToObjectClass->fractionalValue = convertStringToDouble(currentAttribute->value);
 			}
 		}
 		else if(attributeNumber == 4)
@@ -414,7 +415,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute4 = int(atof(currentAttribute->value.c_str()));
+				currentReferenceToObjectClass->attribute4 = int(convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 5)
@@ -426,7 +427,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute5 = int(atof(currentAttribute->value.c_str()));
+				currentReferenceToObjectClass->attribute5 = int(convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 6)
@@ -438,7 +439,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute6 = int(atof(currentAttribute->value.c_str()));
+				currentReferenceToObjectClass->attribute6 = int(convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 7)
@@ -450,7 +451,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute7 = int(atof(currentAttribute->value.c_str()));
+				currentReferenceToObjectClass->attribute7 = int(convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 8)
@@ -462,7 +463,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute8 = int(atof(currentAttribute->value.c_str()));
+				currentReferenceToObjectClass->attribute8 = int(convertStringToDouble(currentAttribute->value));
 			}
 		}
 		attributeNumber++;

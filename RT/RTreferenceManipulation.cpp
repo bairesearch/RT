@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -74,7 +74,6 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 	#endif
 	*/
 
-	char tempDataValueString[100];
 	string dataValueString;
 
 
@@ -90,10 +89,8 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		imageWidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
 		imageHeight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
 	}
-	sprintf(tempDataValueString, "%d", imageWidth);
-	string imgwidthString = tempDataValueString;
-	sprintf(tempDataValueString, "%d", imageHeight);
-	string imgheightString = tempDataValueString;
+	string imgwidthString = convertIntToString(imageWidth);
+	string imgheightString = convertIntToString(imageHeight);
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_IMAGE_SIZE + " " + imgwidthString + " " + imgheightString;
 
@@ -119,12 +116,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		eyey = TAL_FILE_HEADER_DEFAULT_EYE_Y;
 		eyez = TAL_FILE_HEADER_DEFAULT_EYE_Z;
 	}
-	sprintf(tempDataValueString, "%0.4f", eyex);
-	string eyexString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", eyey);
-	string eyeyString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", eyez);
-	string eyezString = tempDataValueString;
+	string eyexString = convertDoubleToString(eyex, "%0.4f");
+	string eyeyString = convertDoubleToString(eyey, "%0.4f");
+	string eyezString = convertDoubleToString(eyez, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_EYE + " " + eyexString + " " + eyeyString + " " + eyezString;
 
@@ -150,12 +144,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		viewaty = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
 		viewatz = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
 	}
-	sprintf(tempDataValueString, "%0.4f", viewatx);
-	string viewatxString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewaty);
-	string viewatyString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewatz);
-	string viewatzString = tempDataValueString;
+	string viewatxString = convertDoubleToString(viewatx, "%0.4f");
+	string viewatyString = convertDoubleToString(viewaty, "%0.4f");
+	string viewatzString = convertDoubleToString(viewatz, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWAT + " " + viewatxString + " " + viewatyString + " " + viewatzString;
 
@@ -181,12 +172,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		viewupy = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
 		viewupz = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
 	}
-	sprintf(tempDataValueString, "%0.4f", viewupx);
-	string viewupxString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewupy);
-	string viewupyString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewupz);
-	string viewupzString = tempDataValueString;
+	string viewupxString = convertDoubleToString(viewupx, "%0.4f");
+	string viewupyString = convertDoubleToString(viewupy, "%0.4f");
+	string viewupzString = convertDoubleToString(viewupz, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWUP + " " + viewupxString + " " + viewupyString + " " + viewupzString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -205,8 +193,7 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 	{
 		focalLength = TAL_FILE_HEADER_DEFAULT_FOCAL;
 	}
-	sprintf(tempDataValueString, "%0.4f", focalLength);
-	string focal_lengthString = tempDataValueString;
+	string focal_lengthString = convertDoubleToString(focalLength, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_FOCAL + " " + focal_lengthString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -228,10 +215,8 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		viewWidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
 		viewHeight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 	}
-	sprintf(tempDataValueString, "%0.4f", viewWidth);
-	string viewwidthString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewHeight);
-	string viewheightString = tempDataValueString;
+	string viewwidthString = convertDoubleToString(viewWidth, "%0.4f");
+	string viewheightString = convertDoubleToString(viewHeight, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWSIZE + " " + viewwidthString + " " + viewheightString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -241,14 +226,10 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 	writeFileObject->put(CHAR_NEWLINE);
 
 
-	string lightSourcePositionxstring;
-	string lightSourcePositionystring;
-	string lightSourcePositionzstring;
 	double lightSourcePositionx;
 	double lightSourcePositiony;
 	double lightSourcePositionz;
 	string lightSourceColourString;
-
 	if(useCustomLightSource)
 	{
 		lightSourcePositionx = lightSourcePosition->x;
@@ -263,14 +244,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 		lightSourcePositionz = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z;
 		lightSourceColourString = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR;
 	}
-
-
-	sprintf(tempDataValueString, "%0.1f", lightSourcePositionx);
-	lightSourcePositionxstring = tempDataValueString;
-	sprintf(tempDataValueString, "%0.1f", lightSourcePositiony);
-	lightSourcePositionystring = tempDataValueString;
-	sprintf(tempDataValueString, "%0.1f", lightSourcePositionz);
-	lightSourcePositionzstring = tempDataValueString;
+	string lightSourcePositionxstring = convertDoubleToString(lightSourcePositionx, "%0.1f");
+	string lightSourcePositionystring = convertDoubleToString(lightSourcePositiony, "%0.1f");
+	string lightSourcePositionzstring = convertDoubleToString(lightSourcePositionz, "%0.1f");
 
 	//light source cannot currently be customised
 	dataValueString = "";

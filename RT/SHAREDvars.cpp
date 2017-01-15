@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -376,16 +376,33 @@ string convertStringToLowerCase(string* arbitraryCaseString)
 	return lowerCaseString;
 }
 
-string convertIntToString(int integer)
+string convertFloatToString(float number, string format)
 {
 	char stringCharStar[100];
-	sprintf(stringCharStar, "%d", integer);
+	sprintf(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
-
-string convertBoolToString(bool boolean)
+string convertDoubleToString(double number, string format)
 {
-	if(boolean)
+	char stringCharStar[100];
+	sprintf(stringCharStar, format.c_str(), number);
+	return string(stringCharStar);
+}
+string convertIntToString(int number)
+{
+	char stringCharStar[100];
+	sprintf(stringCharStar, "%d", number);
+	return string(stringCharStar);
+}
+string convertUnsignedIntToString(int number)
+{
+	char stringCharStar[100];
+	sprintf(stringCharStar, "%u", number);
+	return string(stringCharStar);
+}
+string convertBoolToString(bool number)
+{
+	if(number)
 	{
 		return "true";
 	}
@@ -394,7 +411,6 @@ string convertBoolToString(bool boolean)
 		return "false";
 	}
 }
-
 string convertLongToString(long number)
 {
 	//return to_string(number);	//C++11
@@ -403,6 +419,61 @@ string convertLongToString(long number)
 	sprintf(tempString, "%ld", number);
 	return string(tempString);
 }
+
+int convertStringToInt(string number)
+{
+	return atoi(number.c_str());
+}
+bool convertStringToBool(string number)
+{
+	bool boolean = false;
+	
+	for(int i=0; i<number.length(); i++)
+	{
+		number[i] = tolower(number[i]);
+	}
+
+	if(number == "true")
+	{
+		boolean = true;
+	}
+	else if(number == "false")
+	{
+		boolean = false;
+	}
+	if(number == "1")
+	{
+		boolean = true;	//boolean = (bool)convertStringToInt(number);
+	}
+	else if(number == "0")
+	{
+		boolean = false;
+	}
+	else
+	{
+		cout << "convertStringToBool{} error: number != \"true\" or  \"false\" or  \"1\" or  \"0\"" << endl;
+		cout << "number = " << number << endl;	
+	}
+	
+	return boolean;
+}
+long convertStringToLong(string number)
+{
+	return atol(number.c_str());
+}
+float convertStringToFloat(string number)
+{
+	return (float)convertStringToDouble(number);
+}
+double convertStringToDouble(string number)
+{
+	return atof(number.c_str());
+}
+
+
+
+
+
 
 bool textInTextArray(string text, string* textArray, int arraySize)
 {
@@ -491,16 +562,18 @@ void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByt
 
 void writeStringToFileObject(string s, ofstream* writeFileObject)
 {
+	//writeFileObject.write(*s);
 	for(int i=0; i < s.size(); i++)
 	{
-		writeFileObject->put(s[i]); //(s.cStr())[i]
+		writeFileObject->put(s[i]);
 	}
 }
 
-void writeStringToFile(string* fileName, string* s)
+void writeStringToFile(string fileName, string* s)
 {
-	ofstream writeFileObject(fileName->c_str());
-
+	ofstream writeFileObject(fileName.c_str());
+	
+	//writeFileObject.write(*s);
 	for(int i=0; i < s->size(); i++)
 	{
 		writeFileObject.put((*s)[i]);
@@ -515,7 +588,7 @@ string getFileContents(string inputFileName)
 	
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());
-	if(!parseFileObject.rdbuf( )->is_open( ))
+	if(!parseFileObject.rdbuf()->is_open())
 	{
 		// file does not exist in current directory.
 		cout << "Error: input file does not exist in current directory: " << inputFileName << endl;

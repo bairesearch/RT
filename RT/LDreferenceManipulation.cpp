@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -443,18 +443,14 @@ bool convertReferenceToString(LDreference* currentReference, string* referenceSt
 {
 	bool result = true;
 
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-
 	*referenceString = "";
 
 	//write reference type
-	sprintf(dataValueString, "%d", currentReference->type);
-	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + convertIntToString(currentReference->type);
 	*referenceString = *referenceString + CHAR_SPACE;
 
 	//write reference colour
-	sprintf(dataValueString, "%d", currentReference->colour);
-	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + convertIntToString(currentReference->colour);
 	*referenceString = *referenceString + CHAR_SPACE;
 
 	if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
@@ -522,22 +518,21 @@ bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentRef
 {
 	bool result = true;
 
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-
 	if(currentReference->type != REFERENCE_TYPE_COMMENT)
 	{
 		//write reference type
-		sprintf(dataValueString, "%d", currentReference->type);
-
-		for(int i = 0; i<strlen(dataValueString); i++)
+		string dataValueString = convertIntToString(currentReference->type);
+		//writeFileObject->write(dataValueString);
+		for(int i = 0; i<dataValueString.length(); i++)
 		{
 			writeFileObject->put(dataValueString[i]);
 		}
 		writeFileObject->put(CHAR_SPACE);
 
 		//write reference colour
-		sprintf(dataValueString, "%u", currentReference->colour);
-		for(int i = 0; i<strlen(dataValueString); i++)
+		dataValueString = convertUnsignedIntToString(currentReference->colour);
+		//writeFileObject->write(dataValueString);
+		for(int i = 0; i<dataValueString.length(); i++)
 		{
 			writeFileObject->put(dataValueString[i]);
 		}
@@ -689,7 +684,7 @@ bool readFileIntoString(string fileName, string* fileContentsString, int* fileNu
 	ifstream parseFileObject(fileNamecharstar);
 
 	//2. fill in the data array
-	if(!parseFileObject.rdbuf( )->is_open( ))
+	if(!parseFileObject.rdbuf()->is_open())
 	{
 		//file does not exist in current directory.
 		//cout << "file, " << fileName << " cannot be opened" << endl;
@@ -799,26 +794,16 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 string convertRotationMatrixToString(mat* rotationMatrix)
 {
 	string rotationMatrixString = "";
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
-	sprintf(dataValueString, "%0.4f", rotationMatrix->a.x);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->b.x);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->c.x);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->a.y);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->b.y);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->c.y);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->a.z);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->b.z);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
-	sprintf(dataValueString, "%0.4f", rotationMatrix->c.z);
-	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->a.x, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->b.x, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->c.x, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->a.y, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->b.y, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->c.y, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->a.z, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->b.z, "%0.4f") + CHAR_SPACE;
+	rotationMatrixString = rotationMatrixString + convertDoubleToString(rotationMatrix->c.z, "%0.4f") + CHAR_SPACE;
 	
 	return rotationMatrixString;
 }

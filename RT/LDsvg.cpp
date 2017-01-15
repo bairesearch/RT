@@ -26,7 +26,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -66,18 +66,13 @@ void writeSVGheader(ofstream* writeFileObject, int viewBoxMinX, int viewBoxMaxX,
 {
 	int width = viewBoxMaxX-viewBoxMinX;
 	int height = viewBoxMaxY-viewBoxMinY;
-	char widthString[10];
-	char heightString[10];
-	char viewBoxMinXstring[10];
-	char viewBoxMaxXstring[10];
-	char viewBoxMinYstring[10];
-	char viewBoxMaxYstring[10];
-	sprintf(widthString, "%d", width);
-	sprintf(heightString, "%d", height);
-	sprintf(viewBoxMinXstring, "%d", viewBoxMinX);
-	sprintf(viewBoxMaxXstring, "%d", viewBoxMaxX);
-	sprintf(viewBoxMinYstring, "%d", viewBoxMinY);
-	sprintf(viewBoxMaxYstring, "%d", viewBoxMaxY);
+
+	string widthString = convertIntToString(width);
+	string heightString = convertIntToString(height);
+	string viewBoxMinXstring = convertIntToString(viewBoxMinX);
+	string viewBoxMaxXstring = convertIntToString(viewBoxMaxX);
+	string viewBoxMinYstring = convertIntToString(viewBoxMinY);
+	string viewBoxMaxYstring = convertIntToString(viewBoxMaxY);
 
 	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 	string headerString = "";
@@ -104,39 +99,14 @@ void writeSVGbox(XMLparserTag** currentTag, vec* pos, double width, double heigh
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string boxOutlineWidthString;
-	string xPosString;
-	string yPosString;
-	string widthString;
-	string heightString;
-	string rString;
-	string gString;
-	string bString;
-	char boxOutlineWidthcharstar[10];
-	char xPosStringcharstar[10];
-	char yPosStringcharstar[10];
-	char widthStringcharstar[10];
-	char heightStringcharstar[10];
-	char rStringcharstar[10];
-	char gStringcharstar[10];
-	char bStringcharstar[10];
-	sprintf(boxOutlineWidthcharstar, "%0.3f", boxOutlineWidth);
-	sprintf(xPosStringcharstar, "%d", (int)(pos->x - (width/2)));	//%d
-	sprintf(yPosStringcharstar, "%d", (int)(pos->y - (height/2)));
-	sprintf(rStringcharstar, "%d", (unsigned char)colourrgb.r);
-	sprintf(gStringcharstar, "%d", (unsigned char)colourrgb.g);
-	sprintf(bStringcharstar, "%d", (unsigned char)colourrgb.b);
-	sprintf(widthStringcharstar, "%d", (int)width);
-	sprintf(heightStringcharstar, "%d", (int)height);
-
-	boxOutlineWidthString = boxOutlineWidthcharstar;
-	xPosString = xPosStringcharstar;
-	yPosString = yPosStringcharstar;
-	rString = rStringcharstar;
-	gString = gStringcharstar;
-	bString = bStringcharstar;
-	widthString = widthStringcharstar;
-	heightString = heightStringcharstar;
+	string boxOutlineWidthString = convertDoubleToString(boxOutlineWidth, "%0.3f");
+	string xPosString = convertIntToString((int)(pos->x - (width/2)));	//%d
+	string yPosString = convertIntToString((int)(pos->y - (height/2)));
+	string rString = convertIntToString((unsigned char)colourrgb.r);
+	string gString = convertIntToString((unsigned char)colourrgb.g);
+	string bString = convertIntToString((unsigned char)colourrgb.b);
+	string widthString = convertIntToString((int)width);
+	string heightString = convertIntToString((int)height);
 
 	string svgText = "";
 
@@ -223,45 +193,18 @@ void writeSVGboxTransparent(XMLparserTag** currentTag, vec* pos, double width, d
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string boxOutlineWidthString;
-	string xPosString;
-	string yPosString;
-	string widthString;
-	string heightString;
-	string rString;
-	string gString;
-	string bString;
-	char boxOutlineWidthcharstar[10];
-	char xPosStringcharstar[10];
-	char yPosStringcharstar[10];
-	char widthStringcharstar[10];
-	char heightStringcharstar[10];
-	char rStringcharstar[10];
-	char gStringcharstar[10];
-	char bStringcharstar[10];
-	sprintf(boxOutlineWidthcharstar, "%0.3f", boxOutlineWidth);
-	sprintf(xPosStringcharstar, "%d", (int)(pos->x - (width/2)));	//%d
-	sprintf(yPosStringcharstar, "%d", (int)(pos->y - (height/2)));
-	sprintf(rStringcharstar, "%d", (unsigned char)colourrgb.r);
-	sprintf(gStringcharstar, "%d", (unsigned char)colourrgb.g);
-	sprintf(bStringcharstar, "%d", (unsigned char)colourrgb.b);
-	sprintf(widthStringcharstar, "%d", (int)width);
-	sprintf(heightStringcharstar, "%d", (int)height);
-
-	boxOutlineWidthString = boxOutlineWidthcharstar;
-	xPosString = xPosStringcharstar;
-	yPosString = yPosStringcharstar;
-	rString = rStringcharstar;
-	gString = gStringcharstar;
-	bString = bStringcharstar;
-	widthString = widthStringcharstar;
-	heightString = heightStringcharstar;
+	string boxOutlineWidthString = convertDoubleToString(boxOutlineWidth, "%0.3f");
+	string xPosString = convertIntToString((int)(pos->x - (width/2)));	//%d
+	string yPosString = convertIntToString((int)(pos->y - (height/2)));
+	string rString = convertIntToString((unsigned char)colourrgb.r);
+	string gString = convertIntToString((unsigned char)colourrgb.g);
+	string bString = convertIntToString((unsigned char)colourrgb.b);
+	string widthString = convertIntToString((int)width);
+	string heightString = convertIntToString((int)height);
 
 	string svgText = "";
 
-	char fillOpacityStringcharstar[10];
-	sprintf(fillOpacityStringcharstar, "%0.3f", fillOpacity);
-	string fillOpacityString = fillOpacityStringcharstar;
+	string fillOpacityString = convertDoubleToString(fillOpacity, "%0.3f");
 
 	if(useEllipse)
 	{
@@ -357,34 +300,13 @@ void writeSVGline(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col)
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string xPosString;
-	string yPosString;
-	string xPos2String;
-	string yPos2String;
-	string rString;
-	string gString;
-	string bString;
-	char xPosStringcharstar[10];
-	char yPosStringcharstar[10];
-	char xPos2Stringcharstar[10];
-	char yPos2Stringcharstar[10];
-	char rStringcharstar[10];
-	char gStringcharstar[10];
-	char bStringcharstar[10];
-	sprintf(xPosStringcharstar, "%d", (int)pos1->x);	//%d
-	sprintf(yPosStringcharstar, "%d", (int)pos1->y);
-	sprintf(xPos2Stringcharstar, "%d", (int)pos2->x);
-	sprintf(yPos2Stringcharstar, "%d", (int)pos2->y);
-	sprintf(rStringcharstar, "%d", (unsigned char)colourrgb.r);
-	sprintf(gStringcharstar, "%d", (unsigned char)colourrgb.g);
-	sprintf(bStringcharstar, "%d", (unsigned char)colourrgb.b);
-	xPosString = xPosStringcharstar;
-	yPosString = yPosStringcharstar;
-	xPos2String = xPos2Stringcharstar;
-	yPos2String = yPos2Stringcharstar;
-	rString = rStringcharstar;
-	gString = gStringcharstar;
-	bString = bStringcharstar;
+	string xPosString = convertIntToString((int)pos1->x);	//%d
+	string yPosString = convertIntToString((int)pos1->y);
+	string xPos2String = convertIntToString((int)pos2->x);
+	string yPos2String = convertIntToString((int)pos2->y);
+	string rString = convertIntToString((unsigned char)colourrgb.r);
+	string gString = convertIntToString((unsigned char)colourrgb.g);
+	string bString = convertIntToString((unsigned char)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
@@ -432,30 +354,12 @@ void writeSVGtext(XMLparserTag** currentTag, string text, vec* pos, int fontSize
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string xPosString;
-	string yPosString;
-	string fontSizeString;
-	string rString;
-	string gString;
-	string bString;
-	char xPosStringcharstar[10];
-	char yPosStringcharstar[10];
-	char fontSizeStringcharstar[10];
-	char rStringcharstar[10];
-	char gStringcharstar[10];
-	char bStringcharstar[10];
-	sprintf(fontSizeStringcharstar, "%d", fontSize);
-	sprintf(xPosStringcharstar, "%d", (int)pos->x);
-	sprintf(yPosStringcharstar, "%d", (int)pos->y);
-	sprintf(rStringcharstar, "%d", (unsigned char)colourrgb.r);
-	sprintf(gStringcharstar, "%d", (unsigned char)colourrgb.g);
-	sprintf(bStringcharstar, "%d", (unsigned char)colourrgb.b);
-	xPosString = xPosStringcharstar;
-	yPosString = yPosStringcharstar;
-	fontSizeString = fontSizeStringcharstar;
-	rString = rStringcharstar;
-	gString = gStringcharstar;
-	bString = bStringcharstar;
+	string fontSizeString = convertIntToString(fontSize);
+	string xPosString = convertIntToString((int)pos->x);
+	string yPosString = convertIntToString((int)pos->y);
+	string rString = convertIntToString((unsigned char)colourrgb.r);
+	string gString = convertIntToString((unsigned char)colourrgb.g);
+	string bString = convertIntToString((unsigned char)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
@@ -525,35 +429,19 @@ void writeSVGconnector(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col,
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string xPosString;
-	string yPosString;
-	string xPos2String;
-	string yPos2String;
-	string rString;
-	string gString;
-	string bString;
-	char xPosStringcharstar[10];
-	char yPosStringcharstar[10];
-	char xPos2Stringcharstar[10];
-	char yPos2Stringcharstar[10];
-	char strokeWidthcharstar[10];
-	sprintf(xPosStringcharstar, "%d", (int)pos1->x);	//%d
-	sprintf(yPosStringcharstar, "%d", (int)pos1->y);
-	sprintf(xPos2Stringcharstar, "%d", (int)pos2->x);
-	sprintf(yPos2Stringcharstar, "%d", (int)pos2->y);
-	sprintf(strokeWidthcharstar, "%0.1f", width);
+	string xPosString = convertIntToString((int)pos1->x);	//%d
+	string yPosString = convertIntToString((int)pos1->y);
+	string xPos2String = convertIntToString((int)pos2->x);
+	string yPos2String = convertIntToString((int)pos2->y);
+	string strokeWidth = convertDoubleToString(width, "%0.1f");
 	string hexString = convertColourRGBtoHexString(&colourrgb);
-	xPosString = xPosStringcharstar;
-	yPosString = yPosStringcharstar;
-	xPos2String = xPos2Stringcharstar;
-	yPos2String = yPos2Stringcharstar;
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "path";
 	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";
 	string pathStyleValue = "";
-	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:" + strokeWidthcharstar + "px;stroke-opacity:1";
+	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:" + strokeWidth + "px;stroke-opacity:1";
 	currentAttributeInBlock->value = pathStyleValue;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;

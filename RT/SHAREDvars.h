@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -105,9 +105,19 @@ void copyColours(colour* colToModify, colour* colToCopy);
 bool isWhiteSpace(char c);
 string convertStringToLowerCase(string* arbitraryCaseString);
 
-string convertIntToString(int integer);
-string convertBoolToString(bool boolean);
+string convertFloatToString(float number, string format);
+string convertDoubleToString(double number, string format);
+string convertIntToString(int number);
+string convertUnsignedIntToString(int number);
+string convertBoolToString(bool number);
 string convertLongToString(long number);
+
+int convertStringToInt(string number);
+bool convertStringToBool(string number);
+long convertStringToLong(string number);
+float convertStringToFloat(string number);
+double convertStringToDouble(string number);
+
 
 bool textInTextArray(string text, string* textArray, int arraySize);
 bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound);
@@ -118,7 +128,7 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 
 void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByteArraySize);
 void writeStringToFileObject(string s, ofstream* writeFileObject);
-void writeStringToFile(string* fileName, string* s);
+void writeStringToFile(string fileName, string* s);
 
 string getFileContents(string inputFileName);
 

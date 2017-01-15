@@ -26,11 +26,12 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
 #include "LDjpeg.h"
+#include "SHAREDvars.h"
 #include "jpeglib.h"
 /*
  * <setjmp.h> is used for the optional error recovery mechanism
@@ -275,8 +276,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 						if(printOutput)
 						{
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-							char dataValueString[100];
-							sprintf(dataValueString, "%d", block[i]);
+							string dataValueString = convertIntToString(block[i]);
 							*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
 							#else
 							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);

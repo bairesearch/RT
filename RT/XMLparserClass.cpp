@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  *
  *******************************************************************************/
 
@@ -452,7 +452,7 @@ bool readXMLfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 	lineCount = 1;
 
 	ifstream parseFileObject(xmlFileName.c_str());
-	if(!parseFileObject.rdbuf( )->is_open( ))
+	if(!parseFileObject.rdbuf()->is_open())
 	{
 		//xml file does not exist in current directory.
 		cout << "Error: XML File does not exist in current directory: " << xmlFileName << endl;
@@ -1181,6 +1181,12 @@ bool getAttribute(XMLparserTag* tag, string attributeName, string* attributeValu
 	return result;
 }
 
-
+XMLParserAttribute* createNewAttribute(XMLParserAttribute* currentAttribute)
+{
+	XMLParserAttribute* newAttribute2 = new XMLParserAttribute();
+	currentAttribute->nextAttribute = newAttribute2;
+	currentAttribute = currentAttribute->nextAttribute;
+	return currentAttribute;
+}
 
 
