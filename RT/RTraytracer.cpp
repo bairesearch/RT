@@ -26,7 +26,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19b 15-December-2016
+ * Project Version: 3i19c 15-December-2016
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -280,7 +280,7 @@ void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == CYLINDER)
@@ -288,7 +288,7 @@ void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == SPHERE)
@@ -296,7 +296,7 @@ void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_QUAD)
@@ -312,7 +312,7 @@ void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_LINE)
@@ -320,7 +320,7 @@ void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			//drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#endif
 		}
 		else
@@ -1679,7 +1679,7 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* n
 #ifndef RT_T_TRANSFORM_TEST
 void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm)
 #else
-void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
+//void drawPointTest(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
 #endif
 {
 
