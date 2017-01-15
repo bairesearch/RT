@@ -49,8 +49,8 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-//#define COMPILE_NLC
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+#define COMPILE_NLC
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -233,6 +233,7 @@ extern string tempFolder;
 #define CHAR_QUESTIONMARK '?'
 #define CHAR_STAR '*'
 #define CHAR_INVERTED_COMMAS '"'
+#define CHAR_APOSTROPHE '\''
 #define CHAR_BACKSLASH '\\'
 
 #define STRING_TAB "\t"
