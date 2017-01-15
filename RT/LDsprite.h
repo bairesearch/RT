@@ -3,7 +3,7 @@
  * File Name: LDsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a7b 09-June-2012
+ * Project Version: 3a7d 11-June-2012
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
