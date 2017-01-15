@@ -87,9 +87,9 @@ double maxDouble(double a, double b);	//should be turned into a macro instead
 double absDouble(double val);
 
 #ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-char *getCharArgument(int argc, char **argv, char *keystr);
 int argumentExists(int argc, char **argv, char *keystr);
 float getFloatArgument(int argc, char **argv, char *keystr);
+char *getCharArgument(int argc,char **argv,char *keystr);
 #endif
 bool argumentExists(int argc, char **argv, string keystr);
 float getFloatArgument(int argc, char **argv, string keystr);
