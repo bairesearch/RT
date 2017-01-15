@@ -23,7 +23,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c6a 15-July-2013
+ * Project Version: 3c6b 20-July-2013
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -48,9 +48,9 @@ using namespace std;
 	***********/
 
 	//current/active tests;
-//#define COMPILE_CF
+#define COMPILE_CF
 //#define COMPILE_NLPI
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -88,10 +88,15 @@ using namespace std;
 
 
 #define EXE_FOLDER_PATH_MAX_LENGTH (1000)
+#define SHARED_SUPPORT_DEPRECIATED_CODE		//required for older projects
+#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
 extern char * exeFolderCharStar;
 extern char * workingFolderCharStar;
 extern char * tempFolderCharStar;
-
+#endif
+extern string exeFolder;
+extern string workingFolder;
+extern string tempFolder;
 
 
 
@@ -226,6 +231,9 @@ extern char * tempFolderCharStar;
 #define CHAR_SEMICOLON ';'
 #define CHAR_COLON ':'
 #define CHAR_QUESTIONMARK '?'
+#define CHAR_STAR '*'
+#define CHAR_INVERTED_COMMAS '"'
+#define CHAR_BACKSLASH '\\'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
@@ -235,3 +243,4 @@ extern char * tempFolderCharStar;
 #define TM_STRUCT_YEAR_OFFSET 1900
 
 #endif
+

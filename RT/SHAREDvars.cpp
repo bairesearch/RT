@@ -23,7 +23,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c6a 15-July-2013
+ * Project Version: 3c6b 20-July-2013
  *
  *******************************************************************************/
 
@@ -42,6 +42,7 @@
 #include <windows.h>
 #endif
 #include <math.h>
+#include <vector>
 using namespace std;
 
 long getTimeAsLong()
@@ -179,13 +180,11 @@ double absDouble(double val)
 	}
 }
 
+#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
 
-
-int argumentExists(int argc,char **argv,char *keystr)
+int argumentExists(int argc, char **argv, char *keystr)
 {
-	int i;
-
-	for(i=1;i<argc;i++)
+	for(int i=1; i<argc; i++)
 	{
 		//cout << "argv[i] = " << argv[i] << endl;
 		if(strcmp(argv[i],keystr) == 0)
@@ -196,78 +195,172 @@ int argumentExists(int argc,char **argv,char *keystr)
 	return 0;
 }
 
-float getFloatArgument(int argc,char **argv,char *keystr)
+float getFloatArgument(int argc, char **argv, char *keystr)
 {
-	int i;
 	float result=0.0;
-
-	for(i=1;i<argc;i++)
-	{
-		if(strcmp(argv[i],keystr) == 0)
-		{
-			result=atof(argv[i+1]);
-			break;
-		}
-	}
-	if (i == argc)
-	{
-		fprintf(stderr,"Error: getFloatArgument(%s)\n",keystr);
-		return (float) -999999999;
-	}
-
-	else return result;
-}
-
-char *getCharArgument(int argc,char **argv,char *keystr)
-{
-	int i;
-	char *result;
-
-	result=(char *) malloc(4096);
-	result[0]=0;
-
-	for(i=1;i<argc;i++)
-	{
-		if(strcmp(argv[i],keystr) == 0)
-		{
-			sprintf(result,"%s",argv[i+1]);
-			break;
-		}
-	}
-	if(i == argc)
-	{
-		fprintf(stderr,"Error: getCharArgument(%s)\n",keystr);
-	}
-
-	return result;
-}
-
-string getStringArgument(int argc, char **argv, string keystr)
-{
-	string stringArgument;
 	bool foundArgument = false;
-	//char tempArgument[4096];
-	for(i=1;i<argc;i++)
+
+	for(int i=1; i<argc; i++)
 	{
-		cout << "argument " << i << " = " << argv[i+1] << endl;
-		//printf("argument %d = %s", i, argv[i+1]);
-		//if(strcmp(argv[i],keystr) == 0)
-		if(string(argv[i]) == keystr)
-		{
-			//sprintf(tempArgument,"%s",argv[i+1]);
-			stringArgument = argv[i+1];
-			foundArgument = true;
+		if(!foundArgument)
+		{	
+			if(strcmp(argv[i], keystr) == 0)
+			{
+				result = atof(argv[i+1]);
+				foundArgument = true;
+			}
 		}
 	}
 	if(!foundArgument)
 	{
-		fprintf(stderr,"Error: getStringArgument(%s)\n",keystr);
+		fprintf(stderr,"Error: getFloatArgument(%s)\n",keystr);
+		result = -999999999.0F;
+		return result;
+	}
+	else 
+	{
+		return result;
+	}
+	result;
+}
+
+char *getCharArgument(int argc,char **argv,char *keystr)
+{
+	char *result;
+	bool foundArgument = false;
+
+	result=(char *) malloc(4096);
+	result[0]=0;
+
+	for(int i=1; i<argc; i++)
+	{
+		if(!foundArgument)
+		{
+			if(strcmp(argv[i], keystr) == 0)
+			{
+				sprintf(result,"%s",argv[i+1]);
+				foundArgument = true;
+			}
+		}
+	}
+	if(!foundArgument)
+	{
+		fprintf(stderr,"Error: getCharArgument(%s)\n",keystr);
+	}
+	return result;
+}
+#endif
+
+bool argumentExists(int argc, char **argv, string keystr)
+{
+	for(int i=1; i<argc; i++)
+	{
+		//cout << "argv[i] = " << argv[i] << endl;
+		if(string(argv[i]) == keystr)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+float getFloatArgument(int argc, char **argv, string keystr)
+{
+	float result=0.0;
+	bool foundArgument = false;
+
+	for(int i=1; i<argc; i++)
+	{
+		if(!foundArgument)
+		{	
+			if(string(argv[i]) == keystr)
+			{
+				result = atof(argv[i+1]);
+				foundArgument = true;
+			}
+		}
+	}
+	if(!foundArgument)
+	{
+		cout << "Error: getFloatArgument(" << keystr << ")" << endl;
+		result = -999999999.0F;
+		return result;
+	}
+	else 
+	{
+		return result;
+	}
+}
+
+string getStringArgument(int argc, char **argv, string keystr)
+{
+	string stringArgument = "";
+	bool foundArgument = false;
+	for(int i=1;i<argc;i++)
+	{
+		//cout << "argument " << i << " = " << argv[i] << endl;
+		if(!foundArgument)
+		{
+			if(string(argv[i]) == keystr)
+			{
+				stringArgument = string(argv[i+1]);
+				foundArgument = true;
+			}
+		}
+	}
+	if(!foundArgument)
+	{
+		cout << "Error: getStringArgument(" << keystr << ")" << endl;
 	}
 	return stringArgument;
 }
 
-string getStringArrayArgument(int argc, char **argv, string keystr)
+void getStringArrayArgument(int argc, char **argv, string keystr, vector<string> * inputFileNamesVector)
 {
-
+	bool foundArgument = false;
+	for(int i=1;i<argc;i++)
+	{
+		//cout << "argument " << i << " = " << argv[i] << endl;
+		if(!foundArgument)
+		{
+			if(string(argv[i]) == keystr)
+			{
+				int j=1;
+				while(((argv[i+j])[0] != CHAR_DASH) && (i+j < argc))
+				{
+					string stringArgument = string(argv[i+j]);
+					//cout << "stringArgument = " << stringArgument << endl;				
+					inputFileNamesVector->push_back(stringArgument);
+					foundArgument = true;
+					j++;
+				}
+			}
+		}
+	}
+	if(!foundArgument)
+	{
+		cout << "Error: getStringArrayArgument(" << keystr << ")" << endl;
+	}
 }
 
+void changeDirectory(string newDirectory)
+{
+	char * newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
+	#ifdef LINUX
+	chdir(newDirectoryCharStar);
+	#else
+	::SetCurrentDirectory(newDirectoryCharStar);
+	#endif	
+}
+
+string getCurrentDirectory()
+{
+	char currentFolderCharStar[EXE_FOLDER_PATH_MAX_LENGTH];
+	#ifdef LINUX
+	getcwd(currentFolderCharStar, EXE_FOLDER_PATH_MAX_LENGTH);
+	#else
+	::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolderCharStar);
+	#endif
+	string currentFolder = string(currentFolderCharStar);
+	return currentFolder;
+}				

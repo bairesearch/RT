@@ -23,7 +23,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c6a 15-July-2013
+ * Project Version: 3c6b 20-July-2013
  *
  *******************************************************************************/
 
@@ -32,7 +32,7 @@
 
 #include "SHAREDglobalDefs.h"
 
-
+#include <vector>
 
 #define MAP_VALUE_OUT_OF_RANGE (8888888.0)
 
@@ -86,11 +86,18 @@ double maxDouble(double a, double b);	//should be turned into a macro instead
 
 double absDouble(double val);
 
-int argumentExists(int argc,char **argv,char *keystr);
-float getFloatArgument(int argc,char **argv,char *keystr);
-char *getCharArgument(int argc,char **argv,char *keystr);
+#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
+char *getCharArgument(int argc, char **argv, char *keystr);
+int argumentExists(int argc, char **argv, char *keystr);
+float getFloatArgument(int argc, char **argv, char *keystr);
+#endif
+bool argumentExists(int argc, char **argv, string keystr);
+float getFloatArgument(int argc, char **argv, string keystr);
 string getStringArgument(int argc, char **argv, string keystr);
-string getStringArrayArgument(int argc, char **argv, string keystr);
+void getStringArrayArgument(int argc, char **argv, string keystr, vector<string> * inputFileNamesVector);
+void changeDirectory(string newDirectory);
+string getCurrentDirectory();
+
 
 void copyColours(colour * colToModify, colour * colToCopy);
 

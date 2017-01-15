@@ -23,7 +23,7 @@
  * File Name: SHAREDglobalDefs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c6a 15-July-2013
+ * Project Version: 3c6b 20-July-2013
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -31,6 +31,11 @@
 
 #include "SHAREDglobalDefs.h"
 
+#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
 char * exeFolderCharStar;
 char * workingFolderCharStar;
 char * tempFolderCharStar;
+#endif
+string exeFolder;
+string workingFolder;
+string tempFolder;
