@@ -22,7 +22,7 @@
  *
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Generic Ldraw Construct Functions
+ * Project: Generic Construct Functions
  * Project Version: 3a12a 31-July-2012
  *
  *******************************************************************************/

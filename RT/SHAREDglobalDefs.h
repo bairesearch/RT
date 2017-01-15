@@ -48,9 +48,9 @@ using namespace std;
 	***********/
 
 	//current/active tests;
+#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
-//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
-#define COMPILE_GIA_WITH_CE
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
 //#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
@@ -97,7 +97,9 @@ extern char * tempFolderCharStar;
 	COMPILATION TYPE DEPENDENT VARIABLES;
 	***********/
 
-
+#ifdef COMPILE_GIALRP
+	
+#endif
 #ifdef COMPILE_GIA_WITH_CE
 	#define USE_GIA
 	#define USE_CE
@@ -214,6 +216,9 @@ extern char * tempFolderCharStar;
 #define CHAR_DEL (127)
 #define CHAR_IRRELEVANT (CHAR_DEL)
 #define CHAR_FORWARDSLASH '/'
+#define CHAR_FULLSTOP '.'
+#define CHAR_SEMICOLON ';'
+#define CHAR_COLON ':'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
