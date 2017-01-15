@@ -48,8 +48,8 @@ using namespace std;
 	***********/
 
 	//current/active tests;
-#define COMPILE_NLP
-//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_NLPI
+#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -101,8 +101,8 @@ extern char * tempFolderCharStar;
 #ifdef COMPILE_GIALRP
 	
 #endif
-#ifdef COMPILE_NLP
-	#define USE_NLP
+#ifdef COMPILE_NLPI
+	#define USE_NLPI
 	#define USE_GIA
 #endif
 #ifdef COMPILE_GIA_WITH_CE
