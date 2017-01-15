@@ -23,7 +23,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3c6c 22-July-2013
+ * Project Version: 3c6d 25-August-2013
  *
  *******************************************************************************/
 
@@ -506,7 +506,7 @@ bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject,
 		charCount++;
 
 		if(currentToken == CHAR_TAG_OPEN)
-		{
+		{		
 			tag->value = tagValue;
 			parseTagName(parseFileObject, subTag, tagName, true, ++treeLayer);
 			finishedParsingObject = true;
@@ -520,6 +520,13 @@ bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject,
 		else
 		{
 			tagValue = tagValue+currentToken;
+			#ifndef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
+			if(currentToken == CHAR_NEWLINE)
+			{
+				lineCount++;
+				charCount=0;
+			}
+			#endif
 		}
 	}
 	return result;
@@ -552,42 +559,123 @@ bool parseTagOpen(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 		}
 		else
 		{
-			cout << "currentToken = " << currentToken << (int)currentToken << endl;
+			cout << "currentToken = " << currentToken << ":" << (int)currentToken << endl;
 			cout << "XML_PARSER_ERROR 1: invalid tag opening" << endl;
 			throwGenericXMLParseError();
 			result = false;
 		}
 	}
+	
 	return result;
 
 }
 
 
-//NB this current XML parser accepts <! .... > as a comment, <!-- .... --> is not required
-bool parseTagComment(ifstream * parseFileObject)
+//NB this current XML parser accepts <!-- .... --> and <? .... > as a comment, but <! .... > as a comment is not allowed
+bool parseTagComment(ifstream * parseFileObject, char type)
 {
 	bool result = true;
 	char currentToken;
 
-	bool finishedParsingObject = false;
-	while(!finishedParsingObject && result)
+	if(type == CHAR_EXCLAMATION)
 	{
 		if(!(parseFileObject->get(currentToken)))
 		{
 			result = false;
 		}
-		charCount++;
-
-		if(currentToken == CHAR_TAG_CLOSE)
-		{
-			finishedParsingObject = true;
-		}
 		else
 		{
-			//display comments when parsing:
-			#ifdef XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
-			cout << currentToken;
-			#endif
+			if(currentToken == CHAR_DASH)
+			{//foundFirstDash
+				if(!(parseFileObject->get(currentToken)))
+				{
+					result = false;
+				}
+				else
+				{
+					if(currentToken == CHAR_DASH)
+					{//foundSecondDash
+						//cout << "found legal comment opening" << endl;
+						//throwGenericXMLParseError();
+					}
+					else
+					{
+						cout << "found illegal comment opening" << endl;
+						throwGenericXMLParseError();	
+						result = false;	
+					}
+				}
+			}
+			else
+			{
+				cout << "found illegal comment opening" << endl;
+				throwGenericXMLParseError();	
+				result = false;		
+			}
+		}	
+	}
+	
+	if(result)
+	{
+		bool finishedParsingObject = false;
+		bool foundFirstDash = false;
+		bool foundSecondDash = false;
+		while(!finishedParsingObject && result)
+		{
+			if(!(parseFileObject->get(currentToken)))
+			{
+				result = false;
+			}
+			charCount++;
+
+			if(currentToken == CHAR_TAG_CLOSE)
+			{
+				if(type == CHAR_EXCLAMATION)
+				{
+					if(foundSecondDash)
+					{
+						finishedParsingObject = true;
+						//cout << "found legal comment close" << endl;
+						//throwGenericXMLParseError();
+					}
+					else
+					{
+						foundFirstDash = false;
+						foundSecondDash = false;
+					}
+				}
+				else
+				{
+					finishedParsingObject = true;
+				}
+			}
+			else if(currentToken == CHAR_DASH)
+			{
+				if(foundFirstDash)
+				{
+					foundSecondDash = true;
+				}
+				else
+				{
+					foundFirstDash = true;
+				}
+			}
+			else
+			{
+				foundFirstDash = false;
+				foundSecondDash = false;
+
+				//display comments when parsing:
+				#ifdef XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
+				cout << currentToken;
+				#endif
+				
+				if(currentToken == CHAR_NEWLINE)
+				{
+					lineCount++;
+					charCount=0;
+				}
+			}
 		}
 	}
 	return result;
@@ -619,6 +707,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 			if(!endTagFound)
 			{
 				currentTag->name = tagName;
+				//cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl; 
 
 				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
@@ -655,7 +744,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 		{
 			if(tagName == "")
 			{
-				if(!parseTagComment(parseFileObject))
+				if(!parseTagComment(parseFileObject, currentToken))
 				{
 					result = false;
 				}
@@ -1094,6 +1183,21 @@ void throwGenericXMLParseError()
 	cout << "Error: Parsing XML File: Line = " << lineCount << ", Character = " << charCount << endl;
 }
 
+bool getAttribute(XMLparserTag * tag, string attributeName, string * attributeValueFound)
+{
+	bool result = false;
+	XMLParserAttribute * currentAttribute = tag->firstAttribute;
+	while(currentAttribute->nextAttribute != NULL)
+	{
+		if(currentAttribute->name == attributeName)
+		{	
+			result = true;
+			*attributeValueFound = currentAttribute->value;
+		}
+		currentAttribute = currentAttribute->nextAttribute;
+	}
+	return result;
+}
 
 
 

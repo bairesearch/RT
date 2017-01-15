@@ -23,7 +23,7 @@
  * File Name: XMLrulesClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3c6c 22-July-2013
+ * Project Version: 3c7a 11-August-2013
  *
  *******************************************************************************/
 
@@ -43,6 +43,27 @@ using namespace std;
 #include "SHAREDglobalDefs.h"
 #include "XMLparserClass.h"
 
+#define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
+#define CS_RULES_XML_FILE_NAME "CSrules.xml"
+#define OR_RULES_XML_FILE_NAME "ORrules.xml"
+#define GIA_RULES_XML_FILE_NAME "GIArules.xml"
+
+#define RULES_XML_TAG_rules ((string)"rules")
+#define RULES_XML_TAG_miscellaneousItem ((string)"miscellaneousItem")
+#define RULES_XML_TAG_sprite ((string)"sprite")
+#ifdef USE_CS
+#define RULES_XML_TAG_draw ((string)"draw")
+#endif
+#ifdef USE_GIA
+#define RULES_XML_TAG_draw ((string)"draw")
+#endif
+#ifdef USE_OR
+#define RULES_XML_TAG_objectRecognition ((string)"objectRecognition")
+#endif
+
+#define RULES_XML_ATTRIBUTE_name ((string)"name")
+#define RULES_XML_ATTRIBUTE_stringValue ((string)"stringValue")
+#define RULES_XML_ATTRIBUTE_fractionalValue ((string)"fractionalValue")
 
 class RulesClass
 {
@@ -97,6 +118,7 @@ extern RulesClass * CSrulesDraw;
 #ifdef USE_GIA
 extern RulesClass * GIArulesSprite;
 extern RulesClass * GIArulesDraw;
+extern XMLparserTag * GIAfirstTagInXMLfile;
 #endif
 #ifdef USE_OR
 extern RulesClass * ORrulesObjectRecognition;

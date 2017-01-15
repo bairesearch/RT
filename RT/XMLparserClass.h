@@ -23,7 +23,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3c6c 22-July-2013
+ * Project Version: 3c6d 25-August-2013
  *
  *******************************************************************************/
 
@@ -124,7 +124,9 @@ bool parseTagOpen(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 		bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer);
 			bool parseTagAttributeValue(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer);
 		bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject, XMLparserTag * tag, XMLparserTag * subTag, string tagName, int treeLayer);
-		bool parseTagComment(ifstream * parseFileObject);
+		bool parseTagComment(ifstream * parseFileObject, char type);
+
+bool getAttribute(XMLparserTag * tag, string attributeName, string * attributeValueFound);
 
 //Low Level
 bool isBlankChar(ifstream * parseFileObject, char c);

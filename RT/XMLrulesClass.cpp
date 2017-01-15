@@ -23,35 +23,13 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3c6c 22-July-2013
+ * Project Version: 3c7a 11-August-2013
  *
  *******************************************************************************/
 
 #include "XMLrulesClass.h"
 
 //xml comments not yet supported by this parser
-
-#define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
-#define CS_RULES_XML_FILE_NAME "CSrules.xml"
-#define OR_RULES_XML_FILE_NAME "ORrules.xml"
-#define GIA_RULES_XML_FILE_NAME "GIArules.xml"
-
-#define RULES_XML_TAG_rules ((string)"rules")
-#define RULES_XML_TAG_miscellaneousItem ((string)"miscellaneousItem")
-#define RULES_XML_TAG_sprite ((string)"sprite")
-#ifdef USE_CS
-#define RULES_XML_TAG_draw ((string)"draw")
-#endif
-#ifdef USE_GIA
-#define RULES_XML_TAG_draw ((string)"draw")
-#endif
-#ifdef USE_OR
-#define RULES_XML_TAG_objectRecognition ((string)"objectRecognition")
-#endif
-
-#define RULES_XML_ATTRIBUTE_name ((string)"name")
-#define RULES_XML_ATTRIBUTE_stringValue ((string)"stringValue")
-#define RULES_XML_ATTRIBUTE_fractionalValue ((string)"fractionalValue")
 
 RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
@@ -61,6 +39,7 @@ RulesClass * CSrulesDraw;
 #ifdef USE_GIA
 RulesClass * GIArulesSprite;
 RulesClass * GIArulesDraw;
+XMLparserTag * GIAfirstTagInXMLfile;
 #endif
 #ifdef USE_OR
 RulesClass * ORrulesObjectRecognition;
@@ -110,13 +89,13 @@ bool parseGIArulesXMLfile()
 {
 	bool result = true;
 
- 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!readXMLfile(GIA_RULES_XML_FILE_NAME, firstTagInXMLfile))
+ 	GIAfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+	if(!readXMLfile(GIA_RULES_XML_FILE_NAME, GIAfirstTagInXMLfile))
  	{
 		result = false;
 	}
 
-	XMLparserTag * currentTag = firstTagInXMLfile;
+	XMLparserTag * currentTag = GIAfirstTagInXMLfile;
 
 	GIArulesSprite = new RulesClass();
 	GIArulesDraw = new RulesClass();
@@ -125,10 +104,7 @@ bool parseGIArulesXMLfile()
 	{
 		result = false;
 	}
-
-	delete firstTagInXMLfile;
-
-
+	
 	return result;
 }
 
