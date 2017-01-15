@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i18b 21-September-2016
+ * Project Version: 3i18c 21-September-2016
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
