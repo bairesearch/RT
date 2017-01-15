@@ -89,6 +89,8 @@ double absDouble(double val);
 int argumentExists(int argc,char **argv,char *keystr);
 float getFloatArgument(int argc,char **argv,char *keystr);
 char *getCharArgument(int argc,char **argv,char *keystr);
+string getStringArgument(int argc, char **argv, string keystr);
+string getStringArrayArgument(int argc, char **argv, string keystr);
 
 void copyColours(colour * colToModify, colour * colToCopy);
 

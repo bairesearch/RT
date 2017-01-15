@@ -48,6 +48,7 @@ using namespace std;
 	***********/
 
 	//current/active tests;
+//#define COMPILE_CF
 //#define COMPILE_NLPI
 #define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
@@ -98,8 +99,8 @@ extern char * tempFolderCharStar;
 	COMPILATION TYPE DEPENDENT VARIABLES;
 	***********/
 
-#ifdef COMPILE_GIALRP
-	
+#ifdef COMPILE_CF
+	#define USE_CF
 #endif
 #ifdef COMPILE_NLPI
 	#define USE_NLPI

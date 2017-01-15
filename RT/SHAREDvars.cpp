@@ -241,3 +241,33 @@ char *getCharArgument(int argc,char **argv,char *keystr)
 
 	return result;
 }
+
+string getStringArgument(int argc, char **argv, string keystr)
+{
+	string stringArgument;
+	bool foundArgument = false;
+	//char tempArgument[4096];
+	for(i=1;i<argc;i++)
+	{
+		cout << "argument " << i << " = " << argv[i+1] << endl;
+		//printf("argument %d = %s", i, argv[i+1]);
+		//if(strcmp(argv[i],keystr) == 0)
+		if(string(argv[i]) == keystr)
+		{
+			//sprintf(tempArgument,"%s",argv[i+1]);
+			stringArgument = argv[i+1];
+			foundArgument = true;
+		}
+	}
+	if(!foundArgument)
+	{
+		fprintf(stderr,"Error: getStringArgument(%s)\n",keystr);
+	}
+	return stringArgument;
+}
+
+string getStringArrayArgument(int argc, char **argv, string keystr)
+{
+
+}
+
