@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -315,147 +315,52 @@ void copyReferences(Reference * referenceNew, Reference * referenceToCopy, int t
 	}
 }
 
-void addNewLineCharacterToString(char * string)
+
+
+
+
+string convertPositionCoordinatesToString(vec * spriteSceneCoords)
 {
-	//write space to string
-	char tempString[2];
-	tempString[0] = '\n';
-	tempString[1] = '\0';
-	strcat(string, tempString);
-}
+	string positionCoordinatesString = "";
+	
+	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
-
-void addSpaceCharacterToString(char * string)
-{
-	//write space to string
-	char tempString[2];
-	tempString[0] = ' ';
-	tempString[1] = '\0';
-	strcat(string, tempString);
-}
-
-void addArbitraryCharacterToString(char * string, char delimiter)
-{
-	//write space to string
-	char tempString[2];
-	tempString[0] = delimiter;
-	tempString[1] = '\0';
-	strcat(string, tempString);
-}
-
-
-
-
-
-void convertPositionCoordinatesToString(vec * spriteSceneCoords, char * string)
-{
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "\0";
-	string[0] = '\0';
-	//_gcvt(spriteSceneCoords->x, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
-	//_gcvt(spriteSceneCoords->y, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
+	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
+	
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
-	//_gcvt(spriteSceneCoords->z, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
+	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
+
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
+	
+	return positionCoordinatesString;
 }
 
-void convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spriteSceneCoords, char * string)
+string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spriteSceneCoords)
 {
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "\0";
-	string[0] = '\0';
-	addArbitraryCharacterToString(string, ',');
-	addArbitraryCharacterToString(string, ' ');
-	//_gcvt(spriteSceneCoords->x, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
+	string positionCoordinatesString = "";
+	
+	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
+
+	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
+	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
-	strcat(string, dataValueString);
-	addArbitraryCharacterToString(string, ',');
-	addArbitraryCharacterToString(string, ' ');
-	//_gcvt(spriteSceneCoords->y, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
+	positionCoordinatesString = positionCoordinatesString + dataValueString;
+
+	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
+	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
-	strcat(string, dataValueString);
-	addArbitraryCharacterToString(string, ',');
-	addArbitraryCharacterToString(string, ' ');
-	//_gcvt(spriteSceneCoords->z, DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH, dataValueString);
+	positionCoordinatesString = positionCoordinatesString + dataValueString;
+
+	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
+	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
 	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
-	strcat(string, dataValueString);
-
-}
-
-
-
-
-
-
-
-//OLD
-bool writeReferencesToFileInefficient(char * fileName, Reference * firstReference)
-{
-	bool result = true;
-
-	Reference * currentReference = firstReference;
-	int temp;
-	temp =DAT_FILE_REF_MAX_SIZE;
-	temp =DAT_FILE_REF_MAX_SIZE*DAT_FILE_MAX_NUM_OF_REFERENCES;
-	char * fileByteArray = new char[DAT_FILE_REF_MAX_SIZE*DAT_FILE_MAX_NUM_OF_REFERENCES];
-
-	int fileByteArraySize = 0;
-
-	//convertReferencesToByteArray
-	convertReferencesToByteArray(currentReference, fileByteArray, &fileByteArraySize);
-
-	//create file
-	writeByteArrayToFile(fileName, fileByteArray, fileByteArraySize);
-
-	delete fileByteArray;
-
-	return result;
-}
-
-bool convertReferencesToByteArray(Reference * firstReference, char * fileByteArray, int * fileByteArraySize)
-{
-	bool result = true;
-
-	Reference * currentReference = firstReference;
-
-	//fill byte array
-	int fileByteArrayByteIndex = 0;
-	//int fileByteArrayReferenceIndex = 0;
-
-	while((currentReference -> next) != NULL)
-	{
-		char * submodelReferenceString = new char[DAT_FILE_REF_MAX_SIZE];
-		submodelReferenceString[0] = '\0';
-
-		if(!convertReferenceToString(currentReference, submodelReferenceString))
-		{
-			result = false;
-		}
-
-		//write submodelReferenceString to fileByteArray
-		int stringIndex = 0;
-
-		while(submodelReferenceString[stringIndex] != '\0')
-		{
-			fileByteArray[fileByteArrayByteIndex+stringIndex] = submodelReferenceString[stringIndex];
-			stringIndex++;
-		}
-
-		fileByteArrayByteIndex = fileByteArrayByteIndex + (int)strlen(submodelReferenceString);
-
-		delete submodelReferenceString;
-
-		currentReference = currentReference -> next;
-	}
-
-	*fileByteArraySize = fileByteArrayByteIndex;
-
-	return result;
+	positionCoordinatesString = positionCoordinatesString + dataValueString;
+	
+	//cout << "positionCoordinatesString = " << positionCoordinatesString << endl;
+	
+	return positionCoordinatesString;
 }
 
 
@@ -466,9 +371,16 @@ bool convertReferencesToByteArray(Reference * firstReference, char * fileByteArr
 
 
 
-bool write2DreferenceListCollapsedTo1DtoFile(char * fileName, Reference * firstReference)
+
+
+
+
+
+
+
+bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference * firstReference)
 {
-	ofstream writeFileObject(fileName);
+	ofstream writeFileObject(fileName.c_str());
 
 	write2DreferencesLayerToFileObject(&writeFileObject, firstReference);
 
@@ -524,9 +436,9 @@ bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * 
 }
 
 
-bool writeReferencesToFile(char * fileName, Reference * firstReference)
+bool writeReferencesToFile(string fileName, Reference * firstReference)
 {
-	ofstream writeFileObject(fileName);
+	ofstream writeFileObject(fileName.c_str());
 
 	Reference * currentReference = firstReference;
 	while(currentReference->next != NULL)
@@ -543,25 +455,23 @@ bool writeReferencesToFile(char * fileName, Reference * firstReference)
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool convertReferenceToString(Reference * currentReference, char * referenceString)
+bool convertReferenceToString(Reference * currentReference, string * referenceString)
 {
 	bool result = true;
 
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-	char positionCoordinatesString[DAT_FILE_REF_POS_COORD_MAX_LENGTH];
-	char rotationMatrixString[DAT_FILE_REF_MATRIX_MAX_LENGTH];
 
-	referenceString[0] = '\0';
+	*referenceString = "";
 
 	//write reference type
 	sprintf(dataValueString, "%d", currentReference->type);
-	strcat(referenceString, dataValueString);
-	addSpaceCharacterToString(referenceString);
+	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + CHAR_SPACE;
 
 	//write reference colour
 	sprintf(dataValueString, "%d", currentReference->colour);
-	strcat(referenceString, dataValueString);
-	addSpaceCharacterToString(referenceString);
+	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + CHAR_SPACE;
 
 	if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
@@ -570,45 +480,45 @@ bool convertReferenceToString(Reference * currentReference, char * referenceStri
 		submodelPositionCoordinatesVec.x = currentReference->relativePosition.x;
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
-		convertPositionCoordinatesToString(&submodelPositionCoordinatesVec, positionCoordinatesString);
-		strcat(referenceString, positionCoordinatesString);
+		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
+		*referenceString = *referenceString + positionCoordinatesString;
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
 		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
-		convertRotationMatrixToString(&submodelRotationMatrix, rotationMatrixString);
-		strcat(referenceString, rotationMatrixString);
+		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
+		*referenceString = *referenceString + rotationMatrixString;
 
 		//write submodel name
-		strcat(referenceString, (currentReference->name).c_str());		//convert string to char*
+		*referenceString = *referenceString + currentReference->name;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD) || (currentReference->type == REFERENCE_TYPE_LINE))
 	{
 		//write primitive vertex coords
 
-		convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition), positionCoordinatesString);
-		strcat(referenceString, positionCoordinatesString);
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		*referenceString = *referenceString + positionCoordinatesString;
 
-		convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition), positionCoordinatesString);
-		strcat(referenceString, positionCoordinatesString);
+		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		*referenceString = *referenceString + positionCoordinatesString;
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition), positionCoordinatesString);
-			strcat(referenceString, positionCoordinatesString);
+			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			*referenceString = *referenceString + positionCoordinatesString;
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
-				convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition), positionCoordinatesString);
-				strcat(referenceString, positionCoordinatesString);
+				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				*referenceString = *referenceString + positionCoordinatesString;
 			}
 		}
 	}
 	else if(currentReference->type == REFERENCE_TYPE_COMMENT)
 	{
 		//write comment name
-		strcat(referenceString, (currentReference->name).c_str ( ));
+		*referenceString = *referenceString + currentReference->name;
 	}
 	else
 	{
@@ -616,24 +526,11 @@ bool convertReferenceToString(Reference * currentReference, char * referenceStri
 	}
 
 	//write new line
-	addNewLineCharacterToString(referenceString);
+	*referenceString = *referenceString + CHAR_NEWLINE;
 
 	return result;
 }
 
-bool addReferenceToFileObjectInefficient(ofstream * writeFileObject, Reference * reference)
-{
-
-	char * referenceString = new char[DAT_FILE_REF_MAX_SIZE];
-	convertReferenceToString(reference, referenceString);
-	for(int i=0; i<strlen(referenceString); i++)
-	{
-		writeFileObject->put(referenceString[i]);
-	}
-	delete referenceString;
-
-	return true;
-}
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
@@ -642,8 +539,6 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 	bool result = true;
 
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-	char positionCoordinatesString[DAT_FILE_REF_POS_COORD_MAX_LENGTH];
-	char rotationMatrixString[DAT_FILE_REF_MATRIX_MAX_LENGTH];
 
 	if(currentReference->type != REFERENCE_TYPE_COMMENT)
 	{
@@ -673,8 +568,8 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 		submodelPositionCoordinatesVec.x = currentReference->relativePosition.x;
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
-		convertPositionCoordinatesToString(&submodelPositionCoordinatesVec, positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
@@ -683,9 +578,8 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 		mat submodelRotationMatrix;
 		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
-		convertRotationMatrixToString(&submodelRotationMatrix, rotationMatrixString);
-
-		for(int i = 0; i<strlen(rotationMatrixString); i++)
+		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
+		for(int i = 0; i<rotationMatrixString.length(); i++)
 		{
 			writeFileObject->put(rotationMatrixString[i]);
 		}
@@ -700,30 +594,30 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 	{
 		//write primitive vertex coords
 
-		convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition), positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
-		convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition), positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition), positionCoordinatesString);
-			for(int i = 0; i<strlen(positionCoordinatesString); i++)
+			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			for(int i = 0; i<positionCoordinatesString.length(); i++)
 			{
 				writeFileObject->put(positionCoordinatesString[i]);
 			}
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
-				convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition), positionCoordinatesString);
-				for(int i = 0; i<strlen(positionCoordinatesString); i++)
+				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				for(int i = 0; i<positionCoordinatesString.length(); i++)
 				{
 					writeFileObject->put(positionCoordinatesString[i]);
 				}
@@ -751,17 +645,17 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 
 
 
-bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * writeFileObject)
+bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream * writeFileObject)
 {
 	bool result = true;
 	char c;	//current character being read in
 	int currentLine = 1;
 	int index = 0;
 
-	ifstream parseFileObject(fileToOpenName);
+	ifstream parseFileObject(fileToOpenName.c_str());
 
 	//2. fill in the data array
-	if(!parseFileObject.rdbuf( )->is_open( ))
+	if(!parseFileObject.rdbuf()->is_open())
 	{
 		//file does not exist in current directory.
 		cout << "file, " << fileToOpenName << " cannot be opened" << endl;
@@ -772,7 +666,7 @@ bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * 
 		while ((parseFileObject).get(c))
 		{
 			writeFileObject->put(c);
-			if(c == '\n')
+			if(c == CHAR_NEWLINE)
 			{
 				currentLine++;
 			}
@@ -797,40 +691,6 @@ bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * 
 
 
 
-bool readFileIntoByteArray(char * fileName, char * fileByteArray, int * fileNumberOfLines, int * fileByteArraySize)
-{
-	bool result = true;
-	char c;	//current character being read in
-	int currentLine = 1;
-	int index = 0;
-
-	ifstream parseFileObject(fileName);
-
-	//2. fill in the data array
-	if(!parseFileObject.rdbuf( )->is_open( ))
-	{
-		//file does not exist in current directory.
-		cout << "file, " << fileName << " cannot be opened" << endl;
-		result = false;
-	}
-	else
-	{
-		while ((parseFileObject).get(c))
-		{
-			fileByteArray[index] = c;
-			if(c == '\n')
-			{
-				currentLine++;
-			}
-			index++;
-		}
-		parseFileObject.close();
-		*fileNumberOfLines = currentLine;
-		*fileByteArraySize = index;
-	}
-
-	return result;
-}
 
 
 bool readFileIntoString(string fileName, string * fileContentsString, int * fileNumberOfLines, int * fileByteArraySize)
@@ -872,39 +732,24 @@ bool readFileIntoString(string fileName, string * fileContentsString, int * file
 
 
 
-void copyFiles(char * newFileName, char * fileToCopyName)
+void copyFiles(string newFileName, string fileToCopyName)
 {
-	ofstream writeFileObject(newFileName);
+	ofstream writeFileObject(newFileName.c_str());
 
-	openFileAndCopyDataIntoCurrentFileObject(fileToCopyName, &writeFileObject);
+	openFileAndCopyDataIntoCurrentFileObject(fileToCopyName.c_str(), &writeFileObject);
 
 	writeFileObject.close();
 }
 
-void copyFilesInefficient(char * newFileName, char * fileToCopyName)
-{
-	int fileNumberOfLines = 0;
-	int fileByteArraySize = 0;
-	char * fileByteArray = new char[DAT_FILE_REF_MAX_SIZE*DAT_FILE_MAX_NUM_OF_REFERENCES];
-
-	readFileIntoByteArray(fileToCopyName, fileByteArray, &fileNumberOfLines, &fileByteArraySize);
-
-	writeByteArrayToFile(newFileName, fileByteArray, fileByteArraySize);
-
-	delete fileByteArray;
-}
 
 
 
 
-bool addSpriteReferenceListToSceneFile(char * sceneFileName, char * sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines)
+bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines)
 {
 	bool result = true;
 
-	char * spriteHeaderSearchString = SPRITE_HEADER_NAME;
-	char * spriteTrailerSearchString = SPRITE_TRAILER_NAME;
-
-	ofstream writeFileObject(sceneFileNameWithSprites);
+	ofstream writeFileObject(sceneFileNameWithSprites.c_str());
 
 	//add original data
 	openFileAndCopyDataIntoCurrentFileObject(sceneFileName, &writeFileObject);
@@ -967,38 +812,31 @@ bool addSpriteReferenceListToSceneFile(char * sceneFileName, char * sceneFileNam
 /*sprite routines*/
 
 
-void convertRotationMatrixToString(mat * rotationMatrix, char * string)
+string convertRotationMatrixToString(mat * rotationMatrix)
 {
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "\0";
-	string[0] = '\0';
+	string rotationMatrixString = "";
+	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	sprintf(dataValueString, "%0.4f", rotationMatrix->a.x);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->b.x);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->c.x);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->a.y);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->b.y);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->c.y);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->a.z);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->b.z);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
 	sprintf(dataValueString, "%0.4f", rotationMatrix->c.z);
-	strcat(string, dataValueString);
-	addSpaceCharacterToString(string);
+	rotationMatrixString = rotationMatrixString + dataValueString + CHAR_SPACE;
+	
+	return rotationMatrixString;
 }
 
 
@@ -1038,113 +876,7 @@ void convertRotationMatrixToString(mat * rotationMatrix, char * string)
 
 
 
-/*old sprite routines*/
-bool findTextInByteArray(char * byteArray, int byteArraySize, char * searchString, int searchStringLength, int * lineNumberOfReference)
-{
-	bool result = false;
-	int index;
-	int lineNumber = 0;
-	int searchStringIndex = 0;
 
-	for(index = 0; index < byteArraySize; index++)
-	{
-		if(byteArray[index] == searchString[searchStringIndex])
-		{
-			searchStringIndex++;
-			if(searchStringIndex == searchStringLength)
-			{
-				result = true;
-				*lineNumberOfReference = lineNumber;
-				searchStringIndex = 0;
-			}
-		}
-		else
-		{
-			searchStringIndex = 0;
-		}
-
-		if(byteArray[index] == '\n')
-		{
-			lineNumber++;
-		}
-		index++;
-	}
-
-	return result;
-}
-
-//precondition - there is enough room in the byteArray space to add an extra lines worth of bytes
-
-bool addLinesToByteArray(char * byteArray, char * lineByteArray, int * byteArraySize, int lineByteArraySize, int lineNumberToAdd)
-{
-	return replaceLinesInByteArray(byteArray, lineByteArray, byteArraySize, lineByteArraySize, lineNumberToAdd, 0);
-}
-
-
-bool replaceLinesInByteArray(char * byteArray, char * lineByteArray, int * byteArraySize, int lineByteArraySize, int lineNumberToReplace, int numberOfLinesToReplace)
-{
-	bool result = true;
-	char * tempByteArray = new char[*byteArraySize];
-	int tempByteArrayIndex = 0;
-	bool addingToTempArray = false;
-	int lineNumber = 0;
-	int byteArrayIndexOfLineToReplace = 0;
-
-	int index;
-	for(index = 0; index < *byteArraySize; index++)
-	{
-		if(byteArray[index] == '\n')
-		{
-			lineNumber++;
-		}
-		if((lineNumber == lineNumberToReplace) && (addingToTempArray == false))
-		{
-			byteArrayIndexOfLineToReplace = index;
-		}
-		if(lineNumber == lineNumberToReplace+numberOfLinesToReplace)
-		{
-			addingToTempArray = true;
-		}
-		if(addingToTempArray)
-		{
-			tempByteArray[tempByteArrayIndex] = byteArray[index];
-			tempByteArrayIndex++;
-		}
-	}
-
-	if(*byteArraySize != 0)
-	{
-		if(addingToTempArray == false)
-		{
-			cout << "error: (addingToTempArray == false)" << endl;
-			result = false;
-		}
-		if(tempByteArrayIndex == 0)
-		{
-			cout << "error: (tempByteArrayIndex == 0)" << endl;
-			result = false;
-		}
-	}
-
-	if(result == true)
-	{
-		for(index = 0; index < lineByteArraySize; index++)
-		{
-			byteArray[byteArrayIndexOfLineToReplace+index] = lineByteArray[index];
-		}
-
-		for(index = 0; index < (*byteArraySize - byteArrayIndexOfLineToReplace); index++)
-		{
-			byteArray[byteArrayIndexOfLineToReplace+lineByteArraySize+index] = tempByteArray[index];
-		}
-
-		*byteArraySize = *byteArraySize + lineByteArraySize - numberOfLinesToReplace;
-	}
-
-	delete tempByteArray;
-
-	return result;
-}
 
 
 

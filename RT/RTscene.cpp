@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -85,7 +85,7 @@ void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbie
 
 	/*used to store the original scene in the list*/
 
-int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
+int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
 {
 	#ifndef USE_OR
 	fillInRTRulesExternVariables();
@@ -128,7 +128,7 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 
 }
 
-int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
+int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
 {
 	int result = TRUE;
 
@@ -143,9 +143,9 @@ int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, cha
 
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-	createImage(imageFileName, true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	createImage(true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#else
-	createImage(imageFileName, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	createImage(setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#endif
 
 
@@ -200,25 +200,19 @@ int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, cha
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
 
-		char * outputFileNameWithExtension = new char[100];
-		char * outputFileNameWithoutExtension = new char[100];
+		string outputFileNameWithExtension = "";
+		string outputFileNameWithoutExtension = "";
 
-		/*
-		char outputFileNameWithExtensionArray[100];
-		char outputFileNameWithoutExtensionArray[100];
-		char * outputFileNameWithExtension = outputFileNameWithExtensionArray;
-		char * outputFileNameWithoutExtension = outputFileNameWithoutExtensionArray;
-		*/
 		if(imageFileName != NULL)
 		{
-			stripExtension(imageFileName, outputFileNameWithoutExtension);
+			stripExtension(imageFileName, &outputFileNameWithoutExtension);
 		}
 
 
 		if(imageFileName != NULL)
 		{
 			//make normal output filename same as rgb output file name
-			if(!addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, outputFileNameWithExtension))
+			if(!addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
 				exit(0);
@@ -238,7 +232,7 @@ int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, cha
 		if(imageFileName != NULL)
 		{
 			//make depth output filename same as rgb output file name
-			if(!addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, outputFileNameWithExtension))
+			if(!addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
 				exit(0);
@@ -271,55 +265,32 @@ int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, cha
 	return result;
 }
 
-int stripExtension(char * filenameWithExtension, char * filenameWithoutExtension)
+bool stripExtension(string filenameWithExtension, string * filenameWithoutExtension)
 {
-	int result = TRUE;
+	bool result = true;
 	int i = 0;
-
-	while((filenameWithExtension[i] != '.') && (filenameWithExtension[i] != '\0'))
+	
+	*filenameWithoutExtension = filenameWithExtension;
+	int positionOfFullStop = filenameWithExtension.find(CHAR_FULLSTOP);
+	if(positionOfFullStop != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{
-		filenameWithoutExtension[i] = filenameWithExtension[i];
-
-		if(filenameWithExtension[i] == '\0')
-		{
-			result = FALSE;
-		}
-
-		i++;
+		*filenameWithoutExtension = filenameWithExtension.substr(0, positionOfFullStop);
+		cout << "filenameWithoutExtension without fullstop = " << *filenameWithoutExtension << endl;
 	}
-	filenameWithoutExtension[i] = '\0';
-
+	else
+	{
+		result = false;
+	}
+	
 	return result;
 
 }
 
-int addExtension(char * filenameWithoutExtension, char * extension, char * filenameWithExtension)
+bool addExtension(string filenameWithoutExtension, string extension, string * filenameWithExtension)
 {
+	bool result = true;
 
-	//printf("\n\nfilenameWithoutExtension = %s", filenameWithoutExtension);
-
-	int result = TRUE;
-
-	int i = 0;
-	int j = 0;
-
-	while(filenameWithoutExtension[j] != '\0')
-	{
-		filenameWithExtension[j] = filenameWithoutExtension[j];
-		j++;
-	}
-
-	//printf("\nj = %d", j);
-
-	while(extension[i] != '\0')
-	{
-		//printf("\n extension[i] = %c", extension[i]);
-
-		filenameWithExtension[j] = extension[i];
-		i++;
-		j++;
-	}
-	filenameWithExtension[j] = '\0';
+	*filenameWithExtension = filenameWithoutExtension + extension;
 
 	return result;
 }
@@ -368,16 +339,20 @@ lightingInfo *addLightToEnd(lightingInfo *li_orig, lightingInfo *new_node)
 }
 
 
-void parseTalFileInitialiseParser(char *talFileName)
+void parseTalFileInitialiseParser(string talFileName)
 {
 
  	FILE *f;
 
-  	if (talFileName != NULL)
-   		 f = fopen(talFileName, "r");
- 	else
+  	if(talFileName != "")
+	{
+   		 f = fopen(talFileName.c_str(), "r");
+ 	}
+	else
+	{
    		 f = stdin;
-
+	}
+	
   	if(!f)
 	{
 		printf("error; no file name specified in code execution, and no standard input given to OpenRT.exe executable");
@@ -513,7 +488,7 @@ sceneInfo * parseTalFileGetSceneInfo(sceneInfo *si)
 	return si;
 }
 
-void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li)
+void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li)
 {
 
 

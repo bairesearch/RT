@@ -26,12 +26,21 @@
  * File Name: RTppm.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
 #ifndef HEADER_RT_PPM
 #define HEADER_RT_PPM
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <time.h>
+#include <math.h>
+using namespace std;
 
 #define JPEG_EXTENSION ".jpg"
 #define PPM_EXTENSION ".ppm"
@@ -94,9 +103,9 @@ void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b);
 
 pixmap *newPixmap(int wide, int high);  /*create a new blank pixmap*/
 
-pixmap *loadPPM(char *fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
+pixmap *loadPPM(string fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
 
-void writePPM(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
+void writePPM(string fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
 
 void freePixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
 

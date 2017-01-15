@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -70,37 +70,23 @@ void copyReferences(Reference * referenceNew, Reference * referenceToCopy, int t
 bool compareReferences(Reference * reference1, Reference * reference2, int type);
 
 
-void addNewLineCharacterToString(char * string);
-void addSpaceCharacterToString(char * string);
-void addArbitraryCharacterToString(char * string, char delimiter);
+string convertPositionCoordinatesToString(vec * spriteSceneCoords);
+string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spriteSceneCoords);
 
-void convertPositionCoordinatesToString(vec * spriteSceneCoords, char * string);
-void convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spriteSceneCoords, char * string);
-
-bool writeReferencesToFileInefficient(char * fileName, Reference * firstReference);
-bool convertReferencesToByteArray(Reference * firstReference, char * fileByteArray, int * fileByteArraySize);
-
-bool writeReferencesToFile(char * fileName, Reference * firstReference);
-bool addReferenceToFileObjectInefficient(ofstream * writeFileObject, Reference * reference);
+bool writeReferencesToFile(string fileName, Reference * firstReference);
 bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentReference);
-	bool convertReferenceToString(Reference * currentReference, char * referenceString);
-bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * writeFileObject);
+	bool convertReferenceToString(Reference * currentReference, string * referenceString);
+bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream * writeFileObject);
 
-bool readFileIntoByteArray(char * fileName, char * fileByteArray, int * fileNumberOfLines, int * fileByteArraySize);
 bool readFileIntoString(string fileName, string * fileContentsString, int * fileNumberOfLines, int * fileByteArraySize);
-void copyFilesInefficient(char * newFileName, char * fileToCopyName);
-void copyFiles(char * newFileName, char * fileToCopyName);
+void copyFiles(string newFileName, string fileToCopyName);
 
 /*sprite routines*/
-void convertRotationMatrixToString(mat * rotationMatrix, char * string);
-bool findTextInByteArray(char * byteArray, int byteArraySize, char * searchString, int searchStringLength, int * lineNumberOfReference);	//OLD
-bool addLinesToByteArray(char * byteArray, char * lineByteArray, int * byteArraySize, int lineByteArraySize, int lineNumberToAdd);	//OLD
-bool replaceLinesInByteArray(char * byteArray, char * lineByteArray, int * byteArraySize, int lineByteArraySize, int lineNumberToReplace, int numberOfLinesToReplace);	//OLD
+string convertRotationMatrixToString(mat * rotationMatrix);
 
+bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines);
 
-bool addSpriteReferenceListToSceneFile(char * sceneFileName, char * sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines);
-
-bool write2DreferenceListCollapsedTo1DtoFile(char * fileName, Reference * firstReference);
+bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference * firstReference);
 	bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer);
 
 bool joinReferenceLists(Reference * initialReferenceInMainList, Reference * initialReferenceInAdditionalList);

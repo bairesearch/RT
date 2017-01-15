@@ -26,7 +26,7 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -109,7 +109,7 @@ void setPointerToDCTtableHTMLoutputString(string * pointer)
 #endif
 
 //if storeDataInArrays, assume 1 x block and 1 y block! (image size must be <= 8x8)
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
+int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
 {
 	jvirt_barray_ptr * coefficientarrays;
 	int DCTwidth_in_blocks;
@@ -159,8 +159,8 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 	* requires it in order to read binary files.
 	*/
 
-	if ((infile = fopen(filename, "rb")) == NULL) {
-	fprintf(stderr, "can't open %s\n", filename);
+	if ((infile = fopen(filename.c_str(), "rb")) == NULL) {
+	fprintf(stderr, "can't open %s\n", filename.c_str());
 	return 0;
 	}
 

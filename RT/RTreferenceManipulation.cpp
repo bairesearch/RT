@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -47,10 +47,10 @@ using namespace std;
 #include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Reference * firstReference, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
 {
 	ofstream writeFileObject;
-	writeFileObject.open(fileName);
+	writeFileObject.open(fileName.c_str());
 	if(writeFileObject.is_open())
 	{
 		writeRayTraceFormatHeaderInfo(&writeFileObject, useCustomViewInfo, vi, useCustomLightSource, lightSourcePosition, lightSourceColour);
@@ -359,38 +359,33 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 
 	bool result = true;
 
-	char dataEndString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-	char positionCoordinatesString[DAT_FILE_REF_POS_COORD_MAX_LENGTH];
-	char rotationVectorString[DAT_FILE_REF_MATRIX_MAX_LENGTH];
-	char lengthWidthHeightString[100];
-
 
 
 	//write reference type
+	string referenceTypeString = "";
 	if(currentReference->type == REFERENCE_TYPE_TRI)
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_PRIM_TRI);
+		referenceTypeString = TAL_FILE_TYPE_PRIM_TRI;
 	}
 	else if(currentReference->type == REFERENCE_TYPE_QUAD)
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_PRIM_QUAD);
+		referenceTypeString = TAL_FILE_TYPE_PRIM_QUAD;
 	}
 	else if(currentReference->type == REFERENCE_TYPE_LINE)
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_PRIM_LINE);
+		referenceTypeString = TAL_FILE_TYPE_PRIM_LINE;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4CUBE.DAT"))
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_RECT_PRISM);
+		referenceTypeString = TAL_FILE_TYPE_RECT_PRISM;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_SPHERE);
+		referenceTypeString = TAL_FILE_TYPE_SPHERE;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT"))
 	{
-		strcpy(dataValueString, TAL_FILE_TYPE_CIRCLE);
+		referenceTypeString = TAL_FILE_TYPE_CIRCLE;
 	}
 	else
 	{
@@ -398,93 +393,94 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		exit(0);
 	}
 
-	for(int i = 0; i<strlen(dataValueString); i++)
+	for(int i = 0; i<referenceTypeString.length(); i++)
 	{
-		writeFileObject->put(dataValueString[i]);
+		writeFileObject->put(referenceTypeString[i]);
 	}
 	writeFileObject->put(CHAR_SPACE);
 
 
+	
 
 	//write reference colour
+	string referenceColourString = "";
 	if(currentReference->colour == DAT_FILE_COLOUR_BLACK)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_BLACK);
+		referenceColourString = TAL_FILE_COLOUR_BLACK;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_BLUE)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_BLUE);
+		referenceColourString = TAL_FILE_COLOUR_BLUE;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_GREEN)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_GREEN);
+		referenceColourString = TAL_FILE_COLOUR_GREEN;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_CYAN)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_CYAN);
+		referenceColourString = TAL_FILE_COLOUR_CYAN;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_RED)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_RED);
+		referenceColourString = TAL_FILE_COLOUR_RED;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_MAGENTA)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_MAGENTA);
+		referenceColourString = TAL_FILE_COLOUR_MAGENTA;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_BROWN)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_BROWN);
+		referenceColourString = TAL_FILE_COLOUR_BROWN;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_LIGHTGREY)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_LIGHTGREY);
+		referenceColourString = TAL_FILE_COLOUR_LIGHTGREY;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_DARKGREY)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_DARKGREY);
+		referenceColourString = TAL_FILE_COLOUR_DARKGREY;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_YELLOW)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_YELLOW);
+		referenceColourString = TAL_FILE_COLOUR_YELLOW;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_WHITE)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_WHITE);
+		referenceColourString = TAL_FILE_COLOUR_WHITE;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_ORANGE)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_ORANGE);
+		referenceColourString = TAL_FILE_COLOUR_ORANGE;
 	}
 	else if(currentReference->colour == DAT_FILE_COLOUR_PURPLE)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_PURPLE);
+		referenceColourString = TAL_FILE_COLOUR_PURPLE;
 	}
 	else if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_RED);
+		referenceColourString = TAL_FILE_COLOUR_RED;
 	}
 	else if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR_EDGELINE)
 	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_RED);
+		referenceColourString = TAL_FILE_COLOUR_RED;
 	}
 	else if(currentReference->colour >= DAT_FILE_FIRST_RGB_COLOUR)
-	{
-		strcpy(dataValueString, TAL_FILE_COLOUR_RGB_PADDER);
+	{		
 		unsigned int colourExtracted = currentReference->colour;
 		colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 		char colourValueString[100];
 		sprintf(colourValueString, "%06x", colourExtracted);
 
-		strcat(dataValueString, colourValueString);
+		referenceColourString = string(TAL_FILE_COLOUR_RGB_PADDER) + colourValueString;
 	}
 	else
 	{
 		cout << "error; cannot produce raytrace reference of colour, " << currentReference->colour << endl;
 		exit(0);
 	}
-	for(int i = 0; i<strlen(dataValueString); i++)
+	for(int i = 0; i<referenceColourString.length(); i++)
 	{
-		writeFileObject->put(dataValueString[i]);
+		writeFileObject->put(referenceColourString[i]);
 	}
 	writeFileObject->put(CHAR_SPACE);
 
@@ -495,30 +491,30 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 	{
 		//write primitive vertex coords
 
-		convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition), positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
-		convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition), positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
 		if((currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition), positionCoordinatesString);
-			for(int i = 0; i<strlen(positionCoordinatesString); i++)
+			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			for(int i = 0; i<positionCoordinatesString.length(); i++)
 			{
 				writeFileObject->put(positionCoordinatesString[i]);
 			}
 
 			if(currentReference->type == REFERENCE_TYPE_QUAD)
 			{
-				convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition), positionCoordinatesString);
-				for(int i = 0; i<strlen(positionCoordinatesString); i++)
+				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				for(int i = 0; i<positionCoordinatesString.length(); i++)
 				{
 					writeFileObject->put(positionCoordinatesString[i]);
 				}
@@ -528,8 +524,8 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 	else if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
 		//write position coords
-		convertPositionCoordinatesToString(&(currentReference->relativePosition), positionCoordinatesString);
-		for(int i = 0; i<strlen(positionCoordinatesString); i++)
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->relativePosition));
+		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
@@ -542,16 +538,16 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		submodelRotationVectorDegrees.x = submodelRotationVector.x / PI * 180.0;
 		submodelRotationVectorDegrees.y = submodelRotationVector.y / PI * 180.0;
 		submodelRotationVectorDegrees.z = submodelRotationVector.z / PI * 180.0;
-		convertPositionCoordinatesToString(&submodelRotationVectorDegrees, rotationVectorString);
+		string rotationVectorString = convertPositionCoordinatesToString(&submodelRotationVectorDegrees);
 	#else
 		//write rotation vector values
 		vec submodelRotationVector;
 		submodelRotationVector.x = 0;
 		submodelRotationVector.y = 0;
 		submodelRotationVector.z = 0;
-		convertPositionCoordinatesToString(&submodelRotationVector, rotationVectorString);
+		string rotationVectorString = convertPositionCoordinatesToString(&submodelRotationVector);
 	#endif
-		for(int i = 0; i<strlen(rotationVectorString); i++)
+		for(int i = 0; i<rotationVectorString.length(); i++)
 		{
 			writeFileObject->put(rotationVectorString[i]);
 		}
@@ -597,8 +593,8 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		char heightdataValueString[100];
 		sprintf(heightdataValueString, FILE_FLOAT_PRECISION, height);
 
-		string tempString = "";
-		tempString = tempString + TAL_FILE_REF_WIDTH + widthdataValueString + TAL_FILE_REF_LENGTH + lengthdataValueString + TAL_FILE_REF_HEIGHT + heightdataValueString + " ";
+		string scaleString = "";
+		scaleString = scaleString + TAL_FILE_REF_WIDTH + widthdataValueString + TAL_FILE_REF_LENGTH + lengthdataValueString + TAL_FILE_REF_HEIGHT + heightdataValueString + " ";
 
 	#else
 		double widthLengthHeight = (currentReference->deformationMatrix.a.x) * 2.0;
@@ -606,13 +602,13 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		char dataValueString[100];
 		sprintf(dataValueString, FILE_FLOAT_PRECISION, widthLengthHeight);
 
-		string tempString = "";
-		tempString = tempString + TAL_FILE_REF_WIDTH + dataValueString + TAL_FILE_REF_LENGTH + dataValueString + TAL_FILE_REF_HEIGHT + dataValueString + " ";
+		string scaleString = "";
+		scaleString = scaleString + TAL_FILE_REF_WIDTH + dataValueString + TAL_FILE_REF_LENGTH + dataValueString + TAL_FILE_REF_HEIGHT + dataValueString + " ";
 	#endif
 
-		for(int i = 0; i<tempString.length(); i++)
+		for(int i = 0; i<scaleString.length(); i++)
 		{
-			writeFileObject->put(tempString[i]);
+			writeFileObject->put(scaleString[i]);
 		}
 		//width 2 length 2 height 2"
 
@@ -624,8 +620,8 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 	}
 
 	//write ref end
-	strcpy(dataEndString, TAL_FILE_REF_END);
-	for(int i = 0; i<strlen(dataEndString); i++)
+	string dataEndString = TAL_FILE_REF_END;
+	for(int i = 0; i<dataEndString.length(); i++)
 	{
 		writeFileObject->put(dataEndString[i]);
 	}

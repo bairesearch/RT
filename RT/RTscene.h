@@ -26,7 +26,7 @@
  * File Name: RTscene.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -104,18 +104,18 @@ public:
 };
 
 
-int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
-	int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
+int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
+	int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
 
 void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew);
 void setLightingMode(int newLightingMode);
 
-void parseTalFileInitialiseParser(char *talFileName);
+void parseTalFileInitialiseParser(string talFileName);
 ViewInfo * parseTalFileGetViewInfo(ViewInfo *vi);
 lightingInfo * parseTalFileGetLightInfo(lightingInfo *li);
 sceneInfo * parseTalFileGetSceneInfo(sceneInfo *si);
 
-void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li);
+void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li);
 
 
 typedef struct advancedColour colourAdvanced;
@@ -133,8 +133,8 @@ void calculateAmbientDiffuseSpecular(ViewInfo *vi, sceneInfo *si, lightingInfo *
 void calculateBasicColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
 
 
-int stripExtension(char * filenameWithExtension, char * filenameWithoutExtension);
-int addExtension(char * filenameWithoutExtension, char * extension, char * filenameWithExtension);
+bool stripExtension(string filenameWithExtension, string * filenameWithoutExtension);
+bool addExtension(string filenameWithoutExtension, string extension, string * filenameWithExtension);
 
 
 void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, ViewInfo * vi);

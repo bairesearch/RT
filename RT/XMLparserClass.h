@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -68,8 +68,6 @@ using namespace std;
 #define XML_FILE_MAX_SIZE (100000000)		//100MB
 
 
-#ifndef XML_PARSER_ATTRIBUTE_CLASS
-#define XML_PARSER_ATTRIBUTE_CLASS
 
 
 class XMLParserAttribute
@@ -89,13 +87,9 @@ public:
 
 };
 
-#endif
 
 
 
-
-#ifndef XML_PARSER_TAG_CLASS
-#define XML_PARSER_TAG_CLASS
 
 class XMLparserTag
 {
@@ -117,7 +111,6 @@ public:
 
 };
 
-#endif
 
 XMLparserTag * parseTagDownALevel(XMLparserTag * currentTag, string sectionTagName, bool * result);
 

@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -219,7 +219,7 @@ double getLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double * co
 
 
 #ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_3_LUMINOSITY_ONLY
-void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
+void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -277,7 +277,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 }
 
 #elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_2_ALL_RGB_COMPONENTS
-void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
+void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -350,7 +350,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 }
 
 #elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_1_ALL_RGB_COMPONENTS_WITH_DIRECTION
-void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
+void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
@@ -479,7 +479,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 }
 #endif
 
-void generateBooleanDiffMapFromRGBMaps(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2)
+void generateBooleanDiffMapFromRGBMaps(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2)
 {
 	pixmap* pm;
 	pm = newPixmap(imageWidth, imageHeight);
@@ -663,7 +663,7 @@ double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char
 }
 #endif
 
-void generatePixmapFromRGBmap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
+void generatePixmapFromRGBmap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -686,7 +686,7 @@ void generatePixmapFromRGBmap(char * imageFileName, int imageWidth, int imageHei
 
 
 
-void generatePixmapFromEnumIntMap(char * filename, int imageWidth, int imageHeight, int * intMap)
+void generatePixmapFromEnumIntMap(string filename, int imageWidth, int imageHeight, int * intMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -778,7 +778,7 @@ void generatePixmapFromEnumIntMap(char * filename, int imageWidth, int imageHeig
 
 
 
-void generatePixmapFromLuminosityContrastMap(char * imageFileName, int imageWidth, int imageHeight, double * contrastMap)
+void generatePixmapFromLuminosityContrastMap(string imageFileName, int imageWidth, int imageHeight, double * contrastMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -946,7 +946,7 @@ void generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(int imageWidth, int im
 
 
 
-void generatePixmapFromDepthMapOrDepthContrastMap(char * imageFileName, int imageWidth, int imageHeight, double * depthMap)
+void generatePixmapFromDepthMapOrDepthContrastMap(string imageFileName, int imageWidth, int imageHeight, double * depthMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -1012,7 +1012,7 @@ void generatePixmapFromDepthMapOrDepthContrastMap(char * imageFileName, int imag
 	writeImage(imageFileName, pm);
 }
 
-void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(char * imageFileName, int imageWidth, int imageHeight, double * depthMap, double noHitDepth, double estimateMaxDepth)
+void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(string imageFileName, int imageWidth, int imageHeight, double * depthMap, double noHitDepth, double estimateMaxDepth)
 {
 	int x,y;
 	pixmap* pm;
@@ -1097,7 +1097,7 @@ void generateRGBMapFromNormalMap(int imageWidth, int imageHeight, double * norma
 }
 
 
-void generatePixmapFromNormalMap(char * imageFileName, int imageWidth, int imageHeight, double * normalMap)
+void generatePixmapFromNormalMap(string imageFileName, int imageWidth, int imageHeight, double * normalMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -1118,7 +1118,7 @@ void generatePixmapFromNormalMap(char * imageFileName, int imageWidth, int image
 	writeImage(imageFileName, pm);
 }
 
-void generatePixmapFromLuminosityMap(char * imageFileName, int imageWidth, int imageHeight, double * luminosityMap)
+void generatePixmapFromLuminosityMap(string imageFileName, int imageWidth, int imageHeight, double * luminosityMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -1144,7 +1144,7 @@ void generatePixmapFromLuminosityMap(char * imageFileName, int imageWidth, int i
 
 
 
-void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imageHeight, bool * booleanMap)
+void generatePixmapFromBooleanMap(string imageFileName, int imageWidth, int imageHeight, bool * booleanMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -1242,13 +1242,13 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 }
 
 
-void writeImage(char * imageFileName, pixmap * pm)
+void writeImage(string imageFileName, pixmap * pm)
 {
 	writePPM(imageFileName, pm);
 	freePixmap(pm);
 }
 
-void readImage(char * imageFileName, unsigned char * rgbMap)
+void readImage(string imageFileName, unsigned char * rgbMap)
 {
 	pixmap * rgbPixMap;
 	#ifdef RT_DEBUG
@@ -1264,23 +1264,6 @@ void readImage(char * imageFileName, unsigned char * rgbMap)
 	freePixmap(rgbPixMap);
 }
 
-void readImage(string * imageFileName, unsigned char * rgbMap)
-{
-	char * imageFileNameCharStar = const_cast<char*>(imageFileName->c_str());
-
-	pixmap * rgbPixMap;
-	#ifdef RT_DEBUG
-	//cout << "rgbPixMap = loadPPM(" << imageFileName << ");" << endl;
-	#endif
-	rgbPixMap = loadPPM(imageFileNameCharStar);
-
-	#ifdef RT_DEBUG
-	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
-	#endif
-	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
-
-	freePixmap(rgbPixMap);
-}
 
 
 
@@ -1302,8 +1285,7 @@ void readImage(string * imageFileName, unsigned char * rgbMap)
 
 
 
-
-void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int imageHeight, double * depthMap, double depthScale, double depthOffset)
+void generatePixmapFromDepthMap24Bit(string imageFileName, int imageWidth, int imageHeight, double * depthMap, double depthScale, double depthOffset)
 {
 	int x,y;
 	pixmap* pm;

@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -122,14 +122,10 @@ int main(int argc,char **argv)
 	*==============================================================
 	*/
 
-	char * topLevelSceneFileName = new char[100];
-	strcpy(topLevelSceneFileName, "3Dscene.ldr");
-	char * topLevelSceneFileNameCollapsed = new char[100];
-	strcpy(topLevelSceneFileNameCollapsed, "3Dscene.ldr");
-	char * topLevelSceneFileNameCollapsedForRayTracing = new char[100];
-	strcpy(topLevelSceneFileNameCollapsedForRayTracing, "3Dscene.tal");
-	char * imageFileName = new char[100];
-	strcpy(imageFileName, "3Dscene.ppm");
+	string topLevelSceneFileName = "3Dscene.ldr";
+	string topLevelSceneFileNameCollapsed = "3Dscene.ldr";
+	string topLevelSceneFileNameCollapsedForRayTracing = "3Dscene.tal";
+	string imageFileName = "3Dscene.ppm";
 
 	bool useLDRfile = false;
 
@@ -236,7 +232,7 @@ int main(int argc,char **argv)
 
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3e2d 29-August-2014" << endl;
+			cout << "OpenRT.exe - Project Version: 3e3a 01-September-2014" << endl;
 			exit(1);
 		}
 	}

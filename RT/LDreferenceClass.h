@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -40,6 +40,9 @@
 
 #include "SHAREDglobalDefs.h"
 #include "SHAREDvars.h"
+#ifdef USE_LRRC
+#include "LRRCmodelClass.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -240,6 +243,9 @@ public:
 
 	/*Additional values used with recursive parser*/
 	bool isSubModelReference;
+	#ifdef USE_LRRC
+	ModelDetails * subModelDetails;
+	#endif		
 	Reference * firstReferenceWithinSubModel;
 };
 

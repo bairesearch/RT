@@ -26,13 +26,16 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
 #include "LDparser.h"
 #include "SHAREDvector.h"
 #include "LDreferenceClass.h"
+#ifdef USE_LRRC
+#include "LRRCparser.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,30 +48,9 @@
 using namespace std;
 
 
-bool removeWhiteSpaceFromString(char * s)
-{
-	#define MAX_STR_LEN (100)
-	char tmpStr[MAX_STR_LEN];
-	strcpy(tmpStr, s);
-	int newIndex = 0;
-	for(int i=0; i<MAX_STR_LEN; i++)
-	{
-		if(tmpStr[i] == ' ')
-		{
 
-		}
-		else
-		{
-			s[newIndex] = tmpStr[i];
-			newIndex++;
-		}
-	}
-	s[newIndex] = '\0';
 
-	return true;
-}
-
-bool parseFile(char * parseFileName, Reference * initialReference, Reference * parentReference, bool recurseIntoPartsDir)
+bool parseFile(string parseFileName, Reference * initialReference, Reference * parentReference, bool recurseIntoPartsDir)
 {
 	bool result = true;
 
@@ -91,18 +73,18 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 	bool readingVertex4X = false;
 	bool readingVertex4Y = false;
 	bool readingVertex4Z = false;
-	char vertex1X[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex1Y[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex1Z[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex2X[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex2Y[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex2Z[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex3X[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex3Y[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex3Z[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex4X[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex4Y[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char vertex4Z[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
+	string vertex1X = "";
+	string vertex1Y = "";
+	string vertex1Z = "";
+	string vertex2X = "";
+	string vertex2Y = "";
+	string vertex2Z = "";
+	string vertex3X = "";
+	string vertex3Y = "";
+	string vertex3Z = "";
+	string vertex4X = "";
+	string vertex4Y = "";
+	string vertex4Z = "";
 	bool finishedReadingReference = false;
 
 	bool readingType = true;
@@ -121,54 +103,48 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 	bool readingRotation9 = false;
 	bool readingSubPartFileName = false;
 	bool waitingForNewLine = false;
-	char colour[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char coordX[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char coordY[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char coordZ[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation1[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation2[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation3[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation4[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation5[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation6[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation7[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation8[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char rotation9[DAT_FILE_DATA_VALUE_MAX_LENGTH] = "";
-	char subPartFileName[DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX] = "";
+	string colour = "";
+	string coordX = "";
+	string coordY = "";
+	string coordZ = "";
+	string rotation1 = "";
+	string rotation2 = "";
+	string rotation3 = "";
+	string rotation4 = "";
+	string rotation5 = "";
+	string rotation6 = "";
+	string rotation7 = "";
+	string rotation8 = "";
+	string rotation9 = "";
+	string subPartFileName = "";
 
 	Reference * currentReference = initialReference;
 
-	ifstream * parseFileObject = new ifstream(parseFileName);
+	ifstream parseFileObject;
+	parseFileObject.open(parseFileName.c_str());
 	bool managedToFindFile = false;
 
-	if(!parseFileObject->rdbuf( )->is_open( ))
+	if(!parseFileObject.rdbuf()->is_open())
 	{
-		parseFileObject->close();
-		delete parseFileObject;
+		parseFileObject.close();
 
 		if(recurseIntoPartsDir)
 		{
-			char parseFileNameInPartsDir[100];
-			parseFileNameInPartsDir[0] = '\0';
-			strcat(parseFileNameInPartsDir, DEFAULT_PARTS_DIRECTORY_FULL_PATH);
-			removeWhiteSpaceFromString(parseFileName);
-			strcat(parseFileNameInPartsDir, parseFileName);
-			parseFileObject = new ifstream(parseFileNameInPartsDir);
-			if(!parseFileObject->rdbuf( )->is_open( ))
+			string parseFileNameInPartsDir = DEFAULT_PARTS_DIRECTORY_FULL_PATH;
+			parseFileName = removeWhiteSpaceFromString(parseFileName);
+			parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
+			parseFileObject.open(parseFileNameInPartsDir.c_str());
+			if(!parseFileObject.rdbuf()->is_open( ))
 			{
-				parseFileObject->close();
-				delete parseFileObject;
+				parseFileObject.close();
 
-				char parseFileNameInPartsDir[100];
-				parseFileNameInPartsDir[0] = '\0';
-				strcat(parseFileNameInPartsDir, DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH);
-				removeWhiteSpaceFromString(parseFileName);
-				strcat(parseFileNameInPartsDir, parseFileName);
-				parseFileObject = new ifstream(parseFileNameInPartsDir);
-				if(!parseFileObject->rdbuf( )->is_open( ))
+				parseFileNameInPartsDir = DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH;
+				parseFileName = removeWhiteSpaceFromString(parseFileName);
+				parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
+				parseFileObject.open(parseFileNameInPartsDir.c_str());
+				if(!parseFileObject.rdbuf( )->is_open( ))
 				{
-					parseFileObject->close();
-					delete parseFileObject;
+					parseFileObject.close();
 
 					//file does not exist in parts directory.
 					managedToFindFile = false;
@@ -206,7 +182,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 
 	if(managedToFindFile)
 	{
-		while (parseFileObject->get(c))
+		while(parseFileObject.get(c))
 		{
 			charCount++;
 
@@ -292,7 +268,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 				if(!whiteSpaceLineDetectedInsteadOfReference)
 				{
 
-					parseFileObject->get(c); //gets a blank/space
+					parseFileObject.get(c); //gets a blank/space
 					if((c != ' ') && (type != REFERENCE_TYPE_COMMENT))
 					{
 						cout << "2" << endl;
@@ -305,34 +281,34 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						exit(0);
 					}
 
-					colour[0] = '\0';
-					coordX[0] = '\0';
-					coordY[0] = '\0';
-					coordZ[0] = '\0';
-					rotation1[0] = '\0';
-					rotation2[0] = '\0';
-					rotation3[0] = '\0';
-					rotation4[0] = '\0';
-					rotation5[0] = '\0';
-					rotation6[0] = '\0';
-					rotation7[0] = '\0';
-					rotation8[0] = '\0';
-					rotation9[0] = '\0';
+					colour = "";
+					coordX = "";
+					coordY = "";
+					coordZ = "";
+					rotation1 = "";
+					rotation2 = "";
+					rotation3 = "";
+					rotation4 = "";
+					rotation5 = "";
+					rotation6 = "";
+					rotation7 = "";
+					rotation8 = "";
+					rotation9 = "";
 
-					vertex1X[0] = '\0';
-					vertex1Y[0] = '\0';
-					vertex1Z[0] = '\0';
-					vertex2X[0] = '\0';
-					vertex2Y[0] = '\0';
-					vertex2Z[0] = '\0';
-					vertex3X[0] = '\0';
-					vertex3Y[0] = '\0';
-					vertex3Z[0] = '\0';
-					vertex4X[0] = '\0';
-					vertex4Y[0] = '\0';
-					vertex4Z[0] = '\0';
+					vertex1X = "";
+					vertex1Y = "";
+					vertex1Z = "";
+					vertex2X = "";
+					vertex2Y = "";
+					vertex2Z = "";
+					vertex3X = "";
+					vertex3Y = "";
+					vertex3Z = "";
+					vertex4X = "";
+					vertex4Y = "";
+					vertex4Z = "";
 
-					subPartFileName[0] = '\0';
+					subPartFileName = "";
 
 					readingType = false;
 					readingColour = true;
@@ -350,10 +326,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingColour)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(colour, typeString);
+						colour = colour + c;
 					}
 
 					else if((readingVertex1X) && (c == ' '))
@@ -363,10 +336,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex1X)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex1X, typeString);
+						vertex1X = vertex1X + c;
 					}
 					else if((readingVertex1Y) && (c == ' '))
 					{
@@ -375,10 +345,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex1Y)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex1Y, typeString);
+						vertex1Y = vertex1Y + c;
 					}
 					else if((readingVertex1Z) && (c == ' '))
 					{
@@ -387,10 +354,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex1Z)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex1Z, typeString);
+						vertex1Z = vertex1Z + c;
 					}
 
 					else if((readingVertex2X) && (c == ' '))
@@ -400,10 +364,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex2X)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex2X, typeString);
+						vertex2X = vertex2X + c;
 					}
 					else if((readingVertex2Y) && (c == ' '))
 					{
@@ -412,10 +373,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex2Y)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex2Y, typeString);
+						vertex2Y = vertex2Y + c;
 					}
 					else if((readingVertex2Z) && ((c == ' ') || (c == '\n')))
 					{
@@ -461,10 +419,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex2Z)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex2Z, typeString);
+						vertex2Z = vertex2Z + c;
 					}
 
 					else if((readingVertex3X) && (c == ' '))
@@ -474,10 +429,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex3X)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex3X, typeString);
+						vertex3X = vertex3X + c;
 					}
 					else if((readingVertex3Y) && (c == ' '))
 					{
@@ -486,10 +438,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex3Y)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex3Y, typeString);
+						vertex3Y = vertex3Y + c;
 					}
 					else if((readingVertex3Z) && ((c == ' ') || (c == '\n')))
 					{
@@ -536,10 +485,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex3Z)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex3Z, typeString);
+						vertex3Z = vertex3Z + c;
 					}
 
 					else if((readingVertex4X) && (c == ' '))
@@ -549,10 +495,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex4X)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex4X, typeString);
+						vertex4X = vertex4X + c;
 					}
 					else if((readingVertex4Y) && (c == ' '))
 					{
@@ -561,10 +504,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex4Y)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex4Y, typeString);
+						vertex4Y = vertex4Y + c;
 					}
 					else if((readingVertex4Z) && (c == '\n'))
 					{
@@ -575,10 +515,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingVertex4Z)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(vertex4Z, typeString);
+						vertex4Z = vertex4Z + c;
 					}
 
 					if(finishedReadingReference == true)
@@ -588,7 +525,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						//3. Record Reference information into current Reference object
 						currentReference->type = type;
 
-						currentReference->colour = (unsigned int)(atof(colour));
+						currentReference->colour = (unsigned int)(atof(colour.c_str()));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -600,18 +537,18 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						}
 					#endif
 
-						currentReference->vertex1relativePosition.x = (atof(vertex1X));
-						currentReference->vertex1relativePosition.y = (atof(vertex1Y));
-						currentReference->vertex1relativePosition.z = (atof(vertex1Z));
-						currentReference->vertex2relativePosition.x = (atof(vertex2X));
-						currentReference->vertex2relativePosition.y = (atof(vertex2Y));
-						currentReference->vertex2relativePosition.z = (atof(vertex2Z));
-						currentReference->vertex3relativePosition.x = (atof(vertex3X));
-						currentReference->vertex3relativePosition.y = (atof(vertex3Y));
-						currentReference->vertex3relativePosition.z = (atof(vertex3Z));
-						currentReference->vertex4relativePosition.x = (atof(vertex4X));
-						currentReference->vertex4relativePosition.y = (atof(vertex4Y));
-						currentReference->vertex4relativePosition.z = (atof(vertex4Z));
+						currentReference->vertex1relativePosition.x = (atof(vertex1X.c_str()));
+						currentReference->vertex1relativePosition.y = (atof(vertex1Y.c_str()));
+						currentReference->vertex1relativePosition.z = (atof(vertex1Z.c_str()));
+						currentReference->vertex2relativePosition.x = (atof(vertex2X.c_str()));
+						currentReference->vertex2relativePosition.y = (atof(vertex2Y.c_str()));
+						currentReference->vertex2relativePosition.z = (atof(vertex2Z.c_str()));
+						currentReference->vertex3relativePosition.x = (atof(vertex3X.c_str()));
+						currentReference->vertex3relativePosition.y = (atof(vertex3Y.c_str()));
+						currentReference->vertex3relativePosition.z = (atof(vertex3Z.c_str()));
+						currentReference->vertex4relativePosition.x = (atof(vertex4X.c_str()));
+						currentReference->vertex4relativePosition.y = (atof(vertex4Y.c_str()));
+						currentReference->vertex4relativePosition.z = (atof(vertex4Z.c_str()));
 
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
@@ -691,10 +628,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingColour)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(colour, typeString);
+						colour = colour + c;
 					}
 					else if((readingCoordX) && (c == ' '))
 					{
@@ -703,10 +637,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingCoordX)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(coordX, typeString);
+						coordX = coordX + c;
 					}
 					else if((readingCoordY) && (c == ' '))
 					{
@@ -715,10 +646,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingCoordY)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(coordY, typeString);
+						coordY = coordY + c;
 					}
 					else if((readingCoordZ) && (c == ' '))
 					{
@@ -727,10 +655,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingCoordZ)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(coordZ, typeString);
+						coordZ = coordZ + c;
 					}
 					else if((readingRotation1) && (c == ' '))
 					{
@@ -739,10 +664,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation1)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation1, typeString);
+						rotation1 = rotation1 + c;
 					}
 					else if((readingRotation2) && (c == ' '))
 					{
@@ -751,10 +673,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation2)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation2, typeString);
+						rotation2 = rotation2 + c;
 					}
 					else if((readingRotation3) && (c == ' '))
 					{
@@ -763,10 +682,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation3)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation3, typeString);
+						rotation3 = rotation3 + c;
 					}
 					else if((readingRotation4) && (c == ' '))
 					{
@@ -775,10 +691,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation4)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation4, typeString);
+						rotation4 = rotation4 + c;
 					}
 					else if((readingRotation5) && (c == ' '))
 					{
@@ -787,10 +700,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation5)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation5, typeString);
+						rotation5 = rotation5 + c;
 					}
 					else if((readingRotation6) && (c == ' '))
 					{
@@ -799,10 +709,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation6)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation6, typeString);
+						rotation6 = rotation6 + c;
 					}
 					else if((readingRotation7) && (c == ' '))
 					{
@@ -811,10 +718,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation7)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation7, typeString);
+						rotation7 = rotation7 + c;
 					}
 					else if((readingRotation8) && (c == ' '))
 					{
@@ -823,10 +727,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation8)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation8, typeString);
+						rotation8 = rotation8 + c;
 					}
 					else if((readingRotation9) && (c == ' '))
 					{
@@ -835,10 +736,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingRotation9)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(rotation9, typeString);
+						rotation9 = rotation9 + c;
 					}
 					else if((readingSubPartFileName) && (c == '\n'))
 					{
@@ -849,10 +747,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 					}
 					else if(readingSubPartFileName)
 					{
-						char typeString[2];
-						typeString[0] = c;
-						typeString[1] = '\0';
-						strcat(subPartFileName, typeString);
+						subPartFileName = subPartFileName + c;
 					}
 
 					if(finishedReadingReference == true)
@@ -862,7 +757,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 
 						//3. Record Reference information into current Reference object
 						currentReference->type = type;
-						currentReference->colour = (unsigned int)(atof(colour));
+						currentReference->colour = (unsigned int)(atof(colour.c_str()));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -874,22 +769,22 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						}
 					#endif
 
-						currentReference->relativePosition.x = (atof(coordX));
-						currentReference->relativePosition.y = (atof(coordY));
-						currentReference->relativePosition.z = (atof(coordZ));
+						currentReference->relativePosition.x = (atof(coordX.c_str()));
+						currentReference->relativePosition.y = (atof(coordY.c_str()));
+						currentReference->relativePosition.z = (atof(coordZ.c_str()));
 
 							//26-jan-07 change; take into account rotation of parent reference in calculation of child reference absolute coordinates;
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
-						currentReference->deformationMatrix.a.x = (atof(rotation1));
-						currentReference->deformationMatrix.b.x = (atof(rotation2));
-						currentReference->deformationMatrix.c.x = (atof(rotation3));
-						currentReference->deformationMatrix.a.y = (atof(rotation4));
-						currentReference->deformationMatrix.b.y = (atof(rotation5));
-						currentReference->deformationMatrix.c.y = (atof(rotation6));
-						currentReference->deformationMatrix.a.z = (atof(rotation7));
-						currentReference->deformationMatrix.b.z = (atof(rotation8));
-						currentReference->deformationMatrix.c.z = (atof(rotation9));
+						currentReference->deformationMatrix.a.x = (atof(rotation1.c_str()));
+						currentReference->deformationMatrix.b.x = (atof(rotation2.c_str()));
+						currentReference->deformationMatrix.c.x = (atof(rotation3.c_str()));
+						currentReference->deformationMatrix.a.y = (atof(rotation4.c_str()));
+						currentReference->deformationMatrix.b.y = (atof(rotation5.c_str()));
+						currentReference->deformationMatrix.c.y = (atof(rotation6.c_str()));
+						currentReference->deformationMatrix.a.z = (atof(rotation7.c_str()));
+						currentReference->deformationMatrix.b.z = (atof(rotation8.c_str()));
+						currentReference->deformationMatrix.c.z = (atof(rotation9.c_str()));
 
 						multiplyMatricies(&(currentReference->absoluteDeformationMatrix), &(parentReference->absoluteDeformationMatrix), &(currentReference->deformationMatrix));
 
@@ -914,15 +809,29 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						Reference * subModelReference = new Reference(true);
 						currentReference->firstReferenceWithinSubModel = subModelReference;
 
+						#ifdef USE_LRRC
+						currentReference->subModelDetails = subModelReference->subModelDetails;
+						subModelReference->subModelDetails = NULL;	//added aug 08
+						#endif
 						subModelReference->isSubModelReference = false;	//added aug 08
 
 						if(parseFile(subPartFileName, currentReference->firstReferenceWithinSubModel, currentReference, recurseIntoPartsDir))
 						{
 							//cout << "successfully parsed; currentReference->name = " <<  currentReference->name << endl;
 							currentReference->isSubModelReference = true;
+							
+							#ifdef USE_LRRC
+							//NEW 26-3-06 copy environment relevant child object values into parent object
+							copyEnvironmentRelevantChildUnitDetailsIntoParentObject(parentReference->subModelDetails, currentReference->subModelDetails);
+							#endif								
 						}
 						else
 						{
+							#ifdef USE_LRRC
+							//2. As a custom submodel was not detected, the program updates the unitDetails object based upon Reference name (subPartFileName)
+							updateUnitDetails(subPartFileName, parentReference->subModelDetails);
+							currentReference->subModelDetails = NULL;	//added aug 08
+							#endif						
 							/*clear memory of currentReference->subModelReference and currentReference->subModelDetails as submodel does not exist*/
 							delete subModelReference;
 							currentReference->firstReferenceWithinSubModel = NULL;	//added aug 08
@@ -960,8 +869,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 			}
 		}
 
-		parseFileObject->close();
-		delete parseFileObject;
+		parseFileObject.close();
 	}
 
 
@@ -999,5 +907,17 @@ double calcModZPosBasedUponRotate(vec * childRelativePosition, mat * parentRefer
 	return zPosBasedUponRotatedParent;
 }
 
+string removeWhiteSpaceFromString(string s)
+{
+	string sNew = "";
+	for(int i=0; i<s.length(); i++)
+	{
+		if(s[i] != CHAR_SPACE)
+		{
+			sNew = sNew + s[i];
+		}
+	}
 
+	return sNew;
+}
 

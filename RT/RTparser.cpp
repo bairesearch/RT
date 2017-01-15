@@ -26,7 +26,7 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -108,15 +108,15 @@ static int parse_error(const char *msg)
 /*Read one byte in hex (between 0 and FF) from the string s*/
 static int read_hex_byte(char *s)
 {
-	char	digit[3];
-	int	num;
+	char digit[3];
+	int num;
 
 	digit[2] = '\0';
 
 	digit[0] = s[0];
 	digit[1] = s[1];
 	sscanf(digit, "%x", &num);
-	return	num;
+	return num;
 }
 
 /* Read a string of up to 255 non-whitespace chars */
@@ -145,10 +145,10 @@ static void next_option()
 
 enum{ NUM_COLOURS = 13};
 
-static char	*col_name[NUM_COLOURS] =
+static char *col_name[NUM_COLOURS] =
 	{TAL_FILE_COLOUR_BLACK, TAL_FILE_COLOUR_BLUE, TAL_FILE_COLOUR_GREEN, TAL_FILE_COLOUR_CYAN, TAL_FILE_COLOUR_RED, TAL_FILE_COLOUR_MAGENTA, TAL_FILE_COLOUR_BROWN, TAL_FILE_COLOUR_LIGHTGREY, TAL_FILE_COLOUR_DARKGREY, TAL_FILE_COLOUR_YELLOW, TAL_FILE_COLOUR_WHITE, TAL_FILE_COLOUR_ORANGE, TAL_FILE_COLOUR_PURPLE};
 
-static char	*col_value[NUM_COLOURS] =
+static char *col_value[NUM_COLOURS] =
 	{TAL_FILE_COLOUR_BLACK_RGB, TAL_FILE_COLOUR_BLUE_RGB, TAL_FILE_COLOUR_GREEN_RGB, TAL_FILE_COLOUR_CYAN_RGB, TAL_FILE_COLOUR_RED_RGB, TAL_FILE_COLOUR_MAGENTA_RGB, TAL_FILE_COLOUR_BROWN_RGB, TAL_FILE_COLOUR_LIGHTGREY_RGB, TAL_FILE_COLOUR_DARKGREY_RGB, TAL_FILE_COLOUR_YELLOW_RGB, TAL_FILE_COLOUR_WHITE_RGB, TAL_FILE_COLOUR_ORANGE_RGB, TAL_FILE_COLOUR_PURPLE_RGB};
 
 /* Read a colour (three values between 0 and 255) from infile */
@@ -157,7 +157,7 @@ static colour read_colour()
 	colour c;
 	int r, g, b;
 	char *name;
-	char	digit[3];
+	char digit[3];
 	int i;
 
 	int foundColourMatch = 0;
@@ -196,7 +196,7 @@ static vec read_vec()
 {
 	vec v;
 
-	if (fscanf(infile, " %lg %lg %lg", &v.x, &v.y, &v.z) != 3)
+	if(fscanf(infile, " %lg %lg %lg", &v.x, &v.y, &v.z) != 3)
 	{
 		parse_error("could not read vector");
 	}
@@ -208,7 +208,7 @@ static double read_double()
 {
 	double d;
 
-	if (fscanf(infile, " %lg", &d) != 1)
+	if(fscanf(infile, " %lg", &d) != 1)
 	{
 		parse_error("could not read double");
 	}
@@ -220,7 +220,7 @@ static int read_int()
 {
 	int i;
 
-	if (fscanf(infile, " %d", &i) != 1)
+	if(fscanf(infile, " %d", &i) != 1)
 	{
 		parse_error("could not read positive integer");
 	}
@@ -278,14 +278,14 @@ void exitParser()
 
 
 
-static dimensionsInfo	_dimensions_info;
-static ViewInfo	_view_info;
-static lightSource	_light_source;
-static pieceInfo	_piece_info;
+static dimensionsInfo _dimensions_info;
+static ViewInfo _view_info;
+static lightSource _light_source;
+static pieceInfo _piece_info;
 
 	//not tested
-static decalInfo	_decal_info;
-static unknownInfo	_unknown_info;
+static decalInfo _decal_info;
+static unknownInfo _unknown_info;
 
 
 /* Read in the viewport initialisation section */

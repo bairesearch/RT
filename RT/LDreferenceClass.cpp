@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  *
  *******************************************************************************/
 
@@ -123,34 +123,28 @@ Reference::Reference(void)
 	type = REFERENCE_TYPE_UNDEFINED;
 
 	/*Additional values used with recursive parser*/
+	#ifdef USE_LRRC
+	subModelDetails = NULL;
+	#endif
 	firstReferenceWithinSubModel = NULL;
 }
 
 Reference::~Reference()
 {
-	Reference* n = this->next;
-	Reference* nn = NULL;
-	while(n != NULL)
+	#ifdef USE_LRRC
+	if(subModelDetails != NULL)
 	{
-		nn = n->next;
-
-		if(n->firstReferenceWithinSubModel != NULL)
-		{
-			delete n->firstReferenceWithinSubModel;
-		}
-
-		n->next = NULL;
-		delete n;
-		n = nn;
+		delete this->subModelDetails;
 	}
-
-	if(this->firstReferenceWithinSubModel != NULL)
+	#endif
+	if(firstReferenceWithinSubModel != NULL)
 	{
 		delete this->firstReferenceWithinSubModel;
 	}
-
-	nn = NULL;
-	n = NULL;
+	if(next != NULL)
+	{
+		delete next;
+	}
 }
 
 
@@ -245,10 +239,16 @@ Reference::Reference(string referenceName, int referenceColour, bool createNewSu
 
 	if(createNewSubmodel)
 	{
+		#ifdef USE_LRRC
+		subModelDetails = new ModelDetails();
+		#endif	
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
+		#ifdef USE_LRRC
+		subModelDetails = NULL;
+		#endif	
 		firstReferenceWithinSubModel = NULL;
 	}
 }
@@ -344,10 +344,16 @@ Reference::Reference(bool createNewSubmodel)
 
 	if(createNewSubmodel)
 	{
+		#ifdef USE_LRRC
+		subModelDetails = new ModelDetails();
+		#endif	
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
+		#ifdef USE_LRRC
+		subModelDetails = NULL;
+		#endif	
 		firstReferenceWithinSubModel = NULL;
 	}
 }
