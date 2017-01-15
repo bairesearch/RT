@@ -223,7 +223,7 @@ char *getCharArgument(int argc,char **argv,char *keystr)
 	int i;
 	char *result;
 
-	result=(char *) malloc(256);
+	result=(char *) malloc(4096);
 	result[0]=0;
 
 	for(i=1;i<argc;i++)
