@@ -23,7 +23,7 @@
  * File Name: LDsvg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c3g 18-November-2012
+ * Project Version: 3c3h 19-November-2012
  *
  *******************************************************************************/
 
@@ -38,8 +38,9 @@
 #include "XMLparserClass.h"
 
 bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile);
-void writeSVGfooter(ofstream * writeFileObject);
-void writeSVGheader(ofstream * writeFileObject);
+bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
+	void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
+	void writeSVGfooter(ofstream * writeFileObject);
 void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col);
 void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
 void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSize, int col);

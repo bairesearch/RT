@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c3g 18-November-2012
+ * Project Version: 3c3h 19-November-2012
  *
  *******************************************************************************/
 
@@ -42,11 +42,16 @@ using namespace std;
 
 bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
 {
+	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, -100, 1920, 1400);	
+}
+
+bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
+{
 	bool result = true;
 
 	ofstream writeFileObject(xmlFileName.c_str());
 
-	writeSVGheader(&writeFileObject);
+	writeSVGheader(&writeFileObject, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY);
 
 	if(!addTagLayerToFileObject(firstTagInXMLfile, &writeFileObject, 0))
 	{
@@ -64,10 +69,26 @@ bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
 }
 
 
-void writeSVGheader(ofstream * writeFileObject)
+void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
 {
+	int width = viewBoxMaxX-viewBoxMinX;
+	int height = viewBoxMaxY-viewBoxMinY;
+	char widthString[10];
+	char heightString[10];	
+	char viewBoxMinXstring[10];
+	char viewBoxMaxXstring[10];
+	char viewBoxMinYstring[10];
+	char viewBoxMaxYstring[10];
+	sprintf(widthString, "%d", width);
+	sprintf(heightString, "%d", height);	
+	sprintf(viewBoxMinXstring, "%d", viewBoxMinX);
+	sprintf(viewBoxMaxXstring, "%d", viewBoxMaxX);
+	sprintf(viewBoxMinYstring, "%d", viewBoxMinY);
+	sprintf(viewBoxMaxYstring, "%d", viewBoxMaxY);
+	
 	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
-	string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-400 -100 10000 2000\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+	string headerString = "";
+	headerString = headerString + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" width=\"" + widthString + "\" height=\"" + heightString + "\" viewBox=\"" + viewBoxMinXstring + " " + viewBoxMinYstring + " " + viewBoxMaxXstring + " " + viewBoxMaxYstring + "\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 	for(int i = 0; i<headerString.length(); i++)
 	{
 		writeFileObject->put(headerString[i]);
