@@ -161,7 +161,6 @@ void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2);
 void scaleMatrix(mat * matrix, double scaleFactor);
 
 double calculateAngleOfVector3D(vec * vect1, int axis);
-void createRotatationMatrix(mat * matrix, vec * rotationRadians);
 
 
 
