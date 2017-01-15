@@ -117,5 +117,6 @@ string convertBoolToString(bool boolean);
 bool textInTextArray(string text, string * textArray, int arraySize);
 bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound);
 bool charInCharArray(char c, char * charArray, int arraySize);
+void replaceAllOccurancesOfString(string * text, string stringToFind, string replacementString);
 
 #endif
