@@ -147,7 +147,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	int row_stride;		/* physical row width in output buffer*/
 
 	/* In this example we want to open the input file before doing anything else,
-	* so that the setjmp() error recovery below can assume the file is open.
+	* so that the setjmp{} error recovery below can assume the file is open.
 	* VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
 	* requires it in order to read binary files.
 	*/
