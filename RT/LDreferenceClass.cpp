@@ -3,7 +3,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  *
  *******************************************************************************/
 
@@ -111,81 +111,6 @@ Reference::Reference(void)
 
 Reference::~Reference()
 {
-	/*
-	//cout << "Deleting Reference: vertex1relativePosition.x = " << vertex1relativePosition.x << "vertex1absolutePosition.x = " << vertex1absolutePosition.x <<endl;
-
-	//cout << "Deleting Reference: name = " << name << endl;
-	//cout << "Deleting Reference: colour = " << colour << endl;
-	//cout << "Deleting Reference: isSubModelReference = " << isSubModelReference << endl;
-
-
-#ifdef USE_LRRC
-	//cout << "Deleting Reference: checking value of (subModelDetails != NULL) ... " << endl;
-	if(subModelDetails != NULL)
-	{
-		//cout << "Deleting Reference: (subModelDetails != NULL) = " << (subModelDetails != NULL) << endl;
-		delete subModelDetails;
-	}
-#endif
-
-	//cout << "Deleting Reference: checking value of (firstReferenceWithinSubModel != NULL) ... " << endl;
-	if(firstReferenceWithinSubModel != NULL)
-	{
-		//cout << "Deleting Reference: (firstReferenceWithinSubModel != NULL) = " << (firstReferenceWithinSubModel != NULL) << endl;
-		delete firstReferenceWithinSubModel;
-	}
-
-	//cout << "Deleting Reference: checking value of (next != NULL) ... " << endl;
-	if(next != NULL)
-	{
-		//cout << "Deleting Reference: (next != NULL) = " << (next != NULL) << endl;
-		delete next;
-		//cout << "Finished deleting reference list (a)" << endl;
-	}
-
-
-	//cout << "finished deleting reference list" << endl;
-	*/
-
-	/*
-	Reference * currentReferenceInList = next;
-	Reference * previousReferenceInList = this;
-	if(next != NULL)
-	{
-		int count = 0;
-		while(currentReferenceInList->next != NULL)
-		{
-
-			if(count != 0)
-			{
-				free(previousReferenceInList);
-			}
-		#ifdef USE_LRRC
-			//cout << "Deleting Reference: checking value of (subModelDetails != NULL) ... " << endl;
-			if(currentReferenceInList->subModelDetails != NULL)
-			{
-				cout << "Deleting Reference: (currentReferenceInList->subModelDetails != NULL) = " << (currentReferenceInList->subModelDetails != NULL) << endl;
-				delete currentReferenceInList->subModelDetails;
-			}
-		#endif
-
-			//cout << "Deleting Reference: checking value of (firstReferenceWithinSubModel != NULL) ... " << endl;
-			if(currentReferenceInList->firstReferenceWithinSubModel != NULL)
-			{
-				cout << "Deleting Reference: (currentReferenceInList->firstReferenceWithinSubModel != NULL) = " << (currentReferenceInList->firstReferenceWithinSubModel != NULL) << endl;
-				delete currentReferenceInList->firstReferenceWithinSubModel;
-			}
-
-			previousReferenceInList = currentReferenceInList;
-			currentReferenceInList = currentReferenceInList->next;
-
-			count++;
-		}
-		free(currentReferenceInList);
-	}
-	*/
-
-
 	//int i = 0;
 
 	Reference* n = this->next;

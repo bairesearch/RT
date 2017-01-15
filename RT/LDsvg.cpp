@@ -3,7 +3,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  *
  *******************************************************************************/
 
@@ -90,6 +90,68 @@ void writeSVGBox(ofstream * writeFileObject, vec * pos, double width, double hei
 	else
 	{
 		svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
+	}
+	
+	for(int i = 0; i<svgText.length(); i++)
+	{
+		writeFileObject->put(svgText[i]);
+	}
+}
+
+void writeSVGBoxTransparent(ofstream * writeFileObject, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity)
+{
+	colour colourrgb;
+ 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+
+	string boxOutlineWidthString;
+	string xPosString;
+	string yPosString;
+	string widthString;
+	string heightString;
+	string rString;
+	string gString;
+	string bString;
+	char boxOutlineWidthcharstar[10];
+	char xPosStringcharstar[10];
+	char yPosStringcharstar[10];
+	char widthStringcharstar[10];
+	char heightStringcharstar[10];
+	char rStringcharstar[10];
+	char gStringcharstar[10];
+	char bStringcharstar[10];
+	sprintf(boxOutlineWidthcharstar, "%0.3f", boxOutlineWidth);
+	sprintf(xPosStringcharstar, "%d", (int)(pos->x - (width/2)));	//%d
+	sprintf(yPosStringcharstar, "%d", (int)(pos->y - (height/2)));
+	sprintf(rStringcharstar, "%d", (unsigned char)colourrgb.r);
+	sprintf(gStringcharstar, "%d", (unsigned char)colourrgb.g);
+	sprintf(bStringcharstar, "%d", (unsigned char)colourrgb.b);
+	sprintf(widthStringcharstar, "%d", (int)width);
+	sprintf(heightStringcharstar, "%d", (int)height);
+
+	boxOutlineWidthString = boxOutlineWidthcharstar;
+	xPosString = xPosStringcharstar;
+	yPosString = yPosStringcharstar;
+	rString = rStringcharstar;
+	gString = gStringcharstar;
+	bString = bStringcharstar;
+	widthString = widthStringcharstar;
+	heightString = heightStringcharstar;
+
+	//cout << "boxOutlineWidthString = " << boxOutlineWidthString << endl;
+
+	string svgText = "";
+	
+	char fillOpacityStringcharstar[10];
+	sprintf(fillOpacityStringcharstar, "%0.3f", fillOpacity);
+	string fillOpacityString = fillOpacityStringcharstar;
+	
+	if(useEllipse)
+	{
+		svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";	
+	}
+	else
+	{
+		svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
 	}
 	
 	for(int i = 0; i<svgText.length(); i++)

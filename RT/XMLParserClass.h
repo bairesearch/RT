@@ -3,7 +3,7 @@
  * File Name: XMLParserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  *
  *******************************************************************************/
 
@@ -25,6 +25,7 @@ using namespace std;
 
 #include "SHAREDglobalDefs.h"
 
+
 #define XML_WRITE_STANDARD_XML_HEADER
 
 //#define XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
@@ -35,6 +36,8 @@ using namespace std;
 	#define XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE	
 	*/
 #else
+	#define XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG		//new 5 April 2012 - to support Stanford NLP Core XML files with embedded <coreference><coreference> tags, where the first of these should actually be "<coreferences>"
+	#define XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE	//new 5 April 2012 - to support Stanford NLP Core XML files with end tag immediately following tag name, without a preceeding space eg <basic-dependencies/>
 	#define XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_INSIDE_ATTRIBUTE_VALUE
 	#define XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
 #endif
@@ -93,7 +96,7 @@ public:
 
 #endif
 
-
+XMLParserTag * parseTagDownALevel(XMLParserTag * currentTag, string sectionTagName, bool * result);
 
 bool readXMLFile(string xmlFileName, XMLParserTag * firstTagInXMLFile);
 bool parseTagOpen(ifstream * parseFileObject, XMLParserTag * currentTag, string parentTagName, bool isASubTag, int treeLayer);

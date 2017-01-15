@@ -3,7 +3,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  * Preconditions: Assume Linux EL5 or Windows XP or is installed
  *
  * 1. Object Recognition Software Installation Instructions;
@@ -607,6 +607,7 @@
 	//current/active tests;
 //#define COMPILE_OR		//or.exe
 #define COMPILE_GIA
+//#define COMPILE_GIA_WITH_CE
 //#define COMPILE_TH_OR_IMAGE_CATEGORISTION_NN	//ORTHimageCategorisationNN.exe
 //#define COMPILE_CS		//cs.exe
 //#define COMPILE_RT		//rt.exe
@@ -627,9 +628,11 @@
 //#define COMPILE_TH_OR_METHOD_3DOD_WITH_ANN
 
 
+#ifdef COMPILE_GIA_WITH_CE
+	#define COMPILE_GIA
+	#define USE_CE
+#endif
 #ifdef COMPILE_GIA
-	#define USE_ANN
-	#define TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 	#define USE_RT
 	#define USE_GIA
 #endif

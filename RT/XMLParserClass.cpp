@@ -3,7 +3,7 @@
  * File Name: XMLParserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  *
  *******************************************************************************/
 
@@ -104,6 +104,39 @@ XMLParserTag::~XMLParserTag()
 }
 
 
+XMLParserTag * parseTagDownALevel(XMLParserTag * currentTag, string sectionTagName, bool * result)
+{
+	*result = true;
+
+	XMLParserTag * updatedCurrentTag;
+
+	if(currentTag->name != sectionTagName)
+	{
+		*result = false;
+		cout << "parse error; lower level sectionTagName expected = " <<  sectionTagName << ". section tag name found currentTag->name = " << currentTag->name << endl;
+		updatedCurrentTag = currentTag;
+	}
+	else
+	{
+		//cout << "parseTagDownALevel() " << sectionTagName << endl;
+		//cout << "currentTag->value " << currentTag->value << endl;
+		if(currentTag->firstLowerLevelTag != NULL)
+		{
+			//cout << "currentTag->firstLowerLevelTag->value " << currentTag->firstLowerLevelTag->value << endl;
+			updatedCurrentTag = currentTag->firstLowerLevelTag;
+		}
+		else
+		{
+			updatedCurrentTag = NULL;
+		}
+	}
+
+	return updatedCurrentTag;
+
+}
+
+
+
 bool writeXMLFileInefficient(string xmlFileName, XMLParserTag * firstTagInXMLFile)
 {
 	bool result = true;
@@ -133,7 +166,8 @@ bool writeXMLFileInefficient(string xmlFileName, XMLParserTag * firstTagInXMLFil
 
 void writeXMLHeader(ofstream * writeFileObject)
 {
-	string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	string headerString = "";
+	headerString = headerString + "<" + STRING_TAG_XML_DEF_FULL + ">";
 	for(int i = 0; i<headerString.length(); i++)
 	{
 		writeFileObject->put(headerString[i]);
@@ -595,6 +629,7 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 		{
 			result = false;
 		}
+		
 		charCount++;
 
 		if(isBlankChar(parseFileObject, currentToken))
@@ -623,6 +658,7 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 		}
 		else if(currentToken == CHAR_TAG_END)
 		{
+			#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
 			if(tagName != "")
 			{
 				cout << "XML_PARSER_ERROR 3: incorrect end tag indicator detected" << endl;
@@ -631,8 +667,11 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 			}
 			else
 			{
+			#endif
 				endTagFound = true;
+			#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
 			}
+			#endif
 		}
 		else if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
 		{
@@ -696,15 +735,32 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 							//finished parsing subtags within the value of this tag
 							//cout << "DEBUG 3: tagWithEndFound, tagName = " << tagName << endl;
 						}
+						#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
 						else
 						{//subtab+end detected with no attributes - this is illegal
 							cout << "XML_PARSER_ERROR 6: subtab+end detected with no attributes - this is illegal" << endl;
 							throwGenericXMLParseError();
 							result = false;
 						}
+						#else
+						else
+						{
+							//subtab+end detected without attributes
+							//cout << "DEBUG 3b: tagWithoutAttributesAndWithEndFound, tagName = " << currentTag->name << endl;
+
+							//NB currentTag->name has not already been filled
+							currentTag->name = tagName;
+							
+							XMLParserTag * newTag = new XMLParserTag();
+							currentTag->nextTag = newTag;
+							currentTag = currentTag->nextTag;
+							parseTagOpen(parseFileObject, currentTag, parentTagName, isASubTag, treeLayer);						
+						}
+						#endif
 					}
 					else
 					{
+						#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG					
 						if(tagName == parentTagName)
 						{
 							cout << "XML_PARSER_ERROR 7: subtab detected with same name as parent tab - this is illegal" << endl;
@@ -713,6 +769,7 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 						}
 						else
 						{
+						#endif
 							currentTag->name = tagName;
 							//cout << "DEBUG 4: tagWithoutEndFound, tagName = " << tagName << endl;
 
@@ -729,7 +786,9 @@ bool parseTagName(ifstream * parseFileObject, XMLParserTag * currentTag, string 
 							currentTag->nextTag = newTag;
 							currentTag = currentTag->nextTag;
 							parseTagOpen(parseFileObject, currentTag, parentTagName, isASubTag, treeLayer);
+						#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
 						}
+						#endif
 					}
 				}
 

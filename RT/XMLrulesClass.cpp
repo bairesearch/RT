@@ -3,7 +3,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  *
  *******************************************************************************/
 
@@ -753,27 +753,6 @@ bool parseTagLongDistanceCombat(XMLParserTag * currentTag)
 
 #endif
 
-
-XMLParserTag * parseTagDownALevel(XMLParserTag * currentTag, string sectionTagName, bool * result)
-{
-	*result = true;
-
-	XMLParserTag * updatedCurrentTag;
-
-	if(currentTag->name != sectionTagName)
-	{
-		*result = false;
-		cout << "parse error; lower level sectionTagName expected = " <<  sectionTagName << ". section tag name found currentTag->name = " << currentTag->name << endl;
-		updatedCurrentTag = currentTag;
-	}
-	else
-	{
-		updatedCurrentTag = currentTag->firstLowerLevelTag;
-	}
-
-	return updatedCurrentTag;
-
-}
 
 bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)
 {
