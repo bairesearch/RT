@@ -515,12 +515,21 @@ bool charInCharArray(char c, char * charArray, int arraySize)
 
 string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString)
 {
+	bool foundAtLeastOneInstance = false;
+	string text = replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
+	return text;
+}
+
+string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString, bool * foundAtLeastOneInstance)
+{
+	*foundAtLeastOneInstance = false;
 	string text = *textOrig; 
 	int pos = 0;
 	while((pos = text.find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{
 		text.replace(pos, stringToFind.length(), replacementString);
 		pos = pos + replacementString.length();
+		*foundAtLeastOneInstance = true;
 	}
 	/*
 	cout << "\n*textOrig = " << *textOrig << endl;
