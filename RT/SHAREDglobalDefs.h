@@ -244,6 +244,7 @@ extern string tempFolder;
 #define STRING_NEW_LINE "\n"
 #define STRING_SPACE " "
 #define STRING_FULLSTOP "."
+#define STRING_COMMA ","
 
 #define TM_STRUCT_YEAR_OFFSET 1900
 
