@@ -73,7 +73,7 @@ void fillInRTRulesExternVariables()
 
 void printRGBMap(int imageWidth, int imageHeight, unsigned char* rgbMap)
 {
-	cout << "printRGBMap()" << endl;
+	cout << "printRGBMap{}" << endl;
 
 	//fill luminosityMap
 	for(int y = 0; y < imageHeight; y++)
