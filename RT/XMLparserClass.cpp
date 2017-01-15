@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3f7e 16-August-2015
+ * Project Version: 3g1a 14-October-2015
  *
  *******************************************************************************/
 
@@ -66,7 +66,7 @@ string attributeValue;
 string tagValue;
 */
 
-XMLParserAttribute::XMLParserAttribute(void)
+XMLparserAttribute::XMLparserAttribute(void)
 {
 	name = "";
 	value = "";
@@ -74,7 +74,7 @@ XMLParserAttribute::XMLParserAttribute(void)
 	nextAttribute = NULL;
 }
 
-XMLParserAttribute::~XMLParserAttribute()
+XMLparserAttribute::~XMLparserAttribute()
 {
 
 	if(nextAttribute != NULL)
@@ -95,7 +95,7 @@ XMLparserTag::XMLparserTag(void)
 	nextTag = NULL;
 	firstLowerLevelTag = NULL;
 
-	firstAttribute = new XMLParserAttribute();
+	firstAttribute = new XMLparserAttribute();
 	currentAttribute = firstAttribute;
 }
 
@@ -240,7 +240,7 @@ bool addTagLayerToFileObject(XMLparserTag* firstTagInCurrentLayer, ofstream* wri
 		writeStringToFileObject(tagOpeningString, writeFileObject);
 		if(tagHasAttributes)
 		{
-			XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
+			XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
@@ -350,7 +350,7 @@ bool addTagLayerToByteArrayInefficient(XMLparserTag* firstTagInCurrentLayer, cha
 		writeStringToByteArrayInefficient(tagOpeningString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 		if(tagHasAttributes)
 		{
-			XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
+			XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
@@ -1057,7 +1057,7 @@ bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag,
 
 
 				currentTag->currentAttribute->value = attributeValue;
-				XMLParserAttribute* newAttribute = new XMLParserAttribute();
+				XMLparserAttribute* newAttribute = new XMLparserAttribute();
 				currentTag->currentAttribute->nextAttribute = newAttribute;
 				currentTag->currentAttribute = currentTag->currentAttribute->nextAttribute;
 				//cout << "DEBUG: rentering parseTagAttributeName after recording an attribute. treeLayer = " << treeLayer << endl;
@@ -1168,7 +1168,7 @@ void throwGenericXMLParseError()
 bool getAttribute(XMLparserTag* tag, string attributeName, string* attributeValueFound)
 {
 	bool result = false;
-	XMLParserAttribute* currentAttribute = tag->firstAttribute;
+	XMLparserAttribute* currentAttribute = tag->firstAttribute;
 	while(currentAttribute->nextAttribute != NULL)
 	{
 		if(currentAttribute->name == attributeName)
@@ -1181,9 +1181,9 @@ bool getAttribute(XMLparserTag* tag, string attributeName, string* attributeValu
 	return result;
 }
 
-XMLParserAttribute* createNewAttribute(XMLParserAttribute* currentAttribute)
+XMLparserAttribute* createNewAttribute(XMLparserAttribute* currentAttribute)
 {
-	XMLParserAttribute* newAttribute2 = new XMLParserAttribute();
+	XMLparserAttribute* newAttribute2 = new XMLparserAttribute();
 	currentAttribute->nextAttribute = newAttribute2;
 	currentAttribute = currentAttribute->nextAttribute;
 	return currentAttribute;

@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3f7e 16-August-2015
+ * Project Version: 3g1a 14-October-2015
  *
  *******************************************************************************/
 
@@ -58,19 +58,19 @@
 
 
 
-class XMLParserAttribute
+class XMLparserAttribute
 {
 private:
 	/*There are currently no private attributes of this class*/
 public:
 
-	XMLParserAttribute(void); // constructor
-	~XMLParserAttribute();	// and destructor.
+	XMLparserAttribute(void); // constructor
+	~XMLparserAttribute();	// and destructor.
 
 	string name;
 	string value;
 
-	XMLParserAttribute* nextAttribute;
+	XMLparserAttribute* nextAttribute;
 
 
 };
@@ -94,8 +94,8 @@ public:
 	XMLparserTag* nextTag;
 	XMLparserTag* firstLowerLevelTag;
 
-	XMLParserAttribute* firstAttribute;
-	XMLParserAttribute* currentAttribute;	//temporary variable used for attribute list creation
+	XMLparserAttribute* firstAttribute;
+	XMLparserAttribute* currentAttribute;	//temporary variable used for attribute list creation
 
 };
 
@@ -116,7 +116,7 @@ bool isBlankChar(ifstream* parseFileObject, char c);
 bool isBlankCharTabOrNewLine(ifstream* parseFileObject, char c);
 void throwGenericXMLParseError();
 bool getAttribute(XMLparserTag* tag, string attributeName, string* attributeValueFound);
-XMLParserAttribute* createNewAttribute(XMLParserAttribute* currentAttribute);
+XMLparserAttribute* createNewAttribute(XMLparserAttribute* currentAttribute);
 
 
 bool writeXMLfileInefficient(string xmlFileName, XMLparserTag* firstTagInXMLfile);
