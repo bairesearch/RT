@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -235,8 +235,10 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 	if(positionOfFullStop != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{
 		spriteReferenceFileName = sceneFileName.substr(0, positionOfFullStop);
+		#ifdef LD_DEBUG
 		//cout << "sceneFileName = " << sceneFileName << endl;
 		//cout << "spriteReferenceFileName without fullstop = " << spriteReferenceFileName << endl;
+		#endif
 	}
 
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_NAME_START;

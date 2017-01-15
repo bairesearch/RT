@@ -234,8 +234,9 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 			if(!endTagFound)
 			{
 				currentTag->name = tagName;
+				#ifdef XML_DEBUG
 				//cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
-
+				#endif
 				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
 					result = false;
@@ -596,17 +597,20 @@ bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag,
 			}
 			else
 			{
+				#ifdef XML_DEBUG
 				if(attributeValue != "")
 				{
 					//cout << "empty attribute value detected" << endl;
 				}
-
+				#endif
 
 				currentTag->currentAttribute->value = attributeValue;
 				XMLparserAttribute* newAttribute = new XMLparserAttribute();
 				currentTag->currentAttribute->nextAttribute = newAttribute;
 				currentTag->currentAttribute = currentTag->currentAttribute->nextAttribute;
+				#ifdef XML_DEBUG
 				//cout << "DEBUG: rentering parseTagAttributeName after recording an attribute. treeLayer = " << treeLayer << endl;
+				#endif
 
 				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
@@ -618,12 +622,7 @@ bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag,
 		}
 		else
 		{
-			//cout << "\ncurrentToken = " << currentToken << endl;
-			//cout << "\n1attributeValue = " << attributeValue << endl;					//cout << "ERROR DETECTED HERE @ > 500 function recursive iterations - LIMITED STACK SIZE / FUNCTION RECURSIVE ITERATIONS???\n\n:
-
 			attributeValue = attributeValue+currentToken;
-
-			//cout << "\n2attributeValue = " << attributeValue << endl;
 		}
 	}
 
@@ -699,8 +698,10 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 				{
 					if(currentToken == CHAR_DASH)
 					{//foundSecondDash
+						#ifdef XML_DEBUG
 						//cout << "found legal comment opening" << endl;
 						//throwGenericXMLParseError();
+						#endif
 					}
 					else
 					{
@@ -739,8 +740,10 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 					if(foundSecondDash)
 					{
 						finishedParsingObject = true;
+						#ifdef XML_DEBUG
 						//cout << "found legal comment close" << endl;
 						//throwGenericXMLParseError();
+						#endif
 					}
 					else
 					{

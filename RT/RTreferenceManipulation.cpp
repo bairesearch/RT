@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  *******************************************************************************/
 
@@ -281,7 +281,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 			|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
 			|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT")))
 			{
-
+				#ifdef RT_DEBUG
 				//cout << "Writing ref; currentReference->name = " << currentReference->name << endl;
 				//cout << "currentReference->type = " << currentReference->type << endl;
 				//cout << "currentReference->colour = " << currentReference->colour << endl;
@@ -289,7 +289,8 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 				//cout << "currentReference->absoluteDeformationMatrix.c.z = " << currentReference->absoluteDeformationMatrix.c.z << endl;
 				//cout << "currentReference->deformationMatrix.c.z = " << currentReference->deformationMatrix.c.z << endl;
 				//cout << "currentReference->relativePosition.z = " << currentReference->relativePosition.z << endl;
-
+				#endif
+				
 				LDreference collapsedReference;
 				copyReferences(&collapsedReference, currentReference, currentReference->type);
 

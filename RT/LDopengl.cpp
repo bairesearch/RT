@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  *******************************************************************************/
 
@@ -1075,7 +1075,9 @@ void writeScreenToDepthMap(int width, int height, double* depthMap)
 			#ifdef FIX_OPENGL_3DOD_TIMING_BUG
 			if(depthMap[y*width + x] > 0)
 			{
+				#ifdef LD_DEBUG
 				//cout << "depthMap[" << y << "*width + " << x << "] = " << depthMap[y*width + x] << endl;
+				#endif
 				cout << depthMap[y*width + x] << endl;
 			}
 			#endif

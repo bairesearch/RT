@@ -26,7 +26,7 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  *******************************************************************************/
 
@@ -644,12 +644,16 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 				pt_int->x = xyXInt;
 				pt_int->y = xyYInt;
 				pt_int->z = zxZInt;
+				#ifdef RT_DEBUG
 				//cout << "DEBUG: X intersection on xy plane = X intersection on zx plane detected" << endl;
+				#endif
 			}
 		}
 		else
 		{
+			#ifdef RT_DEBUG
 			//cout << "DEBUG: X intersection on xy plane = X intersection on zx plane detected" << endl;
+			#endif
 		}
 
 		if(xyinterceptionPointFound && yzinterceptionPointFound)
@@ -665,12 +669,16 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 				pt_int->x = xyXInt;
 				pt_int->y = xyYInt;
 				pt_int->z = yzZInt;
+				#ifdef RT_DEBUG
 				//cout << "DEBUG: Y intersection on xy plane = Y intersection on yz plane detected" << endl;
+				#endif
 			}
 		}
 		else
 		{
+			#ifdef RT_DEBUG
 			//cout << "DEBUG: Y intersection on xy plane = Y intersection on yz plane detected" << endl;
+			#endif
 		}
 
 		if(yzinterceptionPointFound && zxinterceptionPointFound)
@@ -686,12 +694,16 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 				pt_int->x = zxXInt;
 				pt_int->y = yzYInt;
 				pt_int->z = yzZInt;
+				#ifdef RT_DEBUG
 				//cout << "DEBUG: Z intersection on yz plane = Z intersection on zx plane detected" << endl;
+				#endif
 			}
 		}
 		else
 		{
+			#ifdef RT_DEBUG
 			//cout << "DEBUG: Z intersection on yz plane = Z intersection on zx plane detected" << endl;
+			#endif
 		}
 
 

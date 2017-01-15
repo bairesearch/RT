@@ -26,7 +26,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  *******************************************************************************/
 
@@ -567,7 +567,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						currentReference->vertex4absolutePosition.y = currentReference->vertex4relativePosition.y + parentReference->absolutePosition.y;
 						currentReference->vertex4absolutePosition.z = currentReference->vertex4relativePosition.z + parentReference->absolutePosition.z;
 					#endif
-
+						#ifdef LD_DEBUG
 						/*
 						cout << "" << endl;
 						cout << "currentReference->type = " << currentReference->type << endl;
@@ -599,7 +599,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						cout << "currentReference->vertex4absolutePosition.z = " << currentReference->vertex4absolutePosition.z << endl;
 						cout << "" << endl;
 						*/
-
+						#endif
 
 						//4. finalise LDreference object
 						//code to create a new reference object
@@ -806,7 +806,9 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 
 						if(parseFile(subPartFileName, currentReference->firstReferenceWithinSubModel, currentReference, recurseIntoPartsDir))
 						{
+							#ifdef LD_DEBUG
 							//cout << "successfully parsed; currentReference->name = " <<  currentReference->name << endl;
+							#endif
 							currentReference->isSubModelReference = true;
 
 							#ifdef USE_LRRC

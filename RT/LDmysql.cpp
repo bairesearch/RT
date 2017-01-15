@@ -26,7 +26,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -132,14 +132,19 @@ bool performSQLrealSelectQuery(char* sqlCommand, unsigned long stringLength)
 
 
 
-//not yet working...
+//long performSQLgetNumRowsQuery(string tableName, string columnName)
 long performSQLgetNumRowsQuery(string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
 
 	string sqlQueryString = "";
+	#ifdef SQL_MYSQL_VERSION_5_7_PLUS
+	//sqlQueryString = sqlQueryString + "SELECT COUNT(" + columnName + ") FROM " + tableName;
+	sqlQueryString = sqlQueryString + "SELECT COUNT(*) FROM " + tableName;
+	#else
 	sqlQueryString = sqlQueryString + "SELECT ID, COUNT(*) FROM " + tableName;
+	#endif
 	char* sqlCommand = const_cast<char*>(sqlQueryString.c_str());
 
 	query_state = mysql_query(connection, sqlCommand);
@@ -155,14 +160,16 @@ long performSQLgetNumRowsQuery(string tableName)
 
 	if((row = mysql_fetch_row(result)) != NULL)
 	{
-		numRowsInTable = long(atof(row[1]));	//0
+		#ifdef SQL_MYSQL_VERSION_5_7_PLUS
+		numRowsInTable = long(atof(row[0]));	
+		#else
+		numRowsInTable = long(atof(row[1]));
+		#endif
 	}
 
-
-
 	return numRowsInTable;
-
 }
+
 
 void performSQLdeleteAllRowsQuery(string tableName)
 {
@@ -195,6 +202,10 @@ bool performSQLinsertQuery(char* sqlCommand)
 {
 	int query_state;
 
+	#ifdef LD_DEBUG
+	//cout << "performSQLinsertQuery{}: sqlCommand = " << sqlCommand << endl;
+	#endif
+	
 	query_state = mysql_query(connection, sqlCommand);
 	if (query_state !=0)
 	{
@@ -209,7 +220,18 @@ bool performSQLinsertQuery(char* sqlCommand)
 bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength)
 {
 	int query_state;
-
+	
+	#ifdef LD_DEBUG
+	/*
+	cout << "performSQLrealInsertQuery{}:";
+	for(int i=0; i<stringLength; i++)
+	{
+		cout << sqlCommand[i];
+	}
+	cout << endl;
+	*/
+	#endif
+	
 	query_state = mysql_real_query(connection, sqlCommand, stringLength);
 	if (query_state !=0)
 	{

@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 3i15a 11-August-2016
  *
  *******************************************************************************/
 
@@ -75,8 +75,6 @@ long getTimeAsLong()
 	uli.HighPart = fileTime.dwHighDateTime;
 
 	ULONGLONG systemTimeIn_ms(uli.QuadPart/10000);
-
-	//cout << "systemTimeIn_ms = " << systemTimeIn_ms << endl;
 
 	return systemTimeIn_ms;
 
@@ -190,7 +188,6 @@ bool argumentExists(int argc, char** argv, string keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
-		//cout << "argv[i] = " << argv[i] << endl;
 		if(string(argv[i]) == keystr)
 		{
 			return true;
@@ -233,7 +230,6 @@ string getStringArgument(int argc, char** argv, string keystr)
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
 	{
-		//cout << "argument " << i << " = " << argv[i] << endl;
 		if(!foundArgument)
 		{
 			if(string(argv[i]) == keystr)
@@ -255,7 +251,6 @@ void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
 	{
-		//cout << "argument " << i << " = " << argv[i] << endl;
 		if(!foundArgument)
 		{
 			if(string(argv[i]) == keystr)
@@ -264,7 +259,6 @@ void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>
 				while(((argv[i+j])[0] != CHAR_DASH) && (i+j < argc))
 				{
 					string stringArgument = string(argv[i+j]);
-					//cout << "stringArgument = " << stringArgument << endl;
 					inputFileNamesVector->push_back(stringArgument);
 					foundArgument = true;
 					j++;
