@@ -598,6 +598,7 @@ void createBooleanDiffMapFromRGBMaps(bool * diffbooleanDiffMap, int imageWidth, 
 }
 */
 
+#ifdef USE_OR
 void normaliseRGBMapBasedOnAverageLuminosity(unsigned char * normalisedRgbMap, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
@@ -645,7 +646,7 @@ double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char
 	//cout << "averageLuminosity = " << averageLuminosity << endl;
 	return averageLuminosity;
 }	
-	
+#endif	
 
 void generatePixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
