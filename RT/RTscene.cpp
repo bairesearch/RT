@@ -23,7 +23,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a11b 09-July-2012
+ * Project Version: 3a12a 31-July-2012
  *
  *******************************************************************************/
 
