@@ -174,7 +174,68 @@ double absDouble(double val)
 
 
 
+//OLD bad code; if(strstr(...)) , NEW good code; if(strcmp(...) == 0)
+int exists_argument(int argc,char **argv,char *keystr)
+{
+	int i;
 
+	for(i=1;i<argc;i++)
+	{
+		//cout << "argv[i] = " << argv[i] << endl;
+		if(strcmp(argv[i],keystr) == 0) 
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+float get_float_argument(int argc,char **argv,char *keystr)
+{
+	int i;
+	float result=0.0;
+
+	for(i=1;i<argc;i++)
+	{
+		if(strcmp(argv[i],keystr) == 0)
+		{
+			result=atof(argv[i+1]);
+			break;
+		}
+	}
+	if (i == argc)
+	{
+		fprintf(stderr,"Error: get_float_argument(%s)\n",keystr);
+		return (float) -999999999;
+	}
+	
+	else return result;
+}
+
+char *get_char_argument(int argc,char **argv,char *keystr)
+{
+	int i;
+	char *result;
+
+	result=(char *) malloc(256);
+	result[0]=0;
+
+	for(i=1;i<argc;i++)
+	{
+		if(strcmp(argv[i],keystr) == 0)
+		{
+			sprintf(result,"%s",argv[i+1]);
+			break;
+		}
+	}
+	if(i == argc) 
+	{
+		fprintf(stderr,"Error: get_char_argument(%s)\n",keystr);
+	}
+	
+	return result;
+}
+/*
 int exists_argument(int argc,char **argv,char *keystr)
 {
   int i;
@@ -219,4 +280,5 @@ char *get_char_argument(int argc,char **argv,char *keystr)
 
   return result;
 }
+*/
 
