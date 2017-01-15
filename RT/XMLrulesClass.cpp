@@ -106,17 +106,17 @@ RulesClass::~RulesClass()
 
 
 #ifdef USE_GIA
-bool parseGIARulesXMLFile()
+bool parseGIArulesXMLfile()
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
- 	if(!readXMLFile(GIA_RULES_XML_FILE_NAME, firstTagInXMLFile))
+ 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+ 	if(!readXMLfile(GIA_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 
-	XMLParserTag * currentTag = firstTagInXMLFile;
+	XMLparserTag * currentTag = firstTagInXMLfile;
 
 	GIArulesSprite = new RulesClass();
 	GIArulesDraw = new RulesClass();
@@ -126,17 +126,17 @@ bool parseGIARulesXMLFile()
 		result = false;
 	}
 
-	delete firstTagInXMLFile;
+	delete firstTagInXMLfile;
 
 
 	return result;
 }
 
-bool parseGIARulesTag(XMLParserTag * currentTag)
+bool parseGIARulesTag(XMLparserTag * currentTag)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagUpdated = currentTag;
+	XMLparserTag * currentTagUpdated = currentTag;
 	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
@@ -157,17 +157,17 @@ bool parseGIARulesTag(XMLParserTag * currentTag)
 
 
 #ifdef USE_CS
-bool parseCSRulesXMLFile()
+bool parseCSrulesXMLfile()
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
- 	if(!readXMLFile(CS_RULES_XML_FILE_NAME, firstTagInXMLFile))
+ 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+ 	if(!readXMLfile(CS_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 
-	XMLParserTag * currentTag = firstTagInXMLFile;
+	XMLparserTag * currentTag = firstTagInXMLfile;
 
 	CSrulesSprite = new RulesClass();
 	CSrulesDraw = new RulesClass();
@@ -177,17 +177,17 @@ bool parseCSRulesXMLFile()
 		result = false;
 	}
 
-	delete firstTagInXMLFile;
+	delete firstTagInXMLfile;
 
 
 	return result;
 }
 
-bool parseCSRulesTag(XMLParserTag * currentTag)
+bool parseCSRulesTag(XMLparserTag * currentTag)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagUpdated = currentTag;
+	XMLparserTag * currentTagUpdated = currentTag;
 	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
@@ -210,36 +210,36 @@ bool parseCSRulesTag(XMLParserTag * currentTag)
 
 
 #ifdef USE_OR
-bool parseORRulesXMLFile()
+bool parseORrulesXMLfile()
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
- 	if(!readXMLFile(OR_RULES_XML_FILE_NAME, firstTagInXMLFile))
+ 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+ 	if(!readXMLfile(OR_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 
-	XMLParserTag * currentTag = firstTagInXMLFile;
+	XMLparserTag * currentTag = firstTagInXMLfile;
 
 	ORrulesObjectRecognition = new RulesClass();
 
-	if(!parseORRulesTag(currentTag))
+	if(!parseORrulesTag(currentTag))
 	{
 		result = false;
 	}
 
-	delete firstTagInXMLFile;
+	delete firstTagInXMLfile;
 
 
 	return result;
 }
 
-bool parseORRulesTag(XMLParserTag * currentTag)
+bool parseORrulesTag(XMLparserTag * currentTag)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagUpdated = currentTag;
+	XMLparserTag * currentTagUpdated = currentTag;
 	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
@@ -256,34 +256,34 @@ bool parseORRulesTag(XMLParserTag * currentTag)
 
 
 
-bool parseANNRulesXMLFile()
+bool parseANNrulesXMLfile()
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
- 	if(!readXMLFile(ANN_RULES_XML_FILE_NAME, firstTagInXMLFile))
+ 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+ 	if(!readXMLfile(ANN_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 
 	/*
 	#define TEMP_XML_FILE_NAME "temp.xml"
- 	if(!writeXMLFile(TEMP_XML_FILE_NAME, firstTagInXMLFile))
+ 	if(!writeXMLfile(TEMP_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 	*/
 
-	XMLParserTag * currentTag = firstTagInXMLFile;
+	XMLparserTag * currentTag = firstTagInXMLfile;
 
 	ANNrulesSprite = new RulesClass();
 
-	if(!parseANNRulesTag(currentTag))
+	if(!parseANNrulesTag(currentTag))
 	{
 		result = false;
 	}
 
-	delete firstTagInXMLFile;
+	delete firstTagInXMLfile;
 
 	return result;
 }
@@ -292,11 +292,11 @@ bool parseANNRulesXMLFile()
 
 
 //Top Level
-bool parseANNRulesTag(XMLParserTag * currentTag)
+bool parseANNrulesTag(XMLparserTag * currentTag)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagUpdated = currentTag;
+	XMLparserTag * currentTagUpdated = currentTag;
 	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
@@ -315,19 +315,19 @@ bool parseANNRulesTag(XMLParserTag * currentTag)
 
 
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)
+bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
 {
 	bool result = true;
 
 	if(currentTag->name == sectionTagName)
 	{
-		XMLParserTag * currentLowerLevelTag = currentTag->firstLowerLevelTag;
+		XMLparserTag * currentLowerLevelTag = currentTag->firstLowerLevelTag;
 
 		RulesClass * currentReferenceToObjectClass = firstReferenceToObjectClass;
 
 		while(currentLowerLevelTag->nextTag != NULL)
 		{
-			if(!addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attribute1Name, attribute2Name, attribute3Name, attribute4Name, attribute5Name, attribute6Name, attribute7Name, attribute8Name))
+			if(!addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attributeName1, attributeName2, attributeName3, attributeName4, attributeName5, attributeName6, attributeName7, attributeName8))
 			{
 				result = false;
 			}
@@ -364,7 +364,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sec
 }
 
 
-bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)
+bool addRulesClassObjectBasedOnTag(XMLparserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
 {
 	bool result = true;
 
@@ -375,10 +375,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 	{
 		if(attributeNumber == 1)
 		{
-			if(currentAttribute->name != attribute1Name)
+			if(currentAttribute->name != attributeName1)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute1Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute1Name = " << attribute1Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName1.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName1 = " << attributeName1 << endl;
 			}
 			else
 			{
@@ -387,10 +387,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 2)
 		{
-			if(currentAttribute->name != attribute2Name)
+			if(currentAttribute->name != attributeName2)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute2Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute2Name = " << attribute2Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName2.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName2 = " << attributeName2 << endl;
 			}
 			else
 			{
@@ -399,10 +399,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 3)
 		{
-			if(currentAttribute->name != attribute3Name)
+			if(currentAttribute->name != attributeName3)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute3Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute3Name = " << attribute3Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName3.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName3 = " << attributeName3 << endl;
 			}
 			else
 			{
@@ -411,10 +411,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 4)
 		{
-			if(currentAttribute->name != attribute4Name)
+			if(currentAttribute->name != attributeName4)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute4Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute4Name = " << attribute4Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName4.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName4 = " << attributeName4 << endl;
 			}
 			else
 			{
@@ -423,10 +423,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 5)
 		{
-			if(currentAttribute->name != attribute5Name)
+			if(currentAttribute->name != attributeName5)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute5Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute5Name = " << attribute5Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName5.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName5 = " << attributeName5 << endl;
 			}
 			else
 			{
@@ -435,10 +435,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 6)
 		{
-			if(currentAttribute->name != attribute6Name)
+			if(currentAttribute->name != attributeName6)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute6Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute6Name = " << attribute6Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName6.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName6 = " << attributeName6 << endl;
 			}
 			else
 			{
@@ -447,10 +447,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 7)
 		{
-			if(currentAttribute->name != attribute7Name)
+			if(currentAttribute->name != attributeName7)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute7Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute7Name = " << attribute7Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName7.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName7 = " << attributeName7 << endl;
 			}
 			else
 			{
@@ -459,10 +459,10 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 		}
 		else if(attributeNumber == 8)
 		{
-			if(currentAttribute->name != attribute8Name)
+			if(currentAttribute->name != attributeName8)
 			{
 				result = false;
-				cout << "parse error; currentAttribute->name != attribute8Name.  currentAttribute->name = " <<  currentAttribute->name << ". attribute8Name = " << attribute8Name << endl;
+				cout << "parse error; currentAttribute->name != attributeName8.  currentAttribute->name = " <<  currentAttribute->name << ". attributeName8 = " << attributeName8 << endl;
 			}
 			else
 			{

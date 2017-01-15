@@ -44,7 +44,7 @@ using namespace std;
 #include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, view_info * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
 {
 	ofstream writeFileObject;
 	writeFileObject.open(fileName);
@@ -65,7 +65,7 @@ bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Refe
 
 
 
-bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomViewInfo, view_info * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
+bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
 {
 	/*
 	#ifdef COMPILE_TH_RT
@@ -85,21 +85,21 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	string dataValueString;
 
 
-	int imgwidth;
-	int imgheight;
+	int imageWidth;
+	int imageHeight;
 	if(useCustomViewInfo)
 	{
-		imgwidth = vi->imgwidth;
-		imgheight = vi->imgheight;
+		imageWidth = vi->imageWidth;
+		imageHeight = vi->imageHeight;
 	}
 	else
 	{
-		imgwidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
-		imgheight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
+		imageWidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
+		imageHeight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
 	}
-	sprintf(tempDataValueString, "%d", imgwidth);
+	sprintf(tempDataValueString, "%d", imageWidth);
 	string imgwidthString = tempDataValueString;
-	sprintf(tempDataValueString, "%d", imgheight);
+	sprintf(tempDataValueString, "%d", imageHeight);
 	string imgheightString = tempDataValueString;
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_IMAGE_SIZE + " " + imgwidthString + " " + imgheightString;
@@ -147,9 +147,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	double viewatz;
 	if(useCustomViewInfo)
 	{
-		viewatx = vi->viewat.x;
-		viewaty = vi->viewat.y;
-		viewatz = vi->viewat.z;
+		viewatx = vi->viewAt.x;
+		viewaty = vi->viewAt.y;
+		viewatz = vi->viewAt.z;
 	}
 	else
 	{
@@ -178,9 +178,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	double viewupz;
 	if(useCustomViewInfo)
 	{
-		viewupx = vi->viewup.x;
-		viewupy = vi->viewup.y;
-		viewupz = vi->viewup.z;
+		viewupx = vi->viewUp.x;
+		viewupy = vi->viewUp.y;
+		viewupz = vi->viewUp.z;
 	}
 	else
 	{
@@ -203,16 +203,16 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	writeFileObject->put(CHAR_NEWLINE);
 
 
-	double focal_length;
+	double focalLength;
 	if(useCustomViewInfo)
 	{
-		focal_length = vi->focal_length;
+		focalLength = vi->focalLength;
 	}
 	else
 	{
-		focal_length = TAL_FILE_HEADER_DEFAULT_FOCAL;
+		focalLength = TAL_FILE_HEADER_DEFAULT_FOCAL;
 	}
-	sprintf(tempDataValueString, "%0.4f", focal_length);
+	sprintf(tempDataValueString, "%0.4f", focalLength);
 	string focal_lengthString = tempDataValueString;
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_FOCAL + " " + focal_lengthString;
@@ -223,21 +223,21 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	writeFileObject->put(CHAR_NEWLINE);
 
 
-	double viewwidth;
-	double viewheight;
+	double viewWidth;
+	double viewHeight;
 	if(useCustomViewInfo)
 	{
-		viewwidth = vi->viewwidth;
-		viewheight = vi->viewheight;
+		viewWidth = vi->viewWidth;
+		viewHeight = vi->viewHeight;
 	}
 	else
 	{
-		viewwidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
-		viewheight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
+		viewWidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
+		viewHeight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 	}
-	sprintf(tempDataValueString, "%0.4f", viewwidth);
+	sprintf(tempDataValueString, "%0.4f", viewWidth);
 	string viewwidthString = tempDataValueString;
-	sprintf(tempDataValueString, "%0.4f", viewheight);
+	sprintf(tempDataValueString, "%0.4f", viewHeight);
 	string viewheightString = tempDataValueString;
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWSIZE + " " + viewwidthString + " " + viewheightString;
@@ -562,10 +562,10 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 
 		if(!compareDoubles(submodelRotationVector.x, 0.0) || !compareDoubles(submodelRotationVector.y, 0.0) || !compareDoubles(submodelRotationVector.z, 0.0))
 		{
-			advanced_mat inverseRotationxMatrix, inverseRotationyMatrix, inverseRotationzMatrix;
-			advanced_mat tmpAdvancedMatrix1b, tmpAdvancedMatrix2b, tmpAdvancedMatrix3b;
+			advancedMat inverseRotationxMatrix, inverseRotationyMatrix, inverseRotationzMatrix;
+			advancedMat tmpAdvancedMatrix1b, tmpAdvancedMatrix2b, tmpAdvancedMatrix3b;
 
-			advanced_mat deformationMatrixAdvanced;
+			advancedMat deformationMatrixAdvanced;
 			makeAdvancedMatrix(&deformationMatrixAdvanced, &(currentReference->deformationMatrix), 1);
 
 			createInverseRotationxMatrix(submodelRotationVector.x, &inverseRotationxMatrix);

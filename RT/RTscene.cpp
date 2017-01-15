@@ -56,12 +56,12 @@ static float lightingSpecular = SPECULAR;
 static float lightingDiffuse = DIFFUSE;
 
 
-lighting_info::lighting_info(void)
+lightingInfo::lightingInfo(void)
 {
 	nextLight = NULL;
 }
 
-lighting_info::~lighting_info(void)
+lightingInfo::~lightingInfo(void)
 {
 	delete nextLight;
 }
@@ -92,16 +92,16 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 
 	int result = TRUE;
 
-	view_info *vi = NULL;
-	scene_info *si = NULL;
-	lighting_info *li = NULL;
+	ViewInfo *vi = NULL;
+	sceneInfo *si = NULL;
+	lightingInfo *li = NULL;
 
 	parseTalFileInitialiseParser(talFileName);
 	vi = parseTalFileGetViewInfo(vi);
 	li = parseTalFileGetLightInfo(li);
 	si = parseTalFileGetSceneInfo(si);
 
-	exit_parser();
+	exitParser();
 
 	#ifdef LINUX
 	chdir(tempFolderCharStar);
@@ -129,16 +129,16 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 
 }
 
-int rayTraceSceneWithoutParse(view_info *vi, scene_info *si, lighting_info *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
+int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap)
 {
 	int result = TRUE;
 
 	if(!setRGBAndDepthAndNormalAndPointMaps)
 	{
-		rgbMap = new unsigned char[(vi->imgwidth)*(vi->imgheight)*(RGB_NUM)];
+		rgbMap = new unsigned char[(vi->imageWidth)*(vi->imageHeight)*(RGB_NUM)];
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-		depthMap = new double[vi->imgwidth*vi->imgheight];
-		normalMap = new double[vi->imgwidth*vi->imgheight*VEC_MAP_VEC_NUM_DIMENSIONS];
+		depthMap = new double[vi->imageWidth*vi->imageHeight];
+		normalMap = new double[vi->imageWidth*vi->imageHeight*VEC_MAP_VEC_NUM_DIMENSIONS];
 	#endif
 	}
 
@@ -158,37 +158,37 @@ int rayTraceSceneWithoutParse(view_info *vi, scene_info *si, lighting_info *li, 
 		pixmap* dm;
 		pixmap* nm;
 
-		pm = new_pixmap(vi->imgwidth, vi->imgheight);
+		pm = newPixmap(vi->imageWidth, vi->imageHeight);
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-		dm = new_pixmap(vi->imgwidth, vi->imgheight);
-		nm = new_pixmap(vi->imgwidth, vi->imgheight);
+		dm = newPixmap(vi->imageWidth, vi->imageHeight);
+		nm = newPixmap(vi->imageWidth, vi->imageHeight);
 	#endif
 
-  		for(x = 0; x < vi->imgwidth; x++)
+  		for(x = 0; x < vi->imageWidth; x++)
 		{
-			for(y = 0; y < vi->imgheight; y++)
+			for(y = 0; y < vi->imageHeight; y++)
 			{
 				colour col;
-				getRGBMapValues(x, y, vi->imgwidth,rgbMap,&col);
-				placepoint_ppm(pm, x, y, col.r, col.g, col.b);
+				getRGBMapValues(x, y, vi->imageWidth,rgbMap,&col);
+				placepointPPM(pm, x, y, col.r, col.g, col.b);
 
 			#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
 
 				vec norm;
-				getNormalMapValue(x, y, vi->imgwidth,normalMap,&norm);
-				placepoint_ppm(nm, x, y, (int)(norm.x*255.0), (int)(norm.y*255.0), (int)(norm.z*255.0));
-				//placepoint_ppm(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
+				getNormalMapValue(x, y, vi->imageWidth,normalMap,&norm);
+				placepointPPM(nm, x, y, (int)(norm.x*255.0), (int)(norm.y*255.0), (int)(norm.z*255.0));
+				//placepointPPM(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
 
 				double tAtSurface;
-				tAtSurface = getLumOrContrastOrDepthMapValue(x, y, vi->imgwidth, depthMap);
+				tAtSurface = getLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, depthMap);
 
 				if(tAtSurface == RT_RAYTRACE_NO_HIT_DEPTH_T)
 				{
 					tAtSurface = ESTIMATE_MAX_DEPTH_T_REAL;
 				}
 				double tValSurfaceNormalised = minInt((int)(tAtSurface/ESTIMATE_MAX_DEPTH_T_REAL*255.0), 255);
-				placepoint_ppm(dm, x, y, tValSurfaceNormalised, tValSurfaceNormalised, tValSurfaceNormalised);
+				placepointPPM(dm, x, y, tValSurfaceNormalised, tValSurfaceNormalised, tValSurfaceNormalised);
 
 			#endif
 			}
@@ -328,9 +328,9 @@ int addExtension(char * filenameWithoutExtension, char * extension, char * filen
 
 
 
-scene_info *addSceneToEnd(scene_info *si_orig, scene_info *new_node)
+sceneInfo *addSceneToEnd(sceneInfo *si_orig, sceneInfo *new_node)
 {
-	scene_info *tmp;
+	sceneInfo *tmp;
 	if(si_orig == NULL)
 	{
 		return new_node;
@@ -344,10 +344,10 @@ scene_info *addSceneToEnd(scene_info *si_orig, scene_info *new_node)
 	return si_orig;
 }
 
-lighting_info *addLightToEnd(lighting_info *li_orig, lighting_info *new_node)
+lightingInfo *addLightToEnd(lightingInfo *li_orig, lightingInfo *new_node)
 {
 
-	lighting_info *tmp;
+	lightingInfo *tmp;
 
 
 	if(li_orig == NULL)
@@ -387,13 +387,13 @@ void parseTalFileInitialiseParser(char *talFileName)
 	else
 	{
 
-		init_parser(f);
+		initParser(f);
 	}
 }
 
-view_info * parseTalFileGetViewInfo(view_info *vi)
+ViewInfo * parseTalFileGetViewInfo(ViewInfo *vi)
 {
-	if(! read_viewport())
+	if(! readViewport())
 	{
 		printf("could not read viewport");
 		exit(0);
@@ -405,12 +405,12 @@ view_info * parseTalFileGetViewInfo(view_info *vi)
 }
 
 
-lighting_info * parseTalFileGetLightInfo(lighting_info *li)
+lightingInfo * parseTalFileGetLightInfo(lightingInfo *li)
 {
-	while(next_light_source())
+	while(nextLightSource())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
-		lighting_info* nd = new lighting_info(); //(lighting_info*)malloc(sizeof(lighting_info));
+		lightingInfo* nd = new lightingInfo(); //(lightingInfo*)malloc(sizeof(lightingInfo));
 
 		nd->ls = *(get_light_info());
 		nd->nextLight = NULL;
@@ -424,7 +424,7 @@ lighting_info * parseTalFileGetLightInfo(lighting_info *li)
 }
 
 
-scene_info * parseTalFileGetSceneInfo(scene_info *si)
+sceneInfo * parseTalFileGetSceneInfo(sceneInfo *si)
 {
 	double height;
 	double width;
@@ -434,29 +434,29 @@ scene_info * parseTalFileGetSceneInfo(scene_info *si)
 	double transz;
 
 	/*defining advanced variables - for rotation, translation, scaling*/
-	advanced_vec tmpAvancedVector;
-	advanced_mat tmpAdvancedMatrix;	/*used for matrix manipulation*/
-	advanced_mat tmpAdvancedMatrix2;/*used for matrix manipulation*/
-	advanced_mat tmpAdvancedMatrix3;/*used for matrix manipulation*/
-	advanced_mat rotationxMatrix;
-	advanced_mat rotationyMatrix;
-	advanced_mat rotationzMatrix;
-	advanced_mat inverseRotationxMatrix;
-	advanced_mat inverseRotationyMatrix;
-	advanced_mat inverseRotationzMatrix;
-	advanced_mat inverseTranslationMatrix;
-	advanced_mat inverseScaleMatrix;
-	advanced_mat translationMatrix;
-	advanced_mat scaleMatrix;
-	advanced_mat reverseMatrix;
-	advanced_mat standardMatrix;
+	advancedVec tmpAvancedVector;
+	advancedMat tmpAdvancedMatrix;	/*used for matrix manipulation*/
+	advancedMat tmpAdvancedMatrix2;/*used for matrix manipulation*/
+	advancedMat tmpAdvancedMatrix3;/*used for matrix manipulation*/
+	advancedMat rotationxMatrix;
+	advancedMat rotationyMatrix;
+	advancedMat rotationzMatrix;
+	advancedMat inverseRotationxMatrix;
+	advancedMat inverseRotationyMatrix;
+	advancedMat inverseRotationzMatrix;
+	advancedMat inverseTranslationMatrix;
+	advancedMat inverseScaleMatrix;
+	advancedMat translationMatrix;
+	advancedMat scaleMatrix;
+	advancedMat reverseMatrix;
+	advancedMat standardMatrix;
 
-  	while (next_scene_command())
+  	while (nextSceneCommand())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
-		scene_info* nd = new scene_info(); //(scene_info*)malloc(sizeof(scene_info));
-		nd->pi = *(get_piece_info());
-		nd->di = *(get_dimensions_info());
+		sceneInfo* nd = new sceneInfo(); //(sceneInfo*)malloc(sizeof(sceneInfo));
+		nd->pi = *(getPieceInfo());
+		nd->di = *(getDimensionsInfo());
 		nd-> tIn = 0.0;
 		nd-> tOut = 0.0;
 		nd->nextScene = NULL;
@@ -514,7 +514,7 @@ scene_info * parseTalFileGetSceneInfo(scene_info *si)
 	return si;
 }
 
-void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, view_info *vi, scene_info *si, lighting_info *li)
+void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li)
 {
 
 
@@ -559,13 +559,13 @@ void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, 
 		/*defining the nTilda, uTilda, vTilda vectors*/
 
 	/*nTilda = (eye - viewAt)*/
-	negativeVector(&(vi->viewat), tmp);
+	negativeVector(&(vi->viewAt), tmp);
 	addVectorsRT(tmp,(&(vi->eye)), nTilda);
 	normaliseVector(nTilda);
 
 	/*wTilda = (viewUp - eye)*/
 	negativeVector(&(vi->eye), tmp);
-	addVectorsRT(tmp,(&(vi->viewup)), wTilda);
+	addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
 	normaliseVector(wTilda);
 
 	/*uTilda = wTilda x nTilda*/
@@ -585,13 +585,13 @@ void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, 
 
 		/*raytrace x/y coordinates of view port*/
 
-  	for(x = 0; x < vi->imgwidth; x++)
+  	for(x = 0; x < vi->imageWidth; x++)
 	{
 		#ifdef DEMONSTRATE_CPP_STRING_TO_CSTRING_CAST_CORRUPTION
 		printf("\nimageFileName = %s", imageFileName);
 		#endif
 
-		for(y = 0; y < vi->imgheight; y++)
+		for(y = 0; y < vi->imageHeight; y++)
 		{
 			//printf("pixel being raytraced; x= %d, y=%d", x , y);
 			#ifndef RT_NO_TEXT_FEEDBACK
@@ -603,7 +603,7 @@ void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, 
 
 
 
-			scene_info* nd = si;
+			sceneInfo* nd = si;
 
 			/*calculates UVN Scalars*/
 			calculateUVNScalars(vi, uvn, x, y);
@@ -620,29 +620,29 @@ void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, 
 			if(lightingMode == 0)
 			{
 				calculateBasicColour(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
-				//placepoint_ppm(pm, x, y, col.r, col.g, col.b);
+				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 			else if(lightingMode == 1)
 			{
 				calculateTransparencyColour(vi, si, li, &col);
-				//placepoint_ppm(pm, x, y, col.r, col.g, col.b);
+				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 
 			}
 			else if(lightingMode == 2)
 			{
 				calculateAmbientDiffuseSpecular(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
-				//placepoint_ppm(pm, x, y, col.r, col.g, col.b);
+				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 
-			setRGBMapValues(x, y,vi->imgwidth, &col, rgbMap);
+			setRGBMapValues(x, y,vi->imageWidth, &col, rgbMap);
 
 			if(setRGBAndDepthAndNormalAndPointMaps)
 			{
 				//printf("\n tAtSurface = %f", tAtSurface);
 				//printf("\n nAtSurface.y = %f", nAtSurface.y);
-				setLumOrContrastOrDepthMapValue(x, y, vi->imgwidth, tAtSurface, depthMap);
-				setNormalMapValue(x, y, vi->imgwidth, &nAtSurface, normalMap);
-				setPointMapValue(x, y, vi->imgwidth, &pAtSurface, pointMap);
+				setLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, tAtSurface, depthMap);
+				setNormalMapValue(x, y, vi->imageWidth, &nAtSurface, normalMap);
+				setPointMapValue(x, y, vi->imageWidth, &pAtSurface, pointMap);
 			}
 
 
@@ -656,9 +656,9 @@ void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, 
 
 
 
-void calculateBasicColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface)
+void calculateBasicColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface)
 {
-	scene_info* nd;
+	sceneInfo* nd;
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -734,7 +734,7 @@ void calculateBasicColour(view_info *vi, scene_info *si, lighting_info *li, colo
 
 
 
-int compare_tin(scene_info *p, scene_info *q, void *pointer)
+int compare_tin(sceneInfo *p, sceneInfo *q, void *pointer)
 {
 	//printf("\nhere1\n");
 	if(p->tIn < q->tIn)
@@ -759,10 +759,10 @@ int compare_tin(scene_info *p, scene_info *q, void *pointer)
 
 
 
-void calculateTransparencyColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb)
+void calculateTransparencyColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb)
 {
-	scene_info* nd_orig;
-	scene_info* nd;
+	sceneInfo* nd_orig;
+	sceneInfo* nd;
 
 	/*temporarily, TRANSPARENCY is a global variable coverting all bricktypes.
 	This can easily be changed to individual brick/piece types but the current .tal
@@ -858,7 +858,7 @@ void calculateTransparencyColour(view_info *vi, scene_info *si, lighting_info *l
 	/* calculateAmbientDiffuseSpecular is a modified version
 	of shading.c's get_point_value method*/
 
-void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface)
+void calculateAmbientDiffuseSpecular(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface)
 {
 		/*light info declarations*/
 
@@ -879,14 +879,14 @@ void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_inf
 	double ambientGreen = lightingAmbientGreen;
 	double ambientBlue = lightingAmbientBlue;
 	colourAdvanced col;
-	lighting_info* nd2;
+	lightingInfo* nd2;
 	vec tmp, tmp2, tmp3;
 	double diff_amt, spec_amt;
 
 
 		/*for scene info traversing declarations..*/
 
-	scene_info* nd;	/*stands for 'node'*/
+	sceneInfo* nd;	/*stands for 'node'*/
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -984,14 +984,14 @@ void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_inf
 
 				/* Find l' using the equation on p5 of the tute 6 notes */
 
-				multiplyVectorByScalarRT(&(nd->n), 2.0*dotproduct(&l,&(nd->n)), &tmp);	/* find  (2 l.n) n	*/
+				multiplyVectorByScalarRT(&(nd->n), 2.0*dotProduct(&l,&(nd->n)), &tmp);	/* find  (2 l.n) n	*/
 				subtractVectorsRT(&l, &tmp, &lpr);		/* subtractVectors it from l	*/
 
 
 				/* Find the diffuse intensity for this light ... */
 
 
-				diff_amt = -dotproduct(&l, &(nd->n)) * diffuse;
+				diff_amt = -dotProduct(&l, &(nd->n)) * diffuse;
 				if (diff_amt < 0.0) diff_amt=0;	/* see tute 6 pre-work */
 
 				/*diffuse lighting effects the surface dependant on the colour of the surface
@@ -1007,8 +1007,8 @@ void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_inf
 
 				/* ... and the specular intensity. */
 
-				if (-(dotproduct(&lpr, &v)) < 0.0) spec_amt = 0;
-				else spec_amt = pow(-dotproduct(&lpr, &v), 1.0*spec_power) * specular;
+				if (-(dotProduct(&lpr, &v)) < 0.0) spec_amt = 0;
+				else spec_amt = pow(-dotProduct(&lpr, &v), 1.0*spec_power) * specular;
 					/*'pow' is a method from math.h*/
 
 				col.r = col.r + nd2->ls.col.r * spec_amt;
@@ -1055,14 +1055,14 @@ void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_inf
 
 
 
-void calculateUVNScalars(view_info *vi, vec* uvn, int x, int y)
+void calculateUVNScalars(ViewInfo *vi, vec* uvn, int x, int y)
 {
 	double u, v, n;
 
 	/*defining the u, v, n scalars*/
-	u = ((double)x - (vi->imgwidth)/2)*(vi->viewwidth)/(vi->imgwidth);
-	v = ((vi->imgheight)/2 - (double)y)*(vi->viewheight)/(vi->imgheight);
-	n = -vi->focal_length;
+	u = ((double)x - (vi->imageWidth)/2)*(vi->viewWidth)/(vi->imageWidth);
+	v = ((vi->imageHeight)/2 - (double)y)*(vi->viewHeight)/(vi->imageHeight);
+	n = -vi->focalLength;
 
 	/*creating the uvn vector from the u, v, n scalars*/
 	uvn->x = u;
@@ -1072,24 +1072,24 @@ void calculateUVNScalars(view_info *vi, vec* uvn, int x, int y)
 	return;
 }
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, view_info * vi)
+void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, ViewInfo * vi)
 {
-	//this function requires viewat, viewup and eye vectors to be defined
+	//this function requires viewAt, viewUp and eye vectors to be defined
 
 	/*
 	cout << "xPos = " << xPos << endl;
 	cout << "yPos = " << yPos << endl;
 	cout << "depthVal = " << depthVal << endl;
-	cout << "vi->viewat.x = " << vi->viewat.x << endl;
-	cout << "vi->viewat.y = " << vi->viewat.y << endl;
-	cout << "vi->viewat.z = " << vi->viewat.z << endl;
-	cout << "vi->viewup.x = " << vi->viewup.x << endl;
-	cout << "vi->viewup.y = " << vi->viewup.y << endl;
-	cout << "vi->viewup.z = " << vi->viewup.z << endl;
+	cout << "vi->viewAt.x = " << vi->viewAt.x << endl;
+	cout << "vi->viewAt.y = " << vi->viewAt.y << endl;
+	cout << "vi->viewAt.z = " << vi->viewAt.z << endl;
+	cout << "vi->viewUp.x = " << vi->viewUp.x << endl;
+	cout << "vi->viewUp.y = " << vi->viewUp.y << endl;
+	cout << "vi->viewUp.z = " << vi->viewUp.z << endl;
 	cout << "vi->eye.x = " << vi->eye.x << endl;
 	cout << "vi->eye.y = " << vi->eye.y << endl;
 	cout << "vi->eye.z = " << vi->eye.z << endl;
-	cout << "vi->focal_length = " << vi->focal_length << endl;
+	cout << "vi->focalLength = " << vi->focalLength << endl;
 	*/
 
 	vec uvn;
@@ -1112,7 +1112,7 @@ void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyz
 
 }
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * pointMap, double * depthMap,  view_info * vi)
+void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * pointMap, double * depthMap,  ViewInfo * vi)
 {
 	for(int y = 0; y < (imageHeight); y++)
 	{

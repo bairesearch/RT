@@ -33,7 +33,7 @@
 #include "RTppm.h"
 
 /*new 24bit pixmap*/
-pixmap *new_pixmap(int wide, int high)
+pixmap *newPixmap(int wide, int high)
 {
   pixmap *pm = (pixmap*)malloc(sizeof(pixmap));
   if(!pm) return NULL;
@@ -49,13 +49,13 @@ pixmap *new_pixmap(int wide, int high)
   return pm;
 }
 
-void free_pixmap(pixmap *pm)
+void freePixmap(pixmap *pm)
 {
   free(pm->pix);
   free(pm);
 }
 
-pixmap *load_ppm(char *fname)
+pixmap *loadPPM(char *fname)
 {
   FILE *f;
   int high, wide;
@@ -83,16 +83,16 @@ pixmap *load_ppm(char *fname)
 
   fgetc(f);  /*eat the trailing white space*/
 
-  npm = new_pixmap(wide, high);
+  npm = newPixmap(wide, high);
 
   if(!npm){
-    free_pixmap(npm);
+    freePixmap(npm);
     fclose(f);
     return NULL;
   }
 
   if(fread(npm->pix, (long)wide*high*3,1, f) != 1){
-    free_pixmap(npm);
+    freePixmap(npm);
     fclose(f);
     return NULL;
   }
@@ -101,7 +101,7 @@ pixmap *load_ppm(char *fname)
   return npm;
 }
 
-void write_ppm(char *fname, pixmap *pm)
+void writePPM(char *fname, pixmap *pm)
 {
   FILE *f;
 
@@ -116,12 +116,12 @@ void write_ppm(char *fname, pixmap *pm)
   fclose(f);
 }
 
-unsigned char* calc_pixel_address(pixmap *pm, int x, int y)
+unsigned char* calcPixelAddress(pixmap *pm, int x, int y)
 {
   return &pm->pix[((long)pm->wide*y + x)*3];
 }
 
-void placepoint_ppm(pixmap *pm, int x, int y, int r, int g, int b)
+void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b)
 {
 	int position = y*(pm->wide)*3+x*3;
 

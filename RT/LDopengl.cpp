@@ -46,23 +46,23 @@ using namespace std;
 
 #ifdef USE_LD_ABSOLUTE_COLOUR
 
-mat opengl2DMultiplicationMatrix;
-double opengl2DMatrixTransformation1ScaleFactor = 0.0;
-double opengl2DMatrixTransformation2iRotationFactor = 0.0;
-double opengl2DMatrixTransformation2iiRotationFactor = 0.0;
-double opengl2DMatrixTransformation3aScaleFactor = 0.0;
-double opengl2DMatrixTransformation4aShearFactor = 0.0;
-double opengl2DMatrixTransformation5aTranslationFactorX = 0.0;
-double opengl2DMatrixTransformation5aTranslationFactorY = 0.0;
+mat opengl2DmultiplicationMatrix;
+double opengl2DmatrixTransformation1ScaleFactor = 0.0;
+double opengl2DmatrixTransformation2iRotationFactor = 0.0;
+double opengl2DmatrixTransformation2iiRotationFactor = 0.0;
+double opengl2DmatrixTransformation3aScaleFactor = 0.0;
+double opengl2DmatrixTransformation4aShearFactor = 0.0;
+double opengl2DmatrixTransformation5aTranslationFactorX = 0.0;
+double opengl2DmatrixTransformation5aTranslationFactorY = 0.0;
 
-mat opengl3DMultiplicationMatrix;
-double opengl3DMatrixTransformation1aXRotationFactor = 0.0;
-double opengl3DMatrixTransformation1bYRotationFactor = 0.0;
-double opengl3DMatrixTransformation2iZRotationFactor = 0.0;
-double opengl3DMatrixTransformation2iiZRotationFactor = 0.0;
-double opengl3DMatrixTransformation3TranslationFactorX = 0.0;
-double opengl3DMatrixTransformation3TranslationFactorY = 0.0;
-double opengl3DMatrixTransformation3TranslationFactorZ = 0.0;
+mat opengl3DmultiplicationMatrix;
+double opengl3DmatrixTransformation1aXRotationFactor = 0.0;
+double opengl3DmatrixTransformation1bYRotationFactor = 0.0;
+double opengl3DmatrixTransformation2iZRotationFactor = 0.0;
+double opengl3DmatrixTransformation2iiZRotationFactor = 0.0;
+double opengl3DmatrixTransformation3TranslationFactorX = 0.0;
+double opengl3DmatrixTransformation3TranslationFactorY = 0.0;
+double opengl3DmatrixTransformation3TranslationFactorZ = 0.0;
 
 
 //these can no longer be configured dynamically through ORrules.xml
@@ -208,7 +208,7 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 }
 
 
-void draw3DTrisPrimitivesReferenceListToOpenGL()
+void draw3DtrisPrimitivesReferenceListToOpenGL()
 {
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
@@ -270,7 +270,7 @@ void draw3DTrisPrimitivesReferenceListToOpenGL()
 }
 
 //not required for 3D - can use viewport instead of rotating model
-void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
+void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
@@ -298,21 +298,21 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 
 	#ifdef USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV
 
-		glTranslatef(opengl3DMatrixTransformation3TranslationFactorX, opengl3DMatrixTransformation3TranslationFactorY, opengl3DMatrixTransformation3TranslationFactorZ);
+		glTranslatef(opengl3DmatrixTransformation3TranslationFactorX, opengl3DmatrixTransformation3TranslationFactorY, opengl3DmatrixTransformation3TranslationFactorZ);
 
 	GLfloat m[] =
-		{(GLfloat)opengl3DMultiplicationMatrix.a.x, (GLfloat)opengl3DMultiplicationMatrix.a.y, (GLfloat)opengl3DMultiplicationMatrix.a.z, 0.0,
-		(GLfloat)opengl3DMultiplicationMatrix.b.x, (GLfloat)opengl3DMultiplicationMatrix.b.y, (GLfloat)opengl3DMultiplicationMatrix.b.z, 0.0,
-		(GLfloat)opengl3DMultiplicationMatrix.c.x, (GLfloat)opengl3DMultiplicationMatrix.c.y, (GLfloat)opengl3DMultiplicationMatrix.c.z, 0.0,
+		{(GLfloat)opengl3DmultiplicationMatrix.a.x, (GLfloat)opengl3DmultiplicationMatrix.a.y, (GLfloat)opengl3DmultiplicationMatrix.a.z, 0.0,
+		(GLfloat)opengl3DmultiplicationMatrix.b.x, (GLfloat)opengl3DmultiplicationMatrix.b.y, (GLfloat)opengl3DmultiplicationMatrix.b.z, 0.0,
+		(GLfloat)opengl3DmultiplicationMatrix.c.x, (GLfloat)opengl3DmultiplicationMatrix.c.y, (GLfloat)opengl3DmultiplicationMatrix.c.z, 0.0,
 		0.0, 0.0, 0.0, 1.0 };
 		glMultMatrixf(m);
 
 	#else
-		glTranslatef(opengl3DMatrixTransformation3TranslationFactorX, opengl3DMatrixTransformation3TranslationFactorY, opengl3DMatrixTransformation3TranslationFactorZ);
-		glRotatef(opengl3DMatrixTransformation2iiZRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glRotatef(opengl3DMatrixTransformation2iZRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glRotatef(opengl3DMatrixTransformation1bYRotationFactor/PI*180.0, 0.0, 1.0f, 0.0);
-		glRotatef(opengl3DMatrixTransformation1aXRotationFactor/PI*180.0, 1.0f, 0.0, 0.0);
+		glTranslatef(opengl3DmatrixTransformation3TranslationFactorX, opengl3DmatrixTransformation3TranslationFactorY, opengl3DmatrixTransformation3TranslationFactorZ);
+		glRotatef(opengl3DmatrixTransformation2iiZRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glRotatef(opengl3DmatrixTransformation2iZRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glRotatef(opengl3DmatrixTransformation1bYRotationFactor/PI*180.0, 0.0, 1.0f, 0.0);
+		glRotatef(opengl3DmatrixTransformation1aXRotationFactor/PI*180.0, 1.0f, 0.0, 0.0);
 
 
 	#endif
@@ -381,7 +381,7 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 
 
 
-void draw3DPrimitivesReferenceListToOpenGL()
+void draw3DprimitivesReferenceListToOpenGL()
 {
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
@@ -458,7 +458,7 @@ void draw3DPrimitivesReferenceListToOpenGL()
 	glFlush();
 }
 
-void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
+void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
@@ -484,32 +484,32 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 
 	#ifdef USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV
 
-		glTranslatef(opengl2DMatrixTransformation5aTranslationFactorX, opengl2DMatrixTransformation5aTranslationFactorY, 0.0);
+		glTranslatef(opengl2DmatrixTransformation5aTranslationFactorX, opengl2DmatrixTransformation5aTranslationFactorY, 0.0);
 
 	GLfloat m[] =
-		{(GLfloat)opengl2DMultiplicationMatrix.a.x, (GLfloat)opengl2DMultiplicationMatrix.a.y, (GLfloat)opengl2DMultiplicationMatrix.a.z, 0.0,
-		(GLfloat)opengl2DMultiplicationMatrix.b.x, (GLfloat)opengl2DMultiplicationMatrix.b.y, (GLfloat)opengl2DMultiplicationMatrix.b.z, 0.0,
-		(GLfloat)opengl2DMultiplicationMatrix.c.x, (GLfloat)opengl2DMultiplicationMatrix.c.y, (GLfloat)opengl2DMultiplicationMatrix.c.z, 0.0,
+		{(GLfloat)opengl2DmultiplicationMatrix.a.x, (GLfloat)opengl2DmultiplicationMatrix.a.y, (GLfloat)opengl2DmultiplicationMatrix.a.z, 0.0,
+		(GLfloat)opengl2DmultiplicationMatrix.b.x, (GLfloat)opengl2DmultiplicationMatrix.b.y, (GLfloat)opengl2DmultiplicationMatrix.b.z, 0.0,
+		(GLfloat)opengl2DmultiplicationMatrix.c.x, (GLfloat)opengl2DmultiplicationMatrix.c.y, (GLfloat)opengl2DmultiplicationMatrix.c.z, 0.0,
 		0.0, 0.0, 0.0, 1.0 };
 		glMultMatrixf(m);
 
 		/*
-		glTranslatef(opengl2DMatrixTransformation5aTranslationFactorX, opengl2DMatrixTransformation5aTranslationFactorY, 0.0);
-		shearMatrix(opengl2DMatrixTransformation4aShearFactor, 0.0);
-		glScalef(opengl2DMatrixTransformation3aScaleFactor, opengl2DMatrixTransformation3aScaleFactor, opengl2DMatrixTransformation3aScaleFactor);
-		glRotatef(opengl2DMatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glRotatef(opengl2DMatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glScalef(opengl2DMatrixTransformation1ScaleFactor, opengl2DMatrixTransformation1ScaleFactor, opengl2DMatrixTransformation1ScaleFactor);
+		glTranslatef(opengl2DmatrixTransformation5aTranslationFactorX, opengl2DmatrixTransformation5aTranslationFactorY, 0.0);
+		shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
+		glScalef(opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor);
+		glRotatef(opengl2DmatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glRotatef(opengl2DmatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glScalef(opengl2DmatrixTransformation1ScaleFactor, opengl2DmatrixTransformation1ScaleFactor, opengl2DmatrixTransformation1ScaleFactor);
 		*/
 
 	#else
-		glTranslatef(opengl2DMatrixTransformation5aTranslationFactorX, opengl2DMatrixTransformation5aTranslationFactorY, 0.0);
+		glTranslatef(opengl2DmatrixTransformation5aTranslationFactorX, opengl2DmatrixTransformation5aTranslationFactorY, 0.0);
 
-		shearMatrix(opengl2DMatrixTransformation4aShearFactor, 0.0);
-		glScalef(opengl2DMatrixTransformation3aScaleFactor, opengl2DMatrixTransformation3aScaleFactor, opengl2DMatrixTransformation3aScaleFactor);
-		glRotatef(opengl2DMatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glRotatef(opengl2DMatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
-		glScalef(opengl2DMatrixTransformation1ScaleFactor, opengl2DMatrixTransformation1ScaleFactor, opengl2DMatrixTransformation1ScaleFactor);
+		shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
+		glScalef(opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor);
+		glRotatef(opengl2DmatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glRotatef(opengl2DmatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
+		glScalef(opengl2DmatrixTransformation1ScaleFactor, opengl2DmatrixTransformation1ScaleFactor, opengl2DmatrixTransformation1ScaleFactor);
 
 	#endif
 
@@ -596,7 +596,7 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 }
 
 
-void draw2DQuadsPrimitivesReferenceListToOpenGL()
+void draw2DquadsPrimitivesReferenceListToOpenGL()
 {
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
@@ -677,7 +677,7 @@ void draw2DQuadsPrimitivesReferenceListToOpenGL()
 
 
 
-void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLayer)
+void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer)
 {
 	Reference * currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
@@ -685,7 +685,7 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 
 		if(currentReference->isSubModelReference)
 		{
-			draw3DPrimitivesReferenceListToOpenGLRecurse(currentReference->firstReferenceWithinSubModel);
+			draw3DprimitivesReferenceListToOpenGLrecurse(currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
@@ -760,7 +760,7 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 }
 
 
-void draw3DPrimitivesReferenceListToOpenGLwithRecursion()
+void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 {
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
@@ -774,7 +774,7 @@ void draw3DPrimitivesReferenceListToOpenGLwithRecursion()
 	glLoadIdentity();
 	glPushMatrix();
 
-	draw3DPrimitivesReferenceListToOpenGLRecurse(firstReferenceInPrimitivesReferenceListGlobal);
+	draw3DprimitivesReferenceListToOpenGLrecurse(firstReferenceInPrimitivesReferenceListGlobal);
 
 
 	glPopMatrix();
@@ -880,32 +880,32 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 
 
-void drawPrimitivesReferenceListToOpenGLAndCreateRGBMap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODMatrixOperations)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
-		if(usePredefinedODMatrixOperations)
+		if(usePredefinedODmatrixOperations)
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations);
+			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations);
 		}
 		else
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw3DTrisPrimitivesReferenceListToOpenGL);
+			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGL);
 		}
 	}
 	else if(dimension == OR_METHOD2DOD_DIMENSIONS)
 	{
-		if(usePredefinedODMatrixOperations)
+		if(usePredefinedODmatrixOperations)
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations);
+			glutDisplayFunc(draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations);
 		}
 		else
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw2DQuadsPrimitivesReferenceListToOpenGL);
+			glutDisplayFunc(draw2DquadsPrimitivesReferenceListToOpenGL);
 		}
 	}
 	else
@@ -924,32 +924,32 @@ void drawPrimitivesReferenceListToOpenGLAndCreateRGBMap(Reference * firstReferen
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODMatrixOperations)
+void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
-		if(usePredefinedODMatrixOperations)
+		if(usePredefinedODmatrixOperations)
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations);
+			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations);
 		}
 		else
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw3DTrisPrimitivesReferenceListToOpenGL);
+			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGL);
 		}
 	}
 	else if(dimension == OR_METHOD2DOD_DIMENSIONS)
 	{
-		if(usePredefinedODMatrixOperations)
+		if(usePredefinedODmatrixOperations)
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations);
+			glutDisplayFunc(draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations);
 		}
 		else
 		{
 			firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
-			glutDisplayFunc(draw2DQuadsPrimitivesReferenceListToOpenGL);
+			glutDisplayFunc(draw2DquadsPrimitivesReferenceListToOpenGL);
 		}
 	}
 	else
@@ -964,11 +964,11 @@ void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesR
 
 
 
-void drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
-	glutDisplayFunc(draw3DPrimitivesReferenceListToOpenGLwithRecursion);
+	glutDisplayFunc(draw3DprimitivesReferenceListToOpenGLwithRecursion);
 
 	glutMainLoopEvent();
 
@@ -998,7 +998,7 @@ void setViewPort(double width, double height, double xCentre, double yCentre)
 }
 */
 
-void setViewPort2DOrtho(double left, double right, double bottom, double top)
+void setViewPort2Dortho(double left, double right, double bottom, double top)
 {
 	glMatrixMode(GL_PROJECTION);		//shouldnt this be modelview???
 	glLoadIdentity();
@@ -1018,20 +1018,20 @@ double maxDouble2(double float1, double float2)
 }
 
 
-void setViewPort3DDynamic(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFacingPoly, vec * viewportWidthHeightDepth)
+void setViewPort3Ddynamic(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	double viewportWidth = maxDouble2(viewportWidthHeightDepth->x, viewportWidthHeightDepth->y) * 20.0;
-	double viewportHeight = maxDouble2(viewportWidthHeightDepth->x, viewportWidthHeightDepth->y) * 20.0;
+	double viewportWidth = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y) * 20.0;
+	double viewportHeight = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y) * 20.0;
 	glOrtho(-(viewportWidth)/2.0, (viewportWidth)/2.0, -(viewportHeight)/2.0, (viewportHeight)/2.0, -100, 100);
 
-	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewatFacingPoly->x, viewatFacingPoly->y, viewatFacingPoly->z, viewupFacingPoly->x, viewupFacingPoly->y, viewupFacingPoly->z);
+	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewAtFacingPoly->x, viewAtFacingPoly->y, viewAtFacingPoly->z, viewUpFacingPoly->x, viewUpFacingPoly->y, viewUpFacingPoly->z);
 
 }
 
-void setViewPort3DBasic()
+void setViewPort3Dbasic()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -1039,7 +1039,7 @@ void setViewPort3DBasic()
 
 }
 
-void setViewPort3DOrtho(double left, double right, double bottom, double top, double back, double forward)
+void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -1050,16 +1050,16 @@ void setViewPort3DOrtho(double left, double right, double bottom, double top, do
 
 }
 
-void setViewPort3D(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFacingPoly, vec * viewportWidthHeightDepth)
+void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);		//shouldnt this be modelview???
 	glLoadIdentity();
 
-	glOrtho(-(viewportWidthHeightDepth->x)/2.0, (viewportWidthHeightDepth->x)/2.0, -(viewportWidthHeightDepth->y)/2.0, (viewportWidthHeightDepth->y)/2.0, -(viewportWidthHeightDepth->z)/2.0, (viewportWidthHeightDepth->z)/2.0);
+	glOrtho(-(viewPortWidthHeightDepth->x)/2.0, (viewPortWidthHeightDepth->x)/2.0, -(viewPortWidthHeightDepth->y)/2.0, (viewPortWidthHeightDepth->y)/2.0, -(viewPortWidthHeightDepth->z)/2.0, (viewPortWidthHeightDepth->z)/2.0);
 
-	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewatFacingPoly->x, viewatFacingPoly->y, viewatFacingPoly->z, viewupFacingPoly->x, viewupFacingPoly->y, viewupFacingPoly->z);
+	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewAtFacingPoly->x, viewAtFacingPoly->y, viewAtFacingPoly->z, viewUpFacingPoly->x, viewUpFacingPoly->y, viewUpFacingPoly->z);
 
 }
 

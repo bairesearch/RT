@@ -52,17 +52,17 @@ void testMySQLserverConnection()
 {
 	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
-	performSQLSelectQuery("SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )", sqlCommandOutput);
+	performSQLselectQuery("SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )", sqlCommandOutput);
 	cout << "sqlCommandOutput = " << sqlCommandOutput << endl;
 	endMySQLserverConnection();
 }
 
 
-bool initiateMySQLserverConnection(char * mysqlserveripaddressAndPort, char * username, char * password, char * databaseName)
+bool initiateMySQLserverConnection(char * mysqlServerIpAddressAndPort, char * username, char * password, char * databaseName)
 {
 
 	mysql_init(&mysql);
-	connection = mysql_real_connect(&mysql,mysqlserveripaddressAndPort,username,password,databaseName,0,0,0);
+	connection = mysql_real_connect(&mysql,mysqlServerIpAddressAndPort,username,password,databaseName,0,0,0);
 	if(connection == NULL)
 	{
 		cout << mysql_error(&mysql) << endl;
@@ -73,7 +73,7 @@ bool initiateMySQLserverConnection(char * mysqlserveripaddressAndPort, char * us
 }
 
 //not complete - debug only
-bool performSQLSelectQuery(char * sqlCommand, char *sqlCommandOutput)
+bool performSQLselectQuery(char * sqlCommand, char *sqlCommandOutput)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -97,7 +97,7 @@ bool performSQLSelectQuery(char * sqlCommand, char *sqlCommandOutput)
 	return true;
 }
 
-bool performSQLSelectQuery(char * sqlCommand)
+bool performSQLselectQuery(char * sqlCommand)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -112,7 +112,7 @@ bool performSQLSelectQuery(char * sqlCommand)
 	return true;
 }
 
-bool performSQLRealSelectQuery(char * sqlCommand, unsigned long stringLength)
+bool performSQLrealSelectQuery(char * sqlCommand, unsigned long stringLength)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -130,7 +130,7 @@ bool performSQLRealSelectQuery(char * sqlCommand, unsigned long stringLength)
 
 
 //not yet working...
-long performSQLGetNumRowsQuery(string tableName)
+long performSQLgetNumRowsQuery(string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -188,7 +188,7 @@ void performSQLdeleteAllRowsQuery(string tableName)
 
 
 
-bool performSQLInsertQuery(char * sqlCommand)
+bool performSQLinsertQuery(char * sqlCommand)
 {
 	int query_state;
 
@@ -203,7 +203,7 @@ bool performSQLInsertQuery(char * sqlCommand)
 }
 
 
-bool performSQLRealInsertQuery(char * sqlCommand, unsigned long stringLength)
+bool performSQLrealInsertQuery(char * sqlCommand, unsigned long stringLength)
 {
 	int query_state;
 

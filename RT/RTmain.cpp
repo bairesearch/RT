@@ -90,21 +90,21 @@ int main(int argc,char **argv)
 	int version;
 	int lightingMode = LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR;
 
-	view_info viewinfo;
-	viewinfo.imgwidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
-	viewinfo.imgheight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
+	ViewInfo viewinfo;
+	viewinfo.imageWidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
+	viewinfo.imageHeight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
 	viewinfo.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;		//CHECK THIS; preferably the eye moves around the object
 	viewinfo.eye.y = TAL_FILE_HEADER_DEFAULT_EYE_Y;
 	viewinfo.eye.z = TAL_FILE_HEADER_DEFAULT_EYE_Z;
-	viewinfo.viewat.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;
-	viewinfo.viewat.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
-	viewinfo.viewat.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
-	viewinfo.viewup.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;
-	viewinfo.viewup.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
-	viewinfo.viewup.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
-	viewinfo.focal_length = TAL_FILE_HEADER_DEFAULT_FOCAL;
-	viewinfo.viewwidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
-	viewinfo.viewheight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
+	viewinfo.viewAt.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;
+	viewinfo.viewAt.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
+	viewinfo.viewAt.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
+	viewinfo.viewUp.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;
+	viewinfo.viewUp.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
+	viewinfo.viewUp.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
+	viewinfo.focalLength = TAL_FILE_HEADER_DEFAULT_FOCAL;
+	viewinfo.viewWidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
+	viewinfo.viewHeight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 
  	bool useCustomLightSource = true;
 	vec lightSourcePosition;
@@ -130,76 +130,76 @@ int main(int argc,char **argv)
 
 	bool useLDRfile = false;
 
-	if ((exists_argument(argc,argv,"-iotal")) || (exists_argument(argc,argv,"-ildr")))
+	if ((argumentExists(argc,argv,"-iotal")) || (argumentExists(argc,argv,"-ildr")))
 	{
-		if (exists_argument(argc,argv,"-iotal"))
-		topLevelSceneFileNameCollapsedForRayTracing=get_char_argument(argc,argv,"-iotal");
+		if (argumentExists(argc,argv,"-iotal"))
+		topLevelSceneFileNameCollapsedForRayTracing=getCharArgument(argc,argv,"-iotal");
 
-		if (exists_argument(argc,argv,"-ildr"))
+		if (argumentExists(argc,argv,"-ildr"))
 		{
-			topLevelSceneFileName=get_char_argument(argc,argv,"-ildr");
+			topLevelSceneFileName=getCharArgument(argc,argv,"-ildr");
 			useLDRfile = true;
 		}
 
-		if (exists_argument(argc,argv,"-lighting"))
-		lightingMode=get_float_argument(argc,argv,"-lighting");
+		if (argumentExists(argc,argv,"-lighting"))
+		lightingMode=getFloatArgument(argc,argv,"-lighting");
 
-		if (exists_argument(argc,argv,"-oppm"))
-		imageFileName=get_char_argument(argc,argv,"-oppm");
+		if (argumentExists(argc,argv,"-oppm"))
+		imageFileName=getCharArgument(argc,argv,"-oppm");
 
-		if (exists_argument(argc,argv,"-width"))
-		viewinfo.imgwidth=get_float_argument(argc,argv,"-width");
+		if (argumentExists(argc,argv,"-width"))
+		viewinfo.imageWidth=getFloatArgument(argc,argv,"-width");
 
-		if (exists_argument(argc,argv,"-height"))
-		viewinfo.imgheight=get_float_argument(argc,argv,"-height");
+		if (argumentExists(argc,argv,"-height"))
+		viewinfo.imageHeight=getFloatArgument(argc,argv,"-height");
 
-		if (exists_argument(argc,argv,"-vieweyex"))
-		viewinfo.eye.x=get_float_argument(argc,argv,"-vieweyex");
+		if (argumentExists(argc,argv,"-vieweyex"))
+		viewinfo.eye.x=getFloatArgument(argc,argv,"-vieweyex");
 
-		if (exists_argument(argc,argv,"-vieweyey"))
-		viewinfo.eye.y=get_float_argument(argc,argv,"-vieweyey");
+		if (argumentExists(argc,argv,"-vieweyey"))
+		viewinfo.eye.y=getFloatArgument(argc,argv,"-vieweyey");
 
-		if (exists_argument(argc,argv,"-vieweyez"))
-		viewinfo.eye.z=get_float_argument(argc,argv,"-vieweyez");
+		if (argumentExists(argc,argv,"-vieweyez"))
+		viewinfo.eye.z=getFloatArgument(argc,argv,"-vieweyez");
 
-		if (exists_argument(argc,argv,"-viewatx"))
-		viewinfo.viewat.x=get_float_argument(argc,argv,"-viewatx");
+		if (argumentExists(argc,argv,"-viewatx"))
+		viewinfo.viewAt.x=getFloatArgument(argc,argv,"-viewatx");
 
-		if (exists_argument(argc,argv,"-viewaty"))
-		viewinfo.viewat.y=get_float_argument(argc,argv,"-viewaty");
+		if (argumentExists(argc,argv,"-viewaty"))
+		viewinfo.viewAt.y=getFloatArgument(argc,argv,"-viewaty");
 
-		if (exists_argument(argc,argv,"-viewatz"))
-		viewinfo.viewat.z=get_float_argument(argc,argv,"-viewatz");
+		if (argumentExists(argc,argv,"-viewatz"))
+		viewinfo.viewAt.z=getFloatArgument(argc,argv,"-viewatz");
 
-		if (exists_argument(argc,argv,"-viewupx"))
-		viewinfo.viewup.x=get_float_argument(argc,argv,"-viewupx");
+		if (argumentExists(argc,argv,"-viewupx"))
+		viewinfo.viewUp.x=getFloatArgument(argc,argv,"-viewupx");
 
-		if (exists_argument(argc,argv,"-viewupy"))
-		viewinfo.viewup.y=get_float_argument(argc,argv,"-viewupy");
+		if (argumentExists(argc,argv,"-viewupy"))
+		viewinfo.viewUp.y=getFloatArgument(argc,argv,"-viewupy");
 
-		if (exists_argument(argc,argv,"-viewupz"))
-		viewinfo.viewup.z=get_float_argument(argc,argv,"-viewupz");
+		if (argumentExists(argc,argv,"-viewupz"))
+		viewinfo.viewUp.z=getFloatArgument(argc,argv,"-viewupz");
 
-		if (exists_argument(argc,argv,"-viewfocal"))
-		viewinfo.focal_length=get_float_argument(argc,argv,"-viewfocal");
+		if (argumentExists(argc,argv,"-viewfocal"))
+		viewinfo.focalLength=getFloatArgument(argc,argv,"-viewfocal");
 
-		if (exists_argument(argc,argv,"-viewsizew"))
-		viewinfo.viewwidth=get_float_argument(argc,argv,"-viewsizew");
+		if (argumentExists(argc,argv,"-viewsizew"))
+		viewinfo.viewWidth=getFloatArgument(argc,argv,"-viewsizew");
 
-		if (exists_argument(argc,argv,"-viewsizeh"))
-		viewinfo.viewheight=get_float_argument(argc,argv,"-viewsizeh");
+		if (argumentExists(argc,argv,"-viewsizeh"))
+		viewinfo.viewHeight=getFloatArgument(argc,argv,"-viewsizeh");
 
-		if (exists_argument(argc,argv,"-lightx"))
-		lightSourcePosition.x=get_float_argument(argc,argv,"-lightx");
+		if (argumentExists(argc,argv,"-lightx"))
+		lightSourcePosition.x=getFloatArgument(argc,argv,"-lightx");
 
-		if (exists_argument(argc,argv,"-lighty"))
-		lightSourcePosition.y=get_float_argument(argc,argv,"-lighty");
+		if (argumentExists(argc,argv,"-lighty"))
+		lightSourcePosition.y=getFloatArgument(argc,argv,"-lighty");
 
-		if (exists_argument(argc,argv,"-lightz"))
-		lightSourcePosition.z=get_float_argument(argc,argv,"-lightz");
+		if (argumentExists(argc,argv,"-lightz"))
+		lightSourcePosition.z=getFloatArgument(argc,argv,"-lightz");
 
-		if (exists_argument(argc,argv,"-lightcol"))
-		lightSourceColour=get_char_argument(argc,argv,"-lightcol");
+		if (argumentExists(argc,argv,"-lightcol"))
+		lightSourceColour=getCharArgument(argc,argv,"-lightcol");
 
 		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];
 		#ifdef LINUX
@@ -208,25 +208,25 @@ int main(int argc,char **argv)
 		::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolder);
 		#endif
 
-		if (exists_argument(argc,argv,"-workingfolder"))
+		if (argumentExists(argc,argv,"-workingfolder"))
 		{
-			workingFolderCharStar=get_char_argument(argc,argv,"-workingfolder");
+			workingFolderCharStar=getCharArgument(argc,argv,"-workingfolder");
 		}
 		else
 		{
 			workingFolderCharStar = currentFolder;
 		}
-		if (exists_argument(argc,argv,"-exefolder"))
+		if (argumentExists(argc,argv,"-exefolder"))
 		{
-			exeFolderCharStar=get_char_argument(argc,argv,"-exefolder");
+			exeFolderCharStar=getCharArgument(argc,argv,"-exefolder");
 		}
 		else
 		{
 			exeFolderCharStar = currentFolder;
 		}
-		if (exists_argument(argc,argv,"-tempfolder"))
+		if (argumentExists(argc,argv,"-tempfolder"))
 		{
-			tempFolderCharStar=get_char_argument(argc,argv,"-tempfolder");
+			tempFolderCharStar=getCharArgument(argc,argv,"-tempfolder");
 		}
 		else
 		{
@@ -239,7 +239,7 @@ int main(int argc,char **argv)
 		::SetCurrentDirectory(workingFolderCharStar);
 		#endif
 
-		if (exists_argument(argc,argv,"-version"))
+		if (argumentExists(argc,argv,"-version"))
 		{
 			cout << "OpenRT.exe - Project Version: 3c3a 16-November-2012" << endl;
 			exit(1);
@@ -269,7 +269,7 @@ int main(int argc,char **argv)
 		::SetCurrentDirectory(tempFolderCharStar);
 		#endif
 
-		write2DReferenceListCollapsedTo1DToFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
+		write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
 		write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);
 
 	}

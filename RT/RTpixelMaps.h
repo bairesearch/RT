@@ -114,7 +114,7 @@ void getPointMapValue(int x, int y, int imageWidth, double * pointMap, vec * poi
 void setLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double contrastVal, double * contrastMap);
 double getLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double * contrastMap);
 
-void generatePixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap);
+void generatePixmapFromRGBmap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap);
 void generatePixmapFromLuminosityContrastMap(char * imageFileName, int imageWidth, int imageHeight, double * contrastMap);
 void generatePixmapFromDepthMapOrDepthContrastMap(char * imageFileName, int imageWidth, int imageHeight, double * depthMap);
 void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(char * imageFileName, int imageWidth, int imageHeight, double * depthMap, double noHitDepth, double estimateMaxDepth);

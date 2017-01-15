@@ -41,31 +41,31 @@
 
 	/*4x4 matrix manipulation methods*/
 
-typedef struct { double x; double y; double z; double w;} advanced_vec;
+typedef struct { double x; double y; double z; double w;} advancedVec;
 
-typedef struct { advanced_vec a; advanced_vec b; advanced_vec c; advanced_vec d;} advanced_mat;
+typedef struct { advancedVec a; advancedVec b; advancedVec c; advancedVec d;} advancedMat;
 
 
-void makeAdvancedMatrix(advanced_mat* matxAdv, mat* matx, int type);
-void multAdvancedMatrix(advanced_mat* matxAdv1, advanced_mat* matxAdv2, advanced_mat* matxAdv);
-void createIdentityMatrixAdvanced(advanced_mat* matx);
-void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advanced_mat* matx);
-void createTranslationMatrix(double xpos, double ypos, double zpos, advanced_mat* matx);
-void createScaleMatrix(double width, double length, double height, advanced_mat* matx);
-void createInverseScaleMatrix(double width, double length, double height, advanced_mat* matx);
-void createRotationxMatrix(double rotation, advanced_mat* matx);
-void createInverseRotationxMatrix(double rotation, advanced_mat* matx);
-void createRotationyMatrix(double rotation, advanced_mat* matx);
-void createInverseRotationyMatrix(double rotation, advanced_mat* matx);
-void createRotationzMatrix(double rotation, advanced_mat* matx);
-void createInverseRotationzMatrix(double rotation, advanced_mat* matx);
-void invertAdvancedMatrix(advanced_mat* matx);
-void transposeAdvancedMatrix(advanced_mat* matx);
-void multAdvancedMatrixByVector(advanced_vec* vecAdv1, advanced_mat* matxAdv1, advanced_vec* vecAdv);
+void makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type);
+void multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMat* matxAdv);
+void createIdentityMatrixAdvanced(advancedMat* matx);
+void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx);
+void createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx);
+void createScaleMatrix(double width, double length, double height, advancedMat* matx);
+void createInverseScaleMatrix(double width, double length, double height, advancedMat* matx);
+void createRotationxMatrix(double rotation, advancedMat* matx);
+void createInverseRotationxMatrix(double rotation, advancedMat* matx);
+void createRotationyMatrix(double rotation, advancedMat* matx);
+void createInverseRotationyMatrix(double rotation, advancedMat* matx);
+void createRotationzMatrix(double rotation, advancedMat* matx);
+void createInverseRotationzMatrix(double rotation, advancedMat* matx);
+void invertAdvancedMatrix(advancedMat* matx);
+void transposeAdvancedMatrix(advancedMat* matx);
+void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv);
 double toRadians(double degrees);
-void toAdvancedVector(vec* vec, int type, advanced_vec* vecAdv);
-void fromAdvancedVector(advanced_vec* vecAdv, vec* vec);
-void createAdvancedVector(advanced_vec* vec);
+void toAdvancedVector(vec* vec, int type, advancedVec* vecAdv);
+void fromAdvancedVector(advancedVec* vecAdv, vec* vec);
+void createAdvancedVector(advancedVec* vec);
 
 
 double findSmallestValue(double val1, double val2, double val3);

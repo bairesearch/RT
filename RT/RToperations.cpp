@@ -37,7 +37,7 @@
 
 
 
-void createAdvancedVector(advanced_vec* vec)
+void createAdvancedVector(advancedVec* vec)
 {
 	vec->x = 0;
 	vec->y = 0;
@@ -45,7 +45,7 @@ void createAdvancedVector(advanced_vec* vec)
 	vec->w = 1;
 }
 
-void createIdentityMatrixAdvanced(advanced_mat* matx)
+void createIdentityMatrixAdvanced(advancedMat* matx)
 {
 	matx->a.x = ONE;
 	matx->b.x = ZERO;
@@ -65,7 +65,7 @@ void createIdentityMatrixAdvanced(advanced_mat* matx)
 	matx->d.w = ONE;
 }
 
-void makeAdvancedMatrix(advanced_mat* matxAdv, mat* matx, int type)
+void makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type)
 {
 	matxAdv->a.x = matx->a.x;
 	matxAdv->b.x = matx->b.x;
@@ -85,7 +85,7 @@ void makeAdvancedMatrix(advanced_mat* matxAdv, mat* matx, int type)
 	matxAdv->d.w = (double)type;
 }
 
-void multAdvancedMatrixByVector(advanced_vec* vecAdv1, advanced_mat* matxAdv1, advanced_vec* vecAdv)
+void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv)
 {
 	vecAdv->x =  matxAdv1->a.x * vecAdv1->x + matxAdv1->b.x * vecAdv1->y + matxAdv1->c.x * vecAdv1->z + matxAdv1->d.x * vecAdv1->w;
 	vecAdv->y =  matxAdv1->a.y * vecAdv1->x + matxAdv1->b.y * vecAdv1->y + matxAdv1->c.y * vecAdv1->z + matxAdv1->d.y * vecAdv1->w;
@@ -93,7 +93,7 @@ void multAdvancedMatrixByVector(advanced_vec* vecAdv1, advanced_mat* matxAdv1, a
 	vecAdv->w =  matxAdv1->a.w * vecAdv1->x + matxAdv1->b.w * vecAdv1->y + matxAdv1->c.w * vecAdv1->z + matxAdv1->d.w * vecAdv1->w;
 }
 
-void multAdvancedMatrix(advanced_mat* matxAdv1, advanced_mat* matxAdv2, advanced_mat* matxAdv)
+void multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMat* matxAdv)
 {
 	matxAdv->a.x = matxAdv1->a.x*matxAdv2->a.x + matxAdv1->b.x*matxAdv2->a.y +  matxAdv1->c.x*matxAdv2->a.z + matxAdv1->d.x*matxAdv2->a.w;
 	matxAdv->b.x = matxAdv1->a.x*matxAdv2->b.x + matxAdv1->b.x*matxAdv2->b.y +  matxAdv1->c.x*matxAdv2->b.z + matxAdv1->d.x*matxAdv2->b.w;
@@ -118,7 +118,7 @@ void multAdvancedMatrix(advanced_mat* matxAdv1, advanced_mat* matxAdv2, advanced
 
 
 
-void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advanced_mat* matx)
+void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->d.x = -xpos;
@@ -128,7 +128,7 @@ void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advan
 }
 
 /*CHECK THIS ONE*/
-void createTranslationMatrix(double xpos, double ypos, double zpos, advanced_mat* matx)
+void createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->d.x = xpos;
@@ -137,7 +137,7 @@ void createTranslationMatrix(double xpos, double ypos, double zpos, advanced_mat
 	/*matx->d.w = 1 --> because it is a vertex not a vector*/
 }
 
-void createScaleMatrix(double width, double length, double height, advanced_mat* matx)
+void createScaleMatrix(double width, double length, double height, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->a.x = width;
@@ -146,7 +146,7 @@ void createScaleMatrix(double width, double length, double height, advanced_mat*
 	/*matx->d.w = 1 --> because it is a vertex not a vector*/
 }
 
-void createInverseScaleMatrix(double width, double length, double height, advanced_mat* matx)
+void createInverseScaleMatrix(double width, double length, double height, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->a.x = 1/width;
@@ -155,7 +155,7 @@ void createInverseScaleMatrix(double width, double length, double height, advanc
 }
 
 
-void createRotationxMatrix(double rotation, advanced_mat* matx)
+void createRotationxMatrix(double rotation, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->b.y = cos(rotation);
@@ -163,13 +163,13 @@ void createRotationxMatrix(double rotation, advanced_mat* matx)
 	matx->c.y = sin(rotation);
 	matx->c.z = cos(rotation);
 }
-void createInverseRotationxMatrix(double rotation, advanced_mat* matx)
+void createInverseRotationxMatrix(double rotation, advancedMat* matx)
 {
 	createRotationxMatrix(rotation, matx);
 	invertAdvancedMatrix(matx);
 }
 
-void createRotationyMatrix(double rotation, advanced_mat* matx)
+void createRotationyMatrix(double rotation, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
@@ -177,13 +177,13 @@ void createRotationyMatrix(double rotation, advanced_mat* matx)
 	matx->c.x = -sin(rotation);
 	matx->c.z = cos(rotation);
 }
-void createInverseRotationyMatrix(double rotation, advanced_mat* matx)
+void createInverseRotationyMatrix(double rotation, advancedMat* matx)
 {
 	createRotationyMatrix(rotation, matx);
 	invertAdvancedMatrix(matx);
 }
 
-void createRotationzMatrix(double rotation, advanced_mat* matx)
+void createRotationzMatrix(double rotation, advancedMat* matx)
 {
 	createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
@@ -191,19 +191,19 @@ void createRotationzMatrix(double rotation, advanced_mat* matx)
 	matx->b.x = sin(rotation);
 	matx->b.y = cos(rotation);
 }
-void createInverseRotationzMatrix(double rotation, advanced_mat* matx)
+void createInverseRotationzMatrix(double rotation, advancedMat* matx)
 {
 	createRotationzMatrix(rotation, matx);
 	invertAdvancedMatrix(matx);
 }
 
-void invertAdvancedMatrix(advanced_mat* matx)
+void invertAdvancedMatrix(advancedMat* matx)
 {
 	/*since the matrix is orthogonal,it can be transposed instead*/
 	transposeAdvancedMatrix(matx);
 }
 
-void transposeAdvancedMatrix(advanced_mat* matx)
+void transposeAdvancedMatrix(advancedMat* matx)
 {
 	double tmp;
 
@@ -237,7 +237,7 @@ double toRadians(double degrees)
 	return degrees/180*PI;
 }
 
-void toAdvancedVector(vec* vec, int type, advanced_vec* vecAdv)
+void toAdvancedVector(vec* vec, int type, advancedVec* vecAdv)
 {
 	vecAdv->x = vec->x;
 	vecAdv->y = vec->y;
@@ -245,7 +245,7 @@ void toAdvancedVector(vec* vec, int type, advanced_vec* vecAdv)
 	vecAdv->w = (double)type;
 }
 
-void fromAdvancedVector(advanced_vec* vecAdv, vec* vec)
+void fromAdvancedVector(advancedVec* vecAdv, vec* vec)
 {
 	vec->x = vecAdv->x;
 	vec->y = vecAdv->y;
@@ -603,7 +603,7 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 	x4 = linept2->x;
 	y4 = linept2->y;
 
-	find2DIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &xyXInt, &xyYInt, &xyinterceptionFound, &xyinterceptionPointFound);
+	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &xyXInt, &xyYInt, &xyinterceptionFound, &xyinterceptionPointFound);
 	//xy plane
 
 	x1 = povpt1->y;
@@ -615,7 +615,7 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 	x4 = linept2->y;
 	y4 = linept2->z;
 
-	find2DIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &yzYInt, &yzZInt, &yzinterceptionFound, &yzinterceptionPointFound);
+	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &yzYInt, &yzZInt, &yzinterceptionFound, &yzinterceptionPointFound);
 	//yz plane
 
 	x1 = povpt1->z;
@@ -627,7 +627,7 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 	x4 = linept2->z;
 	y4 = linept2->x;
 
-	find2DIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &zxZInt, &zxXInt, &zxinterceptionFound, &zxinterceptionPointFound);
+	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &zxZInt, &zxXInt, &zxinterceptionFound, &zxinterceptionPointFound);
 	//zx plane
 
 	bool xyzinterceptionPointFound = false;

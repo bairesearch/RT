@@ -32,12 +32,12 @@
  #include "RTviewinfo.h"
 
 
-view_info::view_info(void)
+ViewInfo::ViewInfo(void)
 {
 
 }
 
-view_info::~view_info(void)
+ViewInfo::~ViewInfo(void)
 {
 }
 

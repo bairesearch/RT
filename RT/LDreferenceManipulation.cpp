@@ -57,7 +57,7 @@ using namespace std;
 
 
 
-Reference * search1DRefListFindLastReference(Reference * initialReferenceInList)
+Reference * search1DrefListFindLastReference(Reference * initialReferenceInList)
 {
 	Reference * lastReference;
 	Reference * currentReference = initialReferenceInList;
@@ -74,7 +74,7 @@ Reference * search1DRefListFindLastReference(Reference * initialReferenceInList)
 
 
 
-bool search1DRefListFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
+bool search1DrefListFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
 {
 	bool foundReference = false;
 
@@ -93,7 +93,7 @@ bool search1DRefListFindRef(Reference * referenceToFind, Reference * initialRefe
 	return foundReference;
 }
 
-bool search1DRefListNameAndColourFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
+bool search1DrefListNameAndColourFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
 {
 	bool foundReference = false;
 
@@ -112,7 +112,7 @@ bool search1DRefListNameAndColourFindRef(Reference * referenceToFind, Reference 
 	return foundReference;
 }
 
-bool search1DRefListReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
+bool search1DrefListReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
 {
 	bool foundReference = false;
 
@@ -132,7 +132,7 @@ bool search1DRefListReplaceRef(Reference * referenceToFind, Reference * referenc
 	return foundReference;
 }
 
-bool search1DRefListNameAndColourReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
+bool search1DrefListNameAndColourReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
 {
 	bool foundReference = false;
 
@@ -152,7 +152,7 @@ bool search1DRefListNameAndColourReplaceRef(Reference * referenceToFind, Referen
 	return foundReference;
 }
 
-bool search1DRefListAddReference(Reference * initialReferenceInList, Reference * referenceToAdd)
+bool search1DrefListAddReference(Reference * initialReferenceInList, Reference * referenceToAdd)
 {
 	bool foundReference = true;
 
@@ -462,11 +462,11 @@ bool convertReferencesToByteArray(Reference * firstReference, char * fileByteArr
 
 
 
-bool write2DReferenceListCollapsedTo1DToFile(char * fileName, Reference * firstReference)
+bool write2DreferenceListCollapsedTo1DtoFile(char * fileName, Reference * firstReference)
 {
 	ofstream writeFileObject(fileName);
 
-	write2DReferencesLayerToFileObject(&writeFileObject, firstReference);
+	write2DreferencesLayerToFileObject(&writeFileObject, firstReference);
 
 	writeFileObject.close();
 
@@ -474,7 +474,7 @@ bool write2DReferenceListCollapsedTo1DToFile(char * fileName, Reference * firstR
 }
 
 
-bool write2DReferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer)
+bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer)
 {
 	bool result = true;
 
@@ -484,7 +484,7 @@ bool write2DReferencesLayerToFileObject(ofstream * writeFileObject, Reference * 
 		if(currentReference->isSubModelReference)
 		{
 
-			result = write2DReferencesLayerToFileObject(writeFileObject, currentReference->firstReferenceWithinSubModel);
+			result = write2DreferencesLayerToFileObject(writeFileObject, currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
@@ -571,7 +571,7 @@ bool convertReferenceToString(Reference * currentReference, char * referenceStri
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
-		copyMatrix2IntoMatrix1(&submodelRotationMatrix, &(currentReference->deformationMatrix));
+		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
 		convertRotationMatrixToString(&submodelRotationMatrix, rotationMatrixString);
 		strcat(referenceString, rotationMatrixString);
@@ -677,7 +677,7 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
-		copyMatrix2IntoMatrix1(&submodelRotationMatrix, &(currentReference->deformationMatrix));
+		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
 		convertRotationMatrixToString(&submodelRotationMatrix, rotationMatrixString);
 

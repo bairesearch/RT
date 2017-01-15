@@ -51,43 +51,43 @@ static char *current_option;	/* internal use only! */
 static char com_buf[256];
 
 
-light_source::light_source(void)
+lightSource::lightSource(void)
 {
 }
 
-light_source::~light_source(void)
+lightSource::~lightSource(void)
 {
 }
 
-piece_info::piece_info(void)
+pieceInfo::pieceInfo(void)
 {
 }
 
-piece_info::~piece_info(void)
+pieceInfo::~pieceInfo(void)
 {
 }
 
-dimensions_info::dimensions_info(void)
+dimensionsInfo::dimensionsInfo(void)
 {
 }
 
-dimensions_info::~dimensions_info(void)
+dimensionsInfo::~dimensionsInfo(void)
 {
 }
 
-decal_info::decal_info(void)
+decalInfo::decalInfo(void)
 {
 }
 
-decal_info::~decal_info(void)
+decalInfo::~decalInfo(void)
 {
 }
 
-unknown_info::unknown_info(void)
+unknownInfo::unknownInfo(void)
 {
 }
 
-unknown_info::~unknown_info(void)
+unknownInfo::~unknownInfo(void)
 {
 }
 
@@ -242,7 +242,7 @@ static void next_command()
 
 
 /* Initialise the parser to take input from the given file */
-void init_parser(FILE *f)
+void initParser(FILE *f)
 {
 	is_initialised = 1;
 	have_error = 0;
@@ -251,30 +251,30 @@ void init_parser(FILE *f)
 	current_option = "";
 }
 
-void exit_parser()
+void exitParser()
 {
 	fclose(infile);
 }
 
 
 
-static dimensions_info	_dimensions_info;
-static view_info	_view_info;
-static light_source	_light_source;
-static piece_info	_piece_info;
+static dimensionsInfo	_dimensions_info;
+static ViewInfo	_view_info;
+static lightSource	_light_source;
+static pieceInfo	_piece_info;
 
 	//not tested
-static decal_info	_decal_info;
-static unknown_info	_unknown_info;
+static decalInfo	_decal_info;
+static unknownInfo	_unknown_info;
 
 
 /* Read in the viewport initialisation section */
-int read_viewport()
+int readViewport()
 {
 	next_command();
 	if (string_is(current_command, "IMAGESIZE", "imagesize")) {
-		_view_info.imgwidth = read_int();
-		_view_info.imgheight = read_int();
+		_view_info.imageWidth = read_int();
+		_view_info.imageHeight = read_int();
 	} else
 		return parse_error("IMAGESIZE expected");
 
@@ -285,27 +285,27 @@ int read_viewport()
 		return parse_error("EYE expected");
 
 	next_command();
-	if (string_is(current_command, "VIEWAT", "viewat")) {
-		_view_info.viewat = read_vec();
+	if (string_is(current_command, "VIEWAT", "viewAt")) {
+		_view_info.viewAt = read_vec();
 	} else
 		return parse_error("VIEWAT expected");
 
 	next_command();
-	if (string_is(current_command, "VIEWUP", "viewup")) {
-		_view_info.viewup = read_vec();
+	if (string_is(current_command, "VIEWUP", "viewUp")) {
+		_view_info.viewUp = read_vec();
 	} else
 		return parse_error("VIEWUP expected");
 
 	next_command();
 	if (string_is(current_command, "FOCAL", "focal")) {
-		_view_info.focal_length = read_double();
+		_view_info.focalLength = read_double();
 	} else
 		return parse_error("FOCAL expected");
 
 	next_command();
 	if (string_is(current_command, "VIEWSIZE", "viewsize")) {
-		_view_info.viewwidth = read_double();
-		_view_info.viewheight = read_double();
+		_view_info.viewWidth = read_double();
+		_view_info.viewHeight = read_double();
 	} else
 		return parse_error("VIEWSIZE expected");
 
@@ -313,14 +313,14 @@ int read_viewport()
 }
 
 
-view_info *get_view_info()
+ViewInfo *get_view_info()
 {
 	return &_view_info;
 }
 
 
 
-int next_light_source()
+int nextLightSource()
 {
 	next_command();
 	if (string_is(current_command, "POINTSOURCE", "pointsource"))
@@ -337,7 +337,7 @@ int next_light_source()
 }
 
 
-light_source *get_light_info()
+lightSource *get_light_info()
 {
 	return &_light_source;
 }
@@ -346,11 +346,11 @@ light_source *get_light_info()
 
 
 
-static void read_options(piece_type type);
+static void read_options(pieceType type);
 
 
 
-int next_scene_command()
+int nextSceneCommand()
 {
 	if (current_command == NULL)
 		return 0;
@@ -439,7 +439,7 @@ void read_unknown(void)
 	char	**params;
 	int	param_count;
 
-	_unknown_info.command_string = strdup(current_command);
+	_unknown_info.commandString = strdup(current_command);
 
 	params = (char**)malloc(0);
 	next_option();
@@ -464,7 +464,7 @@ static void mandatory_option(char *s)
 }
 
 
-void read_options(piece_type type)
+void read_options(pieceType type)
 {
 	if((type == BRICK) || (type == PLATE) || (type == TILE) || (type == BASEPLATE))
 	{
@@ -513,10 +513,10 @@ void read_options(piece_type type)
 		next_option();
 		_decal_info.filename = strdup(current_option);
 		next_option();
-		_decal_info.have_transparent =
+		_decal_info.haveTransparent =
 			(strcmp("translucent_colour",
 				current_option) == 0);
-		if(_decal_info.have_transparent){
+		if(_decal_info.haveTransparent){
 			_decal_info.transparentcolour = read_colour();
 		}
 	}
@@ -526,9 +526,9 @@ void read_options(piece_type type)
 	}
 }
 
-dimensions_info *get_dimensions_info() { return &_dimensions_info; }
-piece_info *get_piece_info() { return &_piece_info; }
+dimensionsInfo *getDimensionsInfo() { return &_dimensions_info; }
+pieceInfo *getPieceInfo() { return &_piece_info; }
 
 	//not tested
-decal_info *get_decal_info() { return &_decal_info; }
-unknown_info *get_unknown_info() { return &_unknown_info; }
+decalInfo *getDecalInfo() { return &_decal_info; }
+unknownInfo *getUnknownInfo() { return &_unknown_info; }

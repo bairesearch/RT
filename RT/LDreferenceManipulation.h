@@ -56,12 +56,12 @@
 	#define FILE_FLOAT_PRECISION "%0.4f"
 #endif
 
-Reference * search1DRefListFindLastReference(Reference * initialReferenceInList);
-bool search1DRefListFindRef(Reference * referenceToFind, Reference * initialReferenceInList);		//not currently used
-bool search1DRefListNameAndColourFindRef(Reference * referenceToFind, Reference * initialReferenceInList);
-bool search1DRefListReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList);	//not currently used
-bool search1DRefListNameAndColourReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList);
-bool search1DRefListAddReference(Reference * initialReferenceInList, Reference * referenceToAdd);
+Reference * search1DrefListFindLastReference(Reference * initialReferenceInList);
+bool search1DrefListFindRef(Reference * referenceToFind, Reference * initialReferenceInList);		//not currently used
+bool search1DrefListNameAndColourFindRef(Reference * referenceToFind, Reference * initialReferenceInList);
+bool search1DrefListReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList);	//not currently used
+bool search1DrefListNameAndColourReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList);
+bool search1DrefListAddReference(Reference * initialReferenceInList, Reference * referenceToAdd);
 bool compareReferenceNameAndColour(Reference * reference, string referenceName, int referenceColour);
 void copyReferences(Reference * referenceNew, Reference * referenceToCopy, int type);
 bool compareReferences(Reference * reference1, Reference * reference2, int type);
@@ -98,8 +98,8 @@ bool replaceLinesInByteArray(char * byteArray, char * lineByteArray, int * byteA
 
 bool addSpriteReferenceListToSceneFile(char * sceneFileName, char * sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines);
 
-bool write2DReferenceListCollapsedTo1DToFile(char * fileName, Reference * firstReference);
-	bool write2DReferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer);
+bool write2DreferenceListCollapsedTo1DtoFile(char * fileName, Reference * firstReference);
+	bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer);
 
 bool joinReferenceLists(Reference * initialReferenceInMainList, Reference * initialReferenceInAdditionalList);
 

@@ -35,8 +35,8 @@
 #include "LDreferenceClass.h"
 #include "RTviewinfo.h"
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, view_info * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour);
-	bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomViewInfo, view_info * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour);
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour);
+	bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour);
 	bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject, Reference * firstReferenceInLayer);
 		bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Reference * currentReference);
 

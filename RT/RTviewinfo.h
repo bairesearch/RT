@@ -305,34 +305,34 @@ using namespace std;
 #define TAL_FILE_REF_END "end"
 
 /*
- * view_info
+ * ViewInfo
  * View frame parameters
  */
 
-class view_info
+class ViewInfo
 {
 public:
 
-	view_info(void);
-	~view_info(void);
+	ViewInfo(void);
+	~ViewInfo(void);
 
-	int imgwidth, imgheight;	//IMAGESIZE
+	int imageWidth, imageHeight;	//IMAGESIZE
 
 	vec eye;			//EYE
-	vec viewat;			//VIEWAT
-	vec viewup;			//VIEWUP
+	vec viewAt;			//VIEWAT
+	vec viewUp;			//VIEWUP
 
-	double focal_length;		//FOCAL
+	double focalLength;		//FOCAL
 
-	double viewwidth, viewheight;	//VIEWSIZE
+	double viewWidth, viewHeight;	//VIEWSIZE
 
-	double depthscale;		//added by RBB 30 Nov 09 [ mapping between depthmap bits and pov (defines resolution and maximum depth range/coverage of depth map)]
+	double depthScale;		//added by RBB 30 Nov 09 [ mapping between depthmap bits and pov (defines resolution and maximum depth range/coverage of depth map)]
 	string objectName;		//not currently required to be used, as object name is passed explicitly between functions
 	string imageExtensionName;	//eg .png
 	string depthExtensionName;	//eg .depth.png
 
-	double xoffset;
-	double yoffset;
+	double xOffset;
+	double yOffset;
 };
 
 

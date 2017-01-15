@@ -181,7 +181,7 @@ double absDouble(double val)
 
 
 
-int exists_argument(int argc,char **argv,char *keystr)
+int argumentExists(int argc,char **argv,char *keystr)
 {
 	int i;
 
@@ -196,7 +196,7 @@ int exists_argument(int argc,char **argv,char *keystr)
 	return 0;
 }
 
-float get_float_argument(int argc,char **argv,char *keystr)
+float getFloatArgument(int argc,char **argv,char *keystr)
 {
 	int i;
 	float result=0.0;
@@ -211,14 +211,14 @@ float get_float_argument(int argc,char **argv,char *keystr)
 	}
 	if (i == argc)
 	{
-		fprintf(stderr,"Error: get_float_argument(%s)\n",keystr);
+		fprintf(stderr,"Error: getFloatArgument(%s)\n",keystr);
 		return (float) -999999999;
 	}
 
 	else return result;
 }
 
-char *get_char_argument(int argc,char **argv,char *keystr)
+char *getCharArgument(int argc,char **argv,char *keystr)
 {
 	int i;
 	char *result;
@@ -236,7 +236,7 @@ char *get_char_argument(int argc,char **argv,char *keystr)
 	}
 	if(i == argc)
 	{
-		fprintf(stderr,"Error: get_char_argument(%s)\n",keystr);
+		fprintf(stderr,"Error: getCharArgument(%s)\n",keystr);
 	}
 
 	return result;

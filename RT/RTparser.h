@@ -48,21 +48,21 @@
 
 typedef enum {
 	POINTSOURCE, DIRECTIONAL,
-} light_type;
+} lightType;
 
 
 /*
- * light_source
+ * lightSource
  * Light source parameters
  */
-class light_source
+class lightSource
 {
 public:
 
-	light_source(void);
-	~light_source(void);
+	lightSource(void);
+	~lightSource(void);
 
-	light_type type;
+	lightType type;
 
 	vec pos;
 	colour col;
@@ -74,20 +74,20 @@ typedef enum {
 	/*BRICK, PLATE, TILE, DECAL, BASEPLATE, PRIM_QUAD, PRIM_TRI, SPHERE, CYLINDER, RECT_PRISM, UNKNOWN, - doesnt work G++ bug*/
 	BASEPLATE, BRICK, CYLINDER, DECAL, PRIM_LINE, PLATE, PRIM_QUAD, PRIM_TRI, RECT_PRISM, TILE, SPHERE, UNKNOWN,
 
-} piece_type;
+} pieceType;
 
 
 /*
- * piece_info
+ * pieceInfo
  * standard attributes common to all pieces
  */
-class piece_info
+class pieceInfo
 {
 public:
-	piece_info(void);
-	~piece_info(void);
+	pieceInfo(void);
+	~pieceInfo(void);
 
-	piece_type type;		// the type of the piece
+	pieceType type;		// the type of the piece
 
 	colour col;			// the colour of the piece
 	vec pos;			// position of the piece's origin
@@ -104,18 +104,18 @@ public:
 
 
 /*
- * brick_info, plate_info, tile_info, decal_info, baseplate_info
+ * brick_info, plate_info, tile_info, decalInfo, baseplate_info
  * structures to hold additional information about specific types of piece
  */
 
 
 
-/* dimensions_info */
-class dimensions_info
+/* dimensionsInfo */
+class dimensionsInfo
 {
 public:
-	dimensions_info(void);
-	~dimensions_info(void);
+	dimensionsInfo(void);
+	~dimensionsInfo(void);
 
 	double width;		// width of the object
 	double length;		// length of the object
@@ -127,36 +127,36 @@ public:
 
 
 
-/* decal_info */
-class decal_info
+/* decalInfo */
+class decalInfo
 {
 public:
-	decal_info(void);
-	~decal_info(void);
+	decalInfo(void);
+	~decalInfo(void);
 
 	double width;		// width of the decal in the scene
 	double length;		// length of the decal
 
 	char *filename;		// name of the image to use
 
-	int have_transparent;	// nonzero if TRANSPARENTCOLOUR specified
+	int haveTransparent;	// nonzero if TRANSPARENTCOLOUR specified
 	colour transparentcolour;	// the colour, if specified
 };
 
 
 /*
- * unknown_info
+ * unknownInfo
  * Generic structure used to hold "unknown" commands; i.e., those not
  * handled above.  Parameters are stored as an array of
  * null-terminated char arrays, one element per parameter supplied.
  */
-class unknown_info
+class unknownInfo
 {
 public:
-	unknown_info(void);
-	~unknown_info(void);
+	unknownInfo(void);
+	~unknownInfo(void);
 
-	char *command_string;	// the name of the unknown command
+	char *commandString;	// the name of the unknown command
 
 	int param_count;	// how many parameters
 	char **params;		// the parameters
@@ -166,7 +166,7 @@ public:
 /*
  * Initialise the parser to take input from the given file.
  */
-void init_parser(FILE *f);
+void initParser(FILE *f);
 
 
 
@@ -175,11 +175,11 @@ void init_parser(FILE *f);
  * return nonzero unless this fails.
  * Only meaningful if we're in the viewport initialisation section!
  */
-int read_viewport();
+int readViewport();
 
 
 /* Return the details of the viewport description. */
-view_info *get_view_info();
+ViewInfo *get_view_info();
 
 
 
@@ -188,11 +188,11 @@ view_info *get_view_info();
  * return nonzero until no more light sources are found.
  * Only meaningful if we're in the light sources section.
  */
-int next_light_source();
+int nextLightSource();
 
 
 /* Return the details of the last light source read in. */
-light_source *get_light_info();
+lightSource *get_light_info();
 
 
 
@@ -201,40 +201,40 @@ light_source *get_light_info();
  * return nonzero unless end of file is reached.
  * Only meaningful if we're in the scene description section.
  */
-int next_scene_command();
+int nextSceneCommand();
 
 
 /*
- * Return a pointer to a `piece_info' structure containing the details
+ * Return a pointer to a `pieceInfo' structure containing the details
  * of the last scene description command read in.
  * Beware -- this and the other get_*_info routines below return the
  * same structure every time, so you will have to copy any data out
  * each time or it will be overwritten!
  */
-piece_info *get_piece_info();
+pieceInfo *getPieceInfo();
 
 /*
- * Return a pointer to a `dimensions_info' structure.  Only meaningful if
+ * Return a pointer to a `dimensionsInfo' structure.  Only meaningful if
  * the last scene description command was not a decal or unknown
  */
-dimensions_info *get_dimensions_info();
+dimensionsInfo *getDimensionsInfo();
 
 
 
 	//not tested;
 /*
- * Return a pointer to a `decal_info' structure.  Only meaningful if
+ * Return a pointer to a `decalInfo' structure.  Only meaningful if
  * the last scene description command was a DECAL.
  */
-decal_info *get_decal_info();
+decalInfo *getDecalInfo();
 
 /*
- * Return a pointer to an `unknown_info' structure.  Only meaningful
+ * Return a pointer to an `unknownInfo' structure.  Only meaningful
  * if the last scene description command was not known to the parser.
  */
-unknown_info *get_unknown_info();
+unknownInfo *getUnknownInfo();
 
-void exit_parser();
+void exitParser();
 
 
 #endif

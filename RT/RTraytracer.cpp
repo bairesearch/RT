@@ -25,7 +25,7 @@
  * Project: Raytracer Functions
  * Project Version: 3c3a 16-November-2012
  * Description: contains methods to raytrace a primitive through a given point (x, y) 
- *              on the screen with the given scene_info structure and accompanying 
+ *              on the screen with the given sceneInfo structure and accompanying 
  *              perspective information.
  *
  *******************************************************************************/
@@ -73,31 +73,31 @@
 #define CUBE 1
 #define CYLINDER 2
 
-scene_info::scene_info(void)
+sceneInfo::sceneInfo(void)
 {
 	nextScene = NULL;
 }
 
-scene_info::~scene_info(void)
+sceneInfo::~sceneInfo(void)
 {
 	delete nextScene;
 }
 
 
-void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
+void rayTrace(ViewInfo* vi, sceneInfo* si, mat* tildaMat, vec* uvn)
 {
-	advanced_mat finalReverseMatrix;
-	advanced_mat relevantFinalReverseMatrix;
+	advancedMat finalReverseMatrix;
+	advancedMat relevantFinalReverseMatrix;
 
 	/*used for object (eg stud) translation/scaling*/
-	advanced_mat inverseTranslationMatrix;
-	advanced_mat inverseScaleMatrix;
-	advanced_vec tmpAvancedVector;
-	advanced_mat tmpAdvancedMatrix;	/*used for matrix manipulation*/
-	advanced_mat tmpAdvancedMatrix2;/*used for matrix manipulation*/
-	advanced_mat tmpAdvancedMatrix3;/*used for matrix manipulation*/
-	advanced_mat tempObjectReverseMatrix;
-	advanced_mat objectReverseMatrix;
+	advancedMat inverseTranslationMatrix;
+	advancedMat inverseScaleMatrix;
+	advancedVec tmpAvancedVector;
+	advancedMat tmpAdvancedMatrix;	/*used for matrix manipulation*/
+	advancedMat tmpAdvancedMatrix2;/*used for matrix manipulation*/
+	advancedMat tmpAdvancedMatrix3;/*used for matrix manipulation*/
+	advancedMat tempObjectReverseMatrix;
+	advancedMat objectReverseMatrix;
 
 	/*translation and scaling is done before rotation*/
 	double scalex;
@@ -115,8 +115,8 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	vec p;
 	vec n;
 
-	advanced_vec p0advanced;
-	advanced_vec p1advanced;
+	advancedVec p0advanced;
+	advancedVec p1advanced;
 	vec tmp_structure;		/*used for vector manipulation*/
 	vec p0_structure;
 	vec p1_structure;
@@ -124,12 +124,12 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	vec* p0 = &p0_structure;
 	vec* p1 = &p1_structure;
 
-	advanced_vec p0dashadvanced;
-	advanced_vec p1dashadvanced;
+	advancedVec p0dashadvanced;
+	advancedVec p1dashadvanced;
 	vec p0dash_structure;
 	vec p1dash_structure;
-	vec* p0dash = &p0dash_structure;
-	vec* p1dash = &p1dash_structure;
+	vec* p0Dash = &p0dash_structure;
+	vec* p1Dash = &p1dash_structure;
 
 
 	/*creating eye and direction*/
@@ -215,8 +215,8 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	p0dashadvanced = tmpAvancedVector;
 	multAdvancedMatrixByVector(&p1advanced, &finalReverseMatrix, &tmpAvancedVector);
 	p1dashadvanced = tmpAvancedVector;
-	fromAdvancedVector(&p0dashadvanced, p0dash);
-	fromAdvancedVector(&p1dashadvanced, p1dash);
+	fromAdvancedVector(&p0dashadvanced, p0Dash);
+	fromAdvancedVector(&p1dashadvanced, p1Dash);
 
 
 	vec norm;	//require to fill in normal information while calculating object - used to draw point at later stage
@@ -228,28 +228,28 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 
 	if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 	{
-		calculateCube(p0dash, p1dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateCube(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == CYLINDER)
 	{
-		calculateCylinder(p0dash, p1dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateCylinder(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == SPHERE)
 	{
-		calculateSphere(p0dash, p1dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateSphere(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 			//do: ?proper order of tInOutDash in calculateSphere [ie split up into calc then draw]
 	}
 	else if(si->pi.type == PRIM_QUAD)
 	{
-		calculatePrimQuad(p0dash, p1dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimQuad(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_TRI)
 	{
-		calculatePrimTri(p0dash, p1dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimTri(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_LINE)
 	{
-		calculatePrimLine(p0dash, p1dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimLine(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else
 	{
@@ -278,49 +278,49 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 		if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == CYLINDER)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == SPHERE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_QUAD)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_TRI)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_LINE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0dash, p1dash, &norm);
+			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#endif
 		}
 		else
@@ -336,7 +336,7 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 
 
 
-void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec pdash;
 	vec tmp_structure;	/*used for vector manipulation*/
@@ -819,7 +819,7 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 
 /*there are currently minor errors with this method*/
 
-void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1172,7 +1172,7 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 /*this method works fine except the calculated normals
 produce a cone like image instead of rounded lighting*/
 
-void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec d; /*= P1 - P0*/
 
@@ -1181,8 +1181,8 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 	vec pdash[CYLINDER_ARRAY_SIZE];
 	double sqrted;
 
-	advanced_mat reverseMatrixCopy;
-	advanced_mat standardMatrixCopy;
+	advancedMat reverseMatrixCopy;
+	advancedMat standardMatrixCopy;
 
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1191,14 +1191,14 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 	vec* tmp2 = &tmp2_structure;
 	vec* tmp3 = &tmp3_structure;
 
-	advanced_vec ndashAdvanced;
-	advanced_vec nAdvanced;
+	advancedVec ndashAdvanced;
+	advancedVec nAdvanced;
 	vec ndash;
 	vec n;
 
 	vec p;
-	advanced_vec pdashAdvanced;
-	advanced_vec pAdvanced;
+	advancedVec pdashAdvanced;
+	advancedVec pAdvanced;
 
 	/*defining basic cylinder dimensions*/
 	double SPHERERADIUSBOUNDARY = ONE;
@@ -1237,10 +1237,10 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 	addVectorsRT(p1, tmp, &d);
 	*/
 	subtractVectorsRT(p1, p0, &d);
-	a = dotproduct(&d, &d);
+	a = dotProduct(&d, &d);
 	multiplyVectorByScalarRT(p0, 2.0, tmp);
-	b = dotproduct(tmp, &d);
-	c = dotproduct(p0, p0) - SPHERERADIUSBOUNDARY;
+	b = dotProduct(tmp, &d);
+	c = dotProduct(p0, p0) - SPHERERADIUSBOUNDARY;
 
 
 	sqrted = pow(b,2) - (4*a*c);
@@ -1368,7 +1368,7 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 
 
 
-void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1416,7 +1416,7 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * 
 	}
 }
 
-void calculatePrimTri(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculatePrimTri(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1480,7 +1480,7 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * n
 
 
 	//define a line as 3 quads
-void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1608,7 +1608,7 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec
 }
 
 
-void calculatePrimLine(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
+void calculatePrimLine(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1677,14 +1677,14 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * 
 
 
 #ifndef RT_T_TRANSFORM_TEST
-void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, double tOutDash, vec* p0dash, vec* p1dash, vec * norm)
+void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec * norm)
 #else
-void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, double tOutDash, vec* p0dash, vec* p1dash, vec * norm, vec* p0, vec* p1)
+void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec * norm, vec* p0, vec* p1)
 #endif
 {
 
-	advanced_mat reverseMatrixCopy;
-	advanced_mat standardMatrixCopy;
+	advancedMat reverseMatrixCopy;
+	advancedMat standardMatrixCopy;
 
 
 	vec tmp_structure;	/*used for vector manipulation*/
@@ -1694,15 +1694,15 @@ void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, doub
 	vec* tmp2 = &tmp2_structure;
 	vec* tmp3 = &tmp3_structure;
 
-	advanced_vec ndashAdvanced;
-	advanced_vec nAdvanced;
+	advancedVec ndashAdvanced;
+	advancedVec nAdvanced;
 	vec ndash;
 	vec n;
 
 	vec pdash;
 	vec p;
-	advanced_vec pdashAdvanced;
-	advanced_vec pAdvanced;
+	advancedVec pdashAdvanced;
+	advancedVec pAdvanced;
 
 
 
@@ -1711,10 +1711,10 @@ void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, doub
 	/*POINT CALCULATIONS*/
 
 	/*added recently, the point is used to calculate lighting*/
-	negativeVector(p0dash, tmp);
-	addVectorsRT(p1dash, tmp, tmp2);
+	negativeVector(p0Dash, tmp);
+	addVectorsRT(p1Dash, tmp, tmp2);
 	multiplyVectorByScalarRT(tmp2, tInDash, tmp3);
-	addVectorsRT(p0dash, tmp3, &pdash);
+	addVectorsRT(p0Dash, tmp3, &pdash);
 
 
 	toAdvancedVector(&pdash, 0, &pdashAdvanced);
@@ -1773,7 +1773,7 @@ void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, doub
 
 
 	//norm is not used
-void drawPointNoLighting(scene_info* si, advanced_mat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec * norm)
+void drawPointNoLighting(sceneInfo* si, advancedMat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec * norm)
 {
 	si -> tIn = tIn;
 	si -> tOut = tOut;
@@ -1781,7 +1781,7 @@ void drawPointNoLighting(scene_info* si, advanced_mat* reverseMatrix, double tIn
 
 
 	//added October 08
-void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, view_info * vi, vec * p, vec * uvn)
+void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, ViewInfo * vi, vec * p, vec * uvn)
 {
 	//1. create tilda matrix
 
@@ -1810,13 +1810,13 @@ void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, view_info 
 		/*defining the nTilda, uTilda, vTilda vectors*/
 
 	/*nTilda = (eye - viewAt)*/
-	negativeVector(&(vi->viewat), tmp);
+	negativeVector(&(vi->viewAt), tmp);
 	addVectorsRT(tmp,(&(vi->eye)), nTilda);
 	normaliseVector(nTilda);
 
 	/*wTilda = (viewUp - eye)*/
 	negativeVector(&(vi->eye), tmp);
-	addVectorsRT(tmp,(&(vi->viewup)), wTilda);
+	addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
 	normaliseVector(wTilda);
 
 	/*uTilda = wTilda x nTilda*/

@@ -226,7 +226,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
 	createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -236,7 +236,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 			black.r = 0;
 			black.g = 0;
 			black.b = 0;
-			placepoint_ppm(pm, x, y, black.r, black.g, black.b);
+			placepointPPM(pm, x, y, black.r, black.g, black.b);
 		}
 	}
 
@@ -266,7 +266,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 				booleanContrastRGBColour.b = MAX_RGB_VAL;
 			}
 
-			placepoint_ppm(pm, x, y, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
+			placepointPPM(pm, x, y, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
 		}
 	}
 
@@ -279,7 +279,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -289,7 +289,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 			black.r = 0;
 			black.g = 0;
 			black.b = 0;
-			placepoint_ppm(pm, x, y, black.r, black.g, black.b);
+			placepointPPM(pm, x, y, black.r, black.g, black.b);
 		}
 	}
 
@@ -339,7 +339,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 				}
 			}
 
-			placepoint_ppm(pm, x, y, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
+			placepointPPM(pm, x, y, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
 		}
 	}
 
@@ -363,7 +363,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth*2, imageHeight*2);
+	pm = newPixmap(imageWidth*2, imageHeight*2);
 
 	for(y = 0; y < imageHeight*2; y++)
 	{
@@ -373,7 +373,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 			black.r = 0;
 			black.g = 0;
 			black.b = 0;
-			placepoint_ppm(pm, x, y, black.r, black.g, black.b);
+			placepointPPM(pm, x, y, black.r, black.g, black.b);
 		}
 	}
 
@@ -462,11 +462,11 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 
 				if(comparisonDirection == 0)
 				{
-					placepoint_ppm(pm, (x*2)+1, y*2, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
+					placepointPPM(pm, (x*2)+1, y*2, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
 				}
 				else
 				{
-					placepoint_ppm(pm, (x*2), (y*2)+1, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
+					placepointPPM(pm, (x*2), (y*2)+1, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
 				}
 			}
 		}
@@ -479,7 +479,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 void generateBooleanDiffMapFromRGBMaps(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2)
 {
 	pixmap* pm;
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -560,7 +560,7 @@ void generateBooleanDiffMapFromRGBMaps(char * imageFileName, int imageWidth, int
 				}
 			}
 
-			placepoint_ppm(pm, x, y, booleanColDiff.r, booleanColDiff.g, booleanColDiff.b);
+			placepointPPM(pm, x, y, booleanColDiff.r, booleanColDiff.g, booleanColDiff.b);
 
 		}
 	}
@@ -660,12 +660,12 @@ double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char
 }
 #endif
 
-void generatePixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
+void generatePixmapFromRGBmap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -674,7 +674,7 @@ void generatePixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHei
 
 			colour col;
 			getRGBMapValues(x, y, imageWidth,rgbMap,&col);
-			placepoint_ppm(pm, x, y, col.r, col.g, col.b);
+			placepointPPM(pm, x, y, col.r, col.g, col.b);
 		}
 	}
 
@@ -688,7 +688,7 @@ void generatePixmapFromEnumIntMap(char * filename, int imageWidth, int imageHeig
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -760,7 +760,7 @@ void generatePixmapFromEnumIntMap(char * filename, int imageWidth, int imageHeig
 				intValueColourRepresentation.b = RED_B;
 			}
 
-			placepoint_ppm(pm, x, y, intValueColourRepresentation.r, intValueColourRepresentation.g, intValueColourRepresentation.b);
+			placepointPPM(pm, x, y, intValueColourRepresentation.r, intValueColourRepresentation.g, intValueColourRepresentation.b);
 		}
 	}
 
@@ -780,7 +780,7 @@ void generatePixmapFromLuminosityContrastMap(char * imageFileName, int imageWidt
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -815,7 +815,7 @@ void generatePixmapFromLuminosityContrastMap(char * imageFileName, int imageWidt
 			#ifdef USE_OR
 			}
 			#endif
-			placepoint_ppm(pm, x, y, contrastNormalised, contrastNormalised, contrastNormalised);
+			placepointPPM(pm, x, y, contrastNormalised, contrastNormalised, contrastNormalised);
 		}
 	}
 
@@ -948,7 +948,7 @@ void generatePixmapFromDepthMapOrDepthContrastMap(char * imageFileName, int imag
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1002,7 +1002,7 @@ void generatePixmapFromDepthMapOrDepthContrastMap(char * imageFileName, int imag
 			}
 			#endif
 
-			placepoint_ppm(pm, x, y, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised);
+			placepointPPM(pm, x, y, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised);
 		}
 	}
 
@@ -1014,7 +1014,7 @@ void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(char * imageFileName, 
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1065,7 +1065,7 @@ void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(char * imageFileName, 
 			}
 			#endif
 
-			placepoint_ppm(pm, x, y, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised);
+			placepointPPM(pm, x, y, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised, depthOrDepthContrastValueNormalised);
 		}
 	}
 
@@ -1099,7 +1099,7 @@ void generatePixmapFromNormalMap(char * imageFileName, int imageWidth, int image
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1107,8 +1107,8 @@ void generatePixmapFromNormalMap(char * imageFileName, int imageWidth, int image
 		{
 			vec norm;
 			getNormalMapValue(x, y, imageWidth,normalMap,&norm);
-			placepoint_ppm(pm, x, y, (int)(norm.x*MAX_RGB_VAL), (int)(norm.y*MAX_RGB_VAL), (int)(norm.z*MAX_RGB_VAL));
-			//placepoint_ppm(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
+			placepointPPM(pm, x, y, (int)(norm.x*MAX_RGB_VAL), (int)(norm.y*MAX_RGB_VAL), (int)(norm.z*MAX_RGB_VAL));
+			//placepointPPM(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
 		}
 	}
 
@@ -1120,7 +1120,7 @@ void generatePixmapFromLuminosityMap(char * imageFileName, int imageWidth, int i
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1132,7 +1132,7 @@ void generatePixmapFromLuminosityMap(char * imageFileName, int imageWidth, int i
 		#ifdef USE_CONTRAST_PIXMAP_INVERSE
 			luminosityNormalised = -(luminosityNormalised-MAX_RGB_VAL);
 		#endif
-			placepoint_ppm(pm, x, y, luminosityNormalised, luminosityNormalised, luminosityNormalised);
+			placepointPPM(pm, x, y, luminosityNormalised, luminosityNormalised, luminosityNormalised);
 		}
 	}
 
@@ -1146,7 +1146,7 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1162,7 +1162,7 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 				int g = 0;
 				int b = 0;
 			#endif
-				placepoint_ppm(pm, x, y, r, g, b);
+				placepointPPM(pm, x, y, r, g, b);
 		#else
 			bool val = getBooleanMapValue(x, y, imageWidth, booleanMap);
 			int r;
@@ -1181,7 +1181,7 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 				b = 0;
 			#endif
 
-				placepoint_ppm(pm, x, y, MAX_RGB_VAL, MAX_RGB_VAL, MAX_RGB_VAL);
+				placepointPPM(pm, x, y, MAX_RGB_VAL, MAX_RGB_VAL, MAX_RGB_VAL);
 			}
 			else
 			{
@@ -1194,7 +1194,7 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 				g = MAX_RGB_VAL;
 				b = MAX_RGB_VAL;
 			#endif
-				placepoint_ppm(pm, x, y, 0, 0, 0);
+				placepointPPM(pm, x, y, 0, 0, 0);
 			}
 
 		#endif
@@ -1225,7 +1225,7 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 						{
 							if((kx >= 0) && (kx < imageWidth))
 							{
-								placepoint_ppm(pm, kx, ky, r, g, b);
+								placepointPPM(pm, kx, ky, r, g, b);
 							}
 						}
 					}
@@ -1241,24 +1241,24 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 
 void writeImage(char * imageFileName, pixmap * pm)
 {
-	write_ppm(imageFileName, pm);
-	free_pixmap(pm);
+	writePPM(imageFileName, pm);
+	freePixmap(pm);
 }
 
 void readImage(char * imageFileName, unsigned char * rgbMap)
 {
 	pixmap * rgbPixMap;
 	#ifdef RT_DEBUG
-	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	//cout << "rgbPixMap = loadPPM(" << imageFileName << ");" << endl;
 	#endif
-	rgbPixMap = load_ppm(imageFileName);
+	rgbPixMap = loadPPM(imageFileName);
 
 	#ifdef RT_DEBUG
 	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
 	#endif
 	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
-	free_pixmap(rgbPixMap);
+	freePixmap(rgbPixMap);
 }
 
 void readImage(string * imageFileName, unsigned char * rgbMap)
@@ -1267,16 +1267,16 @@ void readImage(string * imageFileName, unsigned char * rgbMap)
 
 	pixmap * rgbPixMap;
 	#ifdef RT_DEBUG
-	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	//cout << "rgbPixMap = loadPPM(" << imageFileName << ");" << endl;
 	#endif
-	rgbPixMap = load_ppm(imageFileNameCharStar);
+	rgbPixMap = loadPPM(imageFileNameCharStar);
 
 	#ifdef RT_DEBUG
 	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
 	#endif
 	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
-	free_pixmap(rgbPixMap);
+	freePixmap(rgbPixMap);
 }
 
 
@@ -1305,7 +1305,7 @@ void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int i
 	int x,y;
 	pixmap* pm;
 
-	pm = new_pixmap(imageWidth, imageHeight);
+	pm = newPixmap(imageWidth, imageHeight);
 
 	for(y = 0; y < imageHeight; y++)
 	{
@@ -1323,7 +1323,7 @@ void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int i
 			colour depthMap24BitPixelValue;
 			calculate24BitDepthPixmapPixelFromDepth(depthOrDepthContrastValue, depthScale, depthOffset, &depthMap24BitPixelValue);
 
-			placepoint_ppm(pm, x, y, depthMap24BitPixelValue.r, depthMap24BitPixelValue.g, depthMap24BitPixelValue.b);
+			placepointPPM(pm, x, y, depthMap24BitPixelValue.r, depthMap24BitPixelValue.g, depthMap24BitPixelValue.b);
 		}
 	}
 

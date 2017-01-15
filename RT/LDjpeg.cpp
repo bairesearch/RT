@@ -106,7 +106,7 @@ void setpointerToDCTTableHTMLOutputString(string * pointer)
 #endif
 
 //if storeDataInArrays, assume 1 x block and 1 y block! (image size must be <= 8x8)
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYCr[], signed char dctCoeffArrayYCb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
+int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
 {
 	jvirt_barray_ptr * coefficientarrays;
 	int DCTwidth_in_blocks;
@@ -128,11 +128,11 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 	}
 	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
 	{
-		dctCoeffArrayYCr[i] = 0;
+		dctCoeffArrayYcr[i] = 0;
 	}
 	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
 	{
-		dctCoeffArrayYCb[i] = 0;
+		dctCoeffArrayYcb[i] = 0;
 	}
 
 
@@ -266,11 +266,11 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 							}
 							else if(c == 1)
 							{
-								dctCoeffArrayYCr[y*dctCoeffArrayWidth + x] = block[i];
+								dctCoeffArrayYcr[y*dctCoeffArrayWidth + x] = block[i];
 							}
 							else if(c == 2)
 							{
-								dctCoeffArrayYCb[y*dctCoeffArrayWidth + x] = block[i];
+								dctCoeffArrayYcb[y*dctCoeffArrayWidth + x] = block[i];
 							}
 						/*
 						}

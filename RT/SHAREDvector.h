@@ -57,11 +57,11 @@ void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * 
 void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix);
 void transposeMatrix(mat * matx);
 
-double calculateInteriorAngleOfAPolygonVertex(vec * pt1centre, vec * pt2, vec * pt3);
+double calculateInteriorAngleOfAPolygonVertex(vec * pt1Centre, vec * pt2, vec * pt3);
 
 double calculateAreaOfTriangle3D(vec * pt1, vec * pt2, vec * pt3);
 double calculateAreaOfTriangle(vec * pt1, vec * pt2, vec * pt3);
-	double calculateDeterminant3by3(mat* matrix);
+	double calculateDeterminant3By3(mat* matrix);
 
 double absDouble2(double val);
 
@@ -89,7 +89,7 @@ void multiplyVectorByScalarRT(vec* vect1, double multiplyer, vec* vect);
 
 void divideVectorByScalarRT(vec* vect1, double divisor, vec* vect);
 
-void copyVectorRT(vec * vecNew, vec * vecbToCopy);
+void copyVectorRT(vec * vecNew, vec * vecToCopy);
 
 void normaliseVectorRT(vec *vect1, vec *vect);
 
@@ -100,7 +100,7 @@ void normaliseVector(vec *vect1);
 void negativeVector(vec *vect1, vec* vect);
 	/*finds the negative of a vector*/
 
-double dotproduct(vec *vect1, vec *vect2);
+double dotProduct(vec *vect1, vec *vect2);
 	/*finds the dot product of 2 vectors*/
 
 void crossProduct(vec* vect1, vec* vect2, vec* vect);
@@ -125,11 +125,11 @@ double findMagnitudeOfVector(vec * vect1);
 
 
 
-bool compareVectors(vec * veca, vec * vecb);
-bool compareVectorsArbitraryError(vec * veca, vec * vecb, double error);
+bool compareVectors(vec * vecA, vec * vecB);
+bool compareVectorsArbitraryError(vec * vecA, vec * vecB, double error);
 
-bool compareMatricies(mat * mata, mat * matb);
-void copyVectors(vec * vecNew, vec * vecbToCopy);
+bool compareMatricies(mat * matA, mat * matB);
+void copyVectors(vec * vecNew, vec * vecToCopy);
 void copyMatricies(mat * matNew, mat * matToCopy);
 void multiplyVectorByMatrix(vec * vecNew, vec * vecToMultiply, mat * matrix);
 
@@ -147,13 +147,13 @@ double calculateTheDistanceBetweenTwoPoints(vec * positionOfUnit1, vec * positio
 
 
 void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadians);
-void createRotationxMatrix(mat* matrix, double rotation);
-void createRotationyMatrix(mat* matrix, double rotation);
-void createRotationzMatrix(mat* matrix, double rotation);
+void createRotationMatrixX(mat* matrix, double rotation);
+void createRotationMatrixY(mat* matrix, double rotation);
+void createRotationMatrixZ(mat* matrix, double rotation);
 double convertDegreesToRadian(double degrees);
 double convertRadianToDegrees(double radian);
 //void rotateMatrix(mat * matrix, char rotationAxis, double rotationDegrees);
-void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2);
+void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2);
 void scaleMatrix(mat * matrix, double scaleFactor);
 
 double calculateAngleOfVector3D(vec * vect1, int axis);
@@ -162,19 +162,19 @@ double calculateAngleOfVector3D(vec * vect1, int axis);
 
 //From OLCoperations.h
 
-void find2DIntersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound);	//NB an interception may be a line and not a point
+void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound);	//NB an interception may be a line and not a point
 	double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2);
-	bool solve2DLineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i);
+	bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i);
 	bool determineIfPointLiesOnLine2D(double x1, double y1, double x2, double y2, double x3, double y3);
-	bool find2DIntersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection);
+	bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection);
 	bool twoPointsAreTheSame2D(double x1, double y1, double x2, double y2);
 	bool determineIfPointLiesOnAKnownLine2D(double m1, double i1, double x3, double y3);
 
 #ifdef USE_RT
 	//required for raytracing operations
 bool compareDoublesRelaxed(double a, double b);
-bool determineIfPointLiesOnAKnownLine2DRelaxed(double m1, double i1, double x3, double y3);
-bool twoPointsAreTheSame2DRelaxed(double x1, double y1, double x2, double y2);
+bool determineIfPointLiesOnAKnownLine2Drelaxed(double m1, double i1, double x3, double y3);
+bool twoPointsAreTheSame2Drelaxed(double x1, double y1, double x2, double y2);
 #endif
 
 #endif

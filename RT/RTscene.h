@@ -81,38 +81,38 @@ the 2/15 -HEIGHT_OF_BASEPLATE- fraction...*/
 
 
 /*
-typedef struct light lighting_info;
+typedef struct light lightingInfo;
 struct light
 {
-	light_source ls;
-	lighting_info *nextLight;
+	lightSource ls;
+	lightingInfo *nextLight;
 };
 */
 
-class lighting_info
+class lightingInfo
 {
 public:
 
-	lighting_info(void);
-	~lighting_info(void);
+	lightingInfo(void);
+	~lightingInfo(void);
 
-	light_source ls;
-	lighting_info *nextLight;
+	lightSource ls;
+	lightingInfo *nextLight;
 };
 
 
 int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
-	int rayTraceSceneWithoutParse(view_info *vi, scene_info *si, lighting_info *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
+	int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, char * imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
 
 void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew);
 void setLightingMode(int newLightingMode);
 
 void parseTalFileInitialiseParser(char *talFileName);
-view_info * parseTalFileGetViewInfo(view_info *vi);
-lighting_info * parseTalFileGetLightInfo(lighting_info *li);
-scene_info * parseTalFileGetSceneInfo(scene_info *si);
+ViewInfo * parseTalFileGetViewInfo(ViewInfo *vi);
+lightingInfo * parseTalFileGetLightInfo(lightingInfo *li);
+sceneInfo * parseTalFileGetSceneInfo(sceneInfo *si);
 
-void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, view_info *vi, scene_info *si, lighting_info *li);
+void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li);
 
 
 typedef struct advancedColour colourAdvanced;
@@ -121,22 +121,22 @@ struct advancedColour
 	double r, g, b;
 };
 
-void calculateTransparencyColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb);
+void calculateTransparencyColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb);
 
-void calculateUVNScalars(view_info *vi, vec* uvn, int x, int y);
+void calculateUVNScalars(ViewInfo *vi, vec* uvn, int x, int y);
 
-void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
+void calculateAmbientDiffuseSpecular(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
 
-void calculateBasicColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
+void calculateBasicColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
 
 
 int stripExtension(char * filenameWithExtension, char * filenameWithoutExtension);
 int addExtension(char * filenameWithoutExtension, char * extension, char * filenameWithExtension);
 
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, view_info * vi);
+void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, ViewInfo * vi);
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * pointMap, double * depthMap,  view_info * vi);
+void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * pointMap, double * depthMap,  ViewInfo * vi);
 
 
 #endif

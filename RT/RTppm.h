@@ -87,16 +87,16 @@ typedef struct{
   unsigned char *pix;
 }pixmap;
 
-void placepoint_ppm(pixmap *pm, int x, int y, int r, int g, int b);
+void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b);
 
-pixmap *new_pixmap(int wide, int high);  /*create a new blank pixmap*/
+pixmap *newPixmap(int wide, int high);  /*create a new blank pixmap*/
 
-pixmap *load_ppm(char *fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
+pixmap *loadPPM(char *fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
 				       
-void write_ppm(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
+void writePPM(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
 					
-void free_pixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
+void freePixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
 
-unsigned char* calc_pixel_address(pixmap *pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
+unsigned char* calcPixelAddress(pixmap *pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
 
 #endif

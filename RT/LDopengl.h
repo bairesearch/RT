@@ -79,45 +79,45 @@
 
 #define PI (3.14159265)
 
-extern mat opengl2DMultiplicationMatrix;
-extern double opengl2DMatrixTransformation1ScaleFactor;
-extern double opengl2DMatrixTransformation2iRotationFactor;
-extern double opengl2DMatrixTransformation2iiRotationFactor;
-extern double opengl2DMatrixTransformation3aScaleFactor;
-extern double opengl2DMatrixTransformation4aShearFactor;
-extern double opengl2DMatrixTransformation5aTranslationFactorX;
-extern double opengl2DMatrixTransformation5aTranslationFactorY;
+extern mat opengl2DmultiplicationMatrix;
+extern double opengl2DmatrixTransformation1ScaleFactor;
+extern double opengl2DmatrixTransformation2iRotationFactor;
+extern double opengl2DmatrixTransformation2iiRotationFactor;
+extern double opengl2DmatrixTransformation3aScaleFactor;
+extern double opengl2DmatrixTransformation4aShearFactor;
+extern double opengl2DmatrixTransformation5aTranslationFactorX;
+extern double opengl2DmatrixTransformation5aTranslationFactorY;
 
-extern mat opengl3DMultiplicationMatrix;
-extern double opengl3DMatrixTransformation1aXRotationFactor;
-extern double opengl3DMatrixTransformation1bYRotationFactor;
-extern double opengl3DMatrixTransformation2iZRotationFactor;
-extern double opengl3DMatrixTransformation2iiZRotationFactor;
-extern double opengl3DMatrixTransformation3TranslationFactorX;
-extern double opengl3DMatrixTransformation3TranslationFactorY;
-extern double opengl3DMatrixTransformation3TranslationFactorZ;
+extern mat opengl3DmultiplicationMatrix;
+extern double opengl3DmatrixTransformation1aXRotationFactor;
+extern double opengl3DmatrixTransformation1bYRotationFactor;
+extern double opengl3DmatrixTransformation2iZRotationFactor;
+extern double opengl3DmatrixTransformation2iiZRotationFactor;
+extern double opengl3DmatrixTransformation3TranslationFactorX;
+extern double opengl3DmatrixTransformation3TranslationFactorY;
+extern double opengl3DmatrixTransformation3TranslationFactorZ;
 
 int initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings);
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
-void setViewPort2DOrtho(double left, double right, double bottom, double top);
-void setViewPort3D(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFacingPoly, vec * viewportWidthHeightDepth);
-void setViewPort3DDynamic(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFacingPoly, vec * viewportWidthHeightDepth);
-void setViewPort3DBasic();
-void setViewPort3DOrtho(double left, double right, double bottom, double top, double back, double forward);
+void setViewPort2Dortho(double left, double right, double bottom, double top);
+void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
+void setViewPort3Ddynamic(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
+void setViewPort3Dbasic();
+void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLAndCreateRGBMap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODMatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODMatrixOperations);
-	void draw2DQuadsPrimitivesReferenceListToOpenGL();
-	void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations();
-	void draw3DTrisPrimitivesReferenceListToOpenGL();
-	void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations();
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
+	void draw2DquadsPrimitivesReferenceListToOpenGL();
+	void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+	void draw3DtrisPrimitivesReferenceListToOpenGL();
+	void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
-void drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap);
-	void draw3DPrimitivesReferenceListToOpenGLwithRecursion();
-		void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLayer);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap);
+	void draw3DprimitivesReferenceListToOpenGLwithRecursion();
+		void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer);
 
-void draw3DPrimitivesReferenceListToOpenGL();
+void draw3DprimitivesReferenceListToOpenGL();
 
 	void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap);
 	void writeScreenToDepthMap(int width, int height, double * depthMap);

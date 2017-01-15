@@ -35,15 +35,15 @@
 #include "SHAREDglobalDefs.h"
 #include "SHAREDvars.h"
 #include "LDreferenceClass.h"
-#include "XMLParserClass.h"
+#include "XMLparserClass.h"
 
-bool writeSVGFile(string xmlFileName, XMLParserTag * firstTagInXMLFile);
-void writeSVGFooter(ofstream * writeFileObject);
-void writeSVGHeader(ofstream * writeFileObject);
-void writeSVGLine(XMLParserTag ** currentTag, vec * pos1, vec * pos2, int col);
-void writeSVGBox(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
-void writeSVGText(XMLParserTag ** currentTag, string text, vec * pos, int fontSize, int col);
-void writeSVGBoxTransparent(XMLParserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
+bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile);
+void writeSVGfooter(ofstream * writeFileObject);
+void writeSVGheader(ofstream * writeFileObject);
+void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col);
+void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
+void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSize, int col);
+void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
 
 #endif
 

@@ -67,7 +67,7 @@ static string SPRITE_CHARACTER_EXTENSION;
 double spriteTextKernelArray[ANSI_NUMBER_CHARACTERS];
 
 
-void fillInLDSpriteExternVariables()
+void fillInLDspriteExternVariables()
 {
 	#ifdef USE_CS
 		RulesClass * currentReferenceRulesClass = CSrulesSprite;
@@ -501,7 +501,7 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 	createIdentityMatrix(&spriteRotationMatrix);
 	scaleMatrix(&spriteRotationMatrix, spriteScaleFactor);
 
-	copyMatrix2IntoMatrix1(&(spriteReference->deformationMatrix), &(spriteRotationMatrix));
+	copyMatrixTwoIntoMatrixOne(&(spriteReference->deformationMatrix), &(spriteRotationMatrix));
 
 	spriteReference->relativePosition.x = spriteSceneCoords->x;
 	spriteReference->relativePosition.y = spriteSceneCoords->y;
@@ -510,9 +510,9 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 
 	int lineNumberInFileOfSprite;
 
-	if(search1DRefListNameAndColourFindRef(spriteListInitialReference, spriteReference))
+	if(search1DrefListNameAndColourFindRef(spriteListInitialReference, spriteReference))
 	{
-		if(!search1DRefListNameAndColourReplaceRef(spriteListInitialReference, spriteReference, spriteReference))
+		if(!search1DrefListNameAndColourReplaceRef(spriteListInitialReference, spriteReference, spriteReference))
 		{
 			cout << "error: cannot replace Reference in Sprite Reference List" << endl;
 			cout << "\t spriteReference->colour  = \n" << spriteReference->colour  << endl;
@@ -522,7 +522,7 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 	}
 	else
 	{
-		if(!search1DRefListAddReference(spriteListInitialReference, spriteReference))
+		if(!search1DrefListAddReference(spriteListInitialReference, spriteReference))
 		{
 			cout << "error: cannot add Reference to Sprite Reference List" << endl;
 			cout << "\t spriteReference->colour  = \n" << spriteReference->colour  << endl;
@@ -731,7 +731,7 @@ void LDspriteSubmodelFillTextualReference(Reference * spriteSubmodelCurrentRefer
 		tempString[1] = '\0';
 	}
 
-	copyMatrix2IntoMatrix1(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
+	copyMatrixTwoIntoMatrixOne(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
 
 	spriteSubmodelCurrentReference->name = referenceNameStart + tempString + referenceNameEnd;
 

@@ -52,12 +52,12 @@ extern MYSQL_RES *result;
 
 void testMySQLserverConnection();
 
-bool initiateMySQLserverConnection(char * mysqlserveripaddressAndPort, char * username, char * password, char * databaseName);
-bool performSQLSelectQuery(char * sqlCommand, char *sqlCommandOutput);	//not complete - debug only
-bool performSQLSelectQuery(char * sqlCommand);
-bool performSQLRealSelectQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
-bool performSQLInsertQuery(char * sqlCommand);
-bool performSQLRealInsertQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
-long performSQLGetNumRowsQuery(string tableName);
+bool initiateMySQLserverConnection(char * mysqlServerIpAddressAndPort, char * username, char * password, char * databaseName);
+bool performSQLselectQuery(char * sqlCommand, char *sqlCommandOutput);	//not complete - debug only
+bool performSQLselectQuery(char * sqlCommand);
+bool performSQLrealSelectQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
+bool performSQLinsertQuery(char * sqlCommand);
+bool performSQLrealInsertQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
+long performSQLgetNumRowsQuery(string tableName);
 void performSQLdeleteAllRowsQuery(string tableName);
 void endMySQLserverConnection();

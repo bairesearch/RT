@@ -86,9 +86,9 @@ double maxDouble(double a, double b);	//should be turned into a macro instead
 
 double absDouble(double val);
 
-int exists_argument(int argc,char **argv,char *keystr);
-float get_float_argument(int argc,char **argv,char *keystr);
-char *get_char_argument(int argc,char **argv,char *keystr);
+int argumentExists(int argc,char **argv,char *keystr);
+float getFloatArgument(int argc,char **argv,char *keystr);
+char *getCharArgument(int argc,char **argv,char *keystr);
 
 void copyColours(colour * colToModify, colour * colToCopy);
 

@@ -41,7 +41,7 @@
 using namespace std;
 
 #include "SHAREDglobalDefs.h"
-#include "XMLParserClass.h"
+#include "XMLparserClass.h"
 
 
 class RulesClass
@@ -69,25 +69,25 @@ public:
 //High Level
 
 #ifdef USE_CS
-bool parseCSRulesXMLFile();
-	bool parseCSRulesTag(XMLParserTag * currentTag);
+bool parseCSrulesXMLfile();
+	bool parseCSRulesTag(XMLparserTag * currentTag);
 #endif
 
 #ifdef USE_GIA
-bool parseGIARulesXMLFile();
-	bool parseGIARulesTag(XMLParserTag * currentTag);
+bool parseGIArulesXMLfile();
+	bool parseGIARulesTag(XMLparserTag * currentTag);
 #endif
 
 #ifdef USE_OR
-bool parseORRulesXMLFile();
-	bool parseORRulesTag(XMLParserTag * currentTag);
+bool parseORrulesXMLfile();
+	bool parseORrulesTag(XMLparserTag * currentTag);
 #endif
 
-bool parseANNRulesXMLFile();
-	bool parseANNRulesTag(XMLParserTag * currentTag);
+bool parseANNrulesXMLfile();
+	bool parseANNrulesTag(XMLparserTag * currentTag);
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
-bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
+bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
+bool addRulesClassObjectBasedOnTag(XMLparserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
 
 extern RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS

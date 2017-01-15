@@ -104,7 +104,7 @@
 
 extern int SPRITE_DEFAULT_COLOUR;
 
-void fillInLDSpriteExternVariables();
+void fillInLDspriteExternVariables();
 
 void LDcreateSpriteReferenceName(char * spriteReferenceFileName, int spriteIndex, char * sceneFileName);
 Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReference, string * spriteTextString, int spriteColourArray[], Reference * spriteSubmodelInitialReference, int spriteNumberOfLines, int * numSpritesAdded, bool addIndividualSprites);

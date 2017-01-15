@@ -113,14 +113,14 @@ void transposeMatrix(mat * matx)
 
 
 
-double calculateInteriorAngleOfAPolygonVertex(vec * pt1centre, vec * pt2, vec * pt3)
+double calculateInteriorAngleOfAPolygonVertex(vec * pt1Centre, vec * pt2, vec * pt3)
 {
 	vec side1;
 	vec side2;
-	subtractVectorsRT(pt1centre, pt2, &side1);
-	subtractVectorsRT(pt1centre, pt3, &side2);
-	//subtractVectorsRT(pt3, pt1centre, &side2);
-	double interiorAngle = acos(dotproduct(&side1, &side2) / (findMagnitudeOfVector(&side1) * findMagnitudeOfVector(&side2)));
+	subtractVectorsRT(pt1Centre, pt2, &side1);
+	subtractVectorsRT(pt1Centre, pt3, &side2);
+	//subtractVectorsRT(pt3, pt1Centre, &side2);
+	double interiorAngle = acos(dotProduct(&side1, &side2) / (findMagnitudeOfVector(&side1) * findMagnitudeOfVector(&side2)));
 	return interiorAngle;
 
 }
@@ -140,7 +140,7 @@ double calculateAreaOfTriangle3D(vec * pt1, vec * pt2, vec * pt3)
 	matrix.b.z = pt3->y;
 	matrix.c.z = pt3->z;
 
-	return absDouble2(0.5 * calculateDeterminant3by3(&matrix));
+	return absDouble2(0.5 * calculateDeterminant3By3(&matrix));
 }
 
 
@@ -158,11 +158,11 @@ double calculateAreaOfTriangle(vec * pt1, vec * pt2, vec * pt3)
 	matrix.b.z = pt3->y;
 	matrix.c.z = 1.0;
 
-	return absDouble2(0.5 * calculateDeterminant3by3(&matrix));
+	return absDouble2(0.5 * calculateDeterminant3By3(&matrix));
 }
 
 
-double calculateDeterminant3by3(mat* matrix)
+double calculateDeterminant3By3(mat* matrix)
 {
 	double a = matrix->a.x;
 	double b = matrix->b.x;
@@ -413,7 +413,7 @@ void negativeVector(vec *vect1, vec* vect)
 	vect->z = -(vect1->z);
 }
 
-double dotproduct(vec *vect1, vec *vect2)
+double dotProduct(vec *vect1, vec *vect2)
 {
 	double scalar = vect1->x*vect2->x + vect1->y*vect2->y + vect1->z*vect2->z;
 	return scalar;
@@ -479,29 +479,29 @@ void createIdentityMatrixRT(mat* matx)
 	matx->c.z = ONE;
 }
 
-void copyVectorRT(vec * vecNew, vec * vecbToCopy)
+void copyVectorRT(vec * vecNew, vec * vecToCopy)
 {
 
-	vecNew->x = vecbToCopy->x;
-	vecNew->y = vecbToCopy->y;
-	vecNew->z = vecbToCopy->z;
+	vecNew->x = vecToCopy->x;
+	vecNew->y = vecToCopy->y;
+	vecNew->z = vecToCopy->z;
 }
 
 
 
 
-bool compareVectorsArbitraryError(vec * veca, vec * vecb, double error)
+bool compareVectorsArbitraryError(vec * vecA, vec * vecB, double error)
 {
 	bool result = true;
-	if(!compareDoublesArbitraryError(veca->x, vecb->x, error))
+	if(!compareDoublesArbitraryError(vecA->x, vecB->x, error))
 	{
 		result = false;
 	}
-	if(!compareDoublesArbitraryError(veca->y, vecb->y, error))
+	if(!compareDoublesArbitraryError(vecA->y, vecB->y, error))
 	{
 		result = false;
 	}
-	if(!compareDoublesArbitraryError(veca->z, vecb->z, error))
+	if(!compareDoublesArbitraryError(vecA->z, vecB->z, error))
 	{
 		result = false;
 	}
@@ -511,48 +511,48 @@ bool compareVectorsArbitraryError(vec * veca, vec * vecb, double error)
 
 
 
-bool compareVectors(vec * veca, vec * vecb)
+bool compareVectors(vec * vecA, vec * vecB)
 {
 	bool result = true;
-	if(!compareDoubles(veca->x, vecb->x))
+	if(!compareDoubles(vecA->x, vecB->x))
 	{
 		result = false;
 	}
-	if(!compareDoubles(veca->y, vecb->y))
+	if(!compareDoubles(vecA->y, vecB->y))
 	{
 		result = false;
 	}
-	if(!compareDoubles(veca->z, vecb->z))
+	if(!compareDoubles(vecA->z, vecB->z))
 	{
 		result = false;
 	}
 	return result;
 }
 
-bool compareMatricies(mat * mata, mat * matb)
+bool compareMatricies(mat * matA, mat * matB)
 {
 	bool result = true;
-	if(!compareVectors(&(mata->a), &(matb->a)))
+	if(!compareVectors(&(matA->a), &(matB->a)))
 	{
 		result = false;
 	}
-	if(!compareVectors(&(mata->b), &(matb->b)))
+	if(!compareVectors(&(matA->b), &(matB->b)))
 	{
 		result = false;
 	}
-	if(!compareVectors(&(mata->c), &(matb->c)))
+	if(!compareVectors(&(matA->c), &(matB->c)))
 	{
 		result = false;
 	}
 	return result;
 }
 
-void copyVectors(vec * vecNew, vec * vecbToCopy)
+void copyVectors(vec * vecNew, vec * vecToCopy)
 {
 
-	vecNew->x = vecbToCopy->x;
-	vecNew->y = vecbToCopy->y;
-	vecNew->z = vecbToCopy->z;
+	vecNew->x = vecToCopy->x;
+	vecNew->y = vecToCopy->y;
+	vecNew->z = vecToCopy->z;
 }
 
 void copyMatricies(mat * matNew, mat * matToCopy)
@@ -640,7 +640,7 @@ double calculateTheDistanceBetweenTwoPoints2D(double positionXOfUnit1, double po
 
 
 
-void createRotationxMatrix(mat* matrix, double rotation)
+void createRotationMatrixX(mat* matrix, double rotation)
 {
 	matrix->b.y = cos(rotation);
 	matrix->b.z = -sin(rotation);
@@ -648,7 +648,7 @@ void createRotationxMatrix(mat* matrix, double rotation)
 	matrix->c.z = cos(rotation);
 }
 
-void createRotationyMatrix(mat* matrix, double rotation)
+void createRotationMatrixY(mat* matrix, double rotation)
 {
 	matrix->a.x = cos(rotation);
 	matrix->a.z = sin(rotation);
@@ -656,7 +656,7 @@ void createRotationyMatrix(mat* matrix, double rotation)
 	matrix->c.z = cos(rotation);
 }
 
-void createRotationzMatrix(mat* matrix, double rotation)
+void createRotationMatrixZ(mat* matrix, double rotation)
 {
 	matrix->a.x = cos(rotation);
 	matrix->a.y = -sin(rotation);
@@ -688,7 +688,7 @@ void createIdentityMatrix(mat* matrix)
 	matrix->c.z = 1;
 }
 
-void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2)
+void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2)
 {
 	mat1->a.x = mat2->a.x;
 	mat1->b.x = mat2->b.x;
@@ -714,15 +714,15 @@ void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadia
 {
 	if(rotationAxis == AXIS_X)
 	{
-		createRotationxMatrix(matrix, rotationRadians);
+		createRotationMatrixX(matrix, rotationRadians);
 	}
 	else if(rotationAxis == AXIS_Y)
 	{
-		createRotationyMatrix(matrix, rotationRadians);
+		createRotationMatrixY(matrix, rotationRadians);
 	}
 	else if(rotationAxis == AXIS_Z)
 	{
-		createRotationzMatrix(matrix, rotationRadians);
+		createRotationMatrixZ(matrix, rotationRadians);
 	}
 }
 
@@ -753,10 +753,10 @@ void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadia
 
 
 
-//void find2DIntersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * xinterceptionPointFound, bool * yinterceptionPointFound)	//NB an interception may be a line and not a point
+//void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * xinterceptionPointFound, bool * yinterceptionPointFound)	//NB an interception may be a line and not a point
 
 //NB uses 0 is the centre of the quad drawn by the 4 points. a, b, c, d.
-void find2DIntersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound)	//NB an interception may be a line and not a point
+void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound)	//NB an interception may be a line and not a point
 {
 	//try for analytical solution
 
@@ -771,7 +771,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 
 	if(!twoPointsAreTheSame2D(ax, ay, cx, cy))
 	{
-		if(solve2DLineEquationWithTwoPoints(ax, ay, cx, cy, &mEdge, &iEdge))
+		if(solve2DlineEquationWithTwoPoints(ax, ay, cx, cy, &mEdge, &iEdge))
 		{//m != infinity
 
 		}
@@ -787,7 +787,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 
 	if(!twoPointsAreTheSame2D(bx, by, dx, dy))
 	{
-		if(solve2DLineEquationWithTwoPoints(bx, by, dx, dy, &mOptionalLine, &iOptionalLine))
+		if(solve2DlineEquationWithTwoPoints(bx, by, dx, dy, &mOptionalLine, &iOptionalLine))
 		{//m != infinity
 
 		}
@@ -803,7 +803,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 
 	if(!edgeGradientInfinityDetected && !optionalLineGradientInfinityDetected && !edgeNoLineDetected && !optionalLineNoLineDetected)
 	{
-		if(find2DIntersectionPointOfTwoLines(mEdge, iEdge, mOptionalLine, iOptionalLine, intersectionX, intersectionY))
+		if(find2DintersectionPointOfTwoLines(mEdge, iEdge, mOptionalLine, iOptionalLine, intersectionX, intersectionY))
 		{
 			*interceptionPointFound = true;
 		}
@@ -864,7 +864,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 		{
 			//in this case all 4 points must be the same for an intersection to occur a, b, c, d
 		#ifdef USE_RT
-			if(twoPointsAreTheSame2DRelaxed(ax, ay, bx, by))
+			if(twoPointsAreTheSame2Drelaxed(ax, ay, bx, by))
 		#else
 			if(twoPointsAreTheSame2D(ax, ay, bx, by))
 		#endif
@@ -879,7 +879,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 			if(!optionalLineGradientInfinityDetected)
 			{
 			#ifdef USE_RT
-				if(determineIfPointLiesOnAKnownLine2DRelaxed(mOptionalLine, iOptionalLine, ax, ay))
+				if(determineIfPointLiesOnAKnownLine2Drelaxed(mOptionalLine, iOptionalLine, ax, ay))
 			#else
 				if(determineIfPointLiesOnAKnownLine2D(mOptionalLine, iOptionalLine, ax, ay))
 			#endif
@@ -908,7 +908,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 			if(!edgeGradientInfinityDetected)
 			{
 			#ifdef USE_RT
-				if(determineIfPointLiesOnAKnownLine2DRelaxed(mEdge, iEdge, bx, by))
+				if(determineIfPointLiesOnAKnownLine2Drelaxed(mEdge, iEdge, bx, by))
 			#else
 				if(determineIfPointLiesOnAKnownLine2D(mEdge, iEdge, bx, by))
 			#endif
@@ -943,7 +943,7 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 
 
 
-bool find2DIntersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection)
+bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection)
 {
 	bool result;
 
@@ -988,7 +988,7 @@ double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2
 }
 
 
-bool solve2DLineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i)
+bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i)
 {
 	bool result;
 
@@ -1027,7 +1027,7 @@ bool determineIfPointLiesOnLine2D(double x1, double y1, double x2, double y2, do
 	bool result = false;
 
 	double m, i;
-	if(solve2DLineEquationWithTwoPoints(x1, y1, x2, y2, &m, &i))
+	if(solve2DlineEquationWithTwoPoints(x1, y1, x2, y2, &m, &i))
 	{//m != infinity
 		double RHS = m*(x3) + i;
 		if(compareDoubles(y3, RHS))
@@ -1100,7 +1100,7 @@ bool compareDoublesRelaxed(double a, double b)	//required for raytracing operati
 }
 
 
-bool determineIfPointLiesOnAKnownLine2DRelaxed(double m1, double i1, double x3, double y3)
+bool determineIfPointLiesOnAKnownLine2Drelaxed(double m1, double i1, double x3, double y3)
 {//preconditions: m != infinity
 	bool result = false;
 
@@ -1115,7 +1115,7 @@ bool determineIfPointLiesOnAKnownLine2DRelaxed(double m1, double i1, double x3, 
 	return result;
 }
 
-bool twoPointsAreTheSame2DRelaxed(double x1, double y1, double x2, double y2)
+bool twoPointsAreTheSame2Drelaxed(double x1, double y1, double x2, double y2)
 {
 	bool result;
 
