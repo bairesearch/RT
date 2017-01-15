@@ -459,3 +459,42 @@ string convertStringToLowerCase(string * arbitraryCaseString)
 	}
 	return lowerCaseString;
 }
+
+string convertIntToString(int integer)
+{
+	char stringCharStar[100];
+	sprintf(stringCharStar, "%d", integer);
+	return string(stringCharStar);
+}
+
+string convertBoolToString(bool boolean)
+{
+	if(boolean)
+	{
+		return "true";
+	}
+	else
+	{
+		return "false";
+	}
+}
+
+bool textInTextArray(string text, string * textArray, int arraySize)
+{
+	int arrayIndexOfResultFound = INT_DEFAULT_VALUE;
+	return textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
+}
+
+bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound)
+{
+	bool result = false;
+	for(int i=0; i<arraySize; i++)
+	{
+		if(text == textArray[i])
+		{
+			*arrayIndexOfResultFound = i;
+			result = true;
+		}
+	}
+	return result;
+}

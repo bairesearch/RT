@@ -111,4 +111,10 @@ void copyColours(colour * colToModify, colour * colToCopy);
 bool isWhiteSpace(char c);
 string convertStringToLowerCase(string * arbitraryCaseString);
 
+string convertIntToString(int integer);
+string convertBoolToString(bool boolean);
+
+bool textInTextArray(string text, string * textArray, int arraySize);
+bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound);
+
 #endif
