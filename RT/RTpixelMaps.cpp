@@ -1354,14 +1354,7 @@ void createDepthMapFromDepth24BitPixmapImage(pixmap * depth24BitPixMap, double *
 			}
 
 			setLumOrContrastOrDepthMapValue(x, y, imageWidth, depth, depthMap);
-
-			#ifdef OR_DEBUG_PRINT_DEPTH_MAP
-			cout << depth << " ";
-			#endif
 		}
-		#ifdef OR_DEBUG_PRINT_DEPTH_MAP
-		cout << "\n" << endl;
-		#endif
 	}
 }
 

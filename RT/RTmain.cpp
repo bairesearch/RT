@@ -241,7 +241,7 @@ int main(int argc,char **argv)
 
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe version: 1pXy" << endl;
+			cout << "OpenRT.exe - Project Version: 3a13a 24-Sept-2012" << endl;
 			exit(1);
 		}
 	}
