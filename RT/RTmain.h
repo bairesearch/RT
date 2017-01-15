@@ -26,15 +26,25 @@
  * File Name: RTmain.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #ifndef HEADER_RT_MAIN
+
+#include "RTscene.h"
+#include "LDparser.h"
+#include "RTreferenceManipulation.h"
+#include "LDreferenceManipulation.h"
+
 #define HEADER_RT_MAIN
 
-int main(const int argc,const char* *argv);
+int main(const int argc, const char** argv);
+
+class RTmainClass
+{
+};
 
 #endif
 

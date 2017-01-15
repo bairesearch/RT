@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -239,11 +239,14 @@ public:
 	LDreference* firstReferenceWithinSubModel;
 };
 
-void copyReferencePosition(LDreference* r, LDreference* referenceToCopy);
+class LDreferenceClassClass
+{
+	private: void copyReferencePosition(LDreference* r, LDreference* referenceToCopy);
 
-int obtainReferencePlayerID(const LDreference* referenceInThisPhaseStartSceneFile);
+	private: int obtainReferencePlayerID(const LDreference* referenceInThisPhaseStartSceneFile);
 
-void convertLdrawColourToDatFileRGB(const int dataFileColour, colour* col);
+	public: void convertLdrawColourToDatFileRGB(const int dataFileColour, colour* col);
+};
 
 
 #endif

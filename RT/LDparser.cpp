@@ -26,20 +26,18 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "LDparser.h"
-#include "SHAREDvector.h"
-#include "LDreferenceClass.h"
 #ifdef USE_LRRC
 //#include "LRRCparser.h"
 #endif
 
 
-bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, const bool recurseIntoPartsDir)
+bool LDparserClass::parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, const bool recurseIntoPartsDir)
 {
 	bool result = true;
 
@@ -48,7 +46,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 
 	char c;	//current character being read in
 
-		/*new parameters added to parseFile() 18-mar-07*/
+		/*new parameters added to this->parseFile() 18-mar-07*/
 	int type = REFERENCE_TYPE_UNDEFINED;
 	bool readingVertex1X = false;
 	bool readingVertex1Y = false;
@@ -120,7 +118,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 		if(recurseIntoPartsDir)
 		{
 			string parseFileNameInPartsDir = DEFAULT_PARTS_DIRECTORY_FULL_PATH;
-			parseFileName = removeWhiteSpaceFromString(parseFileName);
+			parseFileName = this->removeWhiteSpaceFromString(parseFileName);
 			parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
 			parseFileObject.open(parseFileNameInPartsDir.c_str());
 			if(!parseFileObject.rdbuf()->is_open( ))
@@ -128,7 +126,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 				parseFileObject.close();
 
 				parseFileNameInPartsDir = DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH;
-				parseFileName = removeWhiteSpaceFromString(parseFileName);
+				parseFileName = this->removeWhiteSpaceFromString(parseFileName);
 				parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
 				parseFileObject.open(parseFileNameInPartsDir.c_str());
 				if(!parseFileObject.rdbuf()->is_open())
@@ -514,7 +512,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 
-						currentReference->colour = (unsigned int)(convertStringToDouble(colour));
+						currentReference->colour = (unsigned int)(SHAREDvars.convertStringToDouble(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -526,33 +524,33 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						}
 					#endif
 
-						currentReference->vertex1relativePosition.x = (convertStringToDouble(vertex1X));
-						currentReference->vertex1relativePosition.y = (convertStringToDouble(vertex1Y));
-						currentReference->vertex1relativePosition.z = (convertStringToDouble(vertex1Z));
-						currentReference->vertex2relativePosition.x = (convertStringToDouble(vertex2X));
-						currentReference->vertex2relativePosition.y = (convertStringToDouble(vertex2Y));
-						currentReference->vertex2relativePosition.z = (convertStringToDouble(vertex2Z));
-						currentReference->vertex3relativePosition.x = (convertStringToDouble(vertex3X));
-						currentReference->vertex3relativePosition.y = (convertStringToDouble(vertex3Y));
-						currentReference->vertex3relativePosition.z = (convertStringToDouble(vertex3Z));
-						currentReference->vertex4relativePosition.x = (convertStringToDouble(vertex4X));
-						currentReference->vertex4relativePosition.y = (convertStringToDouble(vertex4Y));
-						currentReference->vertex4relativePosition.z = (convertStringToDouble(vertex4Z));
+						currentReference->vertex1relativePosition.x = (SHAREDvars.convertStringToDouble(vertex1X));
+						currentReference->vertex1relativePosition.y = (SHAREDvars.convertStringToDouble(vertex1Y));
+						currentReference->vertex1relativePosition.z = (SHAREDvars.convertStringToDouble(vertex1Z));
+						currentReference->vertex2relativePosition.x = (SHAREDvars.convertStringToDouble(vertex2X));
+						currentReference->vertex2relativePosition.y = (SHAREDvars.convertStringToDouble(vertex2Y));
+						currentReference->vertex2relativePosition.z = (SHAREDvars.convertStringToDouble(vertex2Z));
+						currentReference->vertex3relativePosition.x = (SHAREDvars.convertStringToDouble(vertex3X));
+						currentReference->vertex3relativePosition.y = (SHAREDvars.convertStringToDouble(vertex3Y));
+						currentReference->vertex3relativePosition.z = (SHAREDvars.convertStringToDouble(vertex3Z));
+						currentReference->vertex4relativePosition.x = (SHAREDvars.convertStringToDouble(vertex4X));
+						currentReference->vertex4relativePosition.y = (SHAREDvars.convertStringToDouble(vertex4Y));
+						currentReference->vertex4relativePosition.z = (SHAREDvars.convertStringToDouble(vertex4Z));
 
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
-						currentReference->vertex1absolutePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
-						currentReference->vertex1absolutePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
-						currentReference->vertex1absolutePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
-						currentReference->vertex2absolutePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
-						currentReference->vertex2absolutePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
-						currentReference->vertex2absolutePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
-						currentReference->vertex3absolutePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
-						currentReference->vertex3absolutePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
-						currentReference->vertex3absolutePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
-						currentReference->vertex4absolutePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
-						currentReference->vertex4absolutePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
-						currentReference->vertex4absolutePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+						currentReference->vertex1absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
+						currentReference->vertex1absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
+						currentReference->vertex1absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+						currentReference->vertex2absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
+						currentReference->vertex2absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
+						currentReference->vertex2absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+						currentReference->vertex3absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
+						currentReference->vertex3absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
+						currentReference->vertex3absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+						currentReference->vertex4absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
+						currentReference->vertex4absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
+						currentReference->vertex4absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
 					#else
 						currentReference->vertex1absolutePosition.x = currentReference->vertex1relativePosition.x + parentReference->absolutePosition.x;
 						currentReference->vertex1absolutePosition.y = currentReference->vertex1relativePosition.y + parentReference->absolutePosition.y;
@@ -746,7 +744,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
-						currentReference->colour = (unsigned int)(convertStringToDouble(colour));
+						currentReference->colour = (unsigned int)(SHAREDvars.convertStringToDouble(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -758,28 +756,28 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						}
 					#endif
 
-						currentReference->relativePosition.x = (convertStringToDouble(coordX));
-						currentReference->relativePosition.y = (convertStringToDouble(coordY));
-						currentReference->relativePosition.z = (convertStringToDouble(coordZ));
+						currentReference->relativePosition.x = (SHAREDvars.convertStringToDouble(coordX));
+						currentReference->relativePosition.y = (SHAREDvars.convertStringToDouble(coordY));
+						currentReference->relativePosition.z = (SHAREDvars.convertStringToDouble(coordZ));
 
 							//26-jan-07 change; take into account rotation of parent reference in calculation of child reference absolute coordinates;
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
-						currentReference->deformationMatrix.a.x = (convertStringToDouble(rotation1));
-						currentReference->deformationMatrix.b.x = (convertStringToDouble(rotation2));
-						currentReference->deformationMatrix.c.x = (convertStringToDouble(rotation3));
-						currentReference->deformationMatrix.a.y = (convertStringToDouble(rotation4));
-						currentReference->deformationMatrix.b.y = (convertStringToDouble(rotation5));
-						currentReference->deformationMatrix.c.y = (convertStringToDouble(rotation6));
-						currentReference->deformationMatrix.a.z = (convertStringToDouble(rotation7));
-						currentReference->deformationMatrix.b.z = (convertStringToDouble(rotation8));
-						currentReference->deformationMatrix.c.z = (convertStringToDouble(rotation9));
+						currentReference->deformationMatrix.a.x = (SHAREDvars.convertStringToDouble(rotation1));
+						currentReference->deformationMatrix.b.x = (SHAREDvars.convertStringToDouble(rotation2));
+						currentReference->deformationMatrix.c.x = (SHAREDvars.convertStringToDouble(rotation3));
+						currentReference->deformationMatrix.a.y = (SHAREDvars.convertStringToDouble(rotation4));
+						currentReference->deformationMatrix.b.y = (SHAREDvars.convertStringToDouble(rotation5));
+						currentReference->deformationMatrix.c.y = (SHAREDvars.convertStringToDouble(rotation6));
+						currentReference->deformationMatrix.a.z = (SHAREDvars.convertStringToDouble(rotation7));
+						currentReference->deformationMatrix.b.z = (SHAREDvars.convertStringToDouble(rotation8));
+						currentReference->deformationMatrix.c.z = (SHAREDvars.convertStringToDouble(rotation9));
 
-						multiplyMatricies(&(currentReference->absoluteDeformationMatrix), &(parentReference->absoluteDeformationMatrix), &(currentReference->deformationMatrix));
+						SHAREDvector.multiplyMatricies(&(currentReference->absoluteDeformationMatrix), &(parentReference->absoluteDeformationMatrix), &(currentReference->deformationMatrix));
 
-						currentReference->absolutePosition.x = calcModXPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
-						currentReference->absolutePosition.y = calcModYPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
-						currentReference->absolutePosition.z = calcModZPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+						currentReference->absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
+						currentReference->absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
+						currentReference->absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
 
 					#else
 						currentReference->absolutePosition.x = currentReference->relativePosition.x + parentReference->absolutePosition.x;
@@ -804,7 +802,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						#endif
 						subModelReference->isSubModelReference = false;	//added aug 08
 
-						if(parseFile(subPartFileName, currentReference->firstReferenceWithinSubModel, currentReference, recurseIntoPartsDir))
+						if(this->parseFile(subPartFileName, currentReference->firstReferenceWithinSubModel, currentReference, recurseIntoPartsDir))
 						{
 							#ifdef LD_DEBUG
 							//cout << "successfully parsed; currentReference->name = " <<  currentReference->name << endl;
@@ -870,7 +868,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 
 
 
-double calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
+double LDparserClass::calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
 {
 	double xPosBasedUponRotatedParent;
 
@@ -879,7 +877,7 @@ double calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* p
 	return xPosBasedUponRotatedParent;
 }
 
-double calcModYPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
+double LDparserClass::calcModYPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
 {
 	double yPosBasedUponRotatedParent;
 
@@ -889,7 +887,7 @@ double calcModYPosBasedUponRotate(const vec* childRelativePosition, const mat* p
 }
 
 
-double calcModZPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
+double LDparserClass::calcModZPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix)
 {
 	double zPosBasedUponRotatedParent;
 
@@ -898,7 +896,7 @@ double calcModZPosBasedUponRotate(const vec* childRelativePosition, const mat* p
 	return zPosBasedUponRotatedParent;
 }
 
-string removeWhiteSpaceFromString(const string s)
+string LDparserClass::removeWhiteSpaceFromString(const string s)
 {
 	string sNew = "";
 	for(int i=0; i<s.length(); i++)

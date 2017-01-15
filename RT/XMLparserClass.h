@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -35,6 +35,7 @@
 #define HEADER_XML_PARSER_CLASS
 
 #include "SHAREDglobalDefs.h"
+#include "SHAREDvars.h"	//required for writeByteArrayToFile/writeStringToFileObject
 
 
 #define XML_WRITE_STANDARD_XML_HEADER
@@ -103,34 +104,38 @@ public:
 };
 
 
-XMLparserTag* parseTagDownALevel(XMLparserTag* currentTag, const string sectionTagName, bool* result);
+class XMLparserClassClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: XMLparserTag* parseTagDownALevel(XMLparserTag* currentTag, const string sectionTagName, bool* result);
 
-bool readXMLfile(const string xmlFileName, XMLparserTag* firstTagInXMLfile);
-bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
-	bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
-		bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
-			bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, const int treeLayer);
-		bool parseTagValueAssumingExistenceOfSubtagsAndClose(ifstream* parseFileObject, XMLparserTag* currentTag, int treeLayer);
-		bool parseTagComment(ifstream* parseFileObject, const char type);
-		bool processTagClose(ifstream* parseFileObject, XMLparserTag** currentTag, const string parentTagName, const bool isSubTag, int treeLayer, const bool endTagFound, const bool parsingAttributeName, const string tagName);
-		XMLparserTag* createNewTag(XMLparserTag* currentTag);
+	public: bool readXMLfile(const string xmlFileName, XMLparserTag* firstTagInXMLfile);
+	private: bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
+		private: bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
+			private: bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, int treeLayer);
+				private: bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag, const string parentTagName, const bool isSubTag, const int treeLayer);
+			private: bool parseTagValueAssumingExistenceOfSubtagsAndClose(ifstream* parseFileObject, XMLparserTag* currentTag, int treeLayer);
+			private: bool parseTagComment(ifstream* parseFileObject, const char type);
+			private: bool processTagClose(ifstream* parseFileObject, XMLparserTag** currentTag, const string parentTagName, const bool isSubTag, int treeLayer, const bool endTagFound, const bool parsingAttributeName, const string tagName);
+			private: XMLparserTag* createNewTag(XMLparserTag* currentTag);
 
 //Low Level
-bool isBlankChar(const ifstream* parseFileObject, const char c);
-bool isBlankCharTabOrNewLine(const ifstream* parseFileObject, const char c);
-void throwGenericXMLParseError();
-bool getAttribute(XMLparserTag* tag, const string attributeName, string* attributeValueFound);
-XMLparserAttribute* createNewAttribute(XMLparserAttribute* currentAttribute);
+	private: bool isBlankChar(const ifstream* parseFileObject, const char c);
+	private: bool isBlankCharTabOrNewLine(const ifstream* parseFileObject, const char c);
+	private: void throwGenericXMLParseError();
+	public: bool getAttribute(XMLparserTag* tag, const string attributeName, string* attributeValueFound);
+	public: XMLparserAttribute* createNewAttribute(XMLparserAttribute* currentAttribute);
 
-bool writeXMLfileInefficient(const string xmlFileName, const XMLparserTag* firstTagInXMLfile);
-void writeXMLHeader(ofstream* writeFileObject);	//not used?
-bool writeXMLfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile);
-	bool addTagLayerToFileObject(const XMLparserTag* firstTagInCurrentLayer, ofstream* writeFileObject, const int treeLayer);
-		void incrementLineAndAddTabsToFileObject(ofstream* writeFileObject, const int treeLayer);
-		void addTabsToFileObject(ofstream* writeFileObject, const int treeLayer);
-	bool addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-		void incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-		void addTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-		void writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition);
+	private: bool writeXMLfileInefficient(const string xmlFileName, const XMLparserTag* firstTagInXMLfile);
+	private: void writeXMLHeader(ofstream* writeFileObject);	//not used?
+	public: bool writeXMLfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile);
+		public: bool addTagLayerToFileObject(const XMLparserTag* firstTagInCurrentLayer, ofstream* writeFileObject, const int treeLayer);
+			private: void incrementLineAndAddTabsToFileObject(ofstream* writeFileObject, const int treeLayer);
+			private: void addTabsToFileObject(ofstream* writeFileObject, const int treeLayer);
+		private: bool addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void addTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition);
+};
 
 #endif

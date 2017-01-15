@@ -26,7 +26,7 @@
  * File Name: SHAREDvector.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -50,133 +50,138 @@
 #define AXIS_Y (2)
 #define AXIS_Z (3)
 
-void initialiseVector(vec* vect);
+class SHAREDvectorClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: void initialiseVector(vec* vect);
 
-void calculateNormalOfTri(vec* pt1, vec* pt2, vec* pt3, vec* normal);
+	public: void calculateNormalOfTri(vec* pt1, vec* pt2, vec* pt3, vec* normal);
 
-void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec* rotationVector);
-void generateLookAtRotationMatrix(vec* at, vec* eye, vec* up, mat* rotationMatrix);
-void transposeMatrix(mat* matx);
+	public: void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec* rotationVector);
+	public: void generateLookAtRotationMatrix(vec* at, vec* eye, vec* up, mat* rotationMatrix);
+	public: void transposeMatrix(mat* matx);
 
-double calculateInteriorAngleOfAPolygonVertex(vec* pt1Centre, vec* pt2, vec* pt3);
+	public: double calculateInteriorAngleOfAPolygonVertex(vec* pt1Centre, vec* pt2, vec* pt3);
 
-double calculateAreaOfTriangle3D(const vec* pt1, const vec* pt2, const vec* pt3);
-double calculateAreaOfTriangle(const vec* pt1, const vec* pt2, const vec* pt3);
-	double calculateDeterminant3By3(const mat* matrix);
+	private: double calculateAreaOfTriangle3D(const vec* pt1, const vec* pt2, const vec* pt3);
+	public: double calculateAreaOfTriangle(const vec* pt1, const vec* pt2, const vec* pt3);
+		private: double calculateDeterminant3By3(const mat* matrix);
 
-double absDouble2(const double val);
+	private: double absDouble2(const double val);
 
 
-void createRotationMatrix2D(mat* matrix, double rotation);
-void createXAxisShearMatrix2D(mat* matrix, double shear);
-double calculateAngleBetweenVectors2D(const vec* vect1, const vec* vect2);
-void createScaleMatrix2D(mat* matrix, double scaleFactor);
-void createYAxisScaleMatrix2D(mat* matrix, double scaleFactor);
+	public: void createRotationMatrix2D(mat* matrix, double rotation);
+	public: void createXAxisShearMatrix2D(mat* matrix, double shear);
+	public: double calculateAngleBetweenVectors2D(const vec* vect1, const vec* vect2);
+	public: void createScaleMatrix2D(mat* matrix, double scaleFactor);
+	public: void createYAxisScaleMatrix2D(mat* matrix, double scaleFactor);
 
-void calculateMidPointBetweenTwoPoints(vec* pt1, vec* pt2, vec* midPoint);
-	void calculateMidDiffBetweenTwoPoints(vec* pt1, vec* pt2, vec* midDiff);
-void calculateNormal(vec* pt1, vec* pt2, vec* normal);
+	public: void calculateMidPointBetweenTwoPoints(vec* pt1, vec* pt2, vec* midPoint);
+		private: void calculateMidDiffBetweenTwoPoints(vec* pt1, vec* pt2, vec* midDiff);
+	public: void calculateNormal(vec* pt1, vec* pt2, vec* normal);
 
 	//from RToperations.h
 
-void subtractVectorsRT(const vec* vect1, const vec* vect2, vec* vect);
+	public: void subtractVectorsRT(const vec* vect1, const vec* vect2, vec* vect);
 	/*vect = vect1 - vect2*/
 
-void addVectorsRT(const vec* vect1, const vec* vect2, vec* vect);
+	public: void addVectorsRT(const vec* vect1, const vec* vect2, vec* vect);
 	/*adds 2 vectors together*/
 
-void multiplyVectorByScalarRT(const vec* vect1, const double multiplyer, vec* vect);
+	public: void multiplyVectorByScalarRT(const vec* vect1, const double multiplyer, vec* vect);
 	/*multiply a vector by a scalar*/
 
-void divideVectorByScalarRT(const vec* vect1, const double divisor, vec* vect);
+	public: void divideVectorByScalarRT(const vec* vect1, const double divisor, vec* vect);
 
-void copyVectorRT(vec* vecNew, const vec* vecToCopy);
+	public: void copyVectorRT(vec* vecNew, const vec* vecToCopy);
 
-void normaliseVectorRT(vec* vect1, vec* vect);
+	public: void normaliseVectorRT(vec* vect1, vec* vect);
 
 
-void normaliseVector(vec* vect1);
+	public: void normaliseVector(vec* vect1);
 	/*normalises a vector*/
 
-void negativeVector(vec* vect1, vec* vect);
+	public: void negativeVector(vec* vect1, vec* vect);
 	/*finds the negative of a vector*/
 
-double dotProduct(const vec* vect1, const vec* vect2);
+	public: double dotProduct(const vec* vect1, const vec* vect2);
 	/*finds the dot product of 2 vectors*/
 
-void crossProduct(vec* vect1, vec* vect2, vec* vect);
+	public: void crossProduct(vec* vect1, vec* vect2, vec* vect);
 	/*vect = vect1 x vect2; finds the cross product of 2 vectors*/
 
-void makeMatrix(vec* vect1, vec* vect2, vec* vect3, mat* matx);
+	public: void makeMatrix(vec* vect1, vec* vect2, vec* vect3, mat* matx);
 	/*creates a 3x3 matrix from 3 vectors*/
 
-void multMatrixByVector(mat* matx, vec* vect1, vec* vect);
+	public: void multMatrixByVector(mat* matx, vec* vect1, vec* vect);
 	/*multiplies a matrix by a vector*/
 
-void createVector(vec* vec);
+	public: void createVector(vec* vec);
 
-void createIdentityMatrixRT(mat* matx);
+	public: void createIdentityMatrixRT(mat* matx);
 
-double findMagnitudeOfVector(const vec* vect1);
-
-
+	public: double findMagnitudeOfVector(const vec* vect1);
 
 
 
 
 
 
-bool compareVectors(const vec* vecA, const vec* vecB);
-bool compareVectorsArbitraryError(const vec* vecA, const vec* vecB, const double error);
 
-bool compareMatricies(const mat* matA, const mat* matB);
-void copyVectors(vec* vecNew, const vec* vecToCopy);
-void copyMatricies(mat* matNew, const mat* matToCopy);
-void multiplyVectorByMatrix(vec* vecNew, vec* vecToMultiply, mat* matrix);
+
+	public: bool compareVectors(const vec* vecA, const vec* vecB);
+	public: bool compareVectorsArbitraryError(const vec* vecA, const vec* vecB, const double error);
+
+	public: bool compareMatricies(const mat* matA, const mat* matB);
+	public: void copyVectors(vec* vecNew, const vec* vecToCopy);
+	public: void copyMatricies(mat* matNew, const mat* matToCopy);
+	public: void multiplyVectorByMatrix(vec* vecNew, vec* vecToMultiply, mat* matrix);
 
 	//semi shared
-void multiplyMatricies(mat* matNew, mat* mat1, mat* mat2);
-void subtractVectors(vec* vecNew, vec* a, vec* b);
-void addVectors(vec* vecNew, vec* a, vec* b);
-void multiplyVectorByScalar(vec* vec, double scalar);
-void createIdentityMatrix(mat* matrix);
+	public: void multiplyMatricies(mat* matNew, mat* mat1, mat* mat2);
+	public: void subtractVectors(vec* vecNew, vec* a, vec* b);
+	public: void addVectors(vec* vecNew, vec* a, vec* b);
+	public: void multiplyVectorByScalar(vec* vec, double scalar);
+	public: void createIdentityMatrix(mat* matrix);
 
-double calculateTheDistanceBetweenTwoPointsXYOnly(const vec* positionOfUnit1, const vec* positionOfUnit2);
-double calculateTheDistanceBetweenTwoPoints(const vec* positionOfUnit1, const vec* positionOfUnit2);
-	double calculateTheDistanceBetweenTwoPoints(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2, const double positionZOfUnit1, const double positionZOfUnit2);
-	double calculateTheDistanceBetweenTwoPoints2D(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2);
+	public: double calculateTheDistanceBetweenTwoPointsXYOnly(const vec* positionOfUnit1, const vec* positionOfUnit2);
+	public: double calculateTheDistanceBetweenTwoPoints(const vec* positionOfUnit1, const vec* positionOfUnit2);
+		public: double calculateTheDistanceBetweenTwoPoints(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2, const double positionZOfUnit1, const double positionZOfUnit2);
+		private: double calculateTheDistanceBetweenTwoPoints2D(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2);
 
 
-void createRotatationMatrix(mat* matrix, const int rotationAxis, double rotationRadians);
-void createRotationMatrixX(mat* matrix, double rotation);
-void createRotationMatrixY(mat* matrix, double rotation);
-void createRotationMatrixZ(mat* matrix, double rotation);
-double convertDegreesToRadian(const double degrees);
-double convertRadianToDegrees(const double radian);
+	public: void createRotatationMatrix(mat* matrix, const int rotationAxis, double rotationRadians);
+	public: void createRotationMatrixX(mat* matrix, double rotation);
+	public: void createRotationMatrixY(mat* matrix, double rotation);
+	public: void createRotationMatrixZ(mat* matrix, double rotation);
+	public: double convertDegreesToRadian(const double degrees);
+	public: double convertRadianToDegrees(const double radian);
 //void rotateMatrix(mat* matrix, char rotationAxis, double rotationDegrees);
-void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2);
-void scaleMatrix(mat* matrix, double scaleFactor);
+	public: void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2);
+	public: void scaleMatrix(mat* matrix, double scaleFactor);
 
-double calculateAngleOfVector3D(const vec* vect1, const int axis);
+	public: double calculateAngleOfVector3D(const vec* vect1, const int axis);
 
 
 
 //From OLCoperations.h
 
-void find2DintersectionPoint(double ax, double ay, double bx, double by, const double cx, const double cy, const double dx, const double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound);	//NB an interception may be a line and not a point
-	double calcDistanceBetweenTwoPoints2D(const double x1, const double y1, const double x2, const double y2);
-	bool solve2DlineEquationWithTwoPoints(double x1, double y1, const double x2, const double y2, double* m, double* i);
-	bool determineIfPointLiesOnLine2D(double x1, double y1, const double x2, const double y2, const double x3, const double y3);
-	bool find2DintersectionPointOfTwoLines(double m1, double i1, const double m2, const double i2, double* xIntersection, double* yIntersection);
-	bool twoPointsAreTheSame2D(const double x1, const double y1, const double x2, const double y2);
-	bool determineIfPointLiesOnAKnownLine2D(const double m1, const double i1, const double x3, const double y3);
+	public: void find2DintersectionPoint(double ax, double ay, double bx, double by, const double cx, const double cy, const double dx, const double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound);	//NB an interception may be a line and not a point
+		private: double calcDistanceBetweenTwoPoints2D(const double x1, const double y1, const double x2, const double y2);
+		private: bool solve2DlineEquationWithTwoPoints(double x1, double y1, const double x2, const double y2, double* m, double* i);
+		private: bool determineIfPointLiesOnLine2D(double x1, double y1, const double x2, const double y2, const double x3, const double y3);
+		private: bool find2DintersectionPointOfTwoLines(double m1, double i1, const double m2, const double i2, double* xIntersection, double* yIntersection);
+		private: bool twoPointsAreTheSame2D(const double x1, const double y1, const double x2, const double y2);
+		private: bool determineIfPointLiesOnAKnownLine2D(const double m1, const double i1, const double x3, const double y3);
 
 #ifdef USE_RT
 	//required for raytracing operations
-bool compareDoublesRelaxed(const double a, const double b);
-bool determineIfPointLiesOnAKnownLine2Drelaxed(const double m1, const double i1, const double x3, const double y3);
-bool twoPointsAreTheSame2Drelaxed(const double x1, const double y1, const double x2, const double y2);
+	public: bool compareDoublesRelaxed(const double a, const double b);
+	private: bool determineIfPointLiesOnAKnownLine2Drelaxed(const double m1, const double i1, const double x3, const double y3);
+	private: bool twoPointsAreTheSame2Drelaxed(const double x1, const double y1, const double x2, const double y2);
 #endif
+
+};
 
 #endif
 

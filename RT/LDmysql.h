@@ -26,7 +26,7 @@
  * File Name: LDmysql.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -47,16 +47,19 @@ extern MYSQL mysql;
 extern MYSQL_RES* result;
 
 
-void testMySQLserverConnection();
+class LDmysqlClass
+{
+	private: void testMySQLserverConnection();
 
-bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName);
-bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput);	//not complete - debug only
-bool performSQLselectQuery(const char* sqlCommand);
-bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
-bool performSQLinsertQuery(const char* sqlCommand);
-bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
-long performSQLgetNumRowsQuery(const string tableName);
-void performSQLdeleteAllRowsQuery(const string tableName);
-void endMySQLserverConnection();
+	public: bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName);
+	private: bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput);	//not complete - debug only
+	private: bool performSQLselectQuery(const char* sqlCommand);
+	private: bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
+	public: bool performSQLinsertQuery(const char* sqlCommand);
+	public: bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
+	public: long performSQLgetNumRowsQuery(const string tableName);
+	public: void performSQLdeleteAllRowsQuery(const string tableName);
+	public: void endMySQLserverConnection();
+};
 
 #endif

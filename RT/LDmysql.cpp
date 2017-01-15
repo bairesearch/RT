@@ -26,7 +26,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -51,18 +51,18 @@ int main()
 }
 */
 
-void testMySQLserverConnection()
+void LDmysqlClass::testMySQLserverConnection()
 {
-	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
+	this->initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
 	const char* sqlCommand = "SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )";
-	performSQLselectQuery(sqlCommand, sqlCommandOutput);
+	this->performSQLselectQuery(sqlCommand, sqlCommandOutput);
 	cout << "sqlCommandOutput = " << sqlCommandOutput << endl;
-	endMySQLserverConnection();
+	this->endMySQLserverConnection();
 }
 
 
-bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName)
+bool LDmysqlClass::initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName)
 {
 
 	mysql_init(&mysql);
@@ -77,7 +77,7 @@ bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, cons
 }
 
 //not complete - debug only
-bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput)
+bool LDmysqlClass::performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -101,7 +101,7 @@ bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput)
 	return true;
 }
 
-bool performSQLselectQuery(const char* sqlCommand)
+bool LDmysqlClass::performSQLselectQuery(const char* sqlCommand)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -116,7 +116,7 @@ bool performSQLselectQuery(const char* sqlCommand)
 	return true;
 }
 
-bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength)
+bool LDmysqlClass::performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -134,7 +134,7 @@ bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long strin
 
 
 //long performSQLgetNumRowsQuery(string tableName, string columnName)
-long performSQLgetNumRowsQuery(const string tableName)
+long LDmysqlClass::performSQLgetNumRowsQuery(const string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -172,7 +172,7 @@ long performSQLgetNumRowsQuery(const string tableName)
 }
 
 
-void performSQLdeleteAllRowsQuery(const string tableName)
+void LDmysqlClass::performSQLdeleteAllRowsQuery(const string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -199,7 +199,7 @@ void performSQLdeleteAllRowsQuery(const string tableName)
 
 
 
-bool performSQLinsertQuery(const char* sqlCommand)
+bool LDmysqlClass::performSQLinsertQuery(const char* sqlCommand)
 {
 	int query_state;
 
@@ -218,7 +218,7 @@ bool performSQLinsertQuery(const char* sqlCommand)
 }
 
 
-bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength)
+bool LDmysqlClass::performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength)
 {
 	int query_state;
 
@@ -245,7 +245,7 @@ bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long strin
 
 
 
-void endMySQLserverConnection()
+void LDmysqlClass::endMySQLserverConnection()
 {
 	mysql_close(connection);
 

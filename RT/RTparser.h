@@ -26,7 +26,7 @@
  * File Name: RTparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -164,7 +164,9 @@ public:
 /*
  * Initialise the parser to take input from the given file.
  */
-void initParser(FILE* f);
+class RTparserClass
+{
+	public: void initParser(FILE* f);
 
 
 
@@ -173,11 +175,11 @@ void initParser(FILE* f);
  * return nonzero unless this fails.
  * Only meaningful if we're in the viewport initialisation section!
  */
-int readViewport();
+	public: int readViewport();
 
 
 /* Return the details of the viewport description.*/
-RTviewInfo* get_view_info();
+	public: RTviewInfo* get_view_info();
 
 
 
@@ -186,11 +188,11 @@ RTviewInfo* get_view_info();
  * return nonzero until no more light sources are found.
  * Only meaningful if we're in the light sources section.
  */
-int nextLightSource();
+	public: int nextLightSource();
 
 
 /* Return the details of the last light source read in.*/
-RTlightSource* get_light_info();
+	public: RTlightSource* get_light_info();
 
 
 
@@ -199,7 +201,7 @@ RTlightSource* get_light_info();
  * return nonzero unless end of file is reached.
  * Only meaningful if we're in the scene description section.
  */
-int nextSceneCommand();
+	public: int nextSceneCommand();
 
 
 /*
@@ -209,13 +211,13 @@ int nextSceneCommand();
  * same structure every time, so you will have to copy any data out
  * each time or it will be overwritten!
  */
-RTpieceInfo* getPieceInfo();
+	public: RTpieceInfo* getPieceInfo();
 
 /*
  * Return a pointer to a `RTdimensionsInfo' structure.  Only meaningful if
  * the last scene description command was not a decal or unknown
  */
-RTdimensionsInfo* getDimensionsInfo();
+	public: RTdimensionsInfo* getDimensionsInfo();
 
 
 
@@ -224,15 +226,16 @@ RTdimensionsInfo* getDimensionsInfo();
  * Return a pointer to a `RTdecalInfo' structure.  Only meaningful if
  * the last scene description command was a DECAL.
  */
-RTdecalInfo* getDecalInfo();
+	private: RTdecalInfo* getDecalInfo();
 
 /*
  * Return a pointer to an `RTunknownInfo' structure.  Only meaningful
  * if the last scene description command was not known to the parser.
  */
-RTunknownInfo* getUnknownInfo();
+	private: RTunknownInfo* getUnknownInfo();
 
-void exitParser();
+	public: void exitParser();
+};
 
 
 #endif

@@ -26,14 +26,14 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "RToperations.h"
 
-void createAdvancedVector(advancedVec* vec)
+void RToperationsClass::createAdvancedVector(advancedVec* vec)
 {
 	vec->x = 0;
 	vec->y = 0;
@@ -41,7 +41,7 @@ void createAdvancedVector(advancedVec* vec)
 	vec->w = 1;
 }
 
-void createIdentityMatrixAdvanced(advancedMat* matx)
+void RToperationsClass::createIdentityMatrixAdvanced(advancedMat* matx)
 {
 	matx->a.x = ONE;
 	matx->b.x = ZERO;
@@ -61,7 +61,7 @@ void createIdentityMatrixAdvanced(advancedMat* matx)
 	matx->d.w = ONE;
 }
 
-void makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type)
+void RToperationsClass::makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type)
 {
 	matxAdv->a.x = matx->a.x;
 	matxAdv->b.x = matx->b.x;
@@ -81,7 +81,7 @@ void makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type)
 	matxAdv->d.w = (double)type;
 }
 
-void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv)
+void RToperationsClass::multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv)
 {
 	vecAdv->x =  matxAdv1->a.x* vecAdv1->x + matxAdv1->b.x* vecAdv1->y + matxAdv1->c.x* vecAdv1->z + matxAdv1->d.x* vecAdv1->w;
 	vecAdv->y =  matxAdv1->a.y* vecAdv1->x + matxAdv1->b.y* vecAdv1->y + matxAdv1->c.y* vecAdv1->z + matxAdv1->d.y* vecAdv1->w;
@@ -89,7 +89,7 @@ void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, adv
 	vecAdv->w =  matxAdv1->a.w* vecAdv1->x + matxAdv1->b.w* vecAdv1->y + matxAdv1->c.w* vecAdv1->z + matxAdv1->d.w* vecAdv1->w;
 }
 
-void multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMat* matxAdv)
+void RToperationsClass::multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMat* matxAdv)
 {
 	matxAdv->a.x = matxAdv1->a.x*matxAdv2->a.x + matxAdv1->b.x*matxAdv2->a.y +  matxAdv1->c.x*matxAdv2->a.z + matxAdv1->d.x*matxAdv2->a.w;
 	matxAdv->b.x = matxAdv1->a.x*matxAdv2->b.x + matxAdv1->b.x*matxAdv2->b.y +  matxAdv1->c.x*matxAdv2->b.z + matxAdv1->d.x*matxAdv2->b.w;
@@ -114,9 +114,9 @@ void multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMa
 
 
 
-void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
+void RToperationsClass::createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->d.x = -xpos;
 	matx->d.y = -ypos;
 	matx->d.z = -zpos;
@@ -124,82 +124,82 @@ void createInverseTranslationMatrix(double xpos, double ypos, double zpos, advan
 }
 
 /*CHECK THIS ONE*/
-void createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
+void RToperationsClass::createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->d.x = xpos;
 	matx->d.y = ypos;
 	matx->d.z = zpos;
 	/*matx->d.w = 1 --> because it is a vertex not a vector*/
 }
 
-void createScaleMatrix(double width, double length, double height, advancedMat* matx)
+void RToperationsClass::createScaleMatrix(double width, double length, double height, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->a.x = width;
 	matx->b.y = length;
 	matx->c.z = height;
 	/*matx->d.w = 1 --> because it is a vertex not a vector*/
 }
 
-void createInverseScaleMatrix(const double width, const double length, const double height, advancedMat* matx)
+void RToperationsClass::createInverseScaleMatrix(const double width, const double length, const double height, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->a.x = 1/width;
 	matx->b.y = 1/length;
 	matx->c.z = 1/height;
 }
 
 
-void createRotationxMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createRotationxMatrix(double rotation, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->b.y = cos(rotation);
 	matx->b.z = -sin(rotation);
 	matx->c.y = sin(rotation);
 	matx->c.z = cos(rotation);
 }
-void createInverseRotationxMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createInverseRotationxMatrix(double rotation, advancedMat* matx)
 {
-	createRotationxMatrix(rotation, matx);
-	invertAdvancedMatrix(matx);
+	this->createRotationxMatrix(rotation, matx);
+	this->invertAdvancedMatrix(matx);
 }
 
-void createRotationyMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createRotationyMatrix(double rotation, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
 	matx->a.z = sin(rotation);
 	matx->c.x = -sin(rotation);
 	matx->c.z = cos(rotation);
 }
-void createInverseRotationyMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createInverseRotationyMatrix(double rotation, advancedMat* matx)
 {
-	createRotationyMatrix(rotation, matx);
-	invertAdvancedMatrix(matx);
+	this->createRotationyMatrix(rotation, matx);
+	this->invertAdvancedMatrix(matx);
 }
 
-void createRotationzMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createRotationzMatrix(double rotation, advancedMat* matx)
 {
-	createIdentityMatrixAdvanced(matx);
+	this->createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
 	matx->a.y = -sin(rotation);
 	matx->b.x = sin(rotation);
 	matx->b.y = cos(rotation);
 }
-void createInverseRotationzMatrix(double rotation, advancedMat* matx)
+void RToperationsClass::createInverseRotationzMatrix(double rotation, advancedMat* matx)
 {
-	createRotationzMatrix(rotation, matx);
-	invertAdvancedMatrix(matx);
+	this->createRotationzMatrix(rotation, matx);
+	this->invertAdvancedMatrix(matx);
 }
 
-void invertAdvancedMatrix(advancedMat* matx)
+void RToperationsClass::invertAdvancedMatrix(advancedMat* matx)
 {
 	/*since the matrix is orthogonal,it can be transposed instead*/
-	transposeAdvancedMatrix(matx);
+	this->transposeAdvancedMatrix(matx);
 }
 
-void transposeAdvancedMatrix(advancedMat* matx)
+void RToperationsClass::transposeAdvancedMatrix(advancedMat* matx)
 {
 	double tmp;
 
@@ -228,12 +228,12 @@ void transposeAdvancedMatrix(advancedMat* matx)
 	matx->d.z = tmp;
 }
 
-double toRadians(const double degrees)
+double RToperationsClass::toRadians(const double degrees)
 {
 	return degrees/180*PI;
 }
 
-void toAdvancedVector(vec* vec, int type, advancedVec* vecAdv)
+void RToperationsClass::toAdvancedVector(vec* vec, int type, advancedVec* vecAdv)
 {
 	vecAdv->x = vec->x;
 	vecAdv->y = vec->y;
@@ -241,7 +241,7 @@ void toAdvancedVector(vec* vec, int type, advancedVec* vecAdv)
 	vecAdv->w = (double)type;
 }
 
-void fromAdvancedVector(advancedVec* vecAdv, vec* vec)
+void RToperationsClass::fromAdvancedVector(advancedVec* vecAdv, vec* vec)
 {
 	vec->x = vecAdv->x;
 	vec->y = vecAdv->y;
@@ -262,11 +262,11 @@ void fromAdvancedVector(advancedVec* vecAdv, vec* vec)
 
 
 
-double findSmallestValueAdvanced(double val1, const double val2)
+double RToperationsClass::findSmallestValueAdvanced(double val1, const double val2)
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
-		return findSmallestValue(val1, val2);
+		return this->findSmallestValue(val1, val2);
 	}
 	else if(val1 > ZERO)
 	{
@@ -283,7 +283,7 @@ double findSmallestValueAdvanced(double val1, const double val2)
 }
 
 
-double findSmallestValue(double val1, const double val2)
+double RToperationsClass::findSmallestValue(double val1, const double val2)
 {
 	if(val1 < val2)
 	{
@@ -295,11 +295,11 @@ double findSmallestValue(double val1, const double val2)
 	}
 }
 
-double findGreatestValueAdvanced(double val1, const double val2)
+double RToperationsClass::findGreatestValueAdvanced(double val1, const double val2)
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
-		return findGreatestValue(val1, val2);
+		return this->findGreatestValue(val1, val2);
 	}
 	else if(val1 > ZERO)
 	{
@@ -316,7 +316,7 @@ double findGreatestValueAdvanced(double val1, const double val2)
 }
 
 
-double findGreatestValue(double val1, const double val2)
+double RToperationsClass::findGreatestValue(double val1, const double val2)
 {
 	if(val1 > val2)
 	{
@@ -331,7 +331,7 @@ double findGreatestValue(double val1, const double val2)
 
 
 
-double findSmallestValue(const double val1, const double val2, double val3)
+double RToperationsClass::findSmallestValue(const double val1, const double val2, double val3)
 {
 	if(val1 > val2)
 	{
@@ -357,7 +357,7 @@ double findSmallestValue(const double val1, const double val2, double val3)
 	}
 }
 
-double findGreatestValue(const double val1, const double val2, double val3)
+double RToperationsClass::findGreatestValue(const double val1, const double val2, double val3)
 {
 	if(val1 < val2)
 	{
@@ -386,7 +386,7 @@ double findGreatestValue(const double val1, const double val2, double val3)
 
 
 
-int findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size)
+int RToperationsClass::findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -414,7 +414,7 @@ int findPositionOfSmallestValueAdvanced(const double* array, const unsigned int 
 	}
 	return position;
 }
-int findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size)
+int RToperationsClass::findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -446,7 +446,7 @@ int findPositionOfGreatestValueAdvanced(const double* array, const unsigned int 
 
 
 
-int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
+int RToperationsClass::findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_LARGE_DOUBLE;
@@ -463,7 +463,7 @@ int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArr
 }
 
 
-int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
+int RToperationsClass::findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_SMALL_DOUBLE;
@@ -482,9 +482,9 @@ int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArr
 
 
 
-int findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, const vec* norm, double* t)
+int RToperationsClass::findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, const vec* norm, double* t)
 {
-	if(findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
+	if(this->findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
 	{
 
 		bool boundaryCheck = true;
@@ -566,7 +566,7 @@ int findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt
 
 
 
-bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec* linept1, const vec* linept2, vec* pt_int)
+bool RToperationsClass::findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec* linept1, const vec* linept2, vec* pt_int)
 {
 	bool result;
 
@@ -599,7 +599,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 	x4 = linept2->x;
 	y4 = linept2->y;
 
-	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &xyXInt, &xyYInt, &xyinterceptionFound, &xyinterceptionPointFound);
+	SHAREDvector.find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &xyXInt, &xyYInt, &xyinterceptionFound, &xyinterceptionPointFound);
 	//xy plane
 
 	x1 = povpt1->y;
@@ -611,7 +611,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 	x4 = linept2->y;
 	y4 = linept2->z;
 
-	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &yzYInt, &yzZInt, &yzinterceptionFound, &yzinterceptionPointFound);
+	SHAREDvector.find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &yzYInt, &yzZInt, &yzinterceptionFound, &yzinterceptionPointFound);
 	//yz plane
 
 	x1 = povpt1->z;
@@ -623,7 +623,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 	x4 = linept2->z;
 	y4 = linept2->x;
 
-	find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &zxZInt, &zxXInt, &zxinterceptionFound, &zxinterceptionPointFound);
+	SHAREDvector.find2DintersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &zxZInt, &zxXInt, &zxinterceptionFound, &zxinterceptionPointFound);
 	//zx plane
 
 	bool xyzinterceptionPointFound = false;
@@ -634,7 +634,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 
 		if(xyinterceptionPointFound && zxinterceptionPointFound)
 		{
-			if(!compareDoublesRelaxed(xyXInt, zxXInt))
+			if(!SHAREDvector.compareDoublesRelaxed(xyXInt, zxXInt))
 			{//xy plane
 				result = false;
 			}
@@ -658,7 +658,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 
 		if(xyinterceptionPointFound && yzinterceptionPointFound)
 		{
-			if(!compareDoublesRelaxed(xyYInt, yzYInt))
+			if(!SHAREDvector.compareDoublesRelaxed(xyYInt, yzYInt))
 			{//yz plane
 				result = false;
 			}
@@ -683,7 +683,7 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 
 		if(yzinterceptionPointFound && zxinterceptionPointFound)
 		{
-			if(!compareDoublesRelaxed(yzZInt, zxZInt))
+			if(!SHAREDvector.compareDoublesRelaxed(yzZInt, zxZInt))
 			{//zx plane
 				result = false;
 			}
@@ -728,14 +728,14 @@ bool findIntersectLineWithLine2D(const vec* povpt1, const vec* povpt2, const vec
 #define SAME_CLOCKNESS 1
 #define DIFF_CLOCKNESS 0
 
-int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
+int RToperationsClass::findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	double V1x, V1y, V1z;
 	double V2x, V2y, V2z;
 	double dotprod;
 
 	vec vectorP1MinusP0;
-	subtractVectorsRT(linept2, linept1, &vectorP1MinusP0);
+	SHAREDvector.subtractVectorsRT(linept2, linept1, &vectorP1MinusP0);
 	vec* vect = &vectorP1MinusP0;
 
 	// vector form triangle pt1 to pt2
@@ -804,11 +804,11 @@ int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec
 		pt_int->y = linept1->y + vect->y* (*t);
 		pt_int->z = linept1->z + vect->z* (*t);
 
-		if(checkSameClockDir(pt1, pt2, pt_int, norm) == SAME_CLOCKNESS)
+		if(this->checkSameClockDir(pt1, pt2, pt_int, norm) == SAME_CLOCKNESS)
 		{
-			if(checkSameClockDir(pt2, pt3, pt_int, norm) == SAME_CLOCKNESS)
+			if(this->checkSameClockDir(pt2, pt3, pt_int, norm) == SAME_CLOCKNESS)
 			{
-				if(checkSameClockDir(pt3, pt1, pt_int, norm) == SAME_CLOCKNESS)
+				if(this->checkSameClockDir(pt3, pt1, pt_int, norm) == SAME_CLOCKNESS)
 				{
 					/*
 					norm->x = -norm->x;
@@ -845,7 +845,7 @@ int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec
 }
 
 
-int checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec* norm)
+int RToperationsClass::checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec* norm)
 {
 	double testi, testj, testk;
 	double dotprod;
@@ -870,7 +870,7 @@ int checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec*
 
 
 
-int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, const vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
+int RToperationsClass::findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, const vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	//NB a quad is formed out of 2 tris
 
@@ -890,12 +890,12 @@ int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, co
 	double triAtInAndOut;
 	double triBtInAndOut;
 
-	if(findIntersectLineWithTri(pt1, pt2, pt3, linept1, linept2, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
+	if(this->findIntersectLineWithTri(pt1, pt2, pt3, linept1, linept2, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
 	{
 		triAIntersectionFound = TRUE;
 	}
 
-	if(findIntersectLineWithTri(pt1, pt3, pt4, linept1, linept2, &intersectionPointTriB, &intersectionPointNormalTriB, &triBtInAndOut))
+	if(this->findIntersectLineWithTri(pt1, pt3, pt4, linept1, linept2, &intersectionPointTriB, &intersectionPointNormalTriB, &triBtInAndOut))
 	{
 		triBIntersectionFound = TRUE;
 	}
@@ -904,22 +904,22 @@ int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, co
 	if(triAIntersectionFound && triBIntersectionFound)
 	{
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
-		copyVectorRT(&intersectionPoint, &intersectionPointTriA);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointTriA);
 		tInAndOut = triAtInAndOut;
 	}
 	else if(triAIntersectionFound)
 	{
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
-		copyVectorRT(&intersectionPoint, &intersectionPointTriA);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointTriA);
 		tInAndOut = triAtInAndOut;
 	}
 	else if(triBIntersectionFound)
 	{
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriB);
-		copyVectorRT(&intersectionPoint, &intersectionPointTriB);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriB);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointTriB);
 		tInAndOut = triBtInAndOut;
 	}
 	else
@@ -929,8 +929,8 @@ int findIntersectLineWithQuad(const vec* pt1, const vec* pt2, const vec* pt3, co
 	}
 
 	*t = tInAndOut;
-	copyVectorRT(norm, &intersectionPointNormal);
-	copyVectorRT(pt_int, &intersectionPoint);
+	SHAREDvector.copyVectorRT(norm, &intersectionPointNormal);
+	SHAREDvector.copyVectorRT(pt_int, &intersectionPoint);
 
 	return 1;
 }

@@ -26,7 +26,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 #include "RTppm.h"
 
 /*new 24bit pixmap*/
-pixmap* newPixmap(const int wide, const int high)
+pixmap* RTppmClass::newPixmap(const int wide, const int high)
 {
 	pixmap* pm = (pixmap*)malloc(sizeof(pixmap));
 	if(!pm)
@@ -54,13 +54,13 @@ pixmap* newPixmap(const int wide, const int high)
 	return pm;
 }
 
-void freePixmap(pixmap* pm)
+void RTppmClass::freePixmap(pixmap* pm)
 {
 	free(pm->pix);
 	free(pm);
 }
 
-pixmap* loadPPM(const string fname)
+pixmap* RTppmClass::loadPPM(const string fname)
 {
 	FILE* f;
 	int high, wide;
@@ -99,18 +99,18 @@ pixmap* loadPPM(const string fname)
 
 	fgetc(f);  /*eat the trailing white space*/
 
-	npm = newPixmap(wide, high);
+	npm = this->newPixmap(wide, high);
 
 	if(!npm)
 	{
-		freePixmap(npm);
+		this->freePixmap(npm);
 		fclose(f);
 		return NULL;
 	}
 
 	if(fread(npm->pix, (long)wide*high*3,1, f) != 1)
 	{
-		freePixmap(npm);
+		this->freePixmap(npm);
 		fclose(f);
 		return NULL;
 	}
@@ -119,7 +119,7 @@ pixmap* loadPPM(const string fname)
 	return npm;
 }
 
-void writePPM(const string fname, const pixmap* pm)
+void RTppmClass::writePPM(const string fname, const pixmap* pm)
 {
 	FILE* f;
 
@@ -141,12 +141,12 @@ void writePPM(const string fname, const pixmap* pm)
 	fclose(f);
 }
 
-unsigned char* calcPixelAddress(const pixmap* pm, const int x, const int y)
+unsigned char* RTppmClass::calcPixelAddress(const pixmap* pm, const int x, const int y)
 {
 	return &pm->pix[((long)pm->wide*y + x)*3];
 }
 
-void placepointPPM(pixmap* pm, const int x, const int y, int r, int g, int b)
+void RTppmClass::placepointPPM(pixmap* pm, const int x, const int y, int r, int g, int b)
 {
 	int position = y*(pm->wide)*3+x*3;
 

@@ -26,32 +26,32 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "LDsvg.h"
 
-bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile)
+bool LDsvgClass::writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile)
 {
-	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);
+	return this->writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);
 }
 
-bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
+bool LDsvgClass::writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
 {
 	bool result = true;
 
 	ofstream writeFileObject(xmlFileName.c_str());
 
-	writeSVGheader(&writeFileObject, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY);
+	this->writeSVGheader(&writeFileObject, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY);
 
-	if(!addTagLayerToFileObject(firstTagInXMLfile, &writeFileObject, 0))
+	if(!XMLparserClass.addTagLayerToFileObject(firstTagInXMLfile, &writeFileObject, 0))
 	{
 		result = false;
 	}
 
-	writeSVGfooter(&writeFileObject);
+	this->writeSVGfooter(&writeFileObject);
 
 	//Added by RBB 30 August 2009 - required for Windows SW to re-read xml files
 	writeFileObject.put(CHAR_NEWLINE); //(s.cStr())[i]
@@ -62,17 +62,17 @@ bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfil
 }
 
 
-void writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
+void LDsvgClass::writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
 {
 	int width = viewBoxMaxX-viewBoxMinX;
 	int height = viewBoxMaxY-viewBoxMinY;
 
-	string widthString = convertIntToString(width);
-	string heightString = convertIntToString(height);
-	string viewBoxMinXstring = convertIntToString(viewBoxMinX);
-	string viewBoxMaxXstring = convertIntToString(viewBoxMaxX);
-	string viewBoxMinYstring = convertIntToString(viewBoxMinY);
-	string viewBoxMaxYstring = convertIntToString(viewBoxMaxY);
+	string widthString = SHAREDvars.convertIntToString(width);
+	string heightString = SHAREDvars.convertIntToString(height);
+	string viewBoxMinXstring = SHAREDvars.convertIntToString(viewBoxMinX);
+	string viewBoxMaxXstring = SHAREDvars.convertIntToString(viewBoxMaxX);
+	string viewBoxMinYstring = SHAREDvars.convertIntToString(viewBoxMinY);
+	string viewBoxMaxYstring = SHAREDvars.convertIntToString(viewBoxMaxY);
 
 	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 	string headerString = "";
@@ -83,7 +83,7 @@ void writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX, const int 
 	}
 }
 
-void writeSVGfooter(ofstream* writeFileObject)
+void LDsvgClass::writeSVGfooter(ofstream* writeFileObject)
 {
 	string footerString = "</svg>";
 	for(int i = 0; i<footerString.length(); i++)
@@ -94,19 +94,19 @@ void writeSVGfooter(ofstream* writeFileObject)
 
 
 
-void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse)
+void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse)
 {
 	colour colourrgb;
- 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string boxOutlineWidthString = convertDoubleToString(boxOutlineWidth, "%0.3f");
-	string xPosString = convertIntToString((int)(pos->x - (width/2)));	//%d
-	string yPosString = convertIntToString((int)(pos->y - (height/2)));
-	string rString = convertIntToString((unsigned char)colourrgb.r);
-	string gString = convertIntToString((unsigned char)colourrgb.g);
-	string bString = convertIntToString((unsigned char)colourrgb.b);
-	string widthString = convertIntToString((int)width);
-	string heightString = convertIntToString((int)height);
+	string boxOutlineWidthString = SHAREDvars.convertDoubleToString(boxOutlineWidth, "%0.3f");
+	string xPosString = SHAREDvars.convertIntToString((int)(pos->x - (width/2)));	//%d
+	string yPosString = SHAREDvars.convertIntToString((int)(pos->y - (height/2)));
+	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
+	string widthString = SHAREDvars.convertIntToString((int)width);
+	string heightString = SHAREDvars.convertIntToString((int)height);
 
 	string svgText = "";
 
@@ -188,23 +188,23 @@ void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, 
 	}
 }
 
-void writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, const double fillOpacity)
+void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, const double fillOpacity)
 {
 	colour colourrgb;
- 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string boxOutlineWidthString = convertDoubleToString(boxOutlineWidth, "%0.3f");
-	string xPosString = convertIntToString((int)(pos->x - (width/2)));	//%d
-	string yPosString = convertIntToString((int)(pos->y - (height/2)));
-	string rString = convertIntToString((unsigned char)colourrgb.r);
-	string gString = convertIntToString((unsigned char)colourrgb.g);
-	string bString = convertIntToString((unsigned char)colourrgb.b);
-	string widthString = convertIntToString((int)width);
-	string heightString = convertIntToString((int)height);
+	string boxOutlineWidthString = SHAREDvars.convertDoubleToString(boxOutlineWidth, "%0.3f");
+	string xPosString = SHAREDvars.convertIntToString((int)(pos->x - (width/2)));	//%d
+	string yPosString = SHAREDvars.convertIntToString((int)(pos->y - (height/2)));
+	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
+	string widthString = SHAREDvars.convertIntToString((int)width);
+	string heightString = SHAREDvars.convertIntToString((int)height);
 
 	string svgText = "";
 
-	string fillOpacityString = convertDoubleToString(fillOpacity, "%0.3f");
+	string fillOpacityString = SHAREDvars.convertDoubleToString(fillOpacity, "%0.3f");
 
 	if(useEllipse)
 	{
@@ -295,18 +295,18 @@ void writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const dou
 
 
 
-void writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col)
+void LDsvgClass::writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col)
 {
 	colour colourrgb;
- 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string xPosString = convertIntToString((int)pos1->x);	//%d
-	string yPosString = convertIntToString((int)pos1->y);
-	string xPos2String = convertIntToString((int)pos2->x);
-	string yPos2String = convertIntToString((int)pos2->y);
-	string rString = convertIntToString((unsigned char)colourrgb.r);
-	string gString = convertIntToString((unsigned char)colourrgb.g);
-	string bString = convertIntToString((unsigned char)colourrgb.b);
+	string xPosString = SHAREDvars.convertIntToString((int)pos1->x);	//%d
+	string yPosString = SHAREDvars.convertIntToString((int)pos1->y);
+	string xPos2String = SHAREDvars.convertIntToString((int)pos2->x);
+	string yPos2String = SHAREDvars.convertIntToString((int)pos2->y);
+	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
@@ -349,17 +349,17 @@ void writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, c
 
 
 
-void writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col)
+void LDsvgClass::writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col)
 {
 	colour colourrgb;
- 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string fontSizeString = convertIntToString(fontSize);
-	string xPosString = convertIntToString((int)pos->x);
-	string yPosString = convertIntToString((int)pos->y);
-	string rString = convertIntToString((unsigned char)colourrgb.r);
-	string gString = convertIntToString((unsigned char)colourrgb.g);
-	string bString = convertIntToString((unsigned char)colourrgb.b);
+	string fontSizeString = SHAREDvars.convertIntToString(fontSize);
+	string xPosString = SHAREDvars.convertIntToString((int)pos->x);
+	string yPosString = SHAREDvars.convertIntToString((int)pos->y);
+	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
@@ -402,7 +402,7 @@ void writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, 
 	//string svgText = "<g style=\"font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400\"><g style=\"stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")\"><text><tspan x=\"" + xPosString + "\" y=\"" + yPosString + "\">" + text + "</tspan></text></g></g>";
 }
 
-XMLparserTag* writeSVGgroup(XMLparserTag** currentTag, const string* groupID)
+XMLparserTag* LDsvgClass::writeSVGgroup(XMLparserTag** currentTag, const string* groupID)
 {
 	XMLparserTag* nextTagOnOriginalLayer = NULL;
 
@@ -424,17 +424,17 @@ XMLparserTag* writeSVGgroup(XMLparserTag** currentTag, const string* groupID)
 	return nextTagOnOriginalLayer;
 }
 
-void writeSVGconnector(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col, const string* startGroupID, const string* endGroupID, const double width)
+void LDsvgClass::writeSVGconnector(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col, const string* startGroupID, const string* endGroupID, const double width)
 {
 	colour colourrgb;
- 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
 
-	string xPosString = convertIntToString((int)pos1->x);	//%d
-	string yPosString = convertIntToString((int)pos1->y);
-	string xPos2String = convertIntToString((int)pos2->x);
-	string yPos2String = convertIntToString((int)pos2->y);
-	string strokeWidth = convertDoubleToString(width, "%0.1f");
-	string hexString = convertColourRGBtoHexString(&colourrgb);
+	string xPosString = SHAREDvars.convertIntToString((int)pos1->x);	//%d
+	string yPosString = SHAREDvars.convertIntToString((int)pos1->y);
+	string xPos2String = SHAREDvars.convertIntToString((int)pos2->x);
+	string yPos2String = SHAREDvars.convertIntToString((int)pos2->y);
+	string strokeWidth = SHAREDvars.convertDoubleToString(width, "%0.1f");
+	string hexString = this->convertColourRGBtoHexString(&colourrgb);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "path";
@@ -483,7 +483,7 @@ void writeSVGconnector(XMLparserTag** currentTag, const vec* pos1, const vec* po
 	(*currentTag) = (*currentTag)->nextTag;
 }
 
-string convertColourRGBtoHexString(const colour* colourRGB)
+string LDsvgClass::convertColourRGBtoHexString(const colour* colourRGB)
 {
 	string hexString = "";
 

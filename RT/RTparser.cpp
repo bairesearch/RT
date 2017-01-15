@@ -26,7 +26,7 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -259,7 +259,7 @@ static void next_command()
 
 
 /* Initialise the parser to take input from the given file*/
-void initParser(FILE* f)
+void RTparserClass::initParser(FILE* f)
 {
 	is_initialised = 1;
 	have_error = 0;
@@ -268,7 +268,7 @@ void initParser(FILE* f)
 	current_option = "";
 }
 
-void exitParser()
+void RTparserClass::exitParser()
 {
 	fclose(infile);
 }
@@ -286,7 +286,7 @@ static RTunknownInfo _unknown_info;
 
 
 /* Read in the viewport initialisation section*/
-int readViewport()
+int RTparserClass::readViewport()
 {
 	next_command();
 	if(string_is(current_command, "IMAGESIZE", "imagesize"))
@@ -354,14 +354,14 @@ int readViewport()
 }
 
 
-RTviewInfo* get_view_info()
+RTviewInfo* RTparserClass::get_view_info()
 {
 	return &_view_info;
 }
 
 
 
-int nextLightSource()
+int RTparserClass::nextLightSource()
 {
 	next_command();
 	if(string_is(current_command, "POINTSOURCE", "pointsource"))
@@ -384,7 +384,7 @@ int nextLightSource()
 }
 
 
-RTlightSource* get_light_info()
+RTlightSource* RTparserClass::get_light_info()
 {
 	return &_light_source;
 }
@@ -397,7 +397,7 @@ static void read_options(pieceType type);
 
 
 
-int nextSceneCommand()
+int RTparserClass::nextSceneCommand()
 {
 	if(current_command == NULL)
 	{
@@ -601,21 +601,21 @@ void read_options(pieceType type)
 	}
 }
 
-RTdimensionsInfo* getDimensionsInfo()
+RTdimensionsInfo* RTparserClass::getDimensionsInfo()
 {
 	return &_dimensions_info;
 }
-RTpieceInfo* getPieceInfo()
+RTpieceInfo* RTparserClass::getPieceInfo()
 {
 	return &_piece_info;
 }
 
 	//not tested
-RTdecalInfo* getDecalInfo()
+RTdecalInfo* RTparserClass::getDecalInfo()
 {
 	return &_decal_info;
 }
-RTunknownInfo* getUnknownInfo()
+RTunknownInfo* RTparserClass::getUnknownInfo()
 {
 	return &_unknown_info;
 }

@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -35,6 +35,8 @@
 #define HEADER_LD_REFERENCE_MANIPULATION
 
 #include "LDreferenceClass.h"
+#include "SHAREDvector.h"
+#include "SHAREDvars.h"	//required for writeByteArrayToFile
 
 #define DAT_FILE_GENERIC_MAX_SIZE (100000000)		//100MB - the maximum size of any ldraw .DAT/.LDR file
 
@@ -59,36 +61,41 @@
 	#define FILE_FLOAT_PRECISION "%0.4f"
 #endif
 
-LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInList);
-bool search1DrefListFindRef(const LDreference* referenceToFind, const LDreference* initialReferenceInList);		//not currently used
-bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, const LDreference* initialReferenceInList);
-bool search1DrefListReplaceRef(const LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);	//not currently used
-bool search1DrefListNameAndColourReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);
-bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreference* referenceToAdd);
-bool compareReferenceNameAndColour(const LDreference* reference, const string referenceName, const int referenceColour);
-void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, const int type);
-bool compareReferences(const LDreference* reference1, const LDreference* reference2, const int type);
+class LDreferenceManipulationClass
+{
+	private: SHAREDvectorClass SHAREDvector;
+	private: SHAREDvarsClass SHAREDvars;
+	public: LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInList);
+	public: bool search1DrefListFindRef(const LDreference* referenceToFind, const LDreference* initialReferenceInList);		//not currently used
+	public: bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, const LDreference* initialReferenceInList);
+	public: bool search1DrefListReplaceRef(const LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);	//not currently used
+	public: bool search1DrefListNameAndColourReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);
+	public: bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreference* referenceToAdd);
+	public: bool compareReferenceNameAndColour(const LDreference* reference, const string referenceName, const int referenceColour);
+	public: void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, const int type);
+	public: bool compareReferences(const LDreference* reference1, const LDreference* reference2, const int type);
 
 
-string convertPositionCoordinatesToString(const vec* spriteSceneCoords);
-string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(const vec* spriteSceneCoords);
+	public: string convertPositionCoordinatesToString(const vec* spriteSceneCoords);
+	public: string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(const vec* spriteSceneCoords);
 
-bool writeReferencesToFile(const string fileName, LDreference* firstReference);
-bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
-	bool convertReferenceToString(LDreference* currentReference, string* referenceString);
-bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
+	public: bool writeReferencesToFile(const string fileName, LDreference* firstReference);
+	public: bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
+		private: bool convertReferenceToString(LDreference* currentReference, string* referenceString);
+	public: bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
 
-bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
-void copyFiles(const string newFileName, const string fileToCopyName);
+	public: bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
+	public: void copyFiles(const string newFileName, const string fileToCopyName);
 
 /*sprite routines*/
-string convertRotationMatrixToString(const mat* rotationMatrix);
+	public: string convertRotationMatrixToString(const mat* rotationMatrix);
 
-bool addSpriteReferenceListToSceneFile(const string sceneFileName, const string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, const int spriteListByteArrayLines);
+	public: bool addSpriteReferenceListToSceneFile(const string sceneFileName, const string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, const int spriteListByteArrayLines);
 
-bool write2DreferenceListCollapsedTo1DtoFile(const string fileName, LDreference* firstReference);
-	bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
+	public: bool write2DreferenceListCollapsedTo1DtoFile(const string fileName, LDreference* firstReference);
+		private: bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
 
-bool joinReferenceLists(LDreference* initialReferenceInMainList, LDreference* initialReferenceInAdditionalList);
+	public: bool joinReferenceLists(LDreference* initialReferenceInMainList, LDreference* initialReferenceInAdditionalList);
+};
 
 #endif

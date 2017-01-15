@@ -26,26 +26,23 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "RTreferenceManipulation.h"
-#include "LDreferenceManipulation.h"
-#include "SHAREDvector.h"
-#include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
+bool RTreferenceManipulationClass::write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
 {
 	ofstream writeFileObject;
 	writeFileObject.open(fileName.c_str());
 	if(writeFileObject.is_open())
 	{
-		writeRayTraceFormatHeaderInfo(&writeFileObject, useCustomViewInfo, vi, useCustomLightSource, lightSourcePosition, lightSourceColour);
+		this->writeRayTraceFormatHeaderInfo(&writeFileObject, useCustomViewInfo, vi, useCustomLightSource, lightSourcePosition, lightSourceColour);
 
-		write2DReferencesLayerToFileObjectRayTraceFormat(&writeFileObject, firstReference);
+		this->write2DReferencesLayerToFileObjectRayTraceFormat(&writeFileObject, firstReference);
 
 		writeFileObject.close();
 	}
@@ -58,7 +55,7 @@ bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDre
 
 
 
-bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
+bool RTreferenceManipulationClass::writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour)
 {
 	/*
 	#ifdef COMPILE_TH_RT
@@ -89,8 +86,8 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		imageWidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
 		imageHeight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
 	}
-	string imgwidthString = convertIntToString(imageWidth);
-	string imgheightString = convertIntToString(imageHeight);
+	string imgwidthString = SHAREDvars.convertIntToString(imageWidth);
+	string imgheightString = SHAREDvars.convertIntToString(imageHeight);
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_IMAGE_SIZE + " " + imgwidthString + " " + imgheightString;
 
@@ -116,9 +113,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		eyey = TAL_FILE_HEADER_DEFAULT_EYE_Y;
 		eyez = TAL_FILE_HEADER_DEFAULT_EYE_Z;
 	}
-	string eyexString = convertDoubleToString(eyex, "%0.4f");
-	string eyeyString = convertDoubleToString(eyey, "%0.4f");
-	string eyezString = convertDoubleToString(eyez, "%0.4f");
+	string eyexString = SHAREDvars.convertDoubleToString(eyex, "%0.4f");
+	string eyeyString = SHAREDvars.convertDoubleToString(eyey, "%0.4f");
+	string eyezString = SHAREDvars.convertDoubleToString(eyez, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_EYE + " " + eyexString + " " + eyeyString + " " + eyezString;
 
@@ -144,9 +141,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		viewaty = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
 		viewatz = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
 	}
-	string viewatxString = convertDoubleToString(viewatx, "%0.4f");
-	string viewatyString = convertDoubleToString(viewaty, "%0.4f");
-	string viewatzString = convertDoubleToString(viewatz, "%0.4f");
+	string viewatxString = SHAREDvars.convertDoubleToString(viewatx, "%0.4f");
+	string viewatyString = SHAREDvars.convertDoubleToString(viewaty, "%0.4f");
+	string viewatzString = SHAREDvars.convertDoubleToString(viewatz, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWAT + " " + viewatxString + " " + viewatyString + " " + viewatzString;
 
@@ -172,9 +169,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		viewupy = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
 		viewupz = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
 	}
-	string viewupxString = convertDoubleToString(viewupx, "%0.4f");
-	string viewupyString = convertDoubleToString(viewupy, "%0.4f");
-	string viewupzString = convertDoubleToString(viewupz, "%0.4f");
+	string viewupxString = SHAREDvars.convertDoubleToString(viewupx, "%0.4f");
+	string viewupyString = SHAREDvars.convertDoubleToString(viewupy, "%0.4f");
+	string viewupzString = SHAREDvars.convertDoubleToString(viewupz, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWUP + " " + viewupxString + " " + viewupyString + " " + viewupzString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -193,7 +190,7 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 	{
 		focalLength = TAL_FILE_HEADER_DEFAULT_FOCAL;
 	}
-	string focal_lengthString = convertDoubleToString(focalLength, "%0.4f");
+	string focal_lengthString = SHAREDvars.convertDoubleToString(focalLength, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_FOCAL + " " + focal_lengthString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -215,8 +212,8 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		viewWidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
 		viewHeight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 	}
-	string viewwidthString = convertDoubleToString(viewWidth, "%0.4f");
-	string viewheightString = convertDoubleToString(viewHeight, "%0.4f");
+	string viewwidthString = SHAREDvars.convertDoubleToString(viewWidth, "%0.4f");
+	string viewheightString = SHAREDvars.convertDoubleToString(viewHeight, "%0.4f");
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_VIEWSIZE + " " + viewwidthString + " " + viewheightString;
 	for(int i = 0; i<dataValueString.length(); i++)
@@ -244,9 +241,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 		lightSourcePositionz = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z;
 		lightSourceColourString = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR;
 	}
-	string lightSourcePositionxstring = convertDoubleToString(lightSourcePositionx, "%0.1f");
-	string lightSourcePositionystring = convertDoubleToString(lightSourcePositiony, "%0.1f");
-	string lightSourcePositionzstring = convertDoubleToString(lightSourcePositionz, "%0.1f");
+	string lightSourcePositionxstring = SHAREDvars.convertDoubleToString(lightSourcePositionx, "%0.1f");
+	string lightSourcePositionystring = SHAREDvars.convertDoubleToString(lightSourcePositiony, "%0.1f");
+	string lightSourcePositionzstring = SHAREDvars.convertDoubleToString(lightSourcePositionz, "%0.1f");
 
 	//light source cannot currently be customised
 	dataValueString = "";
@@ -260,7 +257,7 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCust
 	return true;
 }
 
-bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer)
+bool RTreferenceManipulationClass::write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer)
 {
 	LDreference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
@@ -270,7 +267,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT"))))
 		{
-			write2DReferencesLayerToFileObjectRayTraceFormat(writeFileObject, currentReference->firstReferenceWithinSubModel);
+			this->write2DReferencesLayerToFileObjectRayTraceFormat(writeFileObject, currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
@@ -292,24 +289,24 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 				#endif
 
 				LDreference collapsedReference;
-				copyReferences(&collapsedReference, currentReference, currentReference->type);
+				LDreferenceManipulation.copyReferences(&collapsedReference, currentReference, currentReference->type);
 
 				if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 				{
-					copyVectors(&(collapsedReference.relativePosition), &(currentReference->absolutePosition)); 	//collapse 2D reference list to top level 1D reference list
-					copyMatricies(&(collapsedReference.deformationMatrix), &(currentReference->absoluteDeformationMatrix));	//collapse 2D reference list to top level 1D reference list
+					SHAREDvector.copyVectors(&(collapsedReference.relativePosition), &(currentReference->absolutePosition)); 	//collapse 2D reference list to top level 1D reference list
+					SHAREDvector.copyMatricies(&(collapsedReference.deformationMatrix), &(currentReference->absoluteDeformationMatrix));	//collapse 2D reference list to top level 1D reference list
 				}
 
-				copyVectors(&(collapsedReference.vertex1relativePosition), &(currentReference->vertex1absolutePosition));
-				copyVectors(&(collapsedReference.vertex2relativePosition), &(currentReference->vertex2absolutePosition));
-				copyVectors(&(collapsedReference.vertex3relativePosition), &(currentReference->vertex3absolutePosition));
-				copyVectors(&(collapsedReference.vertex4relativePosition), &(currentReference->vertex4absolutePosition));
+				SHAREDvector.copyVectors(&(collapsedReference.vertex1relativePosition), &(currentReference->vertex1absolutePosition));
+				SHAREDvector.copyVectors(&(collapsedReference.vertex2relativePosition), &(currentReference->vertex2absolutePosition));
+				SHAREDvector.copyVectors(&(collapsedReference.vertex3relativePosition), &(currentReference->vertex3absolutePosition));
+				SHAREDvector.copyVectors(&(collapsedReference.vertex4relativePosition), &(currentReference->vertex4absolutePosition));
 
 				collapsedReference.colour = currentReference->absoluteColour;
 
 				if(currentReference->referenceEnabledMethod2DOD)
 				{
-					addReferenceToFileObjectRayTraceFormat(writeFileObject, &collapsedReference);
+					this->addReferenceToFileObjectRayTraceFormat(writeFileObject, &collapsedReference);
 				}
 			}
 		}
@@ -321,7 +318,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 }
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference)
+bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference)
 {
 
 	bool result = true;
@@ -458,13 +455,13 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 	{
 		//write primitive vertex coords
 
-		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		string positionCoordinatesString = LDreferenceManipulation.convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
-		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		positionCoordinatesString = LDreferenceManipulation.convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
@@ -472,7 +469,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 
 		if((currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			positionCoordinatesString = LDreferenceManipulation.convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
 			for(int i = 0; i<positionCoordinatesString.length(); i++)
 			{
 				writeFileObject->put(positionCoordinatesString[i]);
@@ -480,7 +477,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 
 			if(currentReference->type == REFERENCE_TYPE_QUAD)
 			{
-				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				positionCoordinatesString = LDreferenceManipulation.convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
 				for(int i = 0; i<positionCoordinatesString.length(); i++)
 				{
 					writeFileObject->put(positionCoordinatesString[i]);
@@ -491,7 +488,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 	else if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
 		//write position coords
-		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->relativePosition));
+		string positionCoordinatesString = LDreferenceManipulation.convertPositionCoordinatesToString(&(currentReference->relativePosition));
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
@@ -501,18 +498,18 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 		//write rotation vector values
 		vec submodelRotationVector;
 		vec submodelRotationVectorDegrees;
-		calculateRotationVectorFromDeformationMatrix(&(currentReference->deformationMatrix), &submodelRotationVector);
+		SHAREDvector.calculateRotationVectorFromDeformationMatrix(&(currentReference->deformationMatrix), &submodelRotationVector);
 		submodelRotationVectorDegrees.x = submodelRotationVector.x / PI* 180.0;
 		submodelRotationVectorDegrees.y = submodelRotationVector.y / PI* 180.0;
 		submodelRotationVectorDegrees.z = submodelRotationVector.z / PI* 180.0;
-		string rotationVectorString = convertPositionCoordinatesToString(&submodelRotationVectorDegrees);
+		string rotationVectorString = LDreferenceManipulation.convertPositionCoordinatesToString(&submodelRotationVectorDegrees);
 	#else
 		//write rotation vector values
 		vec submodelRotationVector;
 		submodelRotationVector.x = 0;
 		submodelRotationVector.y = 0;
 		submodelRotationVector.z = 0;
-		string rotationVectorString = convertPositionCoordinatesToString(&submodelRotationVector);
+		string rotationVectorString = LDreferenceManipulation.convertPositionCoordinatesToString(&submodelRotationVector);
 	#endif
 		for(int i = 0; i<rotationVectorString.length(); i++)
 		{
@@ -526,21 +523,21 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreferen
 		double length;
 		double height;
 
-		if(!compareDoubles(submodelRotationVector.x, 0.0) || !compareDoubles(submodelRotationVector.y, 0.0) || !compareDoubles(submodelRotationVector.z, 0.0))
+		if(!SHAREDvars.compareDoubles(submodelRotationVector.x, 0.0) || !SHAREDvars.compareDoubles(submodelRotationVector.y, 0.0) || !SHAREDvars.compareDoubles(submodelRotationVector.z, 0.0))
 		{
 			advancedMat inverseRotationxMatrix, inverseRotationyMatrix, inverseRotationzMatrix;
 			advancedMat tmpAdvancedMatrix1b, tmpAdvancedMatrix2b, tmpAdvancedMatrix3b;
 
 			advancedMat deformationMatrixAdvanced;
-			makeAdvancedMatrix(&deformationMatrixAdvanced, &(currentReference->deformationMatrix), 1);
+			RToperations.makeAdvancedMatrix(&deformationMatrixAdvanced, &(currentReference->deformationMatrix), 1);
 
-			createInverseRotationxMatrix(submodelRotationVector.x, &inverseRotationxMatrix);
-			createInverseRotationyMatrix(submodelRotationVector.y, &inverseRotationyMatrix);
-			createInverseRotationzMatrix(submodelRotationVector.z, &inverseRotationzMatrix);
+			RToperations.createInverseRotationxMatrix(submodelRotationVector.x, &inverseRotationxMatrix);
+			RToperations.createInverseRotationyMatrix(submodelRotationVector.y, &inverseRotationyMatrix);
+			RToperations.createInverseRotationzMatrix(submodelRotationVector.z, &inverseRotationzMatrix);
 
-			multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationzMatrix, &tmpAdvancedMatrix1b);
-			multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix1b, &tmpAdvancedMatrix2b);
-			multAdvancedMatrix(&tmpAdvancedMatrix2b, &deformationMatrixAdvanced, &tmpAdvancedMatrix3b);
+			RToperations.multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationzMatrix, &tmpAdvancedMatrix1b);
+			RToperations.multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix1b, &tmpAdvancedMatrix2b);
+			RToperations.multAdvancedMatrix(&tmpAdvancedMatrix2b, &deformationMatrixAdvanced, &tmpAdvancedMatrix3b);
 
 			width = (tmpAdvancedMatrix3b.a.x)* 2.0;
 			length = (tmpAdvancedMatrix3b.b.y)* 2.0;

@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -36,6 +36,7 @@
 
 #include "SHAREDglobalDefs.h"
 #include "XMLparserClass.h"
+#include "SHAREDvars.h"
 
 #define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
 #define CS_RULES_XML_FILE_NAME "CSrules.xml"
@@ -84,30 +85,35 @@ public:
 
 //High Level
 
+class XMLrulesClassClass
+{
+	private: XMLparserClassClass XMLparserClass;
+	private: SHAREDvarsClass SHAREDvars;
 #ifdef USE_NLC
-bool parseNLCrulesXMLfile();
+	public: bool parseNLCrulesXMLfile();
 #endif
 
 #ifdef USE_GIA
-bool parseGIArulesXMLfile();
-	bool parseGIARulesTag(XMLparserTag* currentTag);
+	public: bool parseGIArulesXMLfile();
+		private: bool parseGIARulesTag(XMLparserTag* currentTag);
 #endif
 
 #ifdef USE_CS
-bool parseCSrulesXMLfile();
-	bool parseCSRulesTag(XMLparserTag* currentTag);
+	public: bool parseCSrulesXMLfile();
+		private: bool parseCSRulesTag(XMLparserTag* currentTag);
 #endif
 
 #ifdef USE_OR
-bool parseORrulesXMLfile();
-	bool parseORrulesTag(XMLparserTag* currentTag);
+	public: bool parseORrulesXMLfile();
+		private: bool parseORrulesTag(XMLparserTag* currentTag);
 #endif
 
-bool parseANNrulesXMLfile();
-	bool parseANNrulesTag(XMLparserTag* currentTag);
+	public: bool parseANNrulesXMLfile();
+		private: bool parseANNrulesTag(XMLparserTag* currentTag);
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);
-bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);
+	private: bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);
+	private: bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);
+};
 
 extern XMLrulesClass* ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS

@@ -26,7 +26,7 @@
  * File Name: LDopengl.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -99,36 +99,42 @@ extern double opengl3DmatrixTransformation3TranslationFactorX;
 extern double opengl3DmatrixTransformation3TranslationFactorY;
 extern double opengl3DmatrixTransformation3TranslationFactorZ;
 
-bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings);
-bool exitOpenGL();
+class LDopenglClass
+{
+	public: bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings);
+	public: bool exitOpenGL();
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
-void setViewPort2Dortho(const double left, const double right, const double bottom, const double top);
-void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth);
-void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
-double maxDouble2(double float1, const double float2);
-void setViewPort3Dbasic();
-void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward);
+	public: void setViewPort2Dortho(const double left, const double right, const double bottom, const double top);
+	public: void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth);
+	private: void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
+	private: double maxDouble2(double float1, const double float2);
+	private: void setViewPort3Dbasic();
+	public: void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations);
-	static void draw2DquadsPrimitivesReferenceListToOpenGL();
-	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
-	static void draw3DtrisPrimitivesReferenceListToOpenGL();
-	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations);
+	public: void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations);
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap);
-	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
-		static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firstReferenceInLayer);
+	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap);
+
+		public: void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap);
+		public: void writeScreenToDepthMap(int width, const int height, double* depthMap);
+		public: void updateScreen();
+
+	private: void shearMatrix(const float shearX, const float shearY);
+};
+
+static void draw2DquadsPrimitivesReferenceListToOpenGL();
+static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+static void draw3DtrisPrimitivesReferenceListToOpenGL();
+static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
+
+static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
+static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firstReferenceInLayer);
 
 static void draw3DprimitivesReferenceListToOpenGL();
 static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
 
-	void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap);
-	void writeScreenToDepthMap(int width, const int height, double* depthMap);
-	void updateScreen();
-
-void shearMatrix(const float shearX, const float shearY);
 
 #endif
 

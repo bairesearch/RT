@@ -26,13 +26,12 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "RTscene.h"
-#include "RTpixelMaps.h"
 
 #ifndef LINUX
 	#include <windows.h>
@@ -58,12 +57,12 @@ RTlightingInfo::~RTlightingInfo(void)
 	delete nextLight;
 }
 
-void setLightingMode(const int newLightingMode)
+void RTsceneClass::setLightingMode(const int newLightingMode)
 {
 	lightingMode = newLightingMode;
 }
 
-void setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew)
+void RTsceneClass::setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew)
 {
 	lightingAmbientRed = lightingAmbientRedNew;
 	lightingAmbientGreen = lightingAmbientGreenNew;
@@ -74,10 +73,10 @@ void setSceneLightingConditions(const float lightingAmbientRedNew, const float l
 
 	/*used to store the original scene in the list*/
 
-int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	#ifndef USE_OR
-	fillInRTRulesExternVariables();
+	RTpixelMaps.fillInRTRulesExternVariables();
 	#endif
 
 	//printf("Raytrace Started\n");
@@ -88,17 +87,17 @@ int rayTraceScene(const string talFileName, string imageFileName, const int outp
 	RTsceneInfo* si = NULL;
 	RTlightingInfo* li = NULL;
 
-	parseTalFileInitialiseParser(talFileName);
-	vi = parseTalFileGetViewInfo(vi);
-	li = parseTalFileGetLightInfo(li);
-	si = parseTalFileGetSceneInfo(si);
+	this->parseTalFileInitialiseParser(talFileName);
+	vi = this->parseTalFileGetViewInfo(vi);
+	li = this->parseTalFileGetLightInfo(li);
+	si = this->parseTalFileGetSceneInfo(si);
 
-	exitParser();
+	RTparser.exitParser();
 
-	setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(tempFolder);
 
 
-	if(!rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))
+	if(!this->rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))
 	{
 		result = FALSE;
 	}
@@ -117,7 +116,7 @@ int rayTraceScene(const string talFileName, string imageFileName, const int outp
 
 }
 
-int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	int result = TRUE;
 
@@ -132,9 +131,9 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-	createImage(true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	this->createImage(true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#else
-	createImage(setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	this->createImage(setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#endif
 
 
@@ -146,11 +145,11 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 		pixmap* dm;
 		pixmap* nm;
 
-		pm = newPixmap(vi->imageWidth, vi->imageHeight);
+		pm = RTppm.newPixmap(vi->imageWidth, vi->imageHeight);
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-		dm = newPixmap(vi->imageWidth, vi->imageHeight);
-		nm = newPixmap(vi->imageWidth, vi->imageHeight);
+		dm = RTppm.newPixmap(vi->imageWidth, vi->imageHeight);
+		nm = RTppm.newPixmap(vi->imageWidth, vi->imageHeight);
 	#endif
 
   		for(x = 0; x < vi->imageWidth; x++)
@@ -158,32 +157,32 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 			for(y = 0; y < vi->imageHeight; y++)
 			{
 				colour col;
-				getRGBMapValues(x, y, vi->imageWidth,rgbMap,&col);
-				placepointPPM(pm, x, y, col.r, col.g, col.b);
+				RTpixelMaps.getRGBMapValues(x, y, vi->imageWidth,rgbMap,&col);
+				RTppm.placepointPPM(pm, x, y, col.r, col.g, col.b);
 
 			#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
 
 				vec norm;
-				getNormalMapValue(x, y, vi->imageWidth,normalMap,&norm);
-				placepointPPM(nm, x, y, (int)(norm.x*255.0), (int)(norm.y*255.0), (int)(norm.z*255.0));
-				//placepointPPM(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
+				RTpixelMaps.getNormalMapValue(x, y, vi->imageWidth,normalMap,&norm);
+				RTppm.placepointPPM(nm, x, y, (int)(norm.x*255.0), (int)(norm.y*255.0), (int)(norm.z*255.0));
+				//RTppm.placepointPPM(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
 
 				double tAtSurface;
-				tAtSurface = getLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, depthMap);
+				tAtSurface = RTpixelMaps.getLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, depthMap);
 
 				if(tAtSurface == RT_RAYTRACE_NO_HIT_DEPTH_T)
 				{
 					tAtSurface = ESTIMATE_MAX_DEPTH_T_REAL;
 				}
-				double tValSurfaceNormalised = minInt((int)(tAtSurface/ESTIMATE_MAX_DEPTH_T_REAL*255.0), 255);
-				placepointPPM(dm, x, y, tValSurfaceNormalised, tValSurfaceNormalised, tValSurfaceNormalised);
+				double tValSurfaceNormalised = SHAREDvars.minInt((int)(tAtSurface/ESTIMATE_MAX_DEPTH_T_REAL*255.0), 255);
+				RTppm.placepointPPM(dm, x, y, tValSurfaceNormalised, tValSurfaceNormalised, tValSurfaceNormalised);
 
 			#endif
 			}
 		}
 
 
-		writeImage(imageFileName, pm);
+		RTpixelMaps.writeImage(imageFileName, pm);
 
 
 
@@ -194,14 +193,14 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 
 		if(imageFileName != NULL)
 		{
-			stripExtension(imageFileName, &outputFileNameWithoutExtension);
+			this->stripExtension(imageFileName, &outputFileNameWithoutExtension);
 		}
 
 
 		if(imageFileName != NULL)
 		{
 			//make normal output filename same as rgb output file name
-			if(!addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
+			if(!this->addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
 				exit(0);
@@ -216,12 +215,12 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 		}
 
 
-		writeImage(outputFileNameWithExtension, nm);
+		RTpixelMaps.writeImage(outputFileNameWithExtension, nm);
 
 		if(imageFileName != NULL)
 		{
 			//make depth output filename same as rgb output file name
-			if(!addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
+			if(!this->addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
 				exit(0);
@@ -235,7 +234,7 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 			exit(0);
 		}
 
-		writeImage(outputFileNameWithExtension, dm);
+		RTpixelMaps.writeImage(outputFileNameWithExtension, dm);
 
 	#endif
 	}
@@ -254,7 +253,7 @@ int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingI
 	return result;
 }
 
-bool stripExtension(string filenameWithExtension, string* filenameWithoutExtension)
+bool RTsceneClass::stripExtension(string filenameWithExtension, string* filenameWithoutExtension)
 {
 	bool result = true;
 	int i = 0;
@@ -275,7 +274,7 @@ bool stripExtension(string filenameWithExtension, string* filenameWithoutExtensi
 
 }
 
-bool addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension)
+bool RTsceneClass::addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension)
 {
 	bool result = true;
 
@@ -328,7 +327,7 @@ RTlightingInfo* addLightToEnd(RTlightingInfo* li_orig, RTlightingInfo* new_node)
 }
 
 
-void parseTalFileInitialiseParser(const string talFileName)
+void RTsceneClass::parseTalFileInitialiseParser(const string talFileName)
 {
 
  	FILE* f;
@@ -350,32 +349,32 @@ void parseTalFileInitialiseParser(const string talFileName)
 	else
 	{
 
-		initParser(f);
+		RTparser.initParser(f);
 	}
 }
 
-RTviewInfo* parseTalFileGetViewInfo(RTviewInfo* vi)
+RTviewInfo* RTsceneClass::parseTalFileGetViewInfo(RTviewInfo* vi)
 {
-	if(! readViewport())
+	if(! RTparser.readViewport())
 	{
 		printf("could not read viewport");
 		exit(0);
 	}
 
-	vi = get_view_info();
+	vi = RTparser.get_view_info();
 
 	return vi;
 }
 
 
-RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li)
+RTlightingInfo* RTsceneClass::parseTalFileGetLightInfo(RTlightingInfo* li)
 {
-	while(nextLightSource())
+	while(RTparser.nextLightSource())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
 		RTlightingInfo* nd = new RTlightingInfo(); //(RTlightingInfo*)malloc(sizeof(RTlightingInfo));
 
-		nd->ls = *(get_light_info());
+		nd->ls = *(RTparser.get_light_info());
 		nd->nextLight = NULL;
 
 		li = addLightToEnd(li, nd);
@@ -387,7 +386,7 @@ RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li)
 }
 
 
-RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
+RTsceneInfo* RTsceneClass::parseTalFileGetSceneInfo(RTsceneInfo* si)
 {
 	double height;
 	double width;
@@ -414,12 +413,12 @@ RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 	advancedMat reverseMatrix;
 	advancedMat standardMatrix;
 
-  	while (nextSceneCommand())
+  	while (RTparser.nextSceneCommand())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
 		RTsceneInfo* nd = new RTsceneInfo(); //(RTsceneInfo*)malloc(sizeof(RTsceneInfo));
-		nd->pi = *(getPieceInfo());
-		nd->di = *(getDimensionsInfo());
+		nd->pi = *(RTparser.getPieceInfo());
+		nd->di = *(RTparser.getDimensionsInfo());
 		nd-> tIn = 0.0;
 		nd-> tOut = 0.0;
 		nd->nextScene = NULL;
@@ -444,30 +443,30 @@ RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 
 		/*for standardMatrix calculate*/
 
-		createRotationxMatrix(toRadians(nd->pi.xrot), &rotationxMatrix);
-		createRotationyMatrix(toRadians(nd->pi.yrot), &rotationyMatrix);
-		createRotationzMatrix(toRadians(nd->pi.zrot), &rotationzMatrix);
-		createTranslationMatrix(transx, transy, transz, &translationMatrix);
-		createScaleMatrix(width, length, height, &scaleMatrix);
+		RToperations.createRotationxMatrix(RToperations.toRadians(nd->pi.xrot), &rotationxMatrix);
+		RToperations.createRotationyMatrix(RToperations.toRadians(nd->pi.yrot), &rotationyMatrix);
+		RToperations.createRotationzMatrix(RToperations.toRadians(nd->pi.zrot), &rotationzMatrix);
+		RToperations.createTranslationMatrix(transx, transy, transz, &translationMatrix);
+		RToperations.createScaleMatrix(width, length, height, &scaleMatrix);
 
-		multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationxMatrix,&tmpAdvancedMatrix);
-		multAdvancedMatrix(&inverseRotationzMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);		//This used to be (before 14 June 2012);  multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
-		multAdvancedMatrix(&tmpAdvancedMatrix2, &scaleMatrix, &tmpAdvancedMatrix3);
-		multAdvancedMatrix(&translationMatrix, &tmpAdvancedMatrix3, &standardMatrix);
+		RToperations.multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationxMatrix,&tmpAdvancedMatrix);
+		RToperations.multAdvancedMatrix(&inverseRotationzMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);		//This used to be (before 14 June 2012);  RToperations.multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
+		RToperations.multAdvancedMatrix(&tmpAdvancedMatrix2, &scaleMatrix, &tmpAdvancedMatrix3);
+		RToperations.multAdvancedMatrix(&translationMatrix, &tmpAdvancedMatrix3, &standardMatrix);
 
 		/*for reverseMatrix calculate*/
 		/*now create the reverse matrix (A^-1)...*/
 
-		createInverseRotationxMatrix(toRadians(nd->pi.xrot), &inverseRotationxMatrix);
-		createInverseRotationyMatrix(toRadians(nd->pi.yrot), &inverseRotationyMatrix);
-		createInverseRotationzMatrix(toRadians(nd->pi.zrot), &inverseRotationzMatrix);
-		createInverseTranslationMatrix(transx, transy, transz, &inverseTranslationMatrix);
-		createInverseScaleMatrix(width, length, height,&inverseScaleMatrix);
+		RToperations.createInverseRotationxMatrix(RToperations.toRadians(nd->pi.xrot), &inverseRotationxMatrix);
+		RToperations.createInverseRotationyMatrix(RToperations.toRadians(nd->pi.yrot), &inverseRotationyMatrix);
+		RToperations.createInverseRotationzMatrix(RToperations.toRadians(nd->pi.zrot), &inverseRotationzMatrix);
+		RToperations.createInverseTranslationMatrix(transx, transy, transz, &inverseTranslationMatrix);
+		RToperations.createInverseScaleMatrix(width, length, height,&inverseScaleMatrix);
 
-		multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationzMatrix, &tmpAdvancedMatrix);
-		multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
-		multAdvancedMatrix(&tmpAdvancedMatrix2, &inverseTranslationMatrix, &tmpAdvancedMatrix3);
-		multAdvancedMatrix(&inverseScaleMatrix, &tmpAdvancedMatrix3, &reverseMatrix);
+		RToperations.multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationzMatrix, &tmpAdvancedMatrix);
+		RToperations.multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
+		RToperations.multAdvancedMatrix(&tmpAdvancedMatrix2, &inverseTranslationMatrix, &tmpAdvancedMatrix3);
+		RToperations.multAdvancedMatrix(&inverseScaleMatrix, &tmpAdvancedMatrix3, &reverseMatrix);
 
 		nd->standardMatrix = standardMatrix;
 		nd->reverseMatrix = reverseMatrix;
@@ -477,7 +476,7 @@ RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 	return si;
 }
 
-void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li)
+void RTsceneClass::createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li)
 {
 
 
@@ -522,27 +521,27 @@ void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* r
 		/*defining the nTilda, uTilda, vTilda vectors*/
 
 	/*nTilda = (eye - viewAt)*/
-	negativeVector(&(vi->viewAt), tmp);
-	addVectorsRT(tmp,(&(vi->eye)), nTilda);
-	normaliseVector(nTilda);
+	SHAREDvector.negativeVector(&(vi->viewAt), tmp);
+	SHAREDvector.addVectorsRT(tmp,(&(vi->eye)), nTilda);
+	SHAREDvector.normaliseVector(nTilda);
 
 	/*wTilda = (viewUp - eye)*/
-	negativeVector(&(vi->eye), tmp);
-	addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
-	normaliseVector(wTilda);
+	SHAREDvector.negativeVector(&(vi->eye), tmp);
+	SHAREDvector.addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
+	SHAREDvector.normaliseVector(wTilda);
 
 	/*uTilda = wTilda x nTilda*/
-	crossProduct(wTilda, nTilda, uTilda);
-	normaliseVector(uTilda);
+	SHAREDvector.crossProduct(wTilda, nTilda, uTilda);
+	SHAREDvector.normaliseVector(uTilda);
 
 	/*vTilda = nTilda x uTilda*/
-	crossProduct(nTilda, uTilda, vTilda);
-	normaliseVector(vTilda);
+	SHAREDvector.crossProduct(nTilda, uTilda, vTilda);
+	SHAREDvector.normaliseVector(vTilda);
 
 		/*calculation of tildaMatrix*/
 
 	/*creating the uTilda vTilda nTilda matrix from the u, v, n vectors*/
-	makeMatrix(uTilda, vTilda, nTilda, tildaMat);
+	SHAREDvector.makeMatrix(uTilda, vTilda, nTilda, tildaMat);
 
 
 
@@ -569,12 +568,12 @@ void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* r
 			RTsceneInfo* nd = si;
 
 			/*calculates UVN Scalars*/
-			calculateUVNScalars(vi, uvn, x, y);
+			this->calculateUVNScalars(vi, uvn, x, y);
 
 			/*ray trace each piece for this point*/
 			while(nd != NULL)
 			{
-				rayTrace(vi, nd, tildaMat, uvn);
+				RTraytracer.rayTrace(vi, nd, tildaMat, uvn);
 				nd = nd -> nextScene;
 			}
 
@@ -582,30 +581,30 @@ void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* r
 
 			if(lightingMode == 0)
 			{
-				calculateBasicColour(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
+				this->calculateBasicColour(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 			else if(lightingMode == 1)
 			{
-				calculateTransparencyColour(vi, si, li, &col);
+				this->calculateTransparencyColour(vi, si, li, &col);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 
 			}
 			else if(lightingMode == 2)
 			{
-				calculateAmbientDiffuseSpecular(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
+				this->calculateAmbientDiffuseSpecular(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 
-			setRGBMapValues(x, y,vi->imageWidth, &col, rgbMap);
+			RTpixelMaps.setRGBMapValues(x, y,vi->imageWidth, &col, rgbMap);
 
 			if(setRGBAndDepthAndNormalAndPointMaps)
 			{
 				//printf("\n tAtSurface = %f", tAtSurface);
 				//printf("\n nAtSurface.y = %f", nAtSurface.y);
-				setLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, tAtSurface, depthMap);
-				setNormalMapValue(x, y, vi->imageWidth, &nAtSurface, normalMap);
-				setPointMapValue(x, y, vi->imageWidth, &pAtSurface, pointMap);
+				RTpixelMaps.setLumOrContrastOrDepthMapValue(x, y, vi->imageWidth, tAtSurface, depthMap);
+				RTpixelMaps.setNormalMapValue(x, y, vi->imageWidth, &nAtSurface, normalMap);
+				RTpixelMaps.setPointMapValue(x, y, vi->imageWidth, &pAtSurface, pointMap);
 			}
 
 
@@ -619,7 +618,7 @@ void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* r
 
 
 
-void calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void RTsceneClass::calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
 	const RTsceneInfo* nd;
 	double minTIn;
@@ -691,8 +690,8 @@ void calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTl
 	}
 
 	*tAtSurface = minTIn;
-	copyVectorRT(nAtSurface, &(nd->n));
-	copyVectorRT(pointAtSurface, &(nd->p));
+	SHAREDvector.copyVectorRT(nAtSurface, &(nd->n));
+	SHAREDvector.copyVectorRT(pointAtSurface, &(nd->p));
 }
 
 
@@ -722,7 +721,7 @@ int compare_tin(RTsceneInfo* p, RTsceneInfo* q, void* pointer)
 
 
 
-void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb)
+void RTsceneClass::calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb)
 {
 	const RTsceneInfo* nd_orig;
 	const RTsceneInfo* nd;
@@ -821,7 +820,7 @@ void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, co
 	/* calculateAmbientDiffuseSpecular is a modified version
 	of shading.c's get_point_value method*/
 
-void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void RTsceneClass::calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
 		/*light info declarations*/
 
@@ -926,8 +925,8 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, cons
 		else
 		{
 
-			subtractVectorsRT(&(nd->p), &(vi->eye), &v);	/* Get the vector from eye to p	*/
-			normaliseVector(&v);
+			SHAREDvector.subtractVectorsRT(&(nd->p), &(vi->eye), &v);	/* Get the vector from eye to p	*/
+			SHAREDvector.normaliseVector(&v);
 
 			col.r = ambientRed*nd->pi.col.r/MAX_COLOUR;
 			col.g = ambientGreen*nd->pi.col.g/MAX_COLOUR;
@@ -941,20 +940,20 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, cons
 			{
 
 				/* Find l for this light source; normaliseVector it.*/
-				subtractVectorsRT(&(nd->p), &(nd2->ls.pos), &l);
-				normaliseVector(&l);
+				SHAREDvector.subtractVectorsRT(&(nd->p), &(nd2->ls.pos), &l);
+				SHAREDvector.normaliseVector(&l);
 
 
 				/* Find l' using the equation on p5 of the tute 6 notes*/
 
-				multiplyVectorByScalarRT(&(nd->n), 2.0*dotProduct(&l,&(nd->n)), &tmp);	/* find  (2 l.n) n	*/
-				subtractVectorsRT(&l, &tmp, &lpr);		/* subtractVectors it from l	*/
+				SHAREDvector.multiplyVectorByScalarRT(&(nd->n), 2.0*SHAREDvector.dotProduct(&l,&(nd->n)), &tmp);	/* find  (2 l.n) n	*/
+				SHAREDvector.subtractVectorsRT(&l, &tmp, &lpr);		/* subtractVectors it from l	*/
 
 
 				/* Find the diffuse intensity for this light ...*/
 
 
-				diff_amt = -dotProduct(&l, &(nd->n))* diffuse;
+				diff_amt = -SHAREDvector.dotProduct(&l, &(nd->n))* diffuse;
 				if (diff_amt < 0.0) diff_amt=0;	/* see tute 6 pre-work*/
 
 				/*diffuse lighting effects the surface dependant on the colour of the surface
@@ -970,8 +969,8 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, cons
 
 				/* ... and the specular intensity.*/
 
-				if (-(dotProduct(&lpr, &v)) < 0.0) spec_amt = 0;
-				else spec_amt = pow(-dotProduct(&lpr, &v), 1.0*spec_power)* specular;
+				if (-(SHAREDvector.dotProduct(&lpr, &v)) < 0.0) spec_amt = 0;
+				else spec_amt = pow(-SHAREDvector.dotProduct(&lpr, &v), 1.0*spec_power)* specular;
 					/*'pow' is a method from math.h*/
 
 				col.r = col.r + nd2->ls.col.r* spec_amt;
@@ -1012,13 +1011,13 @@ void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, cons
 	}
 
 	*tAtSurface = minTIn;
-	copyVectorRT(nAtSurface, &(nd->n));
-	copyVectorRT(pointAtSurface, &(nd->p));
+	SHAREDvector.copyVectorRT(nAtSurface, &(nd->n));
+	SHAREDvector.copyVectorRT(pointAtSurface, &(nd->p));
 }
 
 
 
-void calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int y)
+void RTsceneClass::calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int y)
 {
 	double u, v, n;
 
@@ -1035,7 +1034,7 @@ void calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int 
 	return;
 }
 
-void calculatePointMapValue(const double xPos, const double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi)
+void RTsceneClass::calculatePointMapValue(const double xPos, const double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi)
 {
 	//this function requires viewAt, viewUp and eye vectors to be defined
 
@@ -1056,12 +1055,12 @@ void calculatePointMapValue(const double xPos, const double yPos, double depthVa
 	*/
 
 	vec uvn;
-	calculateUVNScalars(vi, &uvn, xPos, yPos);
+	this->calculateUVNScalars(vi, &uvn, xPos, yPos);
 
 	vec p;
 	vec p0;
 	vec p1;
-	calculatePointUsingTInWorld(depthVal, &p0, &p1, vi, &p, &uvn);
+	RTraytracer.calculatePointUsingTInWorld(depthVal, &p0, &p1, vi, &p, &uvn);
 
 	xyzWorld->x = p.x;
 	xyzWorld->y = p.y;
@@ -1075,16 +1074,16 @@ void calculatePointMapValue(const double xPos, const double yPos, double depthVa
 
 }
 
-void createPointMapUsingDepthMap(const int imageWidth, const int imageHeight, double* pointMap, const double* depthMap,  RTviewInfo* vi)
+void RTsceneClass::createPointMapUsingDepthMap(const int imageWidth, const int imageHeight, double* pointMap, const double* depthMap,  RTviewInfo* vi)
 {
 	for(int y = 0; y < (imageHeight); y++)
 	{
 		for(int x = 0; x < (imageWidth); x++)
 		{
 			vec xyzWorld;
-			double depthVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
-			calculatePointMapValue(x, y, depthVal, &xyzWorld, vi);
-			setPointMapValue(x, y, imageWidth, &xyzWorld, pointMap);
+			double depthVal = RTpixelMaps.getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			this->calculatePointMapValue(x, y, depthVal, &xyzWorld, vi);
+			RTpixelMaps.setPointMapValue(x, y, imageWidth, &xyzWorld, pointMap);
 
 		}
 	}

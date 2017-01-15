@@ -26,7 +26,7 @@
  * File Name: LDjpeg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -37,12 +37,19 @@
 #include "SHAREDglobalDefs.h"
 #ifdef USE_OR
 	#include "ORglobalDefs.h"
+#include "SHAREDvars.h"
+#include "jpeglib.h"
+#include "jmemsys.h"
 #endif
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-void setPointerToDCTtableHTMLoutputString(string* pointer);
+class LDjpegClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: void setPointerToDCTtableHTMLoutputString(string* pointer);
 #endif
 
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput);
+	public: int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput);
+};
 
 #endif

@@ -26,13 +26,12 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "XMLrulesClass.h"
-#include "SHAREDvars.h"
 
 //xml comments not yet supported by this parser
 
@@ -94,12 +93,12 @@ XMLrulesClass::~XMLrulesClass()
 
 
 #ifdef USE_NLC
-bool parseNLCrulesXMLfile()
+bool XMLrulesClassClass::parseNLCrulesXMLfile()
 {
 	bool result = true;
 
  	NLCfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
-	if(!readXMLfile(NLC_RULES_XML_FILE_NAME, NLCfirstTagInXMLfile))
+	if(!XMLparserClass.readXMLfile(NLC_RULES_XML_FILE_NAME, NLCfirstTagInXMLfile))
  	{
 		result = false;
 	}
@@ -109,12 +108,12 @@ bool parseNLCrulesXMLfile()
 #endif
 
 #ifdef USE_GIA
-bool parseGIArulesXMLfile()
+bool XMLrulesClassClass::parseGIArulesXMLfile()
 {
 	bool result = true;
 
  	GIAfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
-	if(!readXMLfile(GIA_RULES_XML_FILE_NAME, GIAfirstTagInXMLfile))
+	if(!XMLparserClass.readXMLfile(GIA_RULES_XML_FILE_NAME, GIAfirstTagInXMLfile))
  	{
 		result = false;
 	}
@@ -124,7 +123,7 @@ bool parseGIArulesXMLfile()
 	GIArulesSprite = new XMLrulesClass();
 	GIArulesDraw = new XMLrulesClass();
 
-	if(!parseGIARulesTag(currentTag))
+	if(!this->parseGIARulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -132,20 +131,20 @@ bool parseGIArulesXMLfile()
 	return result;
 }
 
-bool parseGIARulesTag(XMLparserTag* currentTag)
+bool XMLrulesClassClass::parseGIARulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
 
 	XMLparserTag* currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
+	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, GIArulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, GIArulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
 		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, GIArulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, GIArulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -157,12 +156,12 @@ bool parseGIARulesTag(XMLparserTag* currentTag)
 
 
 #ifdef USE_CS
-bool parseCSrulesXMLfile()
+bool XMLrulesClassClass::parseCSrulesXMLfile()
 {
 	bool result = true;
 
  	CSfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!readXMLfile(CS_RULES_XML_FILE_NAME, CSfirstTagInXMLfile))
+ 	if(!XMLparserClass.readXMLfile(CS_RULES_XML_FILE_NAME, CSfirstTagInXMLfile))
  	{
 		result = false;
 	}
@@ -172,7 +171,7 @@ bool parseCSrulesXMLfile()
 	CSrulesSprite = new XMLrulesClass();
 	CSrulesDraw = new XMLrulesClass();
 
-	if(!parseCSRulesTag(currentTag))
+	if(!this->parseCSRulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -180,20 +179,20 @@ bool parseCSrulesXMLfile()
 	return result;
 }
 
-bool parseCSRulesTag(XMLparserTag* currentTag)
+bool XMLrulesClassClass::parseCSRulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
 
 	XMLparserTag* currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
+	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, CSrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, CSrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
 		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, CSrulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, CSrulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -207,12 +206,12 @@ bool parseCSRulesTag(XMLparserTag* currentTag)
 
 
 #ifdef USE_OR
-bool parseORrulesXMLfile()
+bool XMLrulesClassClass::parseORrulesXMLfile()
 {
 	bool result = true;
 
  	XMLparserTag* firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!readXMLfile(OR_RULES_XML_FILE_NAME, firstTagInXMLfile))
+ 	if(!XMLparserClass.readXMLfile(OR_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
@@ -221,7 +220,7 @@ bool parseORrulesXMLfile()
 
 	ORrulesObjectRecognition = new XMLrulesClass();
 
-	if(!parseORrulesTag(currentTag))
+	if(!this->parseORrulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -232,15 +231,15 @@ bool parseORrulesXMLfile()
 	return result;
 }
 
-bool parseORrulesTag(XMLparserTag* currentTag)
+bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
 
 	XMLparserTag* currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
+	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -253,12 +252,12 @@ bool parseORrulesTag(XMLparserTag* currentTag)
 
 
 
-bool parseANNrulesXMLfile()
+bool XMLrulesClassClass::parseANNrulesXMLfile()
 {
 	bool result = true;
 
  	XMLparserTag* firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!readXMLfile(ANN_RULES_XML_FILE_NAME, firstTagInXMLfile))
+ 	if(!XMLparserClass.readXMLfile(ANN_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
@@ -275,7 +274,7 @@ bool parseANNrulesXMLfile()
 
 	ANNrulesSprite = new XMLrulesClass();
 
-	if(!parseANNrulesTag(currentTag))
+	if(!this->parseANNrulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -289,15 +288,15 @@ bool parseANNrulesXMLfile()
 
 
 //Top Level
-bool parseANNrulesTag(XMLparserTag* currentTag)
+bool XMLrulesClassClass::parseANNrulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
 
 	XMLparserTag* currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
+	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, ANNrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, ANNrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -312,7 +311,7 @@ bool parseANNrulesTag(XMLparserTag* currentTag)
 
 
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8)
+bool XMLrulesClassClass::addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8)
 {
 	bool result = true;
 
@@ -324,7 +323,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const strin
 
 		while(currentLowerLevelTag->nextTag != NULL)
 		{
-			if(!addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attributeName1, attributeName2, attributeName3, attributeName4, attributeName5, attributeName6, attributeName7, attributeName8))
+			if(!this->addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attributeName1, attributeName2, attributeName3, attributeName4, attributeName5, attributeName6, attributeName7, attributeName8))
 			{
 				result = false;
 			}
@@ -361,7 +360,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const strin
 }
 
 
-bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8)
+bool XMLrulesClassClass::addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8)
 {
 	bool result = true;
 
@@ -403,7 +402,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->fractionalValue = convertStringToDouble(currentAttribute->value);
+				currentReferenceToObjectClass->fractionalValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			}
 		}
 		else if(attributeNumber == 4)
@@ -415,7 +414,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute4 = int(convertStringToDouble(currentAttribute->value));
+				currentReferenceToObjectClass->attribute4 = int(SHAREDvars.convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 5)
@@ -427,7 +426,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute5 = int(convertStringToDouble(currentAttribute->value));
+				currentReferenceToObjectClass->attribute5 = int(SHAREDvars.convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 6)
@@ -439,7 +438,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute6 = int(convertStringToDouble(currentAttribute->value));
+				currentReferenceToObjectClass->attribute6 = int(SHAREDvars.convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 7)
@@ -451,7 +450,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute7 = int(convertStringToDouble(currentAttribute->value));
+				currentReferenceToObjectClass->attribute7 = int(SHAREDvars.convertStringToDouble(currentAttribute->value));
 			}
 		}
 		else if(attributeNumber == 8)
@@ -463,7 +462,7 @@ bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* curr
 			}
 			else
 			{
-				currentReferenceToObjectClass->attribute8 = int(convertStringToDouble(currentAttribute->value));
+				currentReferenceToObjectClass->attribute8 = int(SHAREDvars.convertStringToDouble(currentAttribute->value));
 			}
 		}
 		attributeNumber++;

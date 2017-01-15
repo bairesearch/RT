@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -51,7 +51,7 @@
 using namespace std;
 
 
-long getTimeAsLong()
+long SHAREDvarsClass::getTimeAsLong()
 {
 	#ifdef LINUX
 	struct timeval tv;
@@ -83,7 +83,7 @@ long getTimeAsLong()
 
 }
 
-void copyColours(colour* colToModify, colour* colToCopy)
+void SHAREDvarsClass::copyColours(colour* colToModify, colour* colToCopy)
 {
 	colToModify->r = colToCopy->r;
 	colToModify->g = colToCopy->g;
@@ -91,7 +91,7 @@ void copyColours(colour* colToModify, colour* colToCopy)
 }
 
 
-bool compareDoublesArbitraryError(const double a, const double b, const double error)
+bool SHAREDvarsClass::compareDoublesArbitraryError(const double a, const double b, const double error)
 {
 	bool result;
 	if((a < (b+error)) && (a > (b-error)))
@@ -107,7 +107,7 @@ bool compareDoublesArbitraryError(const double a, const double b, const double e
 }
 
 
-bool compareDoubles(const double a, const double b)
+bool SHAREDvarsClass::compareDoubles(const double a, const double b)
 {
 	bool result;
 	if((a < (b+DOUBLE_MIN_PRECISION)) && (a > (b-DOUBLE_MIN_PRECISION)))
@@ -125,7 +125,7 @@ bool compareDoubles(const double a, const double b)
 
 //generic functions
 
-int maxInt(int a, const int b)
+int SHAREDvarsClass::maxInt(int a, const int b)
 {
 	if(a > b)
 	{
@@ -137,7 +137,7 @@ int maxInt(int a, const int b)
 	}
 }
 
-int minInt(int a, const int b)
+int SHAREDvarsClass::minInt(int a, const int b)
 {
 	if(a < b)
 	{
@@ -149,7 +149,7 @@ int minInt(int a, const int b)
 	}
 }
 
-double minDouble(double a, const double b)
+double SHAREDvarsClass::minDouble(double a, const double b)
 {
 	if(a < b)
 	{
@@ -160,7 +160,7 @@ double minDouble(double a, const double b)
 		return b;
 	}
 }
-double maxDouble(double a, const double b)
+double SHAREDvarsClass::maxDouble(double a, const double b)
 {
 	if(a > b)
 	{
@@ -172,7 +172,7 @@ double maxDouble(double a, const double b)
 	}
 }
 
-double absDouble(const double val)
+double SHAREDvarsClass::absDouble(const double val)
 {
 	if(val < 0.0)
 	{
@@ -184,7 +184,7 @@ double absDouble(const double val)
 	}
 }
 
-bool argumentExists(const int argc, const char** argv, const string keystr)
+bool SHAREDvarsClass::argumentExists(const int argc, const char** argv, const string keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
@@ -196,7 +196,7 @@ bool argumentExists(const int argc, const char** argv, const string keystr)
 	return false;
 }
 
-float getFloatArgument(const int argc, const char** argv, const string keystr)
+float SHAREDvarsClass::getFloatArgument(const int argc, const char** argv, const string keystr)
 {
 	float result=0.0;
 	bool foundArgument = false;
@@ -224,7 +224,7 @@ float getFloatArgument(const int argc, const char** argv, const string keystr)
 	}
 }
 
-string getStringArgument(const int argc, const char** argv, const string keystr)
+string SHAREDvarsClass::getStringArgument(const int argc, const char** argv, const string keystr)
 {
 	string stringArgument = "";
 	bool foundArgument = false;
@@ -246,7 +246,7 @@ string getStringArgument(const int argc, const char** argv, const string keystr)
 	return stringArgument;
 }
 
-void getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector)
+void SHAREDvarsClass::getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector)
 {
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
@@ -272,7 +272,7 @@ void getStringArrayArgument(const int argc, const char** argv, const string keys
 	}
 }
 
-void changeDirectory(const string newDirectory)
+void SHAREDvarsClass::changeDirectory(const string newDirectory)
 {
 	char* newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
 	#ifdef LINUX
@@ -282,7 +282,7 @@ void changeDirectory(const string newDirectory)
 	#endif
 }
 
-string getCurrentDirectory()
+string SHAREDvarsClass::getCurrentDirectory()
 {
 	char currentFolderCharStar[EXE_FOLDER_PATH_MAX_LENGTH];
 	#ifdef LINUX
@@ -294,12 +294,12 @@ string getCurrentDirectory()
 	return currentFolder;
 }
 
-void setCurrentDirectory(string folder)
+void SHAREDvarsClass::setCurrentDirectory(string folder)
 {
-	setCurrentDirectory(&folder);
+	this->setCurrentDirectory(&folder);
 }
 
-void setCurrentDirectory(string* folder)
+void SHAREDvarsClass::setCurrentDirectory(string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
@@ -309,7 +309,7 @@ void setCurrentDirectory(string* folder)
 	#endif
 }
 
-void createDirectory(string* folder)
+void SHAREDvarsClass::createDirectory(string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
@@ -319,7 +319,7 @@ void createDirectory(string* folder)
 	#endif
 }
 
-bool directoryExists(string* folder)
+bool SHAREDvarsClass::directoryExists(string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	bool folderExists = false;
@@ -350,7 +350,7 @@ bool directoryExists(string* folder)
 	return folderExists;
 }
 
-bool isWhiteSpace(const char c)
+bool SHAREDvarsClass::isWhiteSpace(const char c)
 {
 	bool result = false;
 	if((c == CHAR_SPACE) || (c == CHAR_TAB))
@@ -360,7 +360,7 @@ bool isWhiteSpace(const char c)
 	return result;
 }
 
-string convertStringToLowerCase(const string* arbitraryCaseString)
+string SHAREDvarsClass::convertStringToLowerCase(const string* arbitraryCaseString)
 {
 	string lowerCaseString = *arbitraryCaseString;
 	for(int i=0; i<arbitraryCaseString->length(); i++)
@@ -370,31 +370,31 @@ string convertStringToLowerCase(const string* arbitraryCaseString)
 	return lowerCaseString;
 }
 
-string convertFloatToString(const float number, const string format)
+string SHAREDvarsClass::convertFloatToString(const float number, const string format)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
-string convertDoubleToString(const double number, const string format)
+string SHAREDvarsClass::convertDoubleToString(const double number, const string format)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
-string convertIntToString(const int number)
+string SHAREDvarsClass::convertIntToString(const int number)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, "%d", number);
 	return string(stringCharStar);
 }
-string convertUnsignedIntToString(const int number)
+string SHAREDvarsClass::convertUnsignedIntToString(const int number)
 {
 	char stringCharStar[100];
 	sprintf(stringCharStar, "%u", number);
 	return string(stringCharStar);
 }
-string convertBoolToString(const bool number)
+string SHAREDvarsClass::convertBoolToString(const bool number)
 {
 	if(number)
 	{
@@ -405,7 +405,7 @@ string convertBoolToString(const bool number)
 		return "false";
 	}
 }
-string convertLongToString(const long number)
+string SHAREDvarsClass::convertLongToString(const long number)
 {
 	//return to_string(number);	//C++11
 
@@ -414,11 +414,11 @@ string convertLongToString(const long number)
 	return string(tempString);
 }
 
-int convertStringToInt(const string number)
+int SHAREDvarsClass::convertStringToInt(const string number)
 {
 	return atoi(number.c_str());
 }
-bool convertStringToBool(string number)
+bool SHAREDvarsClass::convertStringToBool(string number)
 {
 	bool boolean = false;
 
@@ -451,15 +451,15 @@ bool convertStringToBool(string number)
 
 	return boolean;
 }
-long convertStringToLong(const string number)
+long SHAREDvarsClass::convertStringToLong(const string number)
 {
 	return atol(number.c_str());
 }
-float convertStringToFloat(const string number)
+float SHAREDvarsClass::convertStringToFloat(const string number)
 {
-	return (float)convertStringToDouble(number);
+	return (float)this->convertStringToDouble(number);
 }
-double convertStringToDouble(const string number)
+double SHAREDvarsClass::convertStringToDouble(const string number)
 {
 	return atof(number.c_str());
 }
@@ -469,13 +469,13 @@ double convertStringToDouble(const string number)
 
 
 
-bool textInTextArray(const string text, const string* textArray, const int arraySize)
+bool SHAREDvarsClass::textInTextArray(const string text, const string* textArray, const int arraySize)
 {
 	int arrayIndexOfResultFound = INT_DEFAULT_VALUE;
-	return textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
+	return this->textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
 }
 
-bool textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound)
+bool SHAREDvarsClass::textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -489,7 +489,7 @@ bool textInTextArray(const string text, const string* textArray, const int array
 	return result;
 }
 
-bool charInCharArray(const char c, const char* charArray, const int arraySize)
+bool SHAREDvarsClass::charInCharArray(const char c, const char* charArray, const int arraySize)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -502,7 +502,7 @@ bool charInCharArray(const char c, const char* charArray, const int arraySize)
 	return result;
 }
 
-bool intInIntArray(const int iTest, const int* intArray, const int arraySize)
+bool SHAREDvarsClass::intInIntArray(const int iTest, const int* intArray, const int arraySize)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -516,14 +516,14 @@ bool intInIntArray(const int iTest, const int* intArray, const int arraySize)
 }
 
 
-string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString)
+string SHAREDvarsClass::replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString)
 {
 	bool foundAtLeastOneInstance = false;
-	string text = replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
+	string text = this->replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
 	return text;
 }
 
-string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
+string SHAREDvarsClass::replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
 {
 	*foundAtLeastOneInstance = false;
 	string text = *textOrig;
@@ -543,7 +543,7 @@ string replaceAllOccurancesOfString(const string* textOrig, string stringToFind,
 	return text;
 }
 
-void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize)
+void SHAREDvarsClass::writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize)
 {
 	ofstream parseFileObject(fileName.c_str());
 
@@ -554,7 +554,7 @@ void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileBy
 
 }
 
-void writeStringToFileObject(string s, ofstream* writeFileObject)
+void SHAREDvarsClass::writeStringToFileObject(string s, ofstream* writeFileObject)
 {
 	//writeFileObject.write(*s);
 	for(int i=0; i < s.size(); i++)
@@ -563,7 +563,7 @@ void writeStringToFileObject(string s, ofstream* writeFileObject)
 	}
 }
 
-void writeStringToFile(const string fileName, string* s)
+void SHAREDvarsClass::writeStringToFile(const string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -576,7 +576,7 @@ void writeStringToFile(const string fileName, string* s)
 	writeFileObject.close();
 }
 
-void appendStringToFile(const string fileName, string* s)
+void SHAREDvarsClass::appendStringToFile(const string fileName, string* s)
 {
 	ofstream writeFileObject(fileName.c_str(), ofstream::app);
 
@@ -590,20 +590,20 @@ void appendStringToFile(const string fileName, string* s)
 }
 
 //inefficient
-void prependStringToFile(const string fileName, const string* s)
+void SHAREDvarsClass::prependStringToFile(const string fileName, const string* s)
 {
-	string fileString = getFileContents(fileName);
+	string fileString = this->getFileContents(fileName);
 	fileString = fileString + *s;
-	writeStringToFile(fileName, &fileString);
+	this->writeStringToFile(fileName, &fileString);
 }
 
-string getFileContents(const string inputFileName)
+string SHAREDvarsClass::getFileContents(const string inputFileName)
 {
 	int numberLines = 0;
-	return getFileContents(inputFileName, &numberLines);
+	return this->getFileContents(inputFileName, &numberLines);
 }
 
-string getFileContents(const string inputFileName, int* numberLines)
+string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberLines)
 {
 	string fileContents = "";
 
@@ -634,7 +634,7 @@ string getFileContents(const string inputFileName, int* numberLines)
 	return fileContents;
 }
 
-bool fileExists(const string inputFileName)
+bool SHAREDvarsClass::fileExists(const string inputFileName)
 {
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());

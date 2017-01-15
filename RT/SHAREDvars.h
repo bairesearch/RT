@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -75,66 +75,69 @@ typedef struct { vec a; vec b; vec c; } mat;
 	#define DOUBLE_MIN_PRECISION 0.00001
 #endif
 
-long getTimeAsLong();
+class SHAREDvarsClass
+{
+	public: long getTimeAsLong();
 
-bool compareDoubles(const double a, const double b);
-bool compareDoublesArbitraryError(const double a, const double b, const double error);
+	public: bool compareDoubles(const double a, const double b);
+	public: bool compareDoublesArbitraryError(const double a, const double b, const double error);
 
-int maxInt(int a, const int b);	//should be turned into a macro instead
-int minInt(int a, const int b);	//should be turned into a macro instead
+	public: int maxInt(int a, const int b);	//should be turned into a macro instead
+	public: int minInt(int a, const int b);	//should be turned into a macro instead
 
-double minDouble(double a, const double b);	//should be turned into a macro instead
-double maxDouble(double a, const double b);	//should be turned into a macro instead
+	public: double minDouble(double a, const double b);	//should be turned into a macro instead
+	public: double maxDouble(double a, const double b);	//should be turned into a macro instead
 
-double absDouble(const double val);
+	public: double absDouble(const double val);
 
-bool argumentExists(const int argc, const char** argv, const string keystr);
-float getFloatArgument(const int argc, const char** argv, const string keystr);
-string getStringArgument(const int argc, const char** argv, const string keystr);
-void getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector);
-void changeDirectory(const string newDirectory);
+	public: bool argumentExists(const int argc, const char** argv, const string keystr);
+	public: float getFloatArgument(const int argc, const char** argv, const string keystr);
+	public: string getStringArgument(const int argc, const char** argv, const string keystr);
+	public: void getStringArrayArgument(const int argc, const char** argv, const string keystr, vector<string>* inputFileNamesVector);
+	public: void changeDirectory(const string newDirectory);
 
-string getCurrentDirectory();
-void setCurrentDirectory(string folder);
-	void setCurrentDirectory(string* folder);
-void createDirectory(string* folder);
-bool directoryExists(string* folder);
+	public: string getCurrentDirectory();
+	public: void setCurrentDirectory(string folder);
+		public: void setCurrentDirectory(string* folder);
+	public: void createDirectory(string* folder);
+	public: bool directoryExists(string* folder);
 
-void copyColours(colour* colToModify, colour* colToCopy);
+	public: void copyColours(colour* colToModify, colour* colToCopy);
 
-bool isWhiteSpace(const char c);
-string convertStringToLowerCase(const string* arbitraryCaseString);
+	public: bool isWhiteSpace(const char c);
+	public: string convertStringToLowerCase(const string* arbitraryCaseString);
 
-string convertFloatToString(const float number, const string format);
-string convertDoubleToString(const double number, const string format);
-string convertIntToString(const int number);
-string convertUnsignedIntToString(const int number);
-string convertBoolToString(const bool number);
-string convertLongToString(const long number);
+	public: string convertFloatToString(const float number, const string format);
+	public: string convertDoubleToString(const double number, const string format);
+	public: string convertIntToString(const int number);
+	public: string convertUnsignedIntToString(const int number);
+	public: string convertBoolToString(const bool number);
+	public: string convertLongToString(const long number);
 
-int convertStringToInt(const string number);
-bool convertStringToBool(string number);
-long convertStringToLong(const string number);
-float convertStringToFloat(const string number);
-double convertStringToDouble(const string number);
+	public: int convertStringToInt(const string number);
+	public: bool convertStringToBool(string number);
+	public: long convertStringToLong(const string number);
+	public: float convertStringToFloat(const string number);
+	public: double convertStringToDouble(const string number);
 
 
-bool textInTextArray(const string text, const string* textArray, const int arraySize);
-bool textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound);
-bool charInCharArray(const char c, const char* charArray, const int arraySize);
-bool intInIntArray(const int iTest, const int* intArray, const int arraySize);
-string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString);
-string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
+	public: bool textInTextArray(const string text, const string* textArray, const int arraySize);
+	public: bool textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound);
+	public: bool charInCharArray(const char c, const char* charArray, const int arraySize);
+	public: bool intInIntArray(const int iTest, const int* intArray, const int arraySize);
+	public: string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString);
+	public: string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
 
-void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize);
-void writeStringToFileObject(string s, ofstream* writeFileObject);
-void writeStringToFile(const string fileName, string* s);
-void appendStringToFile(const string fileName, string* s);
-void prependStringToFile(const string fileName, const string* s);
+	public: void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize);
+	public: void writeStringToFileObject(string s, ofstream* writeFileObject);
+	public: void writeStringToFile(const string fileName, string* s);
+	public: void appendStringToFile(const string fileName, string* s);
+	public: void prependStringToFile(const string fileName, const string* s);
 
-string getFileContents(const string inputFileName);
-	string getFileContents(const string inputFileName, int* numberLines);
-bool fileExists(const string inputFileName);
+	public: string getFileContents(const string inputFileName);
+		public: string getFileContents(const string inputFileName, int* numberLines);
+	public: bool fileExists(const string inputFileName);
+};
 
 
 #endif

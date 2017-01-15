@@ -26,7 +26,7 @@
  * File Name: RTscene.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -37,6 +37,7 @@
 #include "RTraytracer.h"
 #include "RTparser.h"
 #include "RTppm.h"
+#include "RTpixelMaps.h"
 
 
 
@@ -103,42 +104,51 @@ public:
 };
 
 
-int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
-	int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
-
-void setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew);
-void setLightingMode(const int newLightingMode);
-
-void parseTalFileInitialiseParser(const string talFileName);
-RTviewInfo* parseTalFileGetViewInfo(RTviewInfo* vi);
-RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li);
-RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si);
-
-void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li);
-
-
 typedef struct advancedColour colourAdvanced;
 struct advancedColour
 {
 	double r, g, b;
 };
 
-void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb);
+class RTsceneClass
+{
+	private: RTparserClass RTparser;
+	private: SHAREDvarsClass SHAREDvars;
+	private: RTpixelMapsClass RTpixelMaps;
+	private: RTppmClass RTppm;
+	private: RToperationsClass RToperations;
+	private: RTraytracerClass RTraytracer;
+	private: SHAREDvectorClass SHAREDvector;
+	public: int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
+		private: int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
 
-void calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int y);
+	public: void setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew);
+	public: void setLightingMode(const int newLightingMode);
 
-void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
+	private: void parseTalFileInitialiseParser(const string talFileName);
+	private: RTviewInfo* parseTalFileGetViewInfo(RTviewInfo* vi);
+	private: RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li);
+	private: RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si);
 
-void calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
+	private: void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li);
+
+	private: void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb);
+
+	private: void calculateUVNScalars(const RTviewInfo* vi, vec* uvn, const int x, const int y);
+
+	private: void calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
+
+	private: void calculateBasicColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
 
 
-bool stripExtension(string filenameWithExtension, string* filenameWithoutExtension);
-bool addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension);
+	private: bool stripExtension(string filenameWithExtension, string* filenameWithoutExtension);
+	private: bool addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension);
 
 
-void calculatePointMapValue(const double xPos, const double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi);
+	public: void calculatePointMapValue(const double xPos, const double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi);
 
-void createPointMapUsingDepthMap(const int imageWidth, const int imageHeight, double* pointMap, const double* depthMap,  RTviewInfo* vi);
+	private: void createPointMapUsingDepthMap(const int imageWidth, const int imageHeight, double* pointMap, const double* depthMap,  RTviewInfo* vi);
+};
 
 
 #endif

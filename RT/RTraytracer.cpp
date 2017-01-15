@@ -26,7 +26,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -35,7 +35,6 @@
 
 
 #include "RTraytracer.h"
-#include "RTpixelMaps.h"	//for max depth val
 
 #define VERTEX 0
 #define VECTOR 1
@@ -84,7 +83,7 @@ RTsceneInfo::~RTsceneInfo(void)
 }
 
 
-void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
+void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 {
 	advancedMat finalReverseMatrix;
 	advancedMat relevantFinalReverseMatrix;
@@ -137,8 +136,8 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 	/*p0 = &(vi->eye);
 	  p1 = [uTilda vTilda nTilda][uvn] + eye*/
 	*p0 = vi->eye;
-	multMatrixByVector(tildaMat, uvn, tmp);
-	addVectorsRT(tmp, p0, p1);
+	SHAREDvector.multMatrixByVector(tildaMat, uvn, tmp);
+	SHAREDvector.addVectorsRT(tmp, p0, p1);
 
 
 
@@ -203,20 +202,20 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 	transz = ZERO;
 #endif
 
-	createInverseScaleMatrix(scalex, scaley, scalez, &inverseScaleMatrix);
-	createInverseTranslationMatrix(transx, transy, transz, &inverseTranslationMatrix);
-	multAdvancedMatrix(&inverseScaleMatrix, &inverseTranslationMatrix, &objectReverseMatrix);
-	multAdvancedMatrix(&objectReverseMatrix, &(si->reverseMatrix), &finalReverseMatrix);
+	RToperations.createInverseScaleMatrix(scalex, scaley, scalez, &inverseScaleMatrix);
+	RToperations.createInverseTranslationMatrix(transx, transy, transz, &inverseTranslationMatrix);
+	RToperations.multAdvancedMatrix(&inverseScaleMatrix, &inverseTranslationMatrix, &objectReverseMatrix);
+	RToperations.multAdvancedMatrix(&objectReverseMatrix, &(si->reverseMatrix), &finalReverseMatrix);
 
 
-	toAdvancedVector(p0, VECTOR, &p0advanced);
-	toAdvancedVector(p1, VECTOR, &p1advanced);
-	multAdvancedMatrixByVector(&p0advanced, &finalReverseMatrix, &tmpAvancedVector);
+	RToperations.toAdvancedVector(p0, VECTOR, &p0advanced);
+	RToperations.toAdvancedVector(p1, VECTOR, &p1advanced);
+	RToperations.multAdvancedMatrixByVector(&p0advanced, &finalReverseMatrix, &tmpAvancedVector);
 	p0dashadvanced = tmpAvancedVector;
-	multAdvancedMatrixByVector(&p1advanced, &finalReverseMatrix, &tmpAvancedVector);
+	RToperations.multAdvancedMatrixByVector(&p1advanced, &finalReverseMatrix, &tmpAvancedVector);
 	p1dashadvanced = tmpAvancedVector;
-	fromAdvancedVector(&p0dashadvanced, p0Dash);
-	fromAdvancedVector(&p1dashadvanced, p1Dash);
+	RToperations.fromAdvancedVector(&p0dashadvanced, p0Dash);
+	RToperations.fromAdvancedVector(&p1dashadvanced, p1Dash);
 
 
 	vec norm;	//require to fill in normal information while calculating object - used to draw point at later stage
@@ -228,28 +227,28 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 
 	if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 	{
-		calculateCube(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculateCube(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == CYLINDER)
 	{
-		calculateCylinder(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculateCylinder(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == SPHERE)
 	{
-		calculateSphere(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculateSphere(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 			//do: ?proper order of tInOutDash in calculateSphere [ie split up into calc then draw]
 	}
 	else if(si->pi.type == PRIM_QUAD)
 	{
-		calculatePrimQuad(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculatePrimQuad(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_TRI)
 	{
-		calculatePrimTri(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculatePrimTri(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_LINE)
 	{
-		calculatePrimLine(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		this->calculatePrimLine(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else
 	{
@@ -264,12 +263,12 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 	{
 		si -> tIn = RT_RAYTRACE_NO_HIT_DEPTH_T;
 		si -> tOut = 0.0;
-		createVector(&p);
+		SHAREDvector.createVector(&p);
 		p.x = RT_RAYTRACE_NO_HIT_POINT_X;
 		p.y = RT_RAYTRACE_NO_HIT_POINT_Y;
 		p.z = RT_RAYTRACE_NO_HIT_POINT_Z;
 		si -> p = p;
-		createVector(&n);
+		SHAREDvector.createVector(&n);
 		si -> n = n;
 	}
 	else
@@ -278,7 +277,7 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 		if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -286,7 +285,7 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 		else if(si->pi.type == CYLINDER)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -294,7 +293,7 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 		else if(si->pi.type == SPHERE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -302,15 +301,15 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 		else if(si->pi.type == PRIM_QUAD)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_TRI)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -318,9 +317,9 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 		else if(si->pi.type == PRIM_LINE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			this->drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			//drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			//this->drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#endif
 		}
 		else
@@ -336,7 +335,7 @@ void rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 
 
 
-void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec pdash;
 	vec tmp_structure;	/*used for vector manipulation*/
@@ -434,11 +433,11 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 
 	#ifdef RT_METHOD2
 			//check if hits - (used later on only for SW diagnostics) - test2
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
 
-		multiplyVectorByScalarRT(tmp2, txin, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, txin, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		txinHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -466,8 +465,8 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 			txinHits = FALSE;
 		}
 
-		multiplyVectorByScalarRT(tmp2, txout, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, txout, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		txoutHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -518,11 +517,11 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 
 	#ifdef RT_METHOD2
 			//check if hits - (used later on only for SW diagnostics) - test2
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
 
-		multiplyVectorByScalarRT(tmp2, tyin, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tyin, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		tyinHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -550,8 +549,8 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 			tyinHits = FALSE;
 		}
 
-		multiplyVectorByScalarRT(tmp2, tyout, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tyout, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		tyoutHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -603,11 +602,11 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 
 	#ifdef RT_METHOD2
 			//check if hits - (used later on only for SW diagnostics) - test2
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
 
-		multiplyVectorByScalarRT(tmp2, tzin, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tzin, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		tzinHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -635,8 +634,8 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 			tzinHits = FALSE;
 		}
 
-		multiplyVectorByScalarRT(tmp2, tzout, tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tzout, tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		tzoutHits = TRUE;
 		if((pdash.x >= CUBEYBOUNDARY1l) && (pdash.x <= CUBEYBOUNDARY2h))
@@ -684,12 +683,12 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 	#ifndef RT_METHOD2
 
 		/* - requires reversal for some reason, must be some defintion reversal earlier
-		tin = findSmallestValue(txin, tyin, tzin);
-		tout = findGreatestValue(txout, tyout, tzout);
+		tin = RToperations.findSmallestValue(txin, tyin, tzin);
+		tout = RToperations.findGreatestValue(txout, tyout, tzout);
 		*/
 
-		tin = findGreatestValue(txin, tyin, tzin);
-		tout = findSmallestValue(txout, tyout, tzout);
+		tin = RToperations.findGreatestValue(txin, tyin, tzin);
+		tout = RToperations.findSmallestValue(txout, tyout, tzout);
 
 		if(tin > tout)
 		{
@@ -725,8 +724,8 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 		//testonly2;
 		int positionIn = -1;
 		int positionOut = -1;
-		positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 3);		//findPositionOfGreatestValueWhichHits: issue found here?
-		positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 3);		//findPositionOfSmallestValueWhichHits: issue found here?
+		positionIn = RToperations.findPositionOfSmallestValueWhichHits(tins, tinsHit, 3);		//findPositionOfGreatestValueWhichHits: issue found here?
+		positionOut = RToperations.findPositionOfGreatestValueWhichHits(touts, toutsHit, 3);		//findPositionOfSmallestValueWhichHits: issue found here?
 		tin = tins[positionIn];
 		tout = touts[positionOut];
 
@@ -775,10 +774,10 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 	#endif
 
 		/*added recently, the point is used to calculate lighting*/
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 		/*find normal*/
 		if((pdash.x > CUBEXBOUNDARY2l) && (pdash.x < CUBEXBOUNDARY2h))
@@ -819,7 +818,7 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 
 /*there are currently minor errors with this method*/
 
-void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -920,11 +919,11 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 		tSide[0] = tmpd;
 		*/
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
 
-		multiplyVectorByScalarRT(tmp2, tSide[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[0]);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tSide[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[0]);
 
 		if((pdash[0].z >= CYLINDERZBOUNDARY1) && (pdash[0].z <= CYLINDERZBOUNDARY2))
 		{
@@ -935,8 +934,8 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 			tSideHit[0] = FALSE;
 		}
 
-		multiplyVectorByScalarRT(tmp2, tSide[1], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[1]);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tSide[1], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[1]);
 
 		if((pdash[1].z >= CYLINDERZBOUNDARY1) && (pdash[1].z <= CYLINDERZBOUNDARY2))
 		{
@@ -979,11 +978,11 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 
 		//tTopBottom[0] =-1;
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
 
-		multiplyVectorByScalarRT(tmp2, tTopBottom[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[0]);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tTopBottom[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[0]);
 
 		if(pow((pdash[0].x), 2) + pow((pdash[0].y), 2) <= CYLINDERRADIUSBOUNDARY)
 		{
@@ -999,8 +998,8 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 
 		//tTopBottom[1] =-1;
 
-		multiplyVectorByScalarRT(tmp2, tTopBottom[1], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[1]);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tTopBottom[1], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[1]);
 
 		if(pow((pdash[1].x), 2) + pow((pdash[1].y), 2) <= CYLINDERRADIUSBOUNDARY)
 		{
@@ -1079,8 +1078,8 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 	//testonly2;
 	positionIn = -1;
 	positionOut = -1;
-	positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 2);		//findPositionOfGreatestValueWhichHits		//issue found here
-	positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 2);		//findPositionOfSmallestValueWhichHits	//issue found here
+	positionIn = RToperations.findPositionOfSmallestValueWhichHits(tins, tinsHit, 2);		//findPositionOfGreatestValueWhichHits		//issue found here
+	positionOut = RToperations.findPositionOfGreatestValueWhichHits(touts, toutsHit, 2);		//findPositionOfSmallestValueWhichHits	//issue found here
 
 
 	//if((positionIn < 0) || (positionOut < 0))	why doesnt thiswork??
@@ -1139,10 +1138,10 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 
 		vec pdashFinal;
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdashFinal);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdashFinal);
 
 		//find norm
 
@@ -1172,7 +1171,7 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 /*this method works fine except the calculated normals
 produce a cone like image instead of rounded lighting*/
 
-void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec d; /*= P1 - P0*/
 
@@ -1233,14 +1232,14 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 
 	/*creates d vector*/
 	/*
-	negativeVector(p0, tmp);
-	addVectorsRT(p1, tmp, &d);
+	SHAREDvector.negativeVector(p0, tmp);
+	SHAREDvector.addVectorsRT(p1, tmp, &d);
 	*/
-	subtractVectorsRT(p1, p0, &d);
-	a = dotProduct(&d, &d);
-	multiplyVectorByScalarRT(p0, 2.0, tmp);
-	b = dotProduct(tmp, &d);
-	c = dotProduct(p0, p0) - SPHERERADIUSBOUNDARY;
+	SHAREDvector.subtractVectorsRT(p1, p0, &d);
+	a = SHAREDvector.dotProduct(&d, &d);
+	SHAREDvector.multiplyVectorByScalarRT(p0, 2.0, tmp);
+	b = SHAREDvector.dotProduct(tmp, &d);
+	c = SHAREDvector.dotProduct(p0, p0) - SPHERERADIUSBOUNDARY;
 
 
 	sqrted = pow(b,2) - (4*a*c);
@@ -1269,15 +1268,15 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 		tHit[0] = TRUE;
 		tHit[1] = TRUE;
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, t[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[0]);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, t[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[0]);
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, t[1], tmp3);
-		addVectorsRT(p0, tmp3, &pdash[1]);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, t[1], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash[1]);
 	}
 
 	/*debugging:
@@ -1344,10 +1343,10 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 
 		vec pdashFinal;
 
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdashFinal);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdashFinal);
 
 		//find norm
 		norm->x = pdashFinal.x;
@@ -1368,7 +1367,7 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 
 
 
-void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculatePrimQuad(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1382,7 +1381,7 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, 
 
 	double quadAtInAndOut;
 
-	findIntersectLineWithQuad(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), &(pi->vertex4Position), p0, p1, &intersectionPointQuad, &intersectionPointNormalQuad, &quadAtInAndOut);
+	RToperations.findIntersectLineWithQuad(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), &(pi->vertex4Position), p0, p1, &intersectionPointQuad, &intersectionPointNormalQuad, &quadAtInAndOut);
 
 
 	double tInAndOut = quadAtInAndOut;
@@ -1403,20 +1402,20 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, 
 		vec pdash;
 
 		/*added recently, the point is used to calculate lighting*/
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 
 		/*set normal*/
 
-		copyVectorRT(norm, &intersectionPointNormalQuad);
-		negativeVector(norm, norm);	//???
+		SHAREDvector.copyVectorRT(norm, &intersectionPointNormalQuad);
+		SHAREDvector.negativeVector(norm, norm);	//???
 	}
 }
 
-void calculatePrimTri(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculatePrimTri(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1433,7 +1432,7 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, v
 
 	double triAtInAndOut;
 
-	if(findIntersectLineWithTri(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), p0, p1, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
+	if(RToperations.findIntersectLineWithTri(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), p0, p1, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
 	{
 		triAIntersectionFound = TRUE;
 	}
@@ -1464,23 +1463,23 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, v
 		vec pdash;
 
 		/*added recently, the point is used to calculate lighting*/
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 
 		/*set normal*/
 
-		copyVectorRT(norm, &intersectionPointNormalTriA);
-		negativeVector(norm, norm);	//???
+		SHAREDvector.copyVectorRT(norm, &intersectionPointNormalTriA);
+		SHAREDvector.negativeVector(norm, norm);	//???
 	}
 }
 
 
 
 	//define a line as 3 quads
-void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1521,12 +1520,12 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec
 	vec vertex2PositionWithYShift;
 	vec vertex2PositionWithZShift;
 
-	copyVectorRT(&vertex1PositionWithXShift, &(pi->vertex1Position));
-	copyVectorRT(&vertex1PositionWithYShift, &(pi->vertex1Position));
-	copyVectorRT(&vertex1PositionWithZShift, &(pi->vertex1Position));
-	copyVectorRT(&vertex2PositionWithXShift, &(pi->vertex2Position));
-	copyVectorRT(&vertex2PositionWithYShift, &(pi->vertex2Position));
-	copyVectorRT(&vertex2PositionWithZShift, &(pi->vertex2Position));
+	SHAREDvector.copyVectorRT(&vertex1PositionWithXShift, &(pi->vertex1Position));
+	SHAREDvector.copyVectorRT(&vertex1PositionWithYShift, &(pi->vertex1Position));
+	SHAREDvector.copyVectorRT(&vertex1PositionWithZShift, &(pi->vertex1Position));
+	SHAREDvector.copyVectorRT(&vertex2PositionWithXShift, &(pi->vertex2Position));
+	SHAREDvector.copyVectorRT(&vertex2PositionWithYShift, &(pi->vertex2Position));
+	SHAREDvector.copyVectorRT(&vertex2PositionWithZShift, &(pi->vertex2Position));
 
 	vertex1PositionWithXShift.x = vertex1PositionWithXShift.x + PRIM_LINE_CALC_QUAD_REDUCTION_WIDTH;
 	vertex1PositionWithYShift.y = vertex1PositionWithYShift.y + PRIM_LINE_CALC_QUAD_REDUCTION_WIDTH;
@@ -1536,15 +1535,15 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec
 	vertex2PositionWithZShift.z = vertex2PositionWithZShift.z + PRIM_LINE_CALC_QUAD_REDUCTION_WIDTH;
 
 
-	if(findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithXShift, &(pi->vertex2Position), &vertex2PositionWithXShift, p0, p1, &intersectionPointQuadA, &intersectionPointNormalQuadA, &quadAtInAndOut))
+	if(RToperations.findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithXShift, &(pi->vertex2Position), &vertex2PositionWithXShift, p0, p1, &intersectionPointQuadA, &intersectionPointNormalQuadA, &quadAtInAndOut))
 	{
 		quadAIntersectionFound = TRUE;
 	}
-	if(findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithYShift, &(pi->vertex2Position), &vertex2PositionWithYShift, p0, p1, &intersectionPointQuadB, &intersectionPointNormalQuadB, &quadBtInAndOut))
+	if(RToperations.findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithYShift, &(pi->vertex2Position), &vertex2PositionWithYShift, p0, p1, &intersectionPointQuadB, &intersectionPointNormalQuadB, &quadBtInAndOut))
 	{
 		quadBIntersectionFound = TRUE;
 	}
-	if(findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithZShift, &(pi->vertex2Position), &vertex2PositionWithZShift, p0, p1, &intersectionPointQuadC, &intersectionPointNormalQuadC, &quadCtInAndOut))
+	if(RToperations.findIntersectLineWithQuad(&(pi->vertex1Position), &vertex1PositionWithZShift, &(pi->vertex2Position), &vertex2PositionWithZShift, p0, p1, &intersectionPointQuadC, &intersectionPointNormalQuadC, &quadCtInAndOut))
 	{
 		quadCIntersectionFound = TRUE;
 	}
@@ -1554,24 +1553,24 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec
 	{
 		//printf("\nfound quad intersectionA");
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadA);
-		copyVectorRT(&intersectionPoint, &intersectionPointQuadA);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadA);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointQuadA);
 		tInAndOut = quadAtInAndOut;
 	}
 	else if(quadBIntersectionFound)
 	{
 		//printf("\nfound quad intersectionB");
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadB);
-		copyVectorRT(&intersectionPoint, &intersectionPointQuadB);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadB);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointQuadB);
 		tInAndOut = quadBtInAndOut;
 	}
 	else if(quadCIntersectionFound)
 	{
 		//printf("\nfound quad intersectionC");
 		quadIntersectionFound = TRUE;
-		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadC);
-		copyVectorRT(&intersectionPoint, &intersectionPointQuadC);
+		SHAREDvector.copyVectorRT(&intersectionPointNormal, &intersectionPointNormalQuadC);
+		SHAREDvector.copyVectorRT(&intersectionPoint, &intersectionPointQuadC);
 		tInAndOut = quadCtInAndOut;
 	}
 	else
@@ -1596,19 +1595,19 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec
 		vec pdash;
 
 		/*added recently, the point is used to calculate lighting*/
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
+		SHAREDvector.negativeVector(p0, tmp);
+		SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+		SHAREDvector.multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
+		SHAREDvector.addVectorsRT(p0, tmp3, &pdash);
 
 
 		/*set normal*/
-		copyVectorRT(norm, &intersectionPointNormal);
+		SHAREDvector.copyVectorRT(norm, &intersectionPointNormal);
 	}
 }
 
 
-void calculatePrimLine(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, const vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void RTraytracerClass::calculatePrimLine(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, const vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1620,12 +1619,12 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, 
 	vec intersectionPoint;
 	vec intersectionPointNormal;
 	vec vectorP1MinusP0;
-	subtractVectorsRT(p1, p0, &vectorP1MinusP0);
+	SHAREDvector.subtractVectorsRT(p1, p0, &vectorP1MinusP0);
 
 	int lineIntersectionFound = FALSE;
 	double linetInAndOut;
 
-	if(findIntersectLineWithLine(&(pi->vertex1Position), &(pi->vertex2Position), p0, p1, &intersectionPoint, &intersectionPointNormal, &linetInAndOut))
+	if(RToperations.findIntersectLineWithLine(&(pi->vertex1Position), &(pi->vertex2Position), p0, p1, &intersectionPoint, &intersectionPointNormal, &linetInAndOut))
 	{
 		lineIntersectionFound = TRUE;
 	}
@@ -1677,7 +1676,7 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, const RTpieceInfo* pi, 
 
 
 #ifndef RT_T_TRANSFORM_TEST
-void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm)
+void RTraytracerClass::drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm)
 #else
 //void drawPointTest(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
 #endif
@@ -1711,21 +1710,21 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 	/*POINT CALCULATIONS*/
 
 	/*added recently, the point is used to calculate lighting*/
-	negativeVector(p0Dash, tmp);
-	addVectorsRT(p1Dash, tmp, tmp2);
-	multiplyVectorByScalarRT(tmp2, tInDash, tmp3);
-	addVectorsRT(p0Dash, tmp3, &pdash);
+	SHAREDvector.negativeVector(p0Dash, tmp);
+	SHAREDvector.addVectorsRT(p1Dash, tmp, tmp2);
+	SHAREDvector.multiplyVectorByScalarRT(tmp2, tInDash, tmp3);
+	SHAREDvector.addVectorsRT(p0Dash, tmp3, &pdash);
 
 
-	toAdvancedVector(&pdash, 0, &pdashAdvanced);
+	RToperations.toAdvancedVector(&pdash, 0, &pdashAdvanced);
 
 	/*this is not needed
 	standardMatrixCopy = *standardMatrix;
-	transposeAdvancedMatrix(&standardMatrixCopy);
+	RToperations.transposeAdvancedMatrix(&standardMatrixCopy);
 	*/
 
-	multAdvancedMatrixByVector(&pdashAdvanced, reverseMatrix, &pAdvanced);
-	fromAdvancedVector(&pAdvanced, &p);
+	RToperations.multAdvancedMatrixByVector(&pdashAdvanced, reverseMatrix, &pAdvanced);
+	RToperations.fromAdvancedVector(&pAdvanced, &p);
 
 #ifndef RT_T_TRANSFORM_TEST
 	si -> tIn = tInDash;
@@ -1734,15 +1733,15 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 #else
 	//store t in world coordinates - and calculate p using tworld;
 	vec pMinusP0;
-	subtractVectorsRT(&p, p0, &pMinusP0);
+	SHAREDvector.subtractVectorsRT(&p, p0, &pMinusP0);
 	vec p1MinusP0;
-	subtractVectorsRT(p1, p0, &p1MinusP0);
+	SHAREDvector.subtractVectorsRT(p1, p0, &p1MinusP0);
 	double tIn = pMinusP0.x / p1MinusP0.x;
 	si -> tIn = tIn;
 	si -> tOut = 0.0;	//not calculated here
 #endif
 	/*this is not needed
-	normaliseVector(&p);
+	SHAREDvector.normaliseVector(&p);
 	*/
 
 	si -> p = p;
@@ -1750,22 +1749,22 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 
 	/*NORMAL CALCULATIONS*/
 
-	createAdvancedVector(&ndashAdvanced);
+	RToperations.createAdvancedVector(&ndashAdvanced);
 	/*creates a 0,0,0,1 advanced vector*/
 	ndashAdvanced.w = 0;
 	/*creates a 0,0,0,0 advanced vector*/
 	/*since vector last var = 1 if position, 0 if vector*/
 
 	//replaced by RBB 2x sept 08
-	toAdvancedVector(norm, 0, &ndashAdvanced);
+	RToperations.toAdvancedVector(norm, 0, &ndashAdvanced);
 
 	reverseMatrixCopy = *reverseMatrix;
-	transposeAdvancedMatrix(&reverseMatrixCopy);	/*this doesnt do anything*/
-	multAdvancedMatrixByVector(&ndashAdvanced, &reverseMatrixCopy, &nAdvanced);
-	fromAdvancedVector(&nAdvanced, &n);
+	RToperations.transposeAdvancedMatrix(&reverseMatrixCopy);	/*this doesnt do anything*/
+	RToperations.multAdvancedMatrixByVector(&ndashAdvanced, &reverseMatrixCopy, &nAdvanced);
+	RToperations.fromAdvancedVector(&nAdvanced, &n);
 
 	/*important*/
-	normaliseVector(&n);
+	SHAREDvector.normaliseVector(&n);
 
 	si -> n = n;
 
@@ -1773,7 +1772,7 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 
 
 	//norm is not used
-void drawPointNoLighting(RTsceneInfo* si, const advancedMat* reverseMatrix, double tIn, double tOut, const vec* p0, const vec* p1, const vec* norm)
+void RTraytracerClass::drawPointNoLighting(RTsceneInfo* si, const advancedMat* reverseMatrix, double tIn, double tOut, const vec* p0, const vec* p1, const vec* norm)
 {
 	si -> tIn = tIn;
 	si -> tOut = tOut;
@@ -1781,7 +1780,7 @@ void drawPointNoLighting(RTsceneInfo* si, const advancedMat* reverseMatrix, doub
 
 
 	//added October 08
-void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* vi, vec* p, vec* uvn)
+void RTraytracerClass::calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* vi, vec* p, vec* uvn)
 {
 	//1. create tilda matrix
 
@@ -1810,27 +1809,27 @@ void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* 
 		/*defining the nTilda, uTilda, vTilda vectors*/
 
 	/*nTilda = (eye - viewAt)*/
-	negativeVector(&(vi->viewAt), tmp);
-	addVectorsRT(tmp,(&(vi->eye)), nTilda);
-	normaliseVector(nTilda);
+	SHAREDvector.negativeVector(&(vi->viewAt), tmp);
+	SHAREDvector.addVectorsRT(tmp,(&(vi->eye)), nTilda);
+	SHAREDvector.normaliseVector(nTilda);
 
 	/*wTilda = (viewUp - eye)*/
-	negativeVector(&(vi->eye), tmp);
-	addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
-	normaliseVector(wTilda);
+	SHAREDvector.negativeVector(&(vi->eye), tmp);
+	SHAREDvector.addVectorsRT(tmp,(&(vi->viewUp)), wTilda);
+	SHAREDvector.normaliseVector(wTilda);
 
 	/*uTilda = wTilda x nTilda*/
-	crossProduct(wTilda, nTilda, uTilda);
-	normaliseVector(uTilda);
+	SHAREDvector.crossProduct(wTilda, nTilda, uTilda);
+	SHAREDvector.normaliseVector(uTilda);
 
 	/*vTilda = nTilda x uTilda*/
-	crossProduct(nTilda, uTilda, vTilda);
-	normaliseVector(vTilda);
+	SHAREDvector.crossProduct(nTilda, uTilda, vTilda);
+	SHAREDvector.normaliseVector(vTilda);
 
 		/*calculation of tildaMatrix*/
 
 	/*creating the uTilda vTilda nTilda matrix from the u, v, n vectors*/
-	makeMatrix(uTilda, vTilda, nTilda, tildaMat);
+	SHAREDvector.makeMatrix(uTilda, vTilda, nTilda, tildaMat);
 
 
 
@@ -1841,8 +1840,8 @@ void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* 
 	/*NB p0 = &(vi->eye);*/
 	*p0 = vi->eye;
 	/*p1 = [uTilda vTilda nTilda][uvn] + eye*/
-	multMatrixByVector(tildaMat, uvn, tmp);
-	addVectorsRT(tmp, p0, p1);
+	SHAREDvector.multMatrixByVector(tildaMat, uvn, tmp);
+	SHAREDvector.addVectorsRT(tmp, p0, p1);
 
 
 
@@ -1850,10 +1849,10 @@ void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* 
 	//3. Point Calculation
 
 	/*added recently, the point is used to calculate lighting*/
-	negativeVector(p0, tmp);
-	addVectorsRT(p1, tmp, tmp2);
-	multiplyVectorByScalarRT(tmp2, tInWorld, tmp3);
-	addVectorsRT(p0, tmp3, p);
+	SHAREDvector.negativeVector(p0, tmp);
+	SHAREDvector.addVectorsRT(p1, tmp, tmp2);
+	SHAREDvector.multiplyVectorByScalarRT(tmp2, tInWorld, tmp3);
+	SHAREDvector.addVectorsRT(p0, tmp3, p);
 
 }
 

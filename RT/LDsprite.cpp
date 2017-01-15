@@ -26,19 +26,13 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
 
-#include "SHAREDglobalDefs.h"
 
 #include "LDsprite.h"
-#include "LDreferenceManipulation.h"
-#include "SHAREDvector.h"
-#include "SHAREDvars.h"	//required for writeByteArrayToFile
-#include "XMLrulesClass.h"
-#include "math.h"
 #ifdef USE_LRRC
 //#include "LRRCrules.h"
 #endif
@@ -71,7 +65,7 @@ static string SPRITE_CHARACTER_EXTENSION;
 double spriteTextKernelArray[ANSI_NUMBER_CHARACTERS];
 
 
-void fillInLDspriteExternVariables()
+void LDspriteClass::fillInLDspriteExternVariables()
 {
 	#ifdef USE_CS
 		XMLrulesClass* currentReferenceRulesClass = CSrulesSprite;
@@ -224,7 +218,7 @@ void fillInLDspriteExternVariables()
 
 /*Secondary sprite routines*/
 
-string LDcreateSpriteReferenceName(const int spriteIndex, string sceneFileName)
+string LDspriteClass::LDcreateSpriteReferenceName(const int spriteIndex, string sceneFileName)
 {
 	string spriteReferenceFileName = "";
 
@@ -242,14 +236,14 @@ string LDcreateSpriteReferenceName(const int spriteIndex, string sceneFileName)
 	}
 
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_NAME_START;
-	spriteReferenceFileName = spriteReferenceFileName + convertIntToString(spriteIndex);
+	spriteReferenceFileName = spriteReferenceFileName + SHAREDvars.convertIntToString(spriteIndex);
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_EXTENSION;
 
 	//create the "spritex.ldr" file that will be referenced by the scene file
 	return spriteReferenceFileName;
 }
 
-LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, const bool addIndividualSprites, int colour, double scale)
+LDreference* LDspriteClass::LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, const bool addIndividualSprites, int colour, double scale)
 {
 	bool result = true;
 
@@ -287,12 +281,12 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 			if(!addIndividualSprites)
 			{
 				vec tempAbsPos;
-				addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
@@ -309,12 +303,12 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 			if(!addIndividualSprites)
 			{
 				vec tempAbsPos;
-				addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
 
@@ -338,7 +332,7 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 
 
 
-LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, const int spriteNumberOfLines, int* numSpritesAdded, const bool addIndividualSprites)
+LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, const int spriteNumberOfLines, int* numSpritesAdded, const bool addIndividualSprites)
 {
 	bool result = true;
 
@@ -380,12 +374,12 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			if(!addIndividualSprites)
 			{
 				vec tempAbsPos;
-				addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
@@ -405,12 +399,12 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			if(!addIndividualSprites)
 			{
 				vec tempAbsPos;
-				addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing/2;
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
@@ -429,12 +423,12 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			if(!addIndividualSprites)
 			{
 				vec tempAbsPos;
-				addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
 
@@ -467,7 +461,7 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 
 
 
-bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* eyeCoords, LDreference* spriteListInitialReference, const string spriteReferenceFileName, const int spriteDefaultColour, double spriteScaleFactor)
+bool LDspriteClass::LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* eyeCoords, LDreference* spriteListInitialReference, const string spriteReferenceFileName, const int spriteDefaultColour, double spriteScaleFactor)
 {
 	//add sprite to spriteByteArray (replace sprite of sprite index, spriteIndex, if it already exists)
 
@@ -479,10 +473,10 @@ bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* e
 	spriteReference.type = REFERENCE_TYPE_SUBMODEL;
 	mat spriteRotationMatrix;
 
-	createIdentityMatrix(&spriteRotationMatrix);
-	scaleMatrix(&spriteRotationMatrix, spriteScaleFactor);
+	SHAREDvector.createIdentityMatrix(&spriteRotationMatrix);
+	SHAREDvector.scaleMatrix(&spriteRotationMatrix, spriteScaleFactor);
 
-	copyMatrixTwoIntoMatrixOne(&(spriteReference.deformationMatrix), &(spriteRotationMatrix));
+	SHAREDvector.copyMatrixTwoIntoMatrixOne(&(spriteReference.deformationMatrix), &(spriteRotationMatrix));
 
 	spriteReference.relativePosition.x = spriteSceneCoords->x;
 	spriteReference.relativePosition.y = spriteSceneCoords->y;
@@ -491,9 +485,9 @@ bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* e
 
 	int lineNumberInFileOfSprite;
 
-	if(search1DrefListNameAndColourFindRef(spriteListInitialReference, &spriteReference))
+	if(LDreferenceManipulation.search1DrefListNameAndColourFindRef(spriteListInitialReference, &spriteReference))
 	{
-		if(!search1DrefListNameAndColourReplaceRef(spriteListInitialReference, &spriteReference, &spriteReference))
+		if(!LDreferenceManipulation.search1DrefListNameAndColourReplaceRef(spriteListInitialReference, &spriteReference, &spriteReference))
 		{
 			cout << "error: cannot replace LDreference in Sprite LDreference List" << endl;
 			cout << "\t spriteReference.colour  = \n" << spriteReference.colour  << endl;
@@ -503,7 +497,7 @@ bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* e
 	}
 	else
 	{
-		if(!search1DrefListAddReference(spriteListInitialReference, &spriteReference))
+		if(!LDreferenceManipulation.search1DrefListAddReference(spriteListInitialReference, &spriteReference))
 		{
 			cout << "error: cannot add LDreference to Sprite LDreference List" << endl;
 			cout << "\t spriteReference.colour  = \n" << spriteReference.colour  << endl;
@@ -520,14 +514,14 @@ bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* e
 
 
 /*this is not complete yet - just use an Identity matrix - ie do not rotate the sprite according to the user POV*/
-void LDgenerateSpriteRotationMatrix(const vec* spriteSceneCoords, const vec* eyeCoords, mat* spriteRotationMatrix)
+void LDspriteClass::LDgenerateSpriteRotationMatrix(const vec* spriteSceneCoords, const vec* eyeCoords, mat* spriteRotationMatrix)
 {
 	//TEMP - this is not complete
-	createIdentityMatrix(spriteRotationMatrix);		//CHECK THIS
+	SHAREDvector.createIdentityMatrix(spriteRotationMatrix);		//CHECK THIS
 }
 
 
-void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, const char characterToWrite, int spriteColour, double scale)
+void LDspriteClass::LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, const char characterToWrite, int spriteColour, double scale)
 {
 	string referenceNameStart = SPRITE_CHARACTER_START;
 	string referenceNameEnd = SPRITE_CHARACTER_EXTENSION;
@@ -545,9 +539,9 @@ void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentRefe
 	if(((unsigned char)characterToWrite > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)characterToWrite <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
 	{
 		/*no change to currentDeformationMatrix*/
-		createIdentityMatrix(&currentDeformationMatrix);
+		SHAREDvector.createIdentityMatrix(&currentDeformationMatrix);
 
-		scaleMatrix(&currentDeformationMatrix, SPRITE_TEXT_DICE_SCALE_FACTOR);
+		SHAREDvector.scaleMatrix(&currentDeformationMatrix, SPRITE_TEXT_DICE_SCALE_FACTOR);
 		spriteSubmodelCurrentReference->relativePosition.y = spriteSubmodelCurrentReference->relativePosition.y + SPRITE_TEXT_DICE_Y_OFFSET;
 		spriteSubmodelCurrentReference->colour = spriteSubmodelCurrentReference->colour + DAT_FILE_COLOUR_TRANPARENT_MOD;
 		tempString = "d";
@@ -568,12 +562,12 @@ void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentRefe
 	}
 	else
 	{
-		createIdentityMatrix(&currentDeformationMatrix);
-		scaleMatrix(&currentDeformationMatrix, scale);
+		SHAREDvector.createIdentityMatrix(&currentDeformationMatrix);
+		SHAREDvector.scaleMatrix(&currentDeformationMatrix, scale);
 		tempString = characterToWrite;
 	}
 
-	copyMatrixTwoIntoMatrixOne(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
+	SHAREDvector.copyMatrixTwoIntoMatrixOne(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
 
 	spriteSubmodelCurrentReference->name = referenceNameStart + tempString + referenceNameEnd;
 }

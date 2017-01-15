@@ -26,18 +26,15 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 #include "LDjpeg.h"
-#include "SHAREDvars.h"
-#include "jpeglib.h"
 /*
  * <setjmp.h> is used for the optional error recovery mechanism
  */
 #include <setjmp.h>
-#include "jmemsys.h"
 
 
 struct jvirt_barray_control {
@@ -95,7 +92,7 @@ METHODDEF(void) my_error_exit (j_common_ptr cinfo)
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 string* pointerToDCTTableHTMLOutputString;
-void setPointerToDCTtableHTMLoutputString(string* pointer)
+void LDjpegClass::setPointerToDCTtableHTMLoutputString(string* pointer)
 {
 	pointerToDCTTableHTMLOutputString = pointer;
 }
@@ -103,7 +100,7 @@ void setPointerToDCTtableHTMLoutputString(string* pointer)
 #endif
 
 //if storeDataInArrays, assume 1 x block and 1 y block! (image size must be <= 8x8)
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput)
+int LDjpegClass::readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput)
 {
 	jvirt_barray_ptr* coefficientarrays;
 	int DCTwidth_in_blocks;
@@ -276,7 +273,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string fi
 						if(printOutput)
 						{
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-							string dataValueString = convertIntToString(block[i]);
+							string dataValueString = SHAREDvars.convertIntToString(block[i]);
 							*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
 							#else
 							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);

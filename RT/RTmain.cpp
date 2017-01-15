@@ -26,16 +26,12 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
 
 #include "RTmain.h"
-#include "RTscene.h"
-#include "LDparser.h"
-#include "RTreferenceManipulation.h"
-#include "LDreferenceManipulation.h"
 
 #ifndef LINUX
 	#include <windows.h>
@@ -86,7 +82,7 @@ static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n"
 "\n";
 
-int main(const int argc,const char* *argv)
+int main(const int argc, const char** argv)
 {
 	bool result = true;
 
@@ -128,150 +124,150 @@ int main(const int argc,const char* *argv)
 
 	bool useLDRfile = false;
 
-	if((argumentExists(argc,argv,"-iotal")) || (argumentExists(argc,argv,"-ildr")))
+	if((SHAREDvarsClass().argumentExists(argc,argv,"-iotal")) || (SHAREDvarsClass().argumentExists(argc,argv,"-ildr")))
 	{
-		if(argumentExists(argc,argv,"-iotal"))
-		topLevelSceneFileNameCollapsedForRayTracing=getStringArgument(argc,argv,"-iotal");
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-iotal"))
+		topLevelSceneFileNameCollapsedForRayTracing=SHAREDvarsClass().getStringArgument(argc,argv,"-iotal");
 
-		if(argumentExists(argc,argv,"-ildr"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-ildr"))
 		{
-			topLevelSceneFileName=getStringArgument(argc,argv,"-ildr");
+			topLevelSceneFileName=SHAREDvarsClass().getStringArgument(argc,argv,"-ildr");
 			useLDRfile = true;
 		}
 
-		if(argumentExists(argc,argv,"-lighting"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-lighting"))
 		{
-			lightingMode=getFloatArgument(argc,argv,"-lighting");
+			lightingMode=SHAREDvarsClass().getFloatArgument(argc,argv,"-lighting");
 		}
 
-		if(argumentExists(argc,argv,"-oppm"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-oppm"))
 		{
-			imageFileName=getStringArgument(argc,argv,"-oppm");
+			imageFileName=SHAREDvarsClass().getStringArgument(argc,argv,"-oppm");
 		}
 
-		if(argumentExists(argc,argv,"-width"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-width"))
 		{
-			viewinfo.imageWidth=getFloatArgument(argc,argv,"-width");
+			viewinfo.imageWidth=SHAREDvarsClass().getFloatArgument(argc,argv,"-width");
 		}
 
-		if(argumentExists(argc,argv,"-height"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-height"))
 		{
-			viewinfo.imageHeight=getFloatArgument(argc,argv,"-height");
+			viewinfo.imageHeight=SHAREDvarsClass().getFloatArgument(argc,argv,"-height");
 		}
 
-		if(argumentExists(argc,argv,"-vieweyex"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-vieweyex"))
 		{
-			viewinfo.eye.x=getFloatArgument(argc,argv,"-vieweyex");
+			viewinfo.eye.x=SHAREDvarsClass().getFloatArgument(argc,argv,"-vieweyex");
 		}
 
-		if(argumentExists(argc,argv,"-vieweyey"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-vieweyey"))
 		{
-			viewinfo.eye.y=getFloatArgument(argc,argv,"-vieweyey");
+			viewinfo.eye.y=SHAREDvarsClass().getFloatArgument(argc,argv,"-vieweyey");
 		}
 
-		if(argumentExists(argc,argv,"-vieweyez"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-vieweyez"))
 		{
-			viewinfo.eye.z=getFloatArgument(argc,argv,"-vieweyez");
+			viewinfo.eye.z=SHAREDvarsClass().getFloatArgument(argc,argv,"-vieweyez");
 		}
 
-		if(argumentExists(argc,argv,"-viewatx"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewatx"))
 		{
-			viewinfo.viewAt.x=getFloatArgument(argc,argv,"-viewatx");
+			viewinfo.viewAt.x=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewatx");
 		}
 
-		if(argumentExists(argc,argv,"-viewaty"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewaty"))
 		{
-			viewinfo.viewAt.y=getFloatArgument(argc,argv,"-viewaty");
+			viewinfo.viewAt.y=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewaty");
 		}
 
-		if(argumentExists(argc,argv,"-viewatz"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewatz"))
 		{
-			viewinfo.viewAt.z=getFloatArgument(argc,argv,"-viewatz");
+			viewinfo.viewAt.z=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewatz");
 		}
 
-		if(argumentExists(argc,argv,"-viewupx"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewupx"))
 		{
-			viewinfo.viewUp.x=getFloatArgument(argc,argv,"-viewupx");
+			viewinfo.viewUp.x=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewupx");
 		}
 
-		if(argumentExists(argc,argv,"-viewupy"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewupy"))
 		{
-			viewinfo.viewUp.y=getFloatArgument(argc,argv,"-viewupy");
+			viewinfo.viewUp.y=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewupy");
 		}
 
-		if(argumentExists(argc,argv,"-viewupz"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewupz"))
 		{
-			viewinfo.viewUp.z=getFloatArgument(argc,argv,"-viewupz");
+			viewinfo.viewUp.z=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewupz");
 		}
 
-		if(argumentExists(argc,argv,"-viewfocal"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewfocal"))
 		{
-			viewinfo.focalLength=getFloatArgument(argc,argv,"-viewfocal");
+			viewinfo.focalLength=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewfocal");
 		}
 
-		if(argumentExists(argc,argv,"-viewsizew"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewsizew"))
 		{
-			viewinfo.viewWidth=getFloatArgument(argc,argv,"-viewsizew");
+			viewinfo.viewWidth=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewsizew");
 		}
 
-		if(argumentExists(argc,argv,"-viewsizeh"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-viewsizeh"))
 		{
-			viewinfo.viewHeight=getFloatArgument(argc,argv,"-viewsizeh");
+			viewinfo.viewHeight=SHAREDvarsClass().getFloatArgument(argc,argv,"-viewsizeh");
 		}
 
-		if(argumentExists(argc,argv,"-lightx"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-lightx"))
 		{
-			lightSourcePosition.x=getFloatArgument(argc,argv,"-lightx");
+			lightSourcePosition.x=SHAREDvarsClass().getFloatArgument(argc,argv,"-lightx");
 		}
 
-		if(argumentExists(argc,argv,"-lighty"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-lighty"))
 		{
-			lightSourcePosition.y=getFloatArgument(argc,argv,"-lighty");
+			lightSourcePosition.y=SHAREDvarsClass().getFloatArgument(argc,argv,"-lighty");
 		}
 
-		if(argumentExists(argc,argv,"-lightz"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-lightz"))
 		{
-			lightSourcePosition.z=getFloatArgument(argc,argv,"-lightz");
+			lightSourcePosition.z=SHAREDvarsClass().getFloatArgument(argc,argv,"-lightz");
 		}
 
-		if(argumentExists(argc,argv,"-lightcol"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-lightcol"))
 		{
-			lightSourceColour=getStringArgument(argc,argv,"-lightcol");
+			lightSourceColour=SHAREDvarsClass().getStringArgument(argc,argv,"-lightcol");
 		}
 
 		string currentFolder = "";
-		currentFolder = getCurrentDirectory();
+		currentFolder = SHAREDvarsClass().getCurrentDirectory();
 
-		if(argumentExists(argc,argv,"-workingfolder"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-workingfolder"))
 		{
-			workingFolder=getStringArgument(argc,argv,"-workingfolder");
+			workingFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-workingfolder");
 		}
 		else
 		{
 			workingFolder = currentFolder;
 		}
-		if(argumentExists(argc,argv,"-exefolder"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-exefolder"))
 		{
-			exeFolder=getStringArgument(argc,argv,"-exefolder");
+			exeFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-exefolder");
 		}
 		else
 		{
 			exeFolder = currentFolder;
 		}
-		if(argumentExists(argc,argv,"-tempfolder"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-tempfolder"))
 		{
-			tempFolder=getStringArgument(argc,argv,"-tempfolder");
+			tempFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-tempfolder");
 		}
 		else
 		{
 			tempFolder = currentFolder;
 		}
 
-		setCurrentDirectory(workingFolder);
+		SHAREDvarsClass().setCurrentDirectory(workingFolder);
 
-		if(argumentExists(argc,argv,"-version"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3j1a 14-January-2017" << endl;
+			cout << "OpenRT.exe - Project Version: 3j1b 14-January-2017" << endl;
 			exit(1);
 		}
 	}
@@ -281,27 +277,27 @@ int main(const int argc,const char* *argv)
 		exit(1);
 	}
 
-	//setLightingMode(LIGHTING_MODE_BASIC);
+	//RTsceneClass().setLightingMode(LIGHTING_MODE_BASIC);
 
 	if(useLDRfile)
 	{
 		LDreference* initialReferenceInSceneFile = new LDreference();
 		LDreference* topLevelReferenceInSceneFile = new LDreference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
-		if(!parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
+		if(!LDparserClass().parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
 		{//file does not exist
 			cout << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;
 			exit(0);
 		}
 
-		setCurrentDirectory(tempFolder);
+		SHAREDvarsClass().setCurrentDirectory(tempFolder);
 
-		write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
-		write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);
+		LDreferenceManipulationClass().write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
+		RTreferenceManipulationClass().write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);
 
 	}
 
-	setLightingMode(lightingMode);
-	rayTraceScene(topLevelSceneFileNameCollapsedForRayTracing, imageFileName, true, false, NULL, NULL, NULL, NULL);
+	RTsceneClass().setLightingMode(lightingMode);
+	RTsceneClass().rayTraceScene(topLevelSceneFileNameCollapsedForRayTracing, imageFileName, true, false, NULL, NULL, NULL, NULL);
 
 	return (int)result;
 }

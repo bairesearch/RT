@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  *
  *******************************************************************************/
 
@@ -69,7 +69,7 @@ const LDreference* firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
-bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings)
+bool LDopenglClass::initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings)
 {
 	bool result = true;
 
@@ -97,7 +97,7 @@ bool initiateOpenGL(const int width, const int height, const int windowPositionX
 
 }
 
-bool exitOpenGL()
+bool LDopenglClass::exitOpenGL()
 {
 	bool result = true;
 
@@ -130,14 +130,14 @@ void setViewPort(double width, double height, double xCentre, double yCentre)
 }
 */
 
-void setViewPort2Dortho(const double left, const double right, const double bottom, const double top)
+void LDopenglClass::setViewPort2Dortho(const double left, const double right, const double bottom, const double top)
 {
 	glMatrixMode(GL_PROJECTION);		//shouldnt this be modelview???
 	glLoadIdentity();
 	gluOrtho2D(left, right, bottom, top);
 }
 
-void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth)
+void LDopenglClass::setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -150,20 +150,20 @@ void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const 
 
 }
 
-void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
+void LDopenglClass::setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	double viewportWidth = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
-	double viewportHeight = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
+	double viewportWidth = this->maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
+	double viewportHeight = this->maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
 	glOrtho(-(viewportWidth)/2.0, (viewportWidth)/2.0, -(viewportHeight)/2.0, (viewportHeight)/2.0, -100, 100);
 
 	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewAtFacingPoly->x, viewAtFacingPoly->y, viewAtFacingPoly->z, viewUpFacingPoly->x, viewUpFacingPoly->y, viewUpFacingPoly->z);
 
 }
 
-double maxDouble2(double float1, const double float2)
+double LDopenglClass::maxDouble2(double float1, const double float2)
 {
 	if(float1 > float2)
 	{
@@ -175,7 +175,7 @@ double maxDouble2(double float1, const double float2)
 	}
 }
 
-void setViewPort3Dbasic()
+void LDopenglClass::setViewPort3Dbasic()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -183,7 +183,7 @@ void setViewPort3Dbasic()
 
 }
 
-void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward)
+void LDopenglClass::setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -203,7 +203,7 @@ void setViewPort3Dortho(const double left, const double right, const double bott
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations)
+void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -242,12 +242,12 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* first
 
 	//glutPostRedisplay();	CHECK THIS - may be required here instead????
 
-	writeScreenToRGBMap(width, height, rgbMap);
+	this->writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations)
+void LDopenglClass::drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -311,7 +311,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 			if(currentReference->absoluteColour < 255)
 			{
 				colour col;
-				convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+				LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 				r = col.r;
 				g = col.g;
 				b = col.b;
@@ -370,7 +370,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 		{
 			cout << "\t\t\t\t start: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
-		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = getTimeAsLong();
+		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = SHAREDvarsClass().getTimeAsLong();
 	}
 
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
@@ -394,7 +394,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 
 		/*
 		glTranslatef(opengl2DmatrixTransformation5aTranslationFactorX, opengl2DmatrixTransformation5aTranslationFactorY, 0.0);
-		shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
+		LDopenglClass().shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
 		glScalef(opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor);
 		glRotatef(opengl2DmatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
 		glRotatef(opengl2DmatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
@@ -404,7 +404,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 	#else
 		glTranslatef(opengl2DmatrixTransformation5aTranslationFactorX, opengl2DmatrixTransformation5aTranslationFactorY, 0.0);
 
-		shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
+		LDopenglClass().shearMatrix(opengl2DmatrixTransformation4aShearFactor, 0.0);
 		glScalef(opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor, opengl2DmatrixTransformation3aScaleFactor);
 		glRotatef(opengl2DmatrixTransformation2iiRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
 		glRotatef(opengl2DmatrixTransformation2iRotationFactor/PI*180.0, 0.0, 0.0, 1.0f);
@@ -430,7 +430,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 			if(currentReference->absoluteColour < 255)
 			{
 				colour col;
-				convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+				LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 				r = col.r;
 				g = col.g;
 				b = col.b;
@@ -486,7 +486,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
 		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
-		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = getTimeAsLong();
+		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = SHAREDvarsClass().getTimeAsLong();
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
@@ -521,7 +521,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 		if(currentReference->absoluteColour < 255)
 		{
 			colour col;
-			convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+			LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 			r = col.r;
 			g = col.g;
 			b = col.b;
@@ -562,7 +562,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 		{
 			cout << "\t\t\t\t start: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
-		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = getTimeAsLong();
+		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = SHAREDvarsClass().getTimeAsLong();
 	}
 
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
@@ -611,7 +611,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 		if(currentReference->absoluteColour < 255)
 		{
 			colour col;
-			convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+			LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 			r = col.r;
 			g = col.g;
 			b = col.b;
@@ -649,7 +649,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
 		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
-		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = getTimeAsLong();
+		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = SHAREDvarsClass().getTimeAsLong();
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
@@ -667,7 +667,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap)
+void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -675,7 +675,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* 
 
 	glutMainLoopEvent();
 
-	writeScreenToRGBMap(width, height, rgbMap);
+	this->writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
 }
@@ -722,7 +722,7 @@ static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firs
 			if(currentReference->absoluteColour < 255)
 			{
 				colour col;
-				convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+				LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 				r = col.r;
 				g = col.g;
 				b = col.b;
@@ -816,7 +816,7 @@ static void draw3DprimitivesReferenceListToOpenGL()
 		if(currentReference->absoluteColour < 255)
 		{
 			colour col;
-			convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+			LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 			r = col.r;
 			g = col.g;
 			b = col.b;
@@ -895,7 +895,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 			if(currentReference->absoluteColour < 255)
 			{
 				colour col;
-				convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
+				LDreferenceClassClass().convertLdrawColourToDatFileRGB(currentReference->absoluteColour, &col);
 				r = col.r;
 				g = col.g;
 				b = col.b;
@@ -974,7 +974,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 
 
-void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap)
+void LDopenglClass::writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap)
 {
 	const int bytesPerPixel = 3;	// RGB
 	const int imageSizeInBytes = bytesPerPixel* width* height;
@@ -1028,7 +1028,7 @@ void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap)
 
 }
 
-void writeScreenToDepthMap(int width, const int height, double* depthMap)
+void LDopenglClass::writeScreenToDepthMap(int width, const int height, double* depthMap)
 {
 	GLfloat* pixels = new GLfloat[width* height];
 	//GLuint* pixels = new GLuint[width* height];
@@ -1089,7 +1089,7 @@ void writeScreenToDepthMap(int width, const int height, double* depthMap)
 
 }
 
-void updateScreen()
+void LDopenglClass::updateScreen()
 {
 	glutPostRedisplay();
 }
@@ -1105,7 +1105,7 @@ void updateScreen()
 //        m1, m2, m3, m4 represent m11, m21, m31, m41
 //        m5, m6, m7, m8 represent m12, m22, m32, m42
 //        etc...
-void shearMatrix(const float shearX, const float shearY)
+void LDopenglClass::shearMatrix(const float shearX, const float shearY)
 {
 	float m[] = {
 		1.0, shearY, 0.0, 0.0,
