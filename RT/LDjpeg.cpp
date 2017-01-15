@@ -26,25 +26,18 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  *
  *******************************************************************************/
 
-
-
-
-
-#include <stdio.h>
-
+#include "LDjpeg.h"
 #include "jpeglib.h"
-
-
 /*
  * <setjmp.h> is used for the optional error recovery mechanism
  */
 #include <setjmp.h>
 #include "jmemsys.h"
-#include "LDjpeg.h"
+
 
 struct jvirt_barray_control {
 	JBLOCKARRAY mem_buffer;	/* => the in-memory buffer*/

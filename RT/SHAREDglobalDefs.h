@@ -26,24 +26,14 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
 
+
 #ifndef HEADER_SHARED_GLOBAL_DEFS
 #define HEADER_SHARED_GLOBAL_DEFS
-
-//required for string and atof
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <time.h>
-#include <math.h>
-using namespace std;
-
 
 	/**********
 	SOURCE PROJECT VARIABLES;
@@ -85,21 +75,6 @@ using namespace std;
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
 	//#include <windows.h>	//incompatible with LDjpeg.h (must only include windows.h when need to)
 #endif
-
-
-
-#define EXE_FOLDER_PATH_MAX_LENGTH (1000)
-#define SHARED_SUPPORT_DEPRECIATED_CODE		//required for older projects
-#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-extern char* exeFolderCharStar;
-extern char* workingFolderCharStar;
-extern char* tempFolderCharStar;
-#endif
-extern string exeFolder;
-extern string workingFolder;
-extern string tempFolder;
-
-
 
 	/**********
 	COMPILATION TYPE DEPENDENT VARIABLES;
@@ -205,6 +180,23 @@ extern string tempFolder;
 #endif
 
 
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <vector>
+#ifdef USE_GIA
+#include <unordered_map>	//requires C++11
+#endif
+#include <map>
+using namespace std;
+
+
 
 	//ANN, LRRC, + OR;
 //Test variables (need optimisation)
@@ -252,6 +244,19 @@ extern string tempFolder;
 #define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//std::string::npos
 #define BOOL_IRRELEVANT (false)
 #define INT_IRRELEVANT (0)
+
+
+
+#define EXE_FOLDER_PATH_MAX_LENGTH (1000)
+#define SHARED_SUPPORT_DEPRECIATED_CODE		//required for older projects
+#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
+extern char* exeFolderCharStar;
+extern char* workingFolderCharStar;
+extern char* tempFolderCharStar;
+#endif
+extern string exeFolder;
+extern string workingFolder;
+extern string tempFolder;
 
 
 #endif

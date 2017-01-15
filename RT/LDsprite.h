@@ -26,10 +26,11 @@
  * File Name: LDsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
+
 
 #ifndef HEADER_LD_SPRITE
 #define HEADER_LD_SPRITE

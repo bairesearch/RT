@@ -26,33 +26,21 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  *
  *******************************************************************************/
 
 #include "SHAREDvars.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <string.h>
-#include <iostream>
-#include <fstream>
 #ifdef LINUX
 #include <sys/time.h>
 #else
 #include <time.h>
 #include <windows.h>
 #endif
-#include <math.h>
-#include <vector>
 
 //for file i/o;
 #ifdef LINUX
-	//#include <direct.h>
-	//#include <unistd.h>
-	//#include <stdio.h>
-	//#include <dir.h>
 	#include <sys/stat.h>	//is this needed?
 	#include <sys/types.h>	//is this needed?
 	#include <unistd.h>	//added for Ubuntu 13.1 file i/o

@@ -26,10 +26,9 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  *
  *******************************************************************************/
-
 
 
 /*LDreferenceClass.cpp: Defines a class for references to submodels/parts/units within a scene file*/
@@ -43,15 +42,6 @@
 #ifdef USE_LRRC
 #include "LRRCmodelClass.h"
 #endif
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <time.h>
-#include <math.h>
-using namespace std;
 
 #ifdef USE_RT
 	#define USE_LD_ABSOLUTE_COLOUR

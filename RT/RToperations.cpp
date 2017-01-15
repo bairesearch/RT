@@ -26,19 +26,12 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  *
  *******************************************************************************/
 
 
-
 #include "RToperations.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
-
 
 void createAdvancedVector(advancedVec* vec)
 {
