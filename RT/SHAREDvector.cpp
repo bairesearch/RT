@@ -23,7 +23,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 25-Sept-2012
  *
  *******************************************************************************/
 
@@ -42,18 +42,6 @@ using namespace std;
 
 
 
-
-/*
-void calculateAreaOfQuad2D(vec * pt1, vec * pt2, vec * pt3, vec * pt4)
-{
-	return calculateAreaOfQuadAssumePointsAreInOrder(pt1, pt2, pt3, pt4);
-}
-
-double calculateAreaOfQuad2DAssumePointsAreInOrder(vec * pt1, vec * pt2, vec * pt3, vec * pt4)
-{
-	double area = (1/2)*((x1*y2 - x2*y1) + (x2*y3 - x3*y2) + (x3y4 - x4y3));
-}
-*/
 
 void initialiseVector(vec * vect)
 {
@@ -79,62 +67,6 @@ void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * 
 	rotationVector->z = atan2(deformationMatrix->b.z, deformationMatrix->c.z);
 }
 
-/*
-void calculateRotationVectorFromVector(vec* vector, vec * rotationVector)
-{
-	//http://planning.cs.uiuc.edu/node103.html
-	rotationVector->x = atan2(vector->y, vector->z);
-	rotationVector->y = atan2(vector->x * cos(rotationVector->x), vector->z);
-	rotationVector->z = atan2(cos(rotationVector->x), sin(rotationVector->x)*sin(rotationVector->y));
-}
-
-
-//from http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/wwh-calculating-a-rotation-matrix-based-on-lo-r665
-void generateXYZRotationMatrix(vec * vector, mat * rotationMatrix)
-{
-	// Get our direction vector (the Z vector component of the matrix)
-	// and make sure it's normalized into a unit vector
-
-	vec zAxis;
-	zAxis.x = vector->x;
-	zAxis.y = vector->y;
-	zAxis.z = vector->z;
-	normaliseVector(&zAxis);
-
-	// Build the Y vector of the matrix (handle the degenerate case
-	// in the way that 3DS does) -- This is not the TRUE vector, only
-	// a reference vector.
-
-	vec yAxis;
-	if (!zAxis.x && !zAxis.z)
-	{
-		yAxis.x = -(zAxis.y);
-		yAxis.y = 0.0;
-		yAxis.z = 0.0;
-	}
-	else
-	{
-		yAxis.x = 0.0;
-		yAxis.y = 1.0;
-		yAxis.z = 0.0;
-	}
-
-	// Build the X axis vector based on the two existing vectors
-	vec xAxis;
-	crossProduct(&yAxis, &zAxis, &xAxis);
-	normaliseVector(&xAxis);
-
-	// Correct the Y reference vector
-	crossProduct(&xAxis, &zAxis, &yAxis);
-	normaliseVector(&yAxis);
-	yAxis.x = -(yAxis.x);
-	yAxis.y = -(yAxis.y);
-	yAxis.z = -(yAxis.z);
-
-	makeMatrix(&xAxis, &yAxis, &zAxis, rotationMatrix);
-
-}
-*/
 
 //from; http://stackoverflow.com/questions/349050/calculating-a-lookat-matrix
 void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix)
@@ -412,7 +344,6 @@ void multiplyVectorByMatrix(vec * vecNew, vec * vecToMultiply, mat * matrix)
 	vecNew->x = matrix->a.x*vecToMultiply->x + matrix->b.x*vecToMultiply->y +  matrix->c.x*vecToMultiply->z;
 	vecNew->y = matrix->a.y*vecToMultiply->x + matrix->b.y*vecToMultiply->y +  matrix->c.y*vecToMultiply->z;
 	vecNew->z = matrix->a.z*vecToMultiply->x + matrix->b.z*vecToMultiply->y +  matrix->c.z*vecToMultiply->z;
-
 }
 
 
@@ -631,49 +562,8 @@ void copyMatricies(mat * matNew, mat * matToCopy)
 	copyVectors(&(matNew->c), &(matToCopy->c));
 }
 
-/*
 void multiplyMatricies(mat * matNew, mat * mat1, mat * mat2)
 {
-	matNew->a.x = (mat1->a.x * mat2->a.x) + (mat1->b.x * mat2->a.y) + (mat1->c.x * mat2->a.z);
-	matNew->a.y = (mat1->a.y * mat2->a.x) + (mat1->b.y * mat2->a.y) + (mat1->c.y * mat2->a.z);
-	matNew->a.z = (mat1->a.z * mat2->a.x) + (mat1->b.z * mat2->a.y) + (mat1->c.z * mat2->a.z);
-
-	matNew->b.x = (mat1->a.x * mat2->b.x) + (mat1->b.x * mat2->b.y) + (mat1->c.x * mat2->b.z);
-	matNew->b.y = (mat1->a.y * mat2->b.x) + (mat1->b.y * mat2->b.y) + (mat1->c.y * mat2->b.z);
-	matNew->b.z = (mat1->a.z * mat2->b.x) + (mat1->b.z * mat2->b.y) + (mat1->c.z * mat2->b.z);
-
-	matNew->c.x = (mat1->a.x * mat2->c.x) + (mat1->b.x * mat2->c.y) + (mat1->c.x * mat2->c.z);
-	matNew->c.y = (mat1->a.y * mat2->c.x) + (mat1->b.y * mat2->c.y) + (mat1->c.y * mat2->c.z);
-	matNew->c.z = (mat1->a.z * mat2->c.x) + (mat1->b.z * mat2->c.y) + (mat1->c.z * mat2->c.z);
-
-}*/
-
-void multiplyMatricies(mat * matNew, mat * mat1, mat * mat2)
-{
-	/*
-	cout << "mat1: " << endl;
-	cout << mat1->a.x << endl;
-	cout << mat1->b.x << endl;
-	cout << mat1->c.x << endl;
-	cout << mat1->a.y << endl;
-	cout << mat1->b.y << endl;
-	cout << mat1->c.y << endl;
-	cout << mat1->a.z << endl;
-	cout << mat1->b.z << endl;
-	cout << mat1->c.z << endl;
-
-	cout << "mat2: " << endl;
-	cout << mat2->a.x << endl;
-	cout << mat2->b.x << endl;
-	cout << mat2->c.x << endl;
-	cout << mat2->a.y << endl;
-	cout << mat2->b.y << endl;
-	cout << mat2->c.y << endl;
-	cout << mat2->a.z << endl;
-	cout << mat2->b.z << endl;
-	cout << mat2->c.z << endl;
-	*/
-
 	matNew->a.x = mat1->a.x*mat2->a.x + mat1->b.x*mat2->a.y +  mat1->c.x*mat2->a.z;
 	matNew->b.x = mat1->a.x*mat2->b.x + mat1->b.x*mat2->b.y +  mat1->c.x*mat2->b.z;
 	matNew->c.x = mat1->a.x*mat2->c.x + mat1->b.x*mat2->c.y +  mat1->c.x*mat2->c.z;
@@ -868,31 +758,6 @@ void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadia
 //NB uses 0 is the centre of the quad drawn by the 4 points. a, b, c, d.
 void find2DIntersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound)	//NB an interception may be a line and not a point
 {
-	/*
-	double distanceab;
-	double distancebc;
-	double distancecd;
-	double distanceda;
-
-	double distanceac;
-	double distancebd;
-
-	//cout << "DEBUG: here1" << endl;
-
-	distanceab = calcDistanceBetweenTwoPoints2D(ax, ay, bx, by);
-	distancebc = calcDistanceBetweenTwoPoints2D(bx, by, cx, cy);
-	distancecd = calcDistanceBetweenTwoPoints2D(cx, cy, dx, dy);
-	distanceda = calcDistanceBetweenTwoPoints2D(dx, dy, ax, ay);
-
-
-	distanceac = calcDistanceBetweenTwoPoints2D(ax, ay, cx, cy);
-	distancebd = calcDistanceBetweenTwoPoints2D(bx, by, dx, dy);
-
-	bool interceptionPointCannotBeFound = false;
-	*/
-
-	//safe guard **
-
 	//try for analytical solution
 
 	double mEdge;
@@ -941,32 +806,9 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 		if(find2DIntersectionPointOfTwoLines(mEdge, iEdge, mOptionalLine, iOptionalLine, intersectionX, intersectionY))
 		{
 			*interceptionPointFound = true;
-
-			/*
-			if(totalNumOptionalLines == 12)
-			{
-				cout << "\nDEBUG: "<< endl;
-				cout << "totalNumOptionalLines = " << totalNumOptionalLines << endl;
-				cout << "\t ax = " << ax << endl;
-				cout << "\t ay = " << ay << endl;
-				cout << "\t bx = " << bx << endl;
-				cout << "\t by = " << by << endl;
-				cout << "\t cx = " << cx << endl;
-				cout << "\t cy = " << cy << endl;
-				cout << "\t dx = " << dx << endl;
-				cout << "\t dy = " << dy << endl;
-				cout << "\t mEdge = " << mEdge << endl;
-				cout << "\t iEdge = " << iEdge << endl;
-				cout << "\t mOptionalLine = " << mOptionalLine << endl;
-				cout << "\t iOptionalLine = " << iOptionalLine << endl;
-				cout << "\t intersectionX = " << *intersectionX << endl;
-				cout << "\t intersectionY = " << *intersectionY << endl;
-			}
-			*/
 		}
 		else
 		{//edge and optional lines are parallel as their gradients are equal, therefore no intersection occurs unless their y intercepts are equal also
-			//cout << " here " << endl;
 
 		#ifdef USE_RT
 			if(compareDoublesRelaxed(iEdge, iOptionalLine))
@@ -976,14 +818,6 @@ void find2DIntersectionPoint(double ax, double ay, double bx, double by, double 
 			{
 				//return from function that there is no precise interception point on this plane (Eg xy plane).
 				*interceptionFound = true;
-
-				/*
-				#ifdef USE_RT
-					*interceptionFound = false;
-				#else
-					*interceptionFound = true;
-				#endif
-				*/
 			}
 		}
 	}
@@ -1246,27 +1080,6 @@ bool twoPointsAreTheSame2D(double x1, double y1, double x2, double y2)
 	return result;
 }
 
-/*
-#ifndef	USE_LRRC
-
-#define DOUBLE_MIN_PRECISION 0.00001
-
-bool compareDoubles(double a, double b)
-{
-	bool result;
-	if((a < (b+DOUBLE_MIN_PRECISION)) && (a > (b-DOUBLE_MIN_PRECISION)))
-	{
-		result = true;
-	}
-	else
-	{
-		result = false;
-	}
-
-	return result;
-}
-#endif
-*/
 
 #ifdef USE_RT
 
@@ -1319,64 +1132,5 @@ bool twoPointsAreTheSame2DRelaxed(double x1, double y1, double x2, double y2)
 }
 
 #endif
-
-
-
-
-
-
-
-/*
-double getMatrixValue(mat* matx, int matrixCellABC, int vectorCellXYZ)
-{
-	if(matrixCellABC == MATRIX_VEC_A)
-	{
-		if(vectorCellXYZ == VECTOR_VAL_X)
-		{
-			return matx->a.x;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Y)
-		{
-			return matx->a.y;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Z)
-		{
-			return matx->a.z;
-		}
-	}
-	else if(matrixCellABC == MATRIX_VEC_B)
-	{
-		if(vectorCellXYZ == VECTOR_VAL_X)
-		{
-			return matx->b.x;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Y)
-		{
-			return matx->b.y;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Z)
-		{
-			return matx->b.z;
-		}
-	}
-	else if(matrixCellABC == MATRIX_VEC_C)
-	{
-		if(vectorCellXYZ == VECTOR_VAL_X)
-		{
-			return matx->c.x;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Y)
-		{
-			return matx->c.y;
-		}
-		else if(vectorCellXYZ == VECTOR_VAL_Z)
-		{
-			return matx->c.z;
-		}
-	}
-	return 0;
-}
-*/
-
 
 

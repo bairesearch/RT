@@ -23,7 +23,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -120,25 +120,16 @@ Reference::Reference(void)
 	type = REFERENCE_TYPE_UNDEFINED;
 
 	/*Additional values used with recursive parser*/
-
 	firstReferenceWithinSubModel = NULL;
-
-
-	/*cout << "\nA Reference object was Constructed\n" << endl;*/
 }
 
 Reference::~Reference()
 {
-	//int i = 0;
-
 	Reference* n = this->next;
 	Reference* nn = NULL;
 	while(n != NULL)
 	{
 		nn = n->next;
-
-		//cout << "deleteing reference i=" << i << endl;
-		//i++;
 
 		if(n->firstReferenceWithinSubModel != NULL)
 		{
@@ -155,11 +146,8 @@ Reference::~Reference()
 		delete this->firstReferenceWithinSubModel;
 	}
 
-
 	nn = NULL;
 	n = NULL;
-
-
 }
 
 
@@ -260,9 +248,6 @@ Reference::Reference(string referenceName, int referenceColour, bool createNewSu
 	{
 		firstReferenceWithinSubModel = NULL;
 	}
-
-
-	/*cout << "\nA Reference object was Constructed\n" << endl;*/
 }
 
 
@@ -362,10 +347,6 @@ Reference::Reference(bool createNewSubmodel)
 	{
 		firstReferenceWithinSubModel = NULL;
 	}
-
-
-
-	/*cout << "\nA Reference object was Constructed\n" << endl;*/
 }
 
 void copyReferencePosition(Reference * r, Reference * referenceToCopy)

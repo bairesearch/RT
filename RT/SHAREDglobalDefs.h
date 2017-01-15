@@ -23,7 +23,7 @@
  * File Name: SHAREDglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12aii 31-July-2012
+ * Project Version: 3a13a 25-Sept-2012
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -48,9 +48,9 @@ using namespace std;
 	***********/
 
 	//current/active tests;
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
-//#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
+#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
 //#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
@@ -219,6 +219,7 @@ extern char * tempFolderCharStar;
 #define CHAR_FULLSTOP '.'
 #define CHAR_SEMICOLON ';'
 #define CHAR_COLON ':'
+#define CHAR_QUESTIONMARK '?'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"

@@ -23,7 +23,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -124,75 +124,8 @@ unsigned char* calc_pixel_address(pixmap *pm, int x, int y)
 void placepoint_ppm(pixmap *pm, int x, int y, int r, int g, int b)
 {
 	int position = y*(pm->wide)*3+x*3;
-	/*
-	unsigned char *position = calc_pixel_address(pm, x, y);
-
-
-	int position = y*(pm->wide)*3+x*3;
-	if(position > (pm->wide*pm->high*3))
-	{
-		printf("the point given does not lie on the pixmap");
-		exit(0);
-	}*/
 
 	pm->pix[(int)position] = r;
 	pm->pix[(int)position+1] = g;
 	pm->pix[(int)position+2] = b;
 }
-
-/*
-pixmap
-*load_ppm(char *fname){
-  FILE *f;
-  int high, wide;
-  pixmap *npm;
-  char c;
-
-  if (fname != NULL)
-    f = fopen(fname, "rb");
-  else
-    f = stdin;
-  if(!f){
-   	printf("load_ppm error");
-	exit(0);
-    return NULL;
-  }
-
-  fscanf(f, "P6 %c", &c);
-  if(c == '#'){
-   while(fgetc(f) != '\n') ;
-  }else{
-    ungetc(c, f);
-  }
-
-  if(fscanf(f, "%i %i 255", &wide, &high) != 2){
-   	printf("load_ppm error");
-	exit(0);
-    return NULL;
-  }
-
-  fgetc(f);
-
-  npm = new_pixmap(wide, high);
-
-  if(!npm){
-   	printf("load_ppm error");
-	exit(0);
-    free_pixmap(npm);
-    fclose(f);
-    return NULL;
-  }
-
-  if(fread(npm->pix, (long)wide*high*3,1, f) != 1){
-  	printf("load_ppm error");
-	exit(0);
-    free_pixmap(npm);
-    fclose(f);
-    return NULL;
-  }
-
-  fclose(f);
-  return npm;
-}
-*/
-

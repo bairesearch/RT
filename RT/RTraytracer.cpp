@@ -23,26 +23,16 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
+ * Description: contains methods to raytrace a primitive through a given point (x, y) 
+ *              on the screen with the given scene_info structure and accompanying 
+ *              perspective information.
  *
  *******************************************************************************/
 
 
-/*
-raytracer.c
-
-@author Richard Baxter
-@version 9-10-03 1:54pm
-
-[Assignment 3 MULT3004]
-
-Raytracer.c contains methods to raytrace a brick
-through a given point (x, y) on the screen with the given
-scene_info structure and accompanying perspective information.
-*/
 
 #include <stdlib.h>
-//#include <stdio.h>
 #include <math.h>
 #include "RTraytracer.h"
 #include "RTpixelMaps.h"	//for max depth val
@@ -96,11 +86,6 @@ scene_info::~scene_info(void)
 
 void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 {
-	//printf("\nasdsdf\n");
-
-	//printf("\n si->pi.type = %d", si->pi.type);
-	//printf("\n si->pi.col = %d", si->pi.col);
-
 	advanced_mat finalReverseMatrix;
 	advanced_mat relevantFinalReverseMatrix;
 
@@ -115,10 +100,6 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	advanced_mat objectReverseMatrix;
 
 	/*translation and scaling is done before rotation*/
-	/*
-	object obj;
-	*/
-
 	double scalex;
 	double scaley;
 	double scalez;
@@ -150,24 +131,12 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	vec* p0dash = &p0dash_structure;
 	vec* p1dash = &p1dash_structure;
 
-	/*
-	input parameters
-
-	type = brick, or plate ,or baseplate, or tile.
-	width = 1, 2, 4 ...
-	length = 1, 2, 4 ...
-	(if plate/brick and w > 6 && l > 6 ... fails)
-	(if tile and w < 8 || l < 8 ... fails)
-	(if anything =  3, 5, 7... fails)
-	*/
-
-
 
 	/*creating eye and direction*/
 
-	/*NB p0 = &(vi->eye);*/
+	/*p0 = &(vi->eye);
+	  p1 = [uTilda vTilda nTilda][uvn] + eye*/	
 	*p0 = vi->eye;
-	/*p1 = [uTilda vTilda nTilda][uvn] + eye*/
 	multMatrixByVector(tildaMat, uvn, tmp);
 	addVectorsRT(tmp, p0, p1);
 
@@ -268,8 +237,7 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	else if(si->pi.type == SPHERE)
 	{
 		calculateSphere(p0dash, p1dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
-		//calculateSphere(si, p0dash, p1dash, &(si->standardMatrix), &relevantFinalReverseMatrix);
-			//do: proper order of tInOutDash in calculateSphere [ie split up into calc then draw]
+			//do: ?proper order of tInOutDash in calculateSphere [ie split up into calc then draw]
 	}
 	else if(si->pi.type == PRIM_QUAD)
 	{
@@ -293,7 +261,7 @@ void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn)
 	/*add tins, touts to tree...*/
 
 	if(tInOutDash[0] < 0)
-	{//????
+	{
 		si -> tIn = RT_RAYTRACE_NO_HIT_DEPTH_T;
 		si -> tOut = 0.0;
 		createVector(&p);
@@ -378,27 +346,15 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	vec* tmp2 = &tmp2_structure;
 	vec* tmp3 = &tmp3_structure;
 
-
-
 	double tempTInOut[2];
 
-
 	/*defining basic cube dimensions*/
-	/*
-	double CUBEXBOUNDARY1 = ZERO;
-	double CUBEXBOUNDARY2 = obj->trans.x + obj->scale.x;
-	double CUBEYBOUNDARY1 = ZERO;
-	double CUBEYBOUNDARY2 = obj->trans.y + obj->scale.y;
-	double CUBEZBOUNDARY1 = ZERO;
-	double CUBEZBOUNDARY2 = obj->trans.z + obj->scale.z;
-	*/
 	double CUBEXBOUNDARY1 = ZERO;
 	double CUBEXBOUNDARY2 = ONE;
 	double CUBEYBOUNDARY1 = ZERO;
 	double CUBEYBOUNDARY2 = ONE;
 	double CUBEZBOUNDARY1 = ZERO;
 	double CUBEZBOUNDARY2 = ONE;
-
 
 		/*used for normal calculations*/
 	/*defining round offs for cube faces. h=high, l=low*/
@@ -414,7 +370,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	double CUBEZBOUNDARY1l = CUBEZBOUNDARY1 - ROUND_OFF;
 	double CUBEZBOUNDARY2h = CUBEZBOUNDARY2 + ROUND_OFF;
 	double CUBEZBOUNDARY2l = CUBEZBOUNDARY2 - ROUND_OFF;
-
 
 	/*setting t calcluation values. set default to hit*/
 	double denominator;
@@ -445,7 +400,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	sub in x=0, x=1 to find t in/out x values
 	sub in y=0, y=1 to find t in/out y values
 	sub in z=0, z=1 to find t in/out z values
-
 
 	Note the denominator checks:
 	if x1 - x0 is 0, the ray misses the interesection and
@@ -727,7 +681,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 		if so, the ray is designated a miss*/
 
 
-
 	#ifndef RT_METHOD2
 
 		/* - requires reversal for some reason, must be some defintion reversal earlier
@@ -772,8 +725,8 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 		//testonly2;
 		int positionIn = -1;
 		int positionOut = -1;
-		positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 3);		//findPositionOfGreatestValueWhichHits		//issue found here
-		positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 3);		//findPositionOfSmallestValueWhichHits	//issue found here
+		positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 3);		//findPositionOfGreatestValueWhichHits: issue found here?
+		positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 3);		//findPositionOfSmallestValueWhichHits: issue found here?
 		tin = tins[positionIn];
 		tout = touts[positionOut];
 
@@ -798,9 +751,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	}
 
 
-
-
-
 		//these operations may only be relevant for a cube; not sure
 	if(tempTInOut[0] > 0)
 	{
@@ -808,7 +758,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 		tInOut[0] = tempTInOut[0];
 		tInOut[1] = tempTInOut[1];
 		*relevantFinalReverseMatrix = *finalReverseMatrix;
-
 	}
 	else
 	{
@@ -824,7 +773,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	if(tInOut[0] > 0) 		//condition added as test2
 	{
 	#endif
-
 
 		/*added recently, the point is used to calculate lighting*/
 		negativeVector(p0, tmp);
@@ -863,9 +811,6 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat * 
 	#ifndef RT_METHOD2
 	}
 	#endif
-
-
-
 }
 
 
@@ -1005,7 +950,6 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 
 	/*tops of cylinder*/
 
-
 	denominator = (p1->z) - (p0->z);
 	if(denominator == 0)
 	{/*hit34 still FALSE*/
@@ -1071,23 +1015,23 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 	//printf("zero = %d", ZERO);
 
 
-	/*original
-	double tin = findSmallestValueAdvanced(tTopBottom[0], tSide[0]);			//issue found here
+	/*debugging original;
+	double tin = findSmallestValueAdvanced(tTopBottom[0], tSide[0]);		//issue found here
 	double tout = findGreatestValueAdvanced(tTopBottom[1], tSide[1]);		//issue found here
 	*/
 
-	/*new
-	double tin = findGreatestValueAdvanced(tTopBottom[0], tSide[0]);			//issue found here
+	/*debugging new;
+	double tin = findGreatestValueAdvanced(tTopBottom[0], tSide[0]);		//issue found here
 	double tout = findSmallestValueAdvanced(tTopBottom[1], tSide[1]);		//issue found here
 	*/
 
-	//testonly1;
+	//debugging testonly1;
 	/*
 	double tin = findGreatestValue(tTopBottom[0], tSide[0]);			//issue found here
 	double tout = findSmallestValue(tTopBottom[1], tSide[1]);		//issue found here
 	*/
 
-	/*
+	/*debugging:
 	//if(tin < 0)
 	//{
 	//	tempTInOut[0] = -1;
@@ -1112,9 +1056,7 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 	*/
 
 
-
 	//METHOD2
-
 
 	double tins[2];
 	double touts[2];
@@ -1130,19 +1072,18 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 	toutsHit[0] = tTopBottomHit[1];
 	toutsHit[1] = tSideHit[1];
 
-	//original
-	//positionIn = findPositionOfGreatestValueAdvanced(tins, 2);			//issue found here
+	//original;
+	//positionIn = findPositionOfGreatestValueAdvanced(tins, 2);		//issue found here
 	//positionOut = findPositionOfSmallestValueAdvanced(touts, 2);		//issue found here
-
 
 	//testonly2;
 	positionIn = -1;
 	positionOut = -1;
-	positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 2);	//findPositionOfGreatestValueWhichHits		//issue found here
+	positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 2);		//findPositionOfGreatestValueWhichHits		//issue found here
 	positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 2);		//findPositionOfSmallestValueWhichHits	//issue found here
 
 
-	//	if((positionIn < 0) || (positionOut < 0))	why doesnt thiswork??
+	//if((positionIn < 0) || (positionOut < 0))	why doesnt thiswork??
 	if(positionIn < 0)
 	{
 		tempTInOut[0] = -1;
@@ -1150,9 +1091,9 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 	}
 	else
 	{
-			//added condition sept 08
-			tempTInOut[0] = tins[positionIn];
-			tempTInOut[1] = touts[positionOut];
+		//added condition sept 08
+		tempTInOut[0] = tins[positionIn];
+		tempTInOut[1] = touts[positionOut];
 		/*
 		if(tins[positionIn] < touts[positionOut])
 		{
@@ -1166,11 +1107,7 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 			tempTInOut[1] = -1;
 		}
 		*/
-
-
 	}
-
-
 
 
 		//these operations may only be relevant for a cube; not sure
@@ -1184,8 +1121,6 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_ma
 	{
 		/*no update*/
 	}
-
-
 
 
 
@@ -1317,9 +1252,6 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 	}
 	else
 	{
-		//printf("0");
-
-
 		double aftersqrted = sqrt(sqrted);
 		t[0] = (-b + aftersqrted) / denominator;
 		t[1] = (-b - aftersqrted) / denominator;
@@ -1327,16 +1259,12 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 		//printf("\n t[0] = %f", t[0]);
 		//printf("\n t[1] = %f", t[1]);
 
-
 		if(t[0] > t[1])	//make sure ins and outs are properly arranged
 		{
 			double tmpd = t[1];
 			t[1] = t[0];
 			t[0] = tmpd;
 		}
-
-
-
 
 		tHit[0] = TRUE;
 		tHit[1] = TRUE;
@@ -1350,10 +1278,9 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 		addVectorsRT(p1, tmp, tmp2);
 		multiplyVectorByScalarRT(tmp2, t[1], tmp3);
 		addVectorsRT(p0, tmp3, &pdash[1]);
-
 	}
 
-	/*
+	/*debugging:
 	double tins[1];
 	double touts[1];
 	tins[0] = t[0];
@@ -1365,14 +1292,14 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advanced_mat 
 	toutsHit[0] = tHit[1];
 
 	//original
-	//positionIn = findPositionOfGreatestValueAdvanced(tins, 2);			//issue found here
+	//positionIn = findPositionOfGreatestValueAdvanced(tins, 2);		//issue found here
 	//positionOut = findPositionOfSmallestValueAdvanced(touts, 2);		//issue found here
 
 
 	//testonly2;
 	positionIn = -1;
 	positionOut = -1;
-	positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 1);	//findPositionOfGreatestValueWhichHits		//issue found here
+	positionIn = findPositionOfSmallestValueWhichHits(tins, tinsHit, 1);		//findPositionOfGreatestValueWhichHits		//issue found here
 	positionOut = findPositionOfGreatestValueWhichHits(touts, toutsHit, 1);		//findPositionOfSmallestValueWhichHits	//issue found here
 
 	double tempTInOut[2];
@@ -1455,12 +1382,6 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * 
 
 	double quadAtInAndOut;
 
-	/*
-	cout << "pi->vertex3Position.x = " << pi->vertex3Position.x << endl;
-	cout << "pi->vertex3Position.y = " << pi->vertex3Position.y << endl;
-	cout << "pi->vertex3Position.z = " << pi->vertex3Position.z << endl;
-	*/
-
 	findIntersectLineWithQuad(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), &(pi->vertex4Position), p0, p1, &intersectionPointQuad, &intersectionPointNormalQuad, &quadAtInAndOut);
 
 
@@ -1495,52 +1416,6 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * 
 	}
 }
 
-/*
-void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
-{
-	vec tmp_structure;	//used for vector manipulation
-	vec tmp2_structure;	//used for vector manipulation
-	vec tmp3_structure;	//used for vector manipulation
-	vec* tmp = &tmp_structure;
-	vec* tmp2 = &tmp2_structure;
-	vec* tmp3 = &tmp3_structure;
-
-	vec intersectionPoint;	//NOT USED
-	vec intersectionPointNormal;
-	double tInAndOut;
-
-	findIntersectLineWithQuad(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), &(pi->vertex4Position), p0, p1, &intersectionPoint, &intersectionPointNormal, &tInAndOut);
-
-	if(tInAndOut > 0)
-	{
-		//printf("found quad intersection");
-		tInOut[0] = tInAndOut;
-		tInOut[1] = tInAndOut;
-		*relevantFinalReverseMatrix = *finalReverseMatrix;
-	}
-
-
-	//NORMAL CALCULATIONS
-
-	if(tInOut[0] > 0) 		//condition added as test2
-	{
-		vec pdash;
-
-		//added recently, the point is used to calculate lighting
-		negativeVector(p0, tmp);
-		addVectorsRT(p1, tmp, tmp2);
-		multiplyVectorByScalarRT(tmp2, tInOut[0], tmp3);
-		addVectorsRT(p0, tmp3, &pdash);
-
-
-		//set normal
-		copyVectorRT(norm, &intersectionPointNormal);
-		//negativeVector(norm, norm);	//???
-	}
-
-}
-*/
-
 void calculatePrimTri(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * norm, advanced_mat * finalReverseMatrix, advanced_mat * relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
@@ -1557,12 +1432,6 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec * n
 	int triAIntersectionFound = FALSE;
 
 	double triAtInAndOut;
-
-	/*
-	cout << "pi->vertex3Position.x = " << pi->vertex3Position.x << endl;
-	cout << "pi->vertex3Position.y = " << pi->vertex3Position.y << endl;
-	cout << "pi->vertex3Position.z = " << pi->vertex3Position.z << endl;
-	*/
 
 	if(findIntersectLineWithTri(&(pi->vertex1Position), &(pi->vertex2Position), &(pi->vertex3Position), p0, p1, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
 	{
@@ -1680,14 +1549,6 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec
 		quadCIntersectionFound = TRUE;
 	}
 
-	//....
-
-	/*
-	cout << "pi->vertex4Position.x = " << pi->vertex4Position.x << endl;
-	cout << "pi->vertex4Position.y = " << pi->vertex4Position.y << endl;
-	cout << "pi->vertex4Position.z = " << pi->vertex4Position.z << endl;
-	*/
-
 	double tInAndOut;
 	if(quadAIntersectionFound)
 	{
@@ -1727,7 +1588,6 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, piece_info * pi, vec
 		tInOut[1] = tInAndOut;
 		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
-
 
 	/*NORMAL CALCULATIONS*/
 
@@ -1923,8 +1783,6 @@ void drawPointNoLighting(scene_info* si, advanced_mat* reverseMatrix, double tIn
 	//added October 08
 void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, view_info * vi, vec * p, vec * uvn)
 {
-
-
 	//1. create tilda matrix
 
 		/*declaration of variables for tildaMatrix calculation*/

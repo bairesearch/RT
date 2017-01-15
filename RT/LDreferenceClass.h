@@ -23,7 +23,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -37,7 +37,6 @@
 
 #include "SHAREDglobalDefs.h"
 #include "SHAREDvars.h"
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -175,9 +174,7 @@ using namespace std;
 									/*NB there is 2 (integer) + 3 (fractional) + 9 (fractional) + 1 + 15 (spaces) = a total of 15 values are present*/
 #define DAT_FILE_REF_MATRIX_MAX_LENGTH  (DAT_FILE_DATA_VALUE_MAX_LENGTH*DAT_FILE_REF_NUM_OF_MATRIX_VALUES + DAT_FILE_REF_NUM_OF_MATRIX_VALUES)
 #define DAT_FILE_REF_POS_COORD_MAX_LENGTH (DAT_FILE_DATA_VALUE_MAX_LENGTH*DAT_FILE_REF_NUM_OF_POSITION_VALUES + DAT_FILE_REF_NUM_OF_POSITION_VALUES)
-#ifdef USE_LRRC
-	#define DAT_FILE_MAX_NUM_OF_REFERENCES (10000U)	//10 thousand references
-#elif defined USE_ANN
+#ifdef USE_ANN
 	#define DAT_FILE_MAX_NUM_OF_REFERENCES (1000000U)	//1 million references
 #else
 	#define DAT_FILE_MAX_NUM_OF_REFERENCES (100000U)	//100 thousand references
@@ -240,9 +237,6 @@ public:
 
 	/*Additional values used with recursive parser*/
 	bool isSubModelReference;
-#ifdef USE_LRRC
-	ModelDetails * subModelDetails;
-#endif
 	Reference * firstReferenceWithinSubModel;
 };
 

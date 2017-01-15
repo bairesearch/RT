@@ -23,7 +23,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -34,16 +34,6 @@
 
 #include "LDmysql.h"
 
-
-/*
-#include <mysql_connection.h>
-#include <mysql_driver.h>
-#include <cppconn/statement.h>
-//#include <cppconn/mysql_util.h>
-sql::mysql::MySQL_Driver *driver;
-sql::Connection	*con;
-sql::Statement *stmt;
-*/
 
 
 MYSQL *connection;
@@ -60,7 +50,6 @@ int main()
 
 void testMySQLserverConnection()
 {
-		//tcp://127.0.0.1:3306"
 	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
 	performSQLSelectQuery("SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )", sqlCommandOutput);
@@ -79,15 +68,6 @@ bool initiateMySQLserverConnection(char * mysqlserveripaddressAndPort, char * us
 		cout << mysql_error(&mysql) << endl;
 		return false;
 	}
-
-	/*
-	driver = sql::mysql::get_mysql_driver_instance();
-	con = driver->connect(mysqlserveripaddressAndPort, username, password);
-	stmt = con->createStatement();
-	string databaseLoadString = "USE ";
-	databaseLoadString = databaseLoadString + databaseName;
-	stmt->execute(databaseLoadString);
-	*/
 
 	return true;
 }
@@ -111,15 +91,8 @@ bool performSQLSelectQuery(char * sqlCommand, char *sqlCommandOutput)
 	{
 		cout << row[0] << endl;
 		cout << row[1] << endl;
-		//printf("%s\n", row[1]);
-		//sqlCommandOutput[index] = row[0];
 		index++;
 	}
-	//sqlCommandOutput[index] = '\0';
-
-	/*
-	stmt->execute(sqlCommand);
-	*/
 
 	return true;
 }

@@ -23,7 +23,7 @@
  * File Name: SHAREDvector.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 25-Sept-2012
  *
  *******************************************************************************/
 
@@ -54,8 +54,6 @@ void initialiseVector(vec * vect);
 void calculateNormalOfTri(vec * pt1, vec * pt2, vec * pt3, vec * normal);
 
 void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * rotationVector);
-//void calculateRotationVectorFromVector(vec* vector, vec * rotationVector);	//this appears incorrect - don't use it ... //added 14 June 2012
-//void generateXYZRotationMatrix(vec * vector, mat * rotationMatrix);		//this appears incorrect - don't use it ... //added 14 June 2012
 void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix);
 void transposeMatrix(mat * matx);
 
@@ -116,8 +114,6 @@ void multMatrixByVector(mat* matx, vec* vect1, vec* vect);
 
 void createVector(vec* vec);
 
-//double magnitudeVector(vec *vect);
-
 void createIdentityMatrixRT(mat* matx);
 
 double findMagnitudeOfVector(vec * vect1);
@@ -161,7 +157,6 @@ void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2);
 void scaleMatrix(mat * matrix, double scaleFactor);
 
 double calculateAngleOfVector3D(vec * vect1, int axis);
-
 
 
 

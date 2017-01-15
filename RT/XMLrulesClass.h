@@ -23,7 +23,7 @@
  * File Name: XMLrulesClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -63,37 +63,8 @@ public:
 	int attribute7;
 	int attribute8;
 
-	/*
-	int defenceMod;
-
-	int closeCombatAttackMod;
-	int mountedAttackBonus;
-
-	int longDistanceAttackMod;
-	int longDistanceRange;
-	*/
-
 	RulesClass * next;
 };
-//there really should be child classes of RulesClass called LRRCrulesUnitTypeDetails, unitCombatDetailsAttack, and unitCombatDetailsDefence that inherit rulesObject and include unique parameters
-
-
-/*
-struct XMLTagAttributes
-{
-	int fractionalValue;
-	int numberOfPartsInUnit;
-
-	int defenceMod;
-
-	int closeCombatAttackMod;
-	int mountedAttackBonus;
-
-	int longDistanceAttackMod;
-	int longDistanceRange;
-};
-typdef XMLTagAttributes objectAttributes
-*/
 
 //High Level
 
@@ -115,13 +86,8 @@ bool parseORRulesXMLFile();
 bool parseANNRulesXMLFile();
 	bool parseANNRulesTag(XMLParserTag * currentTag);
 
-
 bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
 bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
-
-
-//bool parseSectionTagAndAddObjectsWithAttributes(RulesClass * firstReferenceToObjectClass, string parentTagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
-//bool parseTagAndAddObjectWithAttributes(RulesClass * firstReferenceToObjectClass, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
 
 extern RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS

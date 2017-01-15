@@ -23,7 +23,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -32,7 +32,6 @@
 //xml comments not yet supported by this parser
 
 #define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
-#define LRRC_RULES_XML_FILE_NAME "LRRCrules.xml"
 #define CS_RULES_XML_FILE_NAME "CSrules.xml"
 #define OR_RULES_XML_FILE_NAME "ORrules.xml"
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
@@ -53,41 +52,6 @@
 #define RULES_XML_ATTRIBUTE_name ((string)"name")
 #define RULES_XML_ATTRIBUTE_stringValue ((string)"stringValue")
 #define RULES_XML_ATTRIBUTE_fractionalValue ((string)"fractionalValue")
-
-
-/*
-#define RULES_XML_TAG_rules "rules"
-#define RULES_XML_TAG_unitTypeDetails "unitTypeDetails"
-#define RULES_XML_TAG_part "part"
-#define RULES_XML_TAG_unitCombatDetails "unitCombatDetails"
-#define RULES_XML_TAG_armour "armour"
-#define RULES_XML_TAG_head "head"
-#define RULES_XML_TAG_torso "torso"
-#define RULES_XML_TAG_shield "shield"
-#define RULES_XML_TAG_weapons "weapons"
-#define RULES_XML_TAG_closeCombat "closeCombat"
-#define RULES_XML_TAG_longDistance "longDistance"
-#define RULES_XML_TAG_other "other"
-#define RULES_XML_TAG_buildingDetails "LRRCrulesBuildingDetails"
-#define RULES_XML_TAG_terrainDefenceDetails "terrainDefenceDetails"
-#define RULES_XML_TAG_unitTypeCatagories "LRRCrulesUnitTypeCatagories"
-#define RULES_XML_TAG_unitType "unitType"
-#define RULES_XML_TAG_miscellaneousItem "miscellaneousItem"
-
-#define RULES_XML_ATTRIBUTE_name "name"
-#define RULES_XML_ATTRIBUTE_partID "stringValue"
-#define RULES_XML_ATTRIBUTE_partIDLen "partIDLen"
-#define RULES_XML_ATTRIBUTE_defenceMod "defenceMod"
-#define RULES_XML_ATTRIBUTE_closeCombatAttackMod "closeCombatAttackMod"
-#define RULES_XML_ATTRIBUTE_mountedAttackBonus "mountedAttackBonus"
-#define RULES_XML_ATTRIBUTE_attackBonusAgainstMounted "attackBonusAgainstMounted"
-#define RULES_XML_ATTRIBUTE_longDistanceAttackMod "longDistanceAttackMod"
-#define RULES_XML_ATTRIBUTE_longDistanceRange "longDistanceRange"
-#define RULES_XML_ATTRIBUTE_enum "enum"
-#define RULES_XML_ATTRIBUTE_maxTravel "maxTravel"
-#define RULES_XML_ATTRIBUTE_value "value"
-*/
-
 
 RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
@@ -351,7 +315,6 @@ bool parseANNRulesTag(XMLParserTag * currentTag)
 
 
 
-
 bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)
 {
 	bool result = true;
@@ -404,7 +367,6 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sec
 bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)
 {
 	bool result = true;
-	//currentReferenceToObjectClass->tagName = currentTag->name;
 
 	XMLParserAttribute * currentAttribute = currentTag->firstAttribute;
 

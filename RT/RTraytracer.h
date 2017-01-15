@@ -23,7 +23,10 @@
  * File Name: RTraytracer.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
+ * Description: contains methods to raytrace a primitive through a given point (x, y) 
+ *              on the screen with the given scene_info structure and accompanying 
+ *              perspective information.
  *
  *******************************************************************************/
 
@@ -61,19 +64,6 @@ public:
 	scene_info *nextScene;
 };
 
-/*
-typedef struct scene scene_info;
-struct scene
-{
-	advanced_mat standardMatrix;
-	advanced_mat reverseMatrix;
-	piece_info pi;
-	dimensions_info di;
-	double tIn, tOut;		//temporary var.
-	vec p, n;			//temporary vars. p, p1, normal to face
-	scene_info *nextScene;
-};
-*/
 
 void rayTrace(view_info* vi, scene_info* si, mat* tildaMat, vec* uvn);
 	/*ray traces an object*/
@@ -94,11 +84,6 @@ void drawPoint(scene_info* si, advanced_mat* reverseMatrix, double tInDash, doub
 void drawPointNoLighting(scene_info* si, advanced_mat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec * norm);
 
 void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, view_info * vi, vec * p, vec * uvn);
-
-
-//void calculateCube(scene_info* si, vec* p0, vec* p1, advanced_mat *standardMatrix, advanced_mat *reverseMatrix);
-//void calculateCylinder(scene_info* si, vec* p0, vec* p1, advanced_mat *standardMatrix, advanced_mat *reverseMatrix);
-//void calculateSphere(scene_info* si, vec* p0, vec* p1, advanced_mat *standardMatrix, advanced_mat *reverseMatrix);
 
 
 #endif

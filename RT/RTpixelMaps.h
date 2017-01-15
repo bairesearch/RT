@@ -23,7 +23,7 @@
  * File Name: RTpixelMaps.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -34,8 +34,6 @@
 #include "SHAREDvars.h"
 #include "RTppm.h"
 #include "RTviewinfo.h"
-
-
 
 
 
@@ -67,25 +65,15 @@
 #define MAGENTA_G (0)
 #define MAGENTA_B (255)
 
-
-
-
-
-
 #define VEC_MAP_VEC_NUM_DIMENSIONS (3)
 #define VEC_MAP_VEC_X (0)
 #define VEC_MAP_VEC_Y (1)
 #define VEC_MAP_VEC_Z (2)
 
-
-
-
-
 #define PIXMAP_NUMBER_OF_RGB_COLOURS (3)
 #define LUMINOSITY_MAP_MAX_RGB_VALUE (256)
 #define LUMINOSITY_MAP_MAX_LUMINOSITY_VALUE (LUMINOSITY_MAP_MAX_RGB_VALUE*PIXMAP_NUMBER_OF_RGB_COLOURS)
 #define CONTRAST_MAP_MAX_CONTRAST_VALUE (LUMINOSITY_MAP_MAX_LUMINOSITY_VALUE)
-
 
 //#define USE_CONTRAST_PIXMAP_INVERSE
 //#define USE_BOOLEAN_PIXMAP_INVERSE
@@ -94,8 +82,6 @@
 #define BOOLEAN_PIXMAP_DOT_RED (255)
 #define BOOLEAN_PIXMAP_DOT_GREEN (0)
 #define BOOLEAN_PIXMAP_DOT_BLUE (0)
-
-
 
 /*
 #define CONTRAST_MAP_THRESHOLD_VALUE (100)	//33/256 or 100/768

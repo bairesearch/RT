@@ -23,7 +23,7 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -65,7 +65,6 @@ void createIdentityMatrixAdvanced(advanced_mat* matx)
 	matx->d.w = ONE;
 }
 
-	/*method is not used*/
 void makeAdvancedMatrix(advanced_mat* matxAdv, mat* matx, int type)
 {
 	matxAdv->a.x = matx->a.x;
@@ -631,43 +630,10 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 	find2DIntersectionPoint(x1, y1, x2, y2, x3, y3, x4, y4, &zxZInt, &zxXInt, &zxinterceptionFound, &zxinterceptionPointFound);
 	//zx plane
 
-	/*
-	if(totalNumOptionalLines == 12)
-	{
-		cout << "\nDEBUG: "<< endl;
-		cout << "povpt1->x = " << povpt1->x << endl;
-		cout << "povpt1->y = " << povpt1->y << endl;
-		cout << "povpt1->z = " << povpt1->z << endl;
-		cout << "povpt2->x = " << povpt2->x << endl;
-		cout << "povpt2->y = " << povpt2->y << endl;
-		cout << "povpt2->z = " << povpt2->z << endl;
-		cout << "linept1->x = " << linept1->x << endl;
-		cout << "linept1->y = " << linept1->y << endl;
-		cout << "linept1->z = " << linept1->z << endl;
-		cout << "linept2->x = " << linept2->x << endl;
-		cout << "linept2->y = " << linept2->y << endl;
-		cout << "linept2->z = " << linept2->z << endl;
-		cout << "xyinterceptionFound = " << xyinterceptionFound << endl;
-		cout << "xyinterceptionPointFound = " << xyinterceptionPointFound << endl;
-		cout << "yzinterceptionFound = " << yzinterceptionFound << endl;
-		cout << "yzinterceptionPointFound = " << yzinterceptionPointFound << endl;
-		cout << "zxinterceptionFound = " << zxinterceptionFound << endl;
-		cout << "zxinterceptionPointFound = " << zxinterceptionPointFound << endl;
-		cout << "xyXInt = " << xyXInt << endl;
-		cout << "zxXInt = " << zxXInt << endl;
-		cout << "xyYInt = " << xyYInt << endl;
-		cout << "yzYInt = " << yzYInt << endl;
-		cout << "yzZInt = " << yzZInt << endl;
-		cout << "zxZInt = " << zxZInt << endl;
-	}
-	*/
-
 	bool xyzinterceptionPointFound = false;
 
 	if(xyinterceptionFound && yzinterceptionFound && zxinterceptionFound)
 	{
-		//printf("passed1");
-
 		result = true;
 
 		if(xyinterceptionPointFound && zxinterceptionPointFound)
@@ -679,7 +645,6 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 			else
 			{
 				xyzinterceptionPointFound = true;
-				//printf("xyzIntFound");
 				pt_int->x = xyXInt;
 				pt_int->y = xyYInt;
 				pt_int->z = zxZInt;
@@ -744,13 +709,6 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 	{
 		result = false;
 	}
-
-	/*
-	if(result)
-	{
-		printf("passed");
-	}
-	*/
 
 	return result;
 }
@@ -906,7 +864,7 @@ int checkSameClockDir(vec * pt1, vec * pt2, vec * pt3, vec * norm)
 
 int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t)
 {
-		//[NB a quad is formed out of 2 tris]
+	//NB a quad is formed out of 2 tris
 
 	vec intersectionPointTriA;
 	vec intersectionPointTriB;
@@ -934,12 +892,6 @@ int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * 
 		triBIntersectionFound = TRUE;
 	}
 
-	/*
-	cout << "pi->vertex4Position.x = " << pi->vertex4Position.x << endl;
-	cout << "pi->vertex4Position.y = " << pi->vertex4Position.y << endl;
-	cout << "pi->vertex4Position.z = " << pi->vertex4Position.z << endl;
-	*/
-
 	double tInAndOut;
 	if(triAIntersectionFound && triBIntersectionFound)
 	{
@@ -947,15 +899,9 @@ int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * 
 		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
 		copyVectorRT(&intersectionPoint, &intersectionPointTriA);
 		tInAndOut = triAtInAndOut;
-		/*
-		quadIntersectionFound = FALSE;
-		printf("error triAIntersectionFound and triBIntersectionFound");
-		tInAndOut = -1;
-		*/
 	}
 	else if(triAIntersectionFound)
 	{
-		//printf("\nfound quad intersectionA");
 		quadIntersectionFound = TRUE;
 		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriA);
 		copyVectorRT(&intersectionPoint, &intersectionPointTriA);
@@ -963,7 +909,6 @@ int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * 
 	}
 	else if(triBIntersectionFound)
 	{
-		//printf("\nfound quad intersectionB");
 		quadIntersectionFound = TRUE;
 		copyVectorRT(&intersectionPointNormal, &intersectionPointNormalTriB);
 		copyVectorRT(&intersectionPoint, &intersectionPointTriB);

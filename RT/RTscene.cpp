@@ -23,18 +23,9 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
-
-
-/*
-#include <stdlib.h>
-//#include <stdio.h>
-#include <math.h>
-*/
-
-
 
 
 #include <stdio.h>
@@ -105,7 +96,6 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 	scene_info *si = NULL;
 	lighting_info *li = NULL;
 
-	//parseTalFile(talFileName, vi, si, li);
 	parseTalFileInitialiseParser(talFileName);
 	vi = parseTalFileGetViewInfo(vi);
 	li = parseTalFileGetLightInfo(li);
@@ -1087,8 +1077,6 @@ void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyz
 	//this function requires viewat, viewup and eye vectors to be defined
 
 	/*
-	cout << "calculatePointMapValue() function not yet tested - do not use 3DOD with OR_METHOD_3DOD_USE_DYNAMIC_WORLD_COORD_DETERMINATION_USING_DEPTH until this is coded" << endl;
-
 	cout << "xPos = " << xPos << endl;
 	cout << "yPos = " << yPos << endl;
 	cout << "depthVal = " << depthVal << endl;
@@ -1139,83 +1127,5 @@ void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * point
 	}
 
 }
-
-
-
-
-
-
-
-	/*
-	vec positionOnViewWindowRelativeToViewWindowCentre;
-	positionOnViewWindowRelativeToViewWindowCentre.x = uvn.x;
-	positionOnViewWindowRelativeToViewWindowCentre.y = uvn.y;
-	positionOnViewWindowRelativeToViewWindowCentre.z = 0;
-
-	vec directionOfViewAtWRTeye;
-	subtractVectorsRT(&(vi->viewat), &(vi->eye), &directionOfViewAtWRTeye);
-	vec directionOfViewAtWRTeyeNormalised;
-	normaliseVectorRT(&directionOfViewAtWRTeye, &directionOfViewAtWRTeyeNormalised);
-	vec directionOfViewAtWRTeyeNormalisedUsingFocalLength;
-	multiplyVectorByScalarRT(&directionOfViewAtWRTeyeNormalised, vi->focal_length, &directionOfViewAtWRTeyeNormalisedUsingFocalLength);
-	vec centreOfViewWindowPositionWC;
-	addVectorsRT(&(vi->eye), &directionOfViewAtWRTeyeNormalisedUsingFocalLength, &centreOfViewWindowPositionWC);
-	//vec viewacross;
-	//crossProduct(&(vi->viewup), &directionOfViewAtWRTeye, &viewacross);
-	//
-	//vec vectorInTheDirectionOfPointOnViewWindowRelativeToCentreOfViewWindowPosition;
-	vec positionOfPointOnViewWindowWC;
-	addVectorsRT(&(centreOfViewWindowPositionWC), &positionOnViewWindowRelativeToViewWindowCentre, &positionOfPointOnViewWindowWC);
-	vec vectorInTheDirectionOfPointRelativeToEye;
-	subtractVectorsRT(&(positionOfPointOnViewWindowWC), &(vi->eye), &vectorInTheDirectionOfPointRelativeToEye);
-	vec vectorInTheDirectionOfPointRelativeToEyeNormalised;
-	normaliseVectorRT(&vectorInTheDirectionOfPointRelativeToEye, &vectorInTheDirectionOfPointRelativeToEyeNormalised);
-	vec vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint;
-	multiplyVectorByScalarRT(&vectorInTheDirectionOfPointRelativeToEyeNormalised, depthVal*vi->focal_length, &vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint);	//depthVal*vi->focal_length // check this
-	vec positionOfPointWC;
-	addVectorsRT(&(vi->eye), &vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint, &positionOfPointWC);
-
-
-	cout << "positionOnViewWindowRelativeToViewWindowCentre.x = " << positionOnViewWindowRelativeToViewWindowCentre.x << endl;
-	cout << "positionOnViewWindowRelativeToViewWindowCentre.y = " << positionOnViewWindowRelativeToViewWindowCentre.y << endl;
-	cout << "positionOnViewWindowRelativeToViewWindowCentre.z = " << positionOnViewWindowRelativeToViewWindowCentre.z << endl;
-	cout << "directionOfViewAtWRTeye.x = " << directionOfViewAtWRTeye.x << endl;
-	cout << "directionOfViewAtWRTeye.y = " << directionOfViewAtWRTeye.y << endl;
-	cout << "directionOfViewAtWRTeye.z = " << directionOfViewAtWRTeye.z << endl;
-	cout << "directionOfViewAtWRTeyeNormalised.x = " << directionOfViewAtWRTeyeNormalised.x << endl;
-	cout << "directionOfViewAtWRTeyeNormalised.y = " << directionOfViewAtWRTeyeNormalised.y << endl;
-	cout << "directionOfViewAtWRTeyeNormalised.z = " << directionOfViewAtWRTeyeNormalised.z << endl;
-	cout << "directionOfViewAtWRTeyeNormalisedUsingFocalLength.x = " << directionOfViewAtWRTeyeNormalisedUsingFocalLength.x << endl;
-	cout << "directionOfViewAtWRTeyeNormalisedUsingFocalLength.y = " << directionOfViewAtWRTeyeNormalisedUsingFocalLength.y << endl;
-	cout << "directionOfViewAtWRTeyeNormalisedUsingFocalLength.z = " << directionOfViewAtWRTeyeNormalisedUsingFocalLength.z << endl;
-	cout << "centreOfViewWindowPositionWC.x = " << centreOfViewWindowPositionWC.x << endl;
-	cout << "centreOfViewWindowPositionWC.y = " << centreOfViewWindowPositionWC.y << endl;
-	cout << "centreOfViewWindowPositionWC.z = " << centreOfViewWindowPositionWC.z << endl;
-
-
-
-	cout << "positionOfPointOnViewWindowWC.x = " << positionOfPointOnViewWindowWC.x << endl;
-	cout << "positionOfPointOnViewWindowWC.y = " << positionOfPointOnViewWindowWC.y << endl;
-	cout << "positionOfPointOnViewWindowWC.z = " << positionOfPointOnViewWindowWC.z << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEye.x = " << vectorInTheDirectionOfPointRelativeToEye.x << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEye.y = " << vectorInTheDirectionOfPointRelativeToEye.y << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEye.z = " << vectorInTheDirectionOfPointRelativeToEye.z << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalised.x = " << vectorInTheDirectionOfPointRelativeToEyeNormalised.x << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalised.y = " << vectorInTheDirectionOfPointRelativeToEyeNormalised.y << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalised.z = " << vectorInTheDirectionOfPointRelativeToEyeNormalised.z << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.x = " << vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.x << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.y = " << vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.y << endl;
-	cout << "vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.z = " << vectorInTheDirectionOfPointRelativeToEyeNormalisedUsingDistanceToPoint.z << endl;
-	cout << "positionOfPointWC.x = " << positionOfPointWC.x << endl;
-	cout << "positionOfPointWC.y = " << positionOfPointWC.y << endl;
-	cout << "positionOfPointWC.z = " << positionOfPointWC.z << endl;
-
-	//exit(0);
-
-	xyzWorld->x = positionOfPointWC.x;
-	xyzWorld->y = positionOfPointWC.y;
-	xyzWorld->z = positionOfPointWC.z;
-	*/
-
 
 

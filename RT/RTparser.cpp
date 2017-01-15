@@ -23,21 +23,14 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
+ * Description: A simple parser for TAL files
  *
  *******************************************************************************/
 
 
-/*
- * RTparser.c
- *
- * A simple parser for TAL files.  See parser.h for usage.
- */
-
-
 
 #include "RTparser.h"
-//#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -194,20 +187,8 @@ static vec read_vec()
 {
 	vec v;
 
-/*
-#ifdef RTDEBUG
-	int num;
-	num = fscanf(infile, " %lg %lg %lg", &v.x, &v.y, &v.z);
-	if(num !=3)
-	{
-		cout << "num = " << num << endl;
-		parse_error("could not read vector");
-	}
-#else
-*/
 	if (fscanf(infile, " %lg %lg %lg", &v.x, &v.y, &v.z) != 3)
 		parse_error("could not read vector");
-//#endif
 	return v;
 }
 
@@ -352,15 +333,6 @@ int next_light_source()
 	_light_source.pos = read_vec();
 	_light_source.col = read_colour();
 
-	/*
-	printf("\n _light_source.col.r = %d", _light_source.col.r);
-	printf("\n _light_source.col.g = %d", _light_source.col.g);
-	printf("\n _light_source.col.b = %d", _light_source.col.b);
-	printf("\n _light_source.pos.x = %f", _light_source.pos.x);
-	printf("\n _light_source.pos.y = %f", _light_source.pos.y);
-	printf("\n _light_source.pos.z = %f", _light_source.pos.z);
-	*/
-
 	return 1;
 }
 
@@ -438,14 +410,6 @@ int next_scene_command()
 	{
 		_piece_info.vertex1Position = read_vec();
 		_piece_info.vertex2Position = read_vec();
-		/*
-		cout << "_piece_info.vertex1Position.x = " << _piece_info.vertex1Position.x << endl;
-		cout << "_piece_info.vertex1Position.y = " << _piece_info.vertex1Position.y << endl;
-		cout << "_piece_info.vertex1Position.z = " << _piece_info.vertex1Position.z << endl;
-		cout << "_piece_info.vertex2Position.x = " << _piece_info.vertex2Position.x << endl;
-		cout << "_piece_info.vertex2Position.y = " << _piece_info.vertex2Position.y << endl;
-		cout << "_piece_info.vertex2Position.z = " << _piece_info.vertex2Position.z << endl;
-		*/
 		_piece_info.xrot = 0.0;
 		_piece_info.yrot = 0.0;
 		_piece_info.zrot = 0.0;
@@ -462,8 +426,6 @@ int next_scene_command()
 		_piece_info.zrot = read_double();
 		read_options(_piece_info.type);
 	}
-
-	//cout << "newqprimdet" << endl;
 
 	while(!string_is(current_option, "END", "end")) next_option();
 	next_command();

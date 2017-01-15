@@ -23,7 +23,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -46,7 +46,6 @@ using namespace std;
 
 bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(char * fileName, Reference * firstReference, bool useCustomViewInfo, view_info * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
 {
-	//ofstream writeFileObject(fileName);
 	ofstream writeFileObject;
 	writeFileObject.open(fileName);
 	if(writeFileObject.is_open())
@@ -283,7 +282,6 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	//light source cannot currently be customised
 	dataValueString = "";
 	dataValueString = dataValueString + TAL_FILE_HEADER_POINTSOURCE + " " + lightSourcePositionxstring + " " + lightSourcePositionystring + " " + lightSourcePositionzstring + " " + lightSourceColourString;	//TAL_FILE_HEADER_DEFAULT_POINTSOURCE
-	//cout << "dataValueString = " << dataValueString << endl;
 	for(int i = 0; i<dataValueString.length(); i++)
 	{
 		writeFileObject->put(dataValueString[i]);
@@ -298,27 +296,15 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject
 	Reference * currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
-		//if(currentReference->isSubModelReference)
 		if((currentReference->isSubModelReference)
 		&& !(((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4CUBE.DAT"))
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT"))))
 		{
-			//cout << "going down 1 level; currentReference->name = " << currentReference->name << endl;
-
 			write2DReferencesLayerToFileObjectRayTraceFormat(writeFileObject, currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
-			//if((currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
-			//if((currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD) || (currentReference->type == REFERENCE_TYPE_LINE))
-			/*
-			if((currentReference->type == REFERENCE_TYPE_TRI)
-			|| (currentReference->type == REFERENCE_TYPE_QUAD)
-			|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4CUBE.DAT"))
-			|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
-			|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT")))
-			*/
 			if((currentReference->type == REFERENCE_TYPE_TRI)
 			|| (currentReference->type == REFERENCE_TYPE_QUAD)
 			|| (currentReference->type == REFERENCE_TYPE_LINE)
@@ -328,7 +314,6 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject
 			{
 
 				//cout << "Writing ref; currentReference->name = " << currentReference->name << endl;
-
 				//cout << "currentReference->type = " << currentReference->type << endl;
 				//cout << "currentReference->colour = " << currentReference->colour << endl;
 				//cout << "currentReference->name = " << currentReference->name << endl;
@@ -336,11 +321,8 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject
 				//cout << "currentReference->deformationMatrix.c.z = " << currentReference->deformationMatrix.c.z << endl;
 				//cout << "currentReference->relativePosition.z = " << currentReference->relativePosition.z << endl;
 
-
 				Reference collapsedReference;
 				copyReferences(&collapsedReference, currentReference, currentReference->type);
-
-				//
 
 				if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 				{
@@ -490,17 +472,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		char colourValueString[100];
 		sprintf(colourValueString, "%06x", colourExtracted);
 
-		//cout << "colourValueString = " << colourValueString << endl;
 		strcat(dataValueString, colourValueString);
-
-		/*
-		if(colourExtracted > 0)
-		{
-			cout << "currentReference->colour = " << currentReference->colour << endl;
-			cout << "colourExtracted = " << colourExtracted << endl;
-			cout << "colourExtractedStringInHex = " << colourValueString << endl;
-		}
-		*/
 	}
 	else
 	{
@@ -520,7 +492,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 	{
 		//write primitive vertex coords
 
-			//CHECK THIS ---> &(currentReference->vertex1relativePosition),
 		convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition), positionCoordinatesString);
 		for(int i = 0; i<strlen(positionCoordinatesString); i++)
 		{
@@ -550,7 +521,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 				}
 			}
 		}
-		//cout << "DEBUG: referenceString = " << referenceString << endl;
 	}
 	else if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
@@ -561,19 +531,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
-		//writeFileObject->put(CHAR_SPACE);
-
-		/*
-		//write rotation matrix values
-		mat submodelRotationMatrix;
-		copyMatrix2IntoMatrix1(&submodelRotationMatrix, &(currentReference->deformationMatrix));
-		convertRotationMatrixToString(&submodelRotationMatrix, rotationMatrixString);
-		for(int i = 0; i<strlen(rotationMatrixString); i++)
-		{
-			writeFileObject->put(rotationMatrixString[i]);
-		}
-		*/
-
 	#ifdef RT_CONVERT_LDR_OBJECT_ROTATION_PROPERLY
 		//write rotation vector values
 		vec submodelRotationVector;
@@ -582,9 +539,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		submodelRotationVectorDegrees.x = submodelRotationVector.x / PI * 180.0;
 		submodelRotationVectorDegrees.y = submodelRotationVector.y / PI * 180.0;
 		submodelRotationVectorDegrees.z = submodelRotationVector.z / PI * 180.0;
-		//cout << "submodelRotationVector.x = " << submodelRotationVector.x << endl;
-		//cout << "submodelRotationVector.y = " << submodelRotationVector.y << endl;
-		//cout << "submodelRotationVector.z = " << submodelRotationVector.z << endl;
 		convertPositionCoordinatesToString(&submodelRotationVectorDegrees, rotationVectorString);
 	#else
 		//write rotation vector values
@@ -601,7 +555,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 
 		//write width length height values
 
-	//
 	#ifdef RT_CONVERT_LDR_OBJECT_SCALES_PROPERLY
 		double width;
 		double length;
@@ -626,7 +579,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 			width = (tmpAdvancedMatrix3b.a.x) * 2.0;
 			length = (tmpAdvancedMatrix3b.b.y) * 2.0;
 			height = (tmpAdvancedMatrix3b.c.z) * 2.0;
-
 		}
 		else
 		{
@@ -635,9 +587,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 			height = (currentReference->deformationMatrix.c.z) * 2.0;
 		}
 
-
-
-
 		char widthdataValueString[100];
 		sprintf(widthdataValueString, FILE_FLOAT_PRECISION, width);
 		char lengthdataValueString[100];
@@ -645,17 +594,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		char heightdataValueString[100];
 		sprintf(heightdataValueString, FILE_FLOAT_PRECISION, height);
 
-		//string dataValueStringCPlus = dataValueString;
-		/*
-		unsigned int widthLengthHeight = (currentReference->deformationMatrix.a.x)/2;
-		if(widthLengthHeight == 0)
-		{
-			widthLengthHeight = 2;
-		}
-		char dataValueString[100];
-		sprintf(dataValueString, "%d", widthLengthHeight);
-		//string dataValueStringCPlus = dataValueString;
-		*/
 		string tempString = "";
 		tempString = tempString + TAL_FILE_REF_WIDTH + widthdataValueString + TAL_FILE_REF_LENGTH + lengthdataValueString + TAL_FILE_REF_HEIGHT + heightdataValueString + " ";
 
@@ -664,17 +602,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 
 		char dataValueString[100];
 		sprintf(dataValueString, FILE_FLOAT_PRECISION, widthLengthHeight);
-		//string dataValueStringCPlus = dataValueString;
-		/*
-		unsigned int widthLengthHeight = (currentReference->deformationMatrix.a.x)/2;
-		if(widthLengthHeight == 0)
-		{
-			widthLengthHeight = 2;
-		}
-		char dataValueString[100];
-		sprintf(dataValueString, "%d", widthLengthHeight);
-		//string dataValueStringCPlus = dataValueString;
-		*/
+
 		string tempString = "";
 		tempString = tempString + TAL_FILE_REF_WIDTH + dataValueString + TAL_FILE_REF_LENGTH + dataValueString + TAL_FILE_REF_HEIGHT + dataValueString + " ";
 	#endif
@@ -702,8 +630,6 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 
 	//write new line
 	writeFileObject->put(CHAR_NEWLINE);
-
-	//cout << "DEBUG: referenceString = " << referenceString << endl;
 
 	return result;
 }

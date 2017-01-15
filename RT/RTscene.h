@@ -23,7 +23,7 @@
  * File Name: RTscene.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -39,10 +39,7 @@
 
 
 //#define DEMONSTRATE_CPP_STRING_TO_CSTRING_CAST_CORRUPTION
-
-
 //#define TEST_DEPTH_NORMAL_MAP_CREATION
-
 
 
 #define NO_COLOUR 0
@@ -110,21 +107,12 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew);
 void setLightingMode(int newLightingMode);
 
-
-//void parseTalFile(char *talFileName, view_info *vi, scene_info *si, lighting_info *li);
 void parseTalFileInitialiseParser(char *talFileName);
 view_info * parseTalFileGetViewInfo(view_info *vi);
 lighting_info * parseTalFileGetLightInfo(lighting_info *li);
 scene_info * parseTalFileGetSceneInfo(scene_info *si);
 
-
-
 void createImage(char * imageFileName, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, view_info *vi, scene_info *si, lighting_info *li);
-
-
-
-
-
 
 
 typedef struct advancedColour colourAdvanced;
@@ -135,19 +123,12 @@ struct advancedColour
 
 void calculateTransparencyColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb);
 
-//scene_info *addToEnd(scene_info *si_orig, scene_info *new_node);
-
 void calculateUVNScalars(view_info *vi, vec* uvn, int x, int y);
-
-//void colourPixel(int x, int y);
 
 void calculateAmbientDiffuseSpecular(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
 
 void calculateBasicColour(view_info *vi, scene_info *si, lighting_info *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
 
-
-//void setNormalMapValue(int x, int y, int imageHeight, vec * normalVal, double * normalMap);
-//void getNormalMapValue(int x, int y, int imageHeight, double * normalMap, vec * normalVal);
 
 int stripExtension(char * filenameWithExtension, char * filenameWithoutExtension);
 int addExtension(char * filenameWithoutExtension, char * extension, char * filenameWithExtension);

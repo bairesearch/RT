@@ -23,22 +23,13 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
 #include "LDparser.h"
 #include "SHAREDvector.h"
 #include "LDreferenceClass.h"
-
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <string>
-	#include <iostream>
-	#include <fstream>
-	#include <time.h>
-	#include <math.h>
-	using namespace std;
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,8 +42,6 @@
 using namespace std;
 
 
-
-	//white space removal required for messy dat files from ldraw parts library
 bool removeWhiteSpaceFromString(char * s)
 {
 	#define MAX_STR_LEN (100)
@@ -161,8 +150,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 			strcat(parseFileNameInPartsDir, DEFAULT_PARTS_DIRECTORY_FULL_PATH);
 			removeWhiteSpaceFromString(parseFileName);
 			strcat(parseFileNameInPartsDir, parseFileName);
-			//cout << "parseFileNameInPartsDir = " << parseFileNameInPartsDir << endl;
-			 parseFileObject = new ifstream(parseFileNameInPartsDir);
+			parseFileObject = new ifstream(parseFileNameInPartsDir);
 			if(!parseFileObject->rdbuf( )->is_open( ))
 			{
 				parseFileObject->close();
@@ -173,8 +161,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 				strcat(parseFileNameInPartsDir, DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH);
 				removeWhiteSpaceFromString(parseFileName);
 				strcat(parseFileNameInPartsDir, parseFileName);
-				//cout << "parseFileNameInPartsDir = " << parseFileNameInPartsDir << endl;
-				 parseFileObject = new ifstream(parseFileNameInPartsDir);
+				parseFileObject = new ifstream(parseFileNameInPartsDir);
 				if(!parseFileObject->rdbuf( )->is_open( ))
 				{
 					parseFileObject->close();
@@ -186,7 +173,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 				}
 				else
 				{
-					//cout << "gone into prim file" << endl;
+					//gone into prim file.
 					result = true;
 					managedToFindFile = true;
 				}
@@ -216,12 +203,8 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 
 	if(managedToFindFile)
 	{
-		//cout << "DEBUG: successfully opened; parseFileName=" << parseFileName << endl;
-
 		while (parseFileObject->get(c))
 		{
-			//cout << c;
-
 			charCount++;
 
 			if((waitingForNewLine) && (c == '\n'))
@@ -245,33 +228,26 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 				}
 				else if(c == '1')
 				{//submodel detected
-				//#ifndef USE_OLC
 					waitingForNewLine = false;
 					type = REFERENCE_TYPE_SUBMODEL;
 				}
 				else if(c == '2')
 				{//submodel detected
-				//#ifndef USE_OLC
 					waitingForNewLine = false;
 					type = REFERENCE_TYPE_LINE;
 				}
 				else if(c == '3')
 				{//tri primative detected
-				//#ifndef USE_OLC
 					waitingForNewLine = false;
 					type = REFERENCE_TYPE_TRI;
 				}
 				else if(c == '4')
 				{//quad primative detected
-					//cout << "passed";
-				//#ifndef USE_OLC
-
 					waitingForNewLine = false;
 					type = REFERENCE_TYPE_QUAD;
 				}
 				else if(c == '5')
 				{//quad primative detected
-					//cout << "passed";
 					waitingForNewLine = true;
 					type = REFERENCE_TYPE_OPTIONALLINE;
 				}
@@ -443,7 +419,6 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						readingVertex2Z = false;
 						if(type == REFERENCE_TYPE_LINE)
 						{
-							//cout << "DEBUG: found line" << endl;
 						#ifdef LD_USE_STRICT_PARSER
 							if(c == '\n')
 							{
@@ -610,13 +585,6 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						//3. Record Reference information into current Reference object
 						currentReference->type = type;
 
-						/*
-						unsigned int colourRead;
-						sprintf(colour, "%u", colourRead);
-						cout << "colour = " << colour << endl;
-						cout << "colourRead = " << colourRead << endl;
-						currentReference->colour = colourRead;
-						*/
 						currentReference->colour = (unsigned int)(atof(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
@@ -891,13 +859,6 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 
 						//3. Record Reference information into current Reference object
 						currentReference->type = type;
-						/*
-						unsigned int colourRead;
-						sprintf(colour, "%u", colourRead);
-						cout << "colour = " << colour << endl;
-						cout << "colourRead = " << colourRead << endl;
-						currentReference->colour = colourRead;
-						*/
 						currentReference->colour = (unsigned int)(atof(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
@@ -950,29 +911,21 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						Reference * subModelReference = new Reference(true);
 						currentReference->firstReferenceWithinSubModel = subModelReference;
 
-						//CHECK THIS;
 						subModelReference->isSubModelReference = false;	//added aug 08
 
 						if(parseFile(subPartFileName, currentReference->firstReferenceWithinSubModel, currentReference, recurseIntoPartsDir))
 						{
 							//cout << "successfully parsed; currentReference->name = " <<  currentReference->name << endl;
 							currentReference->isSubModelReference = true;
-
-							//cout << "DEBUG: a4" << endl;
 						}
 						else
 						{
-
 							/*clear memory of currentReference->subModelReference and currentReference->subModelDetails as submodel does not exist*/
 							delete subModelReference;
 							currentReference->firstReferenceWithinSubModel = NULL;	//added aug 08
 							currentReference->isSubModelReference = false;	//added aug 08
-
-							//cout << "DEBUG: a6" << endl;
 						}
 					#endif
-						//cout << "DEBUG: a8" << endl;
-
 
 						/*
 						cout << "" << endl;
@@ -1003,14 +956,6 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 				}
 			}
 		}
-		//performFinalUnitClassCalculations(parentReference->subModelDetails);		/*This is not needed here as it is repeated during combat calulations of a unit*/
-
-		/*
-		cout << "DEBUG ModelDetails X has shield = " << unitDetails->numShields << endl;
-		cout << "DEBUG ModelDetails X breast defence = " << unitDetails->breastDefenceValue << endl;
-		cout << "DEBUG ModelDetails X helmet defence = " << unitDetails->helmetDefenceValue << endl;
-		cout << "DEBUG ModelDetails X has neck plate = " << unitDetails->numPlateNeck << endl;
-		*/
 
 		parseFileObject->close();
 		delete parseFileObject;
@@ -1050,9 +995,6 @@ double calcModZPosBasedUponRotate(vec * childRelativePosition, mat * parentRefer
 
 	return zPosBasedUponRotatedParent;
 }
-
-
-
 
 
 

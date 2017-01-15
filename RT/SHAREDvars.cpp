@@ -23,7 +23,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 25-Sept-2012
  *
  *******************************************************************************/
 
@@ -56,18 +56,6 @@ long getTimeAsLong()
 	return timeAsLong;
 
 	#else
-	/*doesnt work;
-	FILETIME systemtime;
-	GetSystemTimeAsFileTime(&systemtime);
-	cout << "ftime = " << long(systemtime.dwLowDateTime) << endl;
-	return long(systemtime.dwLowDateTime);
-	*/
-	/*doesnt work;
-	time_t msec = time(NULL) * 1000;
-	long timeInMilliseconds = long(msec);
-	cout << "timeInMilliseconds = " << timeInMilliseconds << endl;
-	return timeInMilliseconds;
-	*/
 
 	SYSTEMTIME systemTime;
 	GetSystemTime(&systemTime);
@@ -80,7 +68,6 @@ long getTimeAsLong()
 	uli.HighPart = fileTime.dwHighDateTime;
 
 	ULONGLONG systemTimeIn_ms(uli.QuadPart/10000);
-	//long timeIn100NanoSeconds = long(uli.QuadPart);
 
 	//cout << "systemTimeIn_ms = " << systemTimeIn_ms << endl;
 
@@ -194,7 +181,6 @@ double absDouble(double val)
 
 
 
-//OLD bad code; if(strstr(...)) , NEW good code; if(strcmp(...) == 0)
 int exists_argument(int argc,char **argv,char *keystr)
 {
 	int i;
@@ -255,50 +241,3 @@ char *get_char_argument(int argc,char **argv,char *keystr)
 
 	return result;
 }
-/*
-int exists_argument(int argc,char **argv,char *keystr)
-{
-  int i;
-
-  for (i=1;i<argc;i++) if (strstr(argv[i],keystr)) return 1;
-  return 0;
-}
-
-float get_float_argument(int argc,char **argv,char *keystr)
-{
-  int i;
-  float result=0.0;
-
-  for (i=1;i<argc;i++){
-    if (strstr(argv[i],keystr)){
-      result=atof(argv[i+1]);
-      break;
-    }
-  }
-  if (i == argc){
-    fprintf(stderr,"Error: get_float_argument(%s)\n",keystr);
-    return (float) -999999999;
-  }
-  else return result;
-}
-
-char *get_char_argument(int argc,char **argv,char *keystr)
-{
-  int i;
-  char *result;
-
-  result=(char *) malloc(256);
-  result[0]=0;
-
-  for (i=1;i<argc;i++){
-    if (strstr(argv[i],keystr)){
-      sprintf(result,"%s",argv[i+1]);
-      break;
-    }
-  }
-  if (i == argc) fprintf(stderr,"Error: get_char_argument(%s)\n",keystr);
-
-  return result;
-}
-*/
-

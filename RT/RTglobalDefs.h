@@ -23,7 +23,7 @@
  * File Name: RTglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  * Description: RT specific global definitions
  *
  *******************************************************************************/
@@ -56,7 +56,6 @@
 	OR RAYTRACER ACCURACY RESOLUTION VARIABLES
 	***********/
 
-//#define OLDcalculateLuminosityLevelFromRGBMap
 #define RT_CONVERT_LDR_OBJECT_SCALES_PROPERLY
 #define RT_CONVERT_LDR_OBJECT_ROTATION_PROPERLY
 

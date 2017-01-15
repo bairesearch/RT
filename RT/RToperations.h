@@ -23,7 +23,7 @@
  * File Name: RToperations.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -35,22 +35,9 @@
 #define LINE_INTERSECTION_BOUNDARY_ERROR_ALLOWED (0.01)
 
 
-/*
-RToperations.h
-
-@author Richard Baxter
-@version 9-10-03 1:54pm
-
-[Assignment 3 MULT3004]
-
-all Mathematical functions (Vector/Matrix operations) required by the raytracer
-*/
-
 #include "SHAREDvars.h"
 #include "SHAREDvector.h"
 //#include "math.h"
-
-
 
 	/*4x4 matrix manipulation methods*/
 
@@ -81,7 +68,6 @@ void fromAdvancedVector(advanced_vec* vecAdv, vec* vec);
 void createAdvancedVector(advanced_vec* vec);
 
 
-
 double findSmallestValue(double val1, double val2, double val3);
 double findGreatestValue(double val1, double val2, double val3);
 	/*finds the smallest/largest value of 3 given scalars*/
@@ -94,9 +80,6 @@ int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec
 int findIntersectLineWithLine(vec * linept1, vec * linept2, vec * povpt1, vec * povpt2, vec * pt_int, vec * norm, double * t);
 	bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec * pt_int);
 int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t);
-
-
-
 
 
 

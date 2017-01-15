@@ -23,7 +23,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -39,14 +39,7 @@
 #endif
 
 
-/*OLD;
-int main()
-{
-	//setLightingMode(LIGHTING_MODE_BASIC);
-	setLightingMode(LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR);	//Default = LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR
-	rayTraceScene(NULL, "brick.ppm", TRUE, FALSE, NULL, NULL, NULL, NULL);		//uses standard input for tal file "eg OpenRT.exe < test.tal"
-}
-*/
+
 
 static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n"
@@ -248,7 +241,7 @@ int main(int argc,char **argv)
 
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe version: 1pXy" << endl;
+			cout << "OpenRT.exe - Project Version: 3a13a 24-Sept-2012" << endl;
 			exit(1);
 		}
 	}
@@ -286,3 +279,4 @@ int main(int argc,char **argv)
 
 	return (int)result;
 }
+

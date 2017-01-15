@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -42,7 +42,8 @@ using namespace std;
 
 void writeSVGHeader(ofstream * writeFileObject)
 {
-	string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+	string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-400 -100 10000 2000\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 	for(int i = 0; i<headerString.length(); i++)
 	{
 		writeFileObject->put(headerString[i]);
@@ -99,8 +100,6 @@ void writeSVGBox(ofstream * writeFileObject, vec * pos, double width, double hei
 	widthString = widthStringcharstar;
 	heightString = heightStringcharstar;
 
-	//cout << "boxOutlineWidthString = " << boxOutlineWidthString << endl;
-
 	string svgText = "";
 
 	if(useEllipse)
@@ -156,8 +155,6 @@ void writeSVGBoxTransparent(ofstream * writeFileObject, vec * pos, double width,
 	bString = bStringcharstar;
 	widthString = widthStringcharstar;
 	heightString = heightStringcharstar;
-
-	//cout << "boxOutlineWidthString = " << boxOutlineWidthString << endl;
 
 	string svgText = "";
 

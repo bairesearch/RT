@@ -23,7 +23,7 @@
  * File Name: LDsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -44,8 +44,8 @@
 #define DEFAULT_LDRAW_SUBMODEL_COLOUR (16)
 
 
-#define ANN_OR_LRRC_SPRITE_HEADER_NAME "\n0 Start OpenANN.exe Sprites\n"
-#define ANN_OR_LRRC_SPRITE_TRAILER_NAME "0 End OpenANN.exe Sprites\n"
+#define ANN_OR_LRRC_SPRITE_HEADER_NAME "\n0 Start ann.exe Sprites\n"
+#define ANN_OR_LRRC_SPRITE_TRAILER_NAME "0 End ann.exe Sprites\n"
 #define ANN_OR_LRRC_SPRITE_HEADER_NUM_LINES (2)
 #define ANN_OR_LRRC_SPRITE_TRAILER_NUM_LINES (1)
 #define ANN_OR_LRRC_SPRITE_HEADER_LENGTH 25

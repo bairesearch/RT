@@ -23,7 +23,8 @@
  * File Name: RTparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
+ * Description: A simple parser for TAL files 
  *
  *******************************************************************************/
 
@@ -33,17 +34,6 @@
 
 #ifndef HEADER_RT_PARSER
 #define HEADER_RT_PARSER
-
-/*
-#ifdef RTDEBUG
-	#include <string>
-	#include <iostream>
-	#include <fstream>
-	#include <time.h>
-	#include <math.h>
-	using namespace std;
-#endif
-*/
 
 
 #include <stdio.h>
@@ -65,7 +55,6 @@ typedef enum {
  * light_source
  * Light source parameters
  */
-
 class light_source
 {
 public:
@@ -78,14 +67,7 @@ public:
 	vec pos;
 	colour col;
 };
-/*
-typedef struct {
-	light_type type;
 
-	vec pos;
-	colour col;
-} light_source;
-*/
 
 
 typedef enum {
@@ -119,24 +101,6 @@ public:
 	vec vertex3Position;	//only used for PRIM_QUAD/PRIM_TRI
 	vec vertex4Position;	//only used for PRIM_QUAD/PRIM_TRI
 };
-/*
-typedef struct {
-	piece_type type;		// the type of the piece
-
-	colour col;			// the colour of the piece
-	vec pos;			// position of the piece's origin
-
-	double xrot; 			// rotations (in degrees) about the x, y and z axes respectively - not used for primitive parts
-	double yrot;
-	double zrot;
-
-	vec vertex1Position;	//only used for PRIM_QUAD/PRIM_TRI
-	vec vertex2Position;	//only used for PRIM_QUAD/PRIM_TRI
-	vec vertex3Position;	//only used for PRIM_QUAD/PRIM_TRI
-	vec vertex4Position;	//only used for PRIM_QUAD/PRIM_TRI
-
-} piece_info;
-*/
 
 
 /*
@@ -145,9 +109,6 @@ typedef struct {
  */
 
 
-
-
-/*ADDED RB 11:43 15/9/03*/
 
 /* dimensions_info */
 class dimensions_info
@@ -163,16 +124,6 @@ public:
 	int transparency;
 	int is_invisible;	// nonzero if INVISIBLE was specified [not used for most objects, only used for baseplate]
 };
-/*
-typedef struct {
-	double width;		// width of the object
-	double length;		// length of the object
-	double height;		// height of the object [not used for all objects, eg bricks dont use this but use a default height instead]
-	int translucent;	// nonzero if TRANSLUCENT option is specified [OPTIONAL]
-	int transparency;
-	int is_invisible;	// nonzero if INVISIBLE was specified [not used for most objects, only used for baseplate]
-} dimensions_info;
-*/
 
 
 
@@ -191,17 +142,6 @@ public:
 	int have_transparent;	// nonzero if TRANSPARENTCOLOUR specified
 	colour transparentcolour;	// the colour, if specified
 };
-/*
-typedef struct {
-	double width;		// width of the decal in the scene
-	double length;		// length of the decal
-
-	char *filename;		// name of the image to use
-
-	int have_transparent;	// nonzero if TRANSPARENTCOLOUR specified
-	colour transparentcolour;	// the colour, if specified
-} decal_info;
-*/
 
 
 /*
@@ -221,14 +161,6 @@ public:
 	int param_count;	// how many parameters
 	char **params;		// the parameters
 };
- /*
-typedef struct {
-	char *command_string;	// the name of the unknown command
-
-	int param_count;	// how many parameters
-	char **params;		// the parameters
-} unknown_info;
-*/
 
 
 /*

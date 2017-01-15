@@ -23,7 +23,7 @@
  * File Name: RTppm.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -91,12 +91,12 @@ void placepoint_ppm(pixmap *pm, int x, int y, int r, int g, int b);
 
 pixmap *new_pixmap(int wide, int high);  /*create a new blank pixmap*/
 
-pixmap *load_ppm(char *fname);         /*load a ppm file into a pixmap*/
-				       /*if fname is NULL, open standard input*/
-void write_ppm(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/
-					 /*if fname is NULL, write to stdout*/
+pixmap *load_ppm(char *fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
+				       
+void write_ppm(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
+					
 void free_pixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
-/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
-unsigned char* calc_pixel_address(pixmap *pm, int x, int y);
+
+unsigned char* calc_pixel_address(pixmap *pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
 
 #endif

@@ -23,7 +23,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -100,7 +100,6 @@ void printRGBMap(int imageWidth, int imageHeight, unsigned char * rgbMap)
 double calculateLuminosityLevelFromColour(colour * col)
 {
 	double luminosity = (col->r+col->g+col->b);
-	//cout << "luminosity = " << luminosity << endl;
 
 	return luminosity;
 }
@@ -412,7 +411,6 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 					#else
 					contrastThreshold = 0.0;
 					#endif
-					//cout << "contrastThreshold = " << contrastThreshold << endl;
 
 					if(col == 0)
 					{
@@ -624,11 +622,6 @@ void normaliseRGBMapBasedOnAverageLuminosity(unsigned char * normalisedRgbMap, i
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
 	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
 	double normalisationFactor = averageNormalisedLuminosity/averageLuminosity;
-	/*
-	cout << "averageLuminosity = " << averageLuminosity << endl;
-	cout << "averageNormalisedLuminosity = " << averageNormalisedLuminosity << endl;
-	cout << "normalisationFactor = " << normalisationFactor << endl;
-	*/
 
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -663,7 +656,6 @@ double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char
 	}
 
 	double averageLuminosity = totalLuminosity/(imageWidth*imageHeight);
-	//cout << "averageLuminosity = " << averageLuminosity << endl;
 	return averageLuminosity;
 }
 #endif
@@ -1250,17 +1242,20 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 void writeImage(char * imageFileName, pixmap * pm)
 {
 	write_ppm(imageFileName, pm);
-	/*write_ppm(NULL, pm);*/ /*For Clinton*/
 	free_pixmap(pm);
 }
 
 void readImage(char * imageFileName, unsigned char * rgbMap)
 {
 	pixmap * rgbPixMap;
+	#ifdef RT_DEBUG
 	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	#endif
 	rgbPixMap = load_ppm(imageFileName);
 
+	#ifdef RT_DEBUG
 	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
+	#endif
 	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
 	free_pixmap(rgbPixMap);
@@ -1271,10 +1266,14 @@ void readImage(string * imageFileName, unsigned char * rgbMap)
 	char * imageFileNameCharStar = const_cast<char*>(imageFileName->c_str());
 
 	pixmap * rgbPixMap;
+	#ifdef RT_DEBUG
 	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	#endif
 	rgbPixMap = load_ppm(imageFileNameCharStar);
 
+	#ifdef RT_DEBUG
 	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
+	#endif
 	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
 	free_pixmap(rgbPixMap);
@@ -1299,8 +1298,6 @@ void readImage(string * imageFileName, unsigned char * rgbMap)
 
 
 
-//methods taken from ORoperations.cpp;
-
 
 
 void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int imageHeight, double * depthMap, double depthScale, double depthOffset)
@@ -1310,7 +1307,6 @@ void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int i
 
 	pm = new_pixmap(imageWidth, imageHeight);
 
-	//cout << "\n" << endl;
 	for(y = 0; y < imageHeight; y++)
 	{
   		for(x = 0; x < imageWidth; x++)
@@ -1318,7 +1314,6 @@ void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int i
 			int depthOrDepthContrastValueNormalised;
 			double depthOrDepthContrastValue;
 			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
-			//cout << "depth = " << depthOrDepthContrastValue << endl;
 
 			if(depthOrDepthContrastValue == RT_RAYTRACE_NO_HIT_DEPTH_T)
 			{
@@ -1329,10 +1324,7 @@ void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int i
 			calculate24BitDepthPixmapPixelFromDepth(depthOrDepthContrastValue, depthScale, depthOffset, &depthMap24BitPixelValue);
 
 			placepoint_ppm(pm, x, y, depthMap24BitPixelValue.r, depthMap24BitPixelValue.g, depthMap24BitPixelValue.b);
-
-			//cout << int(depthMap24BitPixelValue.b) << " ";
 		}
-		//cout << "\n" << endl;
 	}
 
 	writeImage(imageFileName, pm);
@@ -1344,10 +1336,8 @@ void createDepthMapFromDepth24BitPixmapImage(pixmap * depth24BitPixMap, double *
 {
 
 	int imageWidth = depth24BitPixMap->wide;
-	//cout << "4aii" << endl;
 	int imageHeight =  depth24BitPixMap->high;
 
-	//cout << "\n" << endl;
 	//fill luminosityMap
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -1363,10 +1353,7 @@ void createDepthMapFromDepth24BitPixmapImage(pixmap * depth24BitPixMap, double *
 				depth = RT_RAYTRACE_NO_HIT_DEPTH_T;
 			}
 
-			//cout << "depth = " << depth << endl;
 			setLumOrContrastOrDepthMapValue(x, y, imageWidth, depth, depthMap);
-
-			//cout << depth << " ";
 
 			#ifdef OR_DEBUG_PRINT_DEPTH_MAP
 			cout << depth << " ";
@@ -1399,34 +1386,12 @@ void calculate24BitDepthPixmapPixelFromDepth(double depth, double depthScale, do
 	int depthInt24Bit = (depth + depthOffset) / depthScale;
 	//depthInt24Bit = depthInt24Bit%((MAX_RGB_VAL+1)*(MAX_RGB_VAL+1)*(MAX_RGB_VAL+1));
 	depthMap24BitPixelValue->r = depthInt24Bit/((MAX_RGB_VAL+1)*(MAX_RGB_VAL+1));
-	/*
-	if(depthInt24Bit/((MAX_RGB_VAL)*(MAX_RGB_VAL)) > MAX_RGB_VAL)
-	{
-		cout << "depthMap24BitPixelValue->r = " << depthInt24Bit/((MAX_RGB_VAL)*(MAX_RGB_VAL)) << endl;
-		exit(0);
-	}
-	*/
+
 	int redRemainder = depthInt24Bit%((MAX_RGB_VAL+1)*(MAX_RGB_VAL+1));
 	depthMap24BitPixelValue->g = redRemainder/(MAX_RGB_VAL+1);
-	/*
-	if(redRemainder/(MAX_RGB_VAL) > MAX_RGB_VAL)
-	{
-		cout << "depthMap24BitPixelValue->g = " << redRemainder/(MAX_RGB_VAL) << endl;
-		exit(0);
-	}
-	*/
+
 	int greenRemainder = redRemainder%(MAX_RGB_VAL+1);
 	depthMap24BitPixelValue->b = greenRemainder;
-
-	/*
-	if(greenRemainder == MAX_RGB_VAL)
-	{
-		cout << "depthMap24BitPixelValue->b = " << greenRemainder << endl;
-		exit(0);
-	}
-	*/
-
-
 }
 
 
@@ -1436,7 +1401,6 @@ void createRGBMapFromPixmapImage(pixmap * objectImage, unsigned char * rgbMap)
 {
 
 	int imageWidth = objectImage->wide;
-	//cout << "4aii" << endl;
 	int imageHeight =  objectImage->high;
 
 	//fill luminosityMap
@@ -1447,7 +1411,6 @@ void createRGBMapFromPixmapImage(pixmap * objectImage, unsigned char * rgbMap)
 			int pixelPositionInPixmap = y*imageWidth*3+x*3;
 			colour col;
 			calculateColourFromPixmapPixel(objectImage, pixelPositionInPixmap, &col);
-			//cout << "col.r = " << col.r << endl;
 			setRGBMapValues(x, y, imageWidth, &col, rgbMap);
 		}
 	}
@@ -1456,7 +1419,6 @@ void createRGBMapFromPixmapImage(pixmap * objectImage, unsigned char * rgbMap)
 
 void calculateColourFromPixmapPixel(pixmap * pm, int pixelPositionInPixmap, colour * col)
 {
-
 	col->r = pm->pix[(int)pixelPositionInPixmap];
 	col->g = pm->pix[(int)pixelPositionInPixmap+1];
 	col->b = pm->pix[(int)pixelPositionInPixmap+2];
@@ -1467,7 +1429,6 @@ void calculateColourFromPixmapPixel(pixmap * pm, int pixelPositionInPixmap, colo
 void createLuminosityMapFromPixmapImage(pixmap * objectImage, double * luminosityMap)
 {
 	int imageWidth = objectImage->wide;
-	//cout << "4aii" << endl;
 	int imageHeight =  objectImage->high;
 
 	//fill luminosityMap
@@ -1491,7 +1452,6 @@ double calculateLuminosityLevelFromPixmapPixel(pixmap * pm, int pixelPositionInP
 	unsigned char b = pm->pix[(int)pixelPositionInPixmap+2];
 
 	luminosity = (r+g+b);
-	//cout << "luminosity = " << luminosity << endl;
 
 	return luminosity;
 }
@@ -1519,7 +1479,6 @@ double calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, unsigned
 		unsigned char g = getRGBMapValue(x, y, imageWidth, RGB_GREEN, rgbMap);
 		unsigned char b = getRGBMapValue(x, y, imageWidth, RGB_BLUE, rgbMap);
 		luminosity = (r+g+b);
-		//cout << "luminosity = " << luminosity << endl;
 	#else
 		colour col;
 		getRGBMapValues(x, y, imageWidth, rgbMap, &col);
@@ -1539,7 +1498,6 @@ double calculateLuminosityLevelFromRGBVal(colour * rgbVal)
 	unsigned char b = rgbVal->b;
 
 	luminosity = (r+g+b);
-	//cout << "luminosity = " << luminosity << endl;
 
 	return luminosity;
 }
@@ -1605,10 +1563,6 @@ double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * lumin
 						}
 						else
 						{
-							//cout << "x = " << x << endl;
-							//cout << "y = " << y << endl;
-
-
 							//calc diff lum diff between centre pixel and current surrounding kernel pixel
 							double kernelCurrentPixelPositionInLummapLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 							double currentContrastLevel = absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
@@ -1624,25 +1578,6 @@ double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * lumin
 							#ifdef USE_OR
 							}
 							#endif
-							//cout << "contrastLevel = " << contrastLevel << endl;
-
-
-							/*VERYOLD;	//do not apply threshold for contrast levels here!
-							#define COLOUR_SATURATION_DIFF_FOR_CONTRAST_EDGE 30
-							int centrePixelPositionInPixmap = pixelY*(objectImage->wide)*3+pixelX*3;
-							int kernelCurrentPixelPositionInPixmap = y*(objectImage->wide)*3+x*3;
-							for(int col=0; col<3; col++)
-							{
-
-								int centrePixelPositionInPixmapColour = objectImage->pix[(int)centrePixelPositionInPixmap+col];
-								int kernelCurrentPixelPositionInPixmapColour = objectImage->pix[(int)kernelCurrentPixelPositionInPixmapColour+col];
-								if(abs(centrePixelPositionInPixmapColour - kernelCurrentPixelPositionInPixmapColour) > COLOUR_SATURATION_DIFF_FOR_CONTRAST_EDGE)
-								{
-									contrastLevel = max
-								}
-
-							}
-							*/
 						}
 					}
 				}
@@ -1660,8 +1595,6 @@ double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * lumin
 
 				for(int y = pixelY; y<= pixelY+1; y++)
 				{
-					//cout << "y = " << y << endl;
-
 					double pixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(pixelX, y, imageWidth, luminosityMap);
 					double adjacentPixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(pixelX+1, y, imageWidth, luminosityMap);
 
@@ -1672,8 +1605,6 @@ double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * lumin
 
 				for(int x = pixelX; x<= pixelX+1; x++)
 				{
-					//cout << "x = " << x << endl;
-
 					double pixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(x, pixelY, imageWidth, luminosityMap);
 					double adjacentPixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(x, pixelY+1, imageWidth, luminosityMap);
 
@@ -1728,10 +1659,6 @@ double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, un
 						}
 						else
 						{
-							//cout << "x = " << x << endl;
-							//cout << "y = " << y << endl;
-
-
 							//calc diff lum diff between centre pixel and current surrounding kernel pixel
 
 							double kernelCurrentPixelPositionInLummapLuminosity = getRGBMapValue(x, y, imageWidth, rgbComponent, rgbMap);
@@ -1748,7 +1675,6 @@ double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, un
 							#ifdef USE_OR
 							}
 							#endif
-							//cout << "contrastLevel = " << contrastLevel << endl;
 						}
 					}
 				}
@@ -1766,8 +1692,6 @@ double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, un
 
 				for(int y = pixelY; y<= pixelY+1; y++)
 				{
-					//cout << "y = " << y << endl;
-
 					double pixelLuminosityMeasurement = getRGBMapValue(pixelX, y, imageWidth, rgbComponent, rgbMap);
 					double adjacentPixelLuminosityMeasurement = getRGBMapValue(pixelX+1, y, imageWidth, rgbComponent, rgbMap);
 
@@ -1778,8 +1702,6 @@ double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, un
 
 				for(int x = pixelX; x<= pixelX+1; x++)
 				{
-					//cout << "x = " << x << endl;
-
 					double pixelLuminosityMeasurement = getRGBMapValue(x, pixelY, imageWidth, rgbComponent, rgbMap);
 					double adjacentPixelLuminosityMeasurement = getRGBMapValue(x, pixelY+1, imageWidth, rgbComponent, rgbMap);
 

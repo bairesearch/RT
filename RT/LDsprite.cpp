@@ -23,7 +23,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -32,7 +32,6 @@
 
 
 #include "LDsprite.h"
-//#include "LDparser.h"
 #include "math.h"
 #include "LDreferenceManipulation.h"
 #include "SHAREDvector.h"
@@ -70,7 +69,6 @@ double spriteTextKernelArray[ANSI_NUMBER_CHARACTERS];
 
 void fillInLDSpriteExternVariables()
 {
-	//extract common sprite variables from either xml file (LRRC or ANN)
 	#ifdef USE_CS
 		RulesClass * currentReferenceRulesClass = CSrulesSprite;
 	#elif defined USE_GIA
@@ -220,11 +218,8 @@ void fillInLDSpriteExternVariables()
 
 /*Secondary sprite routines*/
 
-//
-
 void LDcreateSpriteReferenceName(char * spriteReferenceFileName, int spriteIndex, char * sceneFileName)
 {
-	//cout << "66" << endl;
 	//creates sprite reference name spriteReferenceName = [SPRITE_NAME_START][spriteIndex][sceneFileName]
 	char * tempString = new char[SPRITE_INDEX_MAGNITUDE*CPLUSPLUSERRORCORRECTION2];
 
@@ -243,16 +238,13 @@ void LDcreateSpriteReferenceName(char * spriteReferenceFileName, int spriteIndex
 	strcat(spriteReferenceFileName, tempString);
 
 	strcat(spriteReferenceFileName, SPRITE_NAME_START.c_str());
-	//itoa(spriteIndex, tempString, 10);
 	sprintf(tempString, "%d", spriteIndex);
 
 	strcat(spriteReferenceFileName, tempString);
 
 	strcat(spriteReferenceFileName, SPRITE_EXTENSION.c_str());
 
-	//cout << "67" << endl;
 	delete tempString;
-	//cout << "68" << endl;
 	//create the "spritex.ldr" file that will be referenced by the scene file
 }
 
@@ -336,11 +328,6 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string * spriteTextStri
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
 			*numSpritesAdded = *numSpritesAdded + 1;
-
-			//cout << "spriteTextKernelArray[spriteText[spriteTextIndex]][1] = " << spriteTextKernelArray[spriteText[spriteTextIndex]][1] << endl;
-			//cout << "spriteText[spriteTextIndex]] = " << spriteText[spriteTextIndex] << endl;
-
-
 		}
 		else if(spriteText[spriteTextIndex] == ' ')
 		{
@@ -348,27 +335,17 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string * spriteTextStri
 		}
 		else
 		{
-			/*
-			char temp = (char)SPRITE_CHARACTER_DICE_OFFSET;
-			char temp2 = (char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL);
-			printf("\nunknown character - system must exit (character = %c %d)", spriteText[spriteTextIndex], spriteText[spriteTextIndex]);
-			printf("\nNB SPRITE_CHARACTER_DICE_OFFSET = %c %d", temp, temp);
-			printf("\nNB (SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL) = %c %d", temp2, temp2);
-			exit(0);
-			*/
+		
 		}
 	}
 
 	delete spriteText;
-
 
 	return spriteSubmodelCurrentReference;
 }
 
 
 
-//CHECK THIS spriteSubmodelCurrentReference parameter may have to be changed to the LRRCaddTextualSpriteInfoStringToReferenceList() function return value
-//bool LRRCaddTextualSpriteInfoStringToReferenceList(string * spriteTextString, int spriteColourArray[], Reference * spriteSubmodelFirstReference, int spriteNumberOfLines, Reference * spriteSubmodelFinalReference);
 Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReference, string * spriteTextString, int spriteColourArray[], Reference * spriteSubmodelInitialReference, int spriteNumberOfLines, int * numSpritesAdded, bool addIndividualSprites)
 {
 	bool result = true;
@@ -408,8 +385,6 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 			if(spriteLineNumber >= spriteNumberOfLines)
 			{
 				cout << "error; (spriteLineNumber >= spriteNumberOfLines)" << endl;
-
-
 				result = false;
 			}
 			spriteSubmodelCurrentReferencePosition.y  = spriteSubmodelCurrentReferencePosition.y + SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS;
@@ -511,53 +486,32 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 
 
 
-//OLD: new items [eg char, Reference] are currently not being properly created in LRRCsprite.cpp
 bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, Reference * spriteListInitialReference, char * spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor)
 {
 	//add sprite to spriteByteArray (replace sprite of sprite index, spriteIndex, if it already exists)
 
 	bool result = true;
 
-
-	//spriteReferenceSubmodelNameLength = (int)strlen(spriteReferenceFileName);
-
 	Reference * spriteReference = new Reference();
 
-	spriteReference->colour = spriteDefaultColour;		//CHECK THIS - this should be changed to player
+	spriteReference->colour = spriteDefaultColour;
 	spriteReference->type = REFERENCE_TYPE_SUBMODEL;
 	mat spriteRotationMatrix;
 
 	createIdentityMatrix(&spriteRotationMatrix);
-	scaleMatrix(&spriteRotationMatrix, spriteScaleFactor);		//	scaleMatrix(&currentDeformationMatrix, ((neuronContainer->neuron->bias)*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM)));
+	scaleMatrix(&spriteRotationMatrix, spriteScaleFactor);
 
-/*original before RBB 26-jan-07
-	ANNgenerateSpriteRotationMatrix(spriteSceneCoords, eyeCoords, &spriteRotationMatrix);
-*/
 	copyMatrix2IntoMatrix1(&(spriteReference->deformationMatrix), &(spriteRotationMatrix));
-		//spriteReference->deformationMatrix = spriteRotationMatrix;
 
 	spriteReference->relativePosition.x = spriteSceneCoords->x;
 	spriteReference->relativePosition.y = spriteSceneCoords->y;
 	spriteReference->relativePosition.z = spriteSceneCoords->z;
 	spriteReference->name = spriteReferenceFileName;
-	//cout << "DEBUG: mmstart";
-
 
 	int lineNumberInFileOfSprite;
 
-	/*
-	cout << "about to findTextInByteArray;" << endl;
-	cout << "DEBUG: spriteListByteArray = " << spriteListByteArray << endl;
-	cout << "DEBUG: *spriteListByteArraySize = " << *spriteListByteArraySize << endl;
-	cout << "DEBUG: spriteReferenceString = " << spriteReferenceString << endl;
-	cout << "DEBUG: spriteReferenceStringSize = " << spriteReferenceStringSize << endl;
-	cout << "DEBUG: &lineNumberInFileOfSprite = " << &lineNumberInFileOfSprite << endl;
-	*/
-
 	if(search1DRefListNameAndColourFindRef(spriteListInitialReference, spriteReference))
 	{
-		//cout << "DEBUG LRRCsprite.cpp 3b " << endl;
-
 		if(!search1DRefListNameAndColourReplaceRef(spriteListInitialReference, spriteReference, spriteReference))
 		{
 			cout << "error: cannot replace Reference in Sprite Reference List" << endl;
@@ -568,7 +522,6 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 	}
 	else
 	{
-		//cout << "DEBUG LRRCsprite.cpp 3c " << endl;
 		if(!search1DRefListAddReference(spriteListInitialReference, spriteReference))
 		{
 			cout << "error: cannot add Reference to Sprite Reference List" << endl;
@@ -579,7 +532,6 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 	}
 
 	delete spriteReference;
-	//cout << "DEBUG LRRCsprite.cpp 4 " << endl;
 
 	return result;
 }
@@ -606,24 +558,6 @@ bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char *
 	else
 	{
 		int sceneFileNumberOfLinesWithSprites = sceneFileNumberOfLines;
-
-		//TEMP DEBUG
-		/*
-		int temp1 = DAT_FILE_MAX_NUM_OF_REFERENCES;
-		int temp2 = DAT_FILE_REF_MAX_SIZE;
-		cout << "DAT_FILE_MAX_NUM_OF_REFERENCES = " << temp1 << endl;
-		cout << "DAT_FILE_REF_MAX_SIZE = " << temp2 << endl;
-		*/
-
-		#ifdef TEMPDEBUG
-		cout << "DEBUG; sceneFileByteArray = \n" << endl;
-		for(int i = 0; i < sceneFileByteArraySize; i++)
-		{
-			cout << sceneFileByteArray[i];
-		}
-		cout << "DEBUG; sceneFileNumberOfLinesWithSprites = " << sceneFileNumberOfLinesWithSprites << endl;
-		cout << "DEBUG; sceneFileByteArraySize = " << sceneFileByteArraySize << endl;
-		#endif
 
 		/*Start Sprite Header Section Confirmation*/
 
@@ -671,15 +605,8 @@ bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char *
 		else if(!spriteHeaderFound && !spriteTrailerFound)
 		{
 			/*add a sprite header to scene file*/
-			#ifdef TEMPDEBUG
-			cout << "\n\n ADDING SPRITE HEADER TO SCENE FILE \n\n" << endl;
-			#endif
 
 			lineNumberOfSpriteHeader = (sceneFileNumberOfLinesWithSprites-1);
-
-			#ifdef TEMPDEBUG2
-			cout << "DEBUG; sceneFileByteArraySize theoretical = " << (sceneFileByteArraySize + ANN_OR_LRRC_SPRITE_HEADER_LENGTH) << endl;
-			#endif
 
 			if(!addLinesToByteArray(sceneFileByteArray, spriteHeaderSearchString, &sceneFileByteArraySize, spriteHeaderSearchStringLength, lineNumberOfSpriteHeader))
 			{
@@ -696,24 +623,7 @@ bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char *
 
 			sceneFileNumberOfLinesWithSprites=sceneFileNumberOfLinesWithSprites+ANN_OR_LRRC_SPRITE_HEADER_NUM_LINES;
 
-			#ifdef TEMPDEBUG2
-			cout << "DEBUG; sceneFileByteArray = \n" << endl;
-			for(int i = 0; i < sceneFileByteArraySize; i++)
-			{
-				cout << sceneFileByteArray[i];
-			}
-			cout << "DEBUG; sceneFileNumberOfLinesWithSprites = " << sceneFileNumberOfLinesWithSprites << endl;
-			cout << "DEBUG; sceneFileByteArraySize = " << sceneFileByteArraySize << endl;
-			#endif
-
 			/*add a sprites to scene file*/
-			#ifdef TEMPDEBUG
-			cout << "\n\n ADDING SPRITES TO SCENE FILE  \n\n" << endl;
-			#endif
-
-			#ifdef TEMPDEBUG2
-			cout << "DEBUG; sceneFileByteArraySize theoretical = " << (sceneFileByteArraySize + spriteListByteArraySize) << endl;
-			#endif
 
 			lineNumberInFileOfSprite = (sceneFileNumberOfLinesWithSprites-1);
 			if(!addLinesToByteArray(sceneFileByteArray, spriteListByteArray, &sceneFileByteArraySize, spriteListByteArraySize, lineNumberInFileOfSprite))
@@ -731,22 +641,7 @@ bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char *
 
 			sceneFileNumberOfLinesWithSprites = sceneFileNumberOfLinesWithSprites + spriteListByteArrayLines;
 
-
-			#ifdef TEMPDEBUG2
-			cout << "DEBUG; sceneFileByteArray = \n" << endl;
-			for(int i = 0; i < sceneFileByteArraySize; i++)
-			{
-				cout << sceneFileByteArray[i];
-			}
-			cout << "DEBUG; sceneFileNumberOfLinesWithSprites = " << sceneFileNumberOfLinesWithSprites << endl;
-			cout << "DEBUG; sceneFileByteArraySize = " << sceneFileByteArraySize << endl;
-			#endif
-
-
 			/*add a sprite trailer to scene file*/
-			#ifdef TEMPDEBUG
-			cout << "\n\n ADDING SPRITE TRAILER TO SCENE FILE  \n\n" << endl;
-			#endif
 
 			lineNumberOfSpriteTrailer = (sceneFileNumberOfLinesWithSprites-1);
 			if(!addLinesToByteArray(sceneFileByteArray, spriteTrailerSearchString, &sceneFileByteArraySize, spriteTrailerSearchStringLength, lineNumberOfSpriteTrailer))
@@ -766,18 +661,6 @@ bool LDaddSpriteListByteArrayToSceneFileInefficient(char * sceneFileName, char *
 				result = false;
 			}
 			sceneFileNumberOfLinesWithSprites=sceneFileNumberOfLinesWithSprites+ANN_OR_LRRC_SPRITE_TRAILER_NUM_LINES;
-
-
-			#ifdef TEMPDEBUG
-			cout << "DEBUG; sceneFileByteArray = \n" << endl;
-			for(int i = 0; i < sceneFileByteArraySize; i++)
-			{
-				cout << sceneFileByteArray[i];
-			}
-			cout << "DEBUG; sceneFileNumberOfLinesWithSprites = " << sceneFileNumberOfLinesWithSprites << endl;
-			cout << "DEBUG; sceneFileByteArraySize = " << sceneFileByteArraySize << endl;
-			#endif
-
 
 			//write the byteArray - replacing the original scene file
 			writeByteArrayToFile(sceneFileNameWithSprites, sceneFileByteArray, sceneFileByteArraySize);
@@ -851,8 +734,6 @@ void LDspriteSubmodelFillTextualReference(Reference * spriteSubmodelCurrentRefer
 	copyMatrix2IntoMatrix1(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
 
 	spriteSubmodelCurrentReference->name = referenceNameStart + tempString + referenceNameEnd;
-	//cout << "DEBUG: SPRITE_CHARACTER_EXTENSION = " << SPRITE_CHARACTER_EXTENSION << endl;
-	//cout << "DEBUG: spriteSubmodelCurrentReference->name = " << spriteSubmodelCurrentReference->name << endl;
 
 	delete tempString;
 }

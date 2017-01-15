@@ -23,7 +23,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 24-Sept-2012
  *
  *******************************************************************************/
 
@@ -152,6 +152,7 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 {
 	GLfloat *pixels = new GLfloat[width * height];
 	//GLuint *pixels = new GLuint[width * height];
+	
 	/*
 	glPixelStorei(GL_PACK_ROW_LENGTH, width);
 	int rowSkip = 0;
@@ -160,7 +161,7 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 	glPixelStorei(GL_PACK_SKIP_ROWS, 0);
 	glReadPixels(pixelSkip, rowSkip, width, height, GL_DEPTH_COMPONENT, GL_FLOAT, pixels);
 	*/
-	//	//?
+	
 	//glReadBuffer(GL_BACK);	//?
 	//glPixelTransferf(GL_DEPTH_SCALE, 1.0);	//pnr
 	//glPixelTransferf(GL_DEPTH_BIAS, 0.0);	//probably not req
@@ -191,13 +192,13 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 			depthMap[y*width + x] = (pixels[oldx + (oldy * width)]);
 			//depthMap[y*width + x] = ((double)(pixels[oldx + (oldy * width)]))/((double)(sizeof(GL_UNSIGNED_INT)));
 
+			#ifdef FIX_OPENGL_3DOD_TIMING_BUG
 			if(depthMap[y*width + x] > 0)
 			{
 				//cout << "depthMap[" << y << "*width + " << x << "] = " << depthMap[y*width + x] << endl;
-			#ifdef FIX_OPENGL_3DOD_TIMING_BUG
 				cout << depthMap[y*width + x] << endl;
-			#endif
 			}
+			#endif
 		}
 	}
 
@@ -244,7 +245,6 @@ void draw3DTrisPrimitivesReferenceListToOpenGL()
 		}
 		else
 		{
-			//cout << "h1" << endl;
 			unsigned int colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 			r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -339,7 +339,6 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 		}
 		else
 		{
-			//cout << "h1" << endl;
 			unsigned int colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 			r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -377,8 +376,6 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
 		}
 	}
-
-	//cout << "h3" << endl;
 }
 
 
@@ -386,8 +383,6 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 
 void draw3DPrimitivesReferenceListToOpenGL()
 {
-	cout << "here" << endl;
-
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
 	#endif
@@ -417,7 +412,6 @@ void draw3DPrimitivesReferenceListToOpenGL()
 		}
 		else
 		{
-			//cout << "h1" << endl;
 			unsigned int colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 			r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -490,8 +484,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 
 	#ifdef USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV
 
-		//cout << "h2" << endl;
-
 		glTranslatef(opengl2DMatrixTransformation5aTranslationFactorX, opengl2DMatrixTransformation5aTranslationFactorY, 0.0);
 
 	GLfloat m[] =
@@ -546,7 +538,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 			}
 			else
 			{
-				//cout << "h1" << endl;
 				unsigned int colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 				r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -558,13 +549,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 			b = b / 255.0;
 
 			glColor3f(r,g,b);
-
-			/*
-			if(((int)r == 0) && ((int)g == 0) && ((int)b == 0))
-			{
-				exit(0);
-			}
-			*/
 
 			/*
 			cout << "r = " << r << endl;
@@ -584,9 +568,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 			glVertex2f(currentReference->vertex2absolutePosition.x,currentReference->vertex2absolutePosition.y);
 			glVertex2f(currentReference->vertex3absolutePosition.x,currentReference->vertex3absolutePosition.y);
 			glVertex2f(currentReference->vertex4absolutePosition.x,currentReference->vertex4absolutePosition.y);
-
-
-			//cout << "h2" << endl;
 		}
 
 		currentReference = currentReference->next;
@@ -612,8 +593,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
 		}
 	}
-
-	//cout << "h3" << endl;
 }
 
 
@@ -654,7 +633,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGL()
 			}
 			else
 			{
-				//cout << "h1" << endl;
 				unsigned int colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 				r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -666,13 +644,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGL()
 			b = b / 255.0;
 
 			glColor3f(r,g,b);
-
-			/*
-			if(((int)r == 0) && ((int)g == 0) && ((int)b == 0))
-			{
-				exit(0);
-			}
-			*/
 
 			/*
 			cout << "r = " << r << endl;
@@ -692,9 +663,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGL()
 			glVertex2f(currentReference->vertex2absolutePosition.x,currentReference->vertex2absolutePosition.y);
 			glVertex2f(currentReference->vertex3absolutePosition.x,currentReference->vertex3absolutePosition.y);
 			glVertex2f(currentReference->vertex4absolutePosition.x,currentReference->vertex4absolutePosition.y);
-
-
-			//cout << "h2" << endl;
 		}
 
 		currentReference = currentReference->next;
@@ -705,8 +673,6 @@ void draw2DQuadsPrimitivesReferenceListToOpenGL()
 	glPopMatrix();
 
 	glFlush();
-
-	//cout << "h3" << endl;
 }
 
 
@@ -723,10 +689,10 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 		}
 		else
 		{
-
-
-		//if(currentReference->referenceEnabledMethod2DOD)
-		//{
+		/*
+		if(currentReference->referenceEnabledMethod2DOD)
+		{
+		*/
 			float r;
 			float g;
 			float b;
@@ -741,7 +707,6 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 			}
 			else
 			{
-				//cout << "h1" << endl;
 				unsigned int colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 				r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -784,7 +749,9 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 					glVertex3f(currentReference->vertex4absolutePosition.x,currentReference->vertex4absolutePosition.y,currentReference->vertex4absolutePosition.z);
 				glEnd();
 			}
-		//}
+		/*
+		}
+		*/
 
 		}
 
@@ -795,8 +762,6 @@ void draw3DPrimitivesReferenceListToOpenGLRecurse(Reference * firstReferenceInLa
 
 void draw3DPrimitivesReferenceListToOpenGLwithRecursion()
 {
-	//cout << "h2" << endl;
-
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
 	#endif
@@ -815,8 +780,6 @@ void draw3DPrimitivesReferenceListToOpenGLwithRecursion()
 	glPopMatrix();
 
 	glFlush();
-
-	//cout << "h3" << endl;
 }
 
 
@@ -825,8 +788,6 @@ void draw3DPrimitivesReferenceListToOpenGLwithRecursion()
 
 void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 {
-	//cout << "h2" << endl;
-
 	#ifndef  __FREEGLUT_EXT_H__
 		cout << "freeglut appears not to be installed" << endl;
 	#endif
@@ -843,8 +804,10 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
-		//if(currentReference->referenceEnabledMethod2DOD)
-		//{
+		/*
+		if(currentReference->referenceEnabledMethod2DOD)
+		{
+		*/
 
 			float r;
 			float g;
@@ -860,7 +823,6 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 			}
 			else
 			{
-				//cout << "h1" << endl;
 				unsigned int colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 				r = ((unsigned int)(colourExtracted << 8) >> 24);
@@ -876,8 +838,6 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 			if(currentReference->type == REFERENCE_TYPE_LINE)
 			{
-				//cout << "here" << endl;
-
 				glBegin(GL_LINES);
 					glColor3f(r,g,b);
 					glVertex2f(currentReference->vertex1absolutePosition.x,currentReference->vertex1absolutePosition.y);
@@ -896,8 +856,6 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 			}
 			else if(currentReference->type == REFERENCE_TYPE_QUAD)
 			{
-				//cout << "here2" << endl;
-
 				glBegin(GL_QUADS);
 					glColor3f(r,g,b);
 					glVertex2f(currentReference->vertex1absolutePosition.x,currentReference->vertex1absolutePosition.y);
@@ -906,9 +864,9 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 					glVertex2f(currentReference->vertex4absolutePosition.x,currentReference->vertex4absolutePosition.y);
 				glEnd();
 			}
-		//}
-
-
+		/*
+		}
+		*/
 
 		currentReference = currentReference->next;
 	}
@@ -916,8 +874,6 @@ void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 	glPopMatrix();
 
 	glFlush();
-
-	//cout << "h3" << endl;
 }
 
 
@@ -966,8 +922,6 @@ void drawPrimitivesReferenceListToOpenGLAndCreateRGBMap(Reference * firstReferen
 	writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
-
-	//cout << "h4" << endl;
 }
 
 void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODMatrixOperations)
@@ -1006,8 +960,6 @@ void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesR
 	}
 
 	glutMainLoopEvent();
-
-	//cout << "h4" << endl;
 }
 
 
@@ -1023,15 +975,11 @@ void drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(Reference * firstRe
 	writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
-
-	//cout << "h4" << endl;
 }
 
 void updateScreen()
 {
 	glutPostRedisplay();
-
-	//cout << "h4" << endl;
 }
 
 
