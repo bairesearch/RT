@@ -123,5 +123,6 @@ string replaceAllOccurancesOfString(string * textOrig, string stringToFind, stri
 
 void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileByteArraySize);
 void writeStringToFileObject(string s, ofstream * writeFileObject);
+void writeStringToFile(string * fileName, string * s);
 
 #endif

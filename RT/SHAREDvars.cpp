@@ -567,3 +567,15 @@ void writeStringToFileObject(string s, ofstream * writeFileObject)
 		writeFileObject->put(s[i]); //(s.cStr())[i]
 	}
 }
+
+void writeStringToFile(string * fileName, string * s)
+{
+	ofstream writeFileObject(fileName->c_str());
+
+	for(int i=0; i < s->size(); i++)
+	{
+		writeFileObject.put((*s)[i]);
+	}
+
+	writeFileObject.close();
+}
