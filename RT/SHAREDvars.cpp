@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f5d 21-July-2015
+ * Project Version: 3f6a 27-July-2015
  *
  *******************************************************************************/
 
