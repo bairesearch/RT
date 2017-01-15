@@ -26,7 +26,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -431,9 +431,9 @@ void divideVectorByScalarRT(vec* vect1, double divisor, vec* vect)
 
 void makeMatrix(vec* vect1, vec* vect2, vec* vect3, mat* matx)
 {
-	matx->a =* (vect1);
-	matx->b =* (vect2);
-	matx->c =* (vect3);
+	matx->a = *(vect1);
+	matx->b = *(vect2);
+	matx->c = *(vect3);
 }
 
 void multMatrixByVector(mat* matx, vec* vect1, vec* vect)

@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -449,13 +449,13 @@ bool convertReferenceToString(LDreference* currentReference, string* referenceSt
 
 	//write reference type
 	sprintf(dataValueString, "%d", currentReference->type);
-	*referenceString =* referenceString + dataValueString;
-	*referenceString =* referenceString + CHAR_SPACE;
+	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + CHAR_SPACE;
 
 	//write reference colour
 	sprintf(dataValueString, "%d", currentReference->colour);
-	*referenceString =* referenceString + dataValueString;
-	*referenceString =* referenceString + CHAR_SPACE;
+	*referenceString = *referenceString + dataValueString;
+	*referenceString = *referenceString + CHAR_SPACE;
 
 	if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
@@ -465,44 +465,44 @@ bool convertReferenceToString(LDreference* currentReference, string* referenceSt
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
 		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
-		*referenceString =* referenceString + positionCoordinatesString;
+		*referenceString = *referenceString + positionCoordinatesString;
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
 		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
 		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
-		*referenceString =* referenceString + rotationMatrixString;
+		*referenceString = *referenceString + rotationMatrixString;
 
 		//write submodel name
-		*referenceString =* referenceString + currentReference->name;
+		*referenceString = *referenceString + currentReference->name;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD) || (currentReference->type == REFERENCE_TYPE_LINE))
 	{
 		//write primitive vertex coords
 
 		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
-		*referenceString =* referenceString + positionCoordinatesString;
+		*referenceString = *referenceString + positionCoordinatesString;
 
 		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
-		*referenceString =* referenceString + positionCoordinatesString;
+		*referenceString = *referenceString + positionCoordinatesString;
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
 			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
-			*referenceString =* referenceString + positionCoordinatesString;
+			*referenceString = *referenceString + positionCoordinatesString;
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
 				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
-				*referenceString =* referenceString + positionCoordinatesString;
+				*referenceString = *referenceString + positionCoordinatesString;
 			}
 		}
 	}
 	else if(currentReference->type == REFERENCE_TYPE_COMMENT)
 	{
 		//write comment name
-		*referenceString =* referenceString + currentReference->name;
+		*referenceString = *referenceString + currentReference->name;
 	}
 	else
 	{
@@ -510,7 +510,7 @@ bool convertReferenceToString(LDreference* currentReference, string* referenceSt
 	}
 
 	//write new line
-	*referenceString =* referenceString + CHAR_NEWLINE;
+	*referenceString = *referenceString + CHAR_NEWLINE;
 
 	return result;
 }
@@ -699,7 +699,7 @@ bool readFileIntoString(string fileName, string* fileContentsString, int* fileNu
 	{
 		while ((parseFileObject).get(c))
 		{
-			*fileContentsString =* fileContentsString + c;
+			*fileContentsString = *fileContentsString + c;
 			if(c == '\n')
 			{
 				currentLine++;

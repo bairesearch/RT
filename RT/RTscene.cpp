@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -375,7 +375,7 @@ RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li)
 		/*the first time round, read info commands do not provide relevant pointers!*/
 		RTlightingInfo* nd = new RTlightingInfo(); //(RTlightingInfo*)malloc(sizeof(RTlightingInfo));
 
-		nd->ls =* (get_light_info());
+		nd->ls = *(get_light_info());
 		nd->nextLight = NULL;
 
 		li = addLightToEnd(li, nd);
@@ -418,8 +418,8 @@ RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
 		RTsceneInfo* nd = new RTsceneInfo(); //(RTsceneInfo*)malloc(sizeof(RTsceneInfo));
-		nd->pi =* (getPieceInfo());
-		nd->di =* (getDimensionsInfo());
+		nd->pi = *(getPieceInfo());
+		nd->di = *(getDimensionsInfo());
 		nd-> tIn = 0.0;
 		nd-> tOut = 0.0;
 		nd->nextScene = NULL;

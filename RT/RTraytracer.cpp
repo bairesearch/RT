@@ -26,7 +26,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -757,7 +757,7 @@ void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* fin
 
 		tInOut[0] = tempTInOut[0];
 		tInOut[1] = tempTInOut[1];
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 	else
 	{
@@ -1115,7 +1115,7 @@ void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat*
 	{
 		tInOut[0] = tempTInOut[0];
 		tInOut[1] = tempTInOut[1];
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 	else
 	{
@@ -1322,7 +1322,7 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 		//printf("2");
 		tInOut[0] = t[0];
 		tInOut[1] = t[1];
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 	else
 	{
@@ -1392,7 +1392,7 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* n
 		//printf("hereg");
 		tInOut[0] = tInAndOut;
 		tInOut[1] = tInAndOut;
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 
 
@@ -1453,7 +1453,7 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* no
 		//printf("hereg");
 		tInOut[0] = tInAndOut;
 		tInOut[1] = tInAndOut;
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 
 
@@ -1586,7 +1586,7 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec
 		//printf("found quad intersection");
 		tInOut[0] = tInAndOut;
 		tInOut[1] = tInAndOut;
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 
 	/*NORMAL CALCULATIONS*/
@@ -1645,7 +1645,7 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* n
 		//printf("hereg");
 		tInOut[0] = tInAndOut;
 		tInOut[1] = tInAndOut;
-		*relevantFinalReverseMatrix =* finalReverseMatrix;
+		*relevantFinalReverseMatrix = *finalReverseMatrix;
 	}
 
 
@@ -1720,7 +1720,7 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 	toAdvancedVector(&pdash, 0, &pdashAdvanced);
 
 	/*this is not needed
-	standardMatrixCopy =* standardMatrix;
+	standardMatrixCopy = *standardMatrix;
 	transposeAdvancedMatrix(&standardMatrixCopy);
 	*/
 
@@ -1759,7 +1759,7 @@ void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, doub
 	//replaced by RBB 2x sept 08
 	toAdvancedVector(norm, 0, &ndashAdvanced);
 
-	reverseMatrixCopy =* reverseMatrix;
+	reverseMatrixCopy = *reverseMatrix;
 	transposeAdvancedMatrix(&reverseMatrixCopy);	/*this doesnt do anything*/
 	multAdvancedMatrixByVector(&ndashAdvanced, &reverseMatrixCopy, &nAdvanced);
 	fromAdvancedVector(&nAdvanced, &n);

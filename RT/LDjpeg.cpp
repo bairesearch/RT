@@ -26,7 +26,7 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -195,7 +195,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	if(printOutput)
 	{
 		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-		*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
+		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
 		#else
 		printf("\n\n\nyBlock = %d", yBlock);
 		#endif
@@ -207,7 +207,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-			*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TD>";
+			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>";
 			#else
 			printf("\n\n\nyBlock = %d", yBlock);
 			#endif
@@ -229,7 +229,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 				if(printOutput)
 				{
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-					*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TABLE>";
+					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE>";
 					#else
 					printf("\nxBlock = %d", xBlock);
 					#endif
@@ -242,7 +242,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 					if(printOutput)
 					{
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-						*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TR>";
+						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TR>";
 						#else
 						printf("\n");
 						#endif
@@ -277,7 +277,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 							char dataValueString[100];
 							sprintf(dataValueString, "%d", block[i]);
-							*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
+							*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
 							#else
 							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);
 							printf("%d\t", block[i]);
@@ -288,14 +288,14 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 					if(printOutput)
 					{
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-						*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TR>";
+						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR>";
 						#endif
 					}
 				}
 				if(printOutput)
 				{
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-					*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TABLE>";
+					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TABLE>";
 					#endif
 				}
 
@@ -306,7 +306,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-			*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TD>";
+			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TD>";
 			#endif
 		}
 
@@ -316,7 +316,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	if(printOutput)
 	{
 		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-		*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
+		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
 		#endif
 	}
 

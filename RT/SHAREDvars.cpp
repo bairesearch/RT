@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -440,7 +440,7 @@ bool isWhiteSpace(char c)
 
 string convertStringToLowerCase(string* arbitraryCaseString)
 {
-	string lowerCaseString =* arbitraryCaseString;
+	string lowerCaseString = *arbitraryCaseString;
 	for(int i=0; i<arbitraryCaseString->length(); i++)
 	{
 		lowerCaseString[i] = tolower((*arbitraryCaseString)[i]);
@@ -520,7 +520,7 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
 {
 	*foundAtLeastOneInstance = false;
-	string text =* textOrig; 
+	string text = *textOrig; 
 	int pos = 0;
 	while((pos = text.find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{

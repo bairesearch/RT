@@ -26,7 +26,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -142,7 +142,7 @@ void writeSVGbox(XMLparserTag** currentTag, vec* pos, double width, double heigh
 
 	if(useEllipse)
 	{
-		XMLparserTag* currentTagInBlock =* currentTag;
+		XMLparserTag* currentTagInBlock = *currentTag;
 		currentTagInBlock->name = "ellipse";
 		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "cx";
@@ -180,7 +180,7 @@ void writeSVGbox(XMLparserTag** currentTag, vec* pos, double width, double heigh
 	}
 	else
 	{
-		XMLparserTag* currentTagInBlock =* currentTag;
+		XMLparserTag* currentTagInBlock = *currentTag;
 		currentTagInBlock->name = "rect";
 		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "x";
@@ -265,7 +265,7 @@ void writeSVGboxTransparent(XMLparserTag** currentTag, vec* pos, double width, d
 
 	if(useEllipse)
 	{
-		XMLparserTag* currentTagInBlock =* currentTag;
+		XMLparserTag* currentTagInBlock = *currentTag;
 		currentTagInBlock->name = "ellipse";
 		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "cx";
@@ -307,7 +307,7 @@ void writeSVGboxTransparent(XMLparserTag** currentTag, vec* pos, double width, d
 	}
 	else
 	{
-		XMLparserTag* currentTagInBlock =* currentTag;
+		XMLparserTag* currentTagInBlock = *currentTag;
 		currentTagInBlock->name = "rect";
 		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "x";
@@ -386,7 +386,7 @@ void writeSVGline(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col)
 	gString = gStringcharstar;
 	bString = bStringcharstar;
 
-	XMLparserTag* currentTagInBlock =* currentTag;
+	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
 	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "stroke";
@@ -457,7 +457,7 @@ void writeSVGtext(XMLparserTag** currentTag, string text, vec* pos, int fontSize
 	gString = gStringcharstar;
 	bString = bStringcharstar;
 
-	XMLparserTag* currentTagInBlock =* currentTag;
+	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
 	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";
@@ -502,11 +502,11 @@ XMLparserTag* writeSVGgroup(XMLparserTag** currentTag, string* groupID)
 {
 	XMLparserTag* nextTagOnOriginalLayer = NULL;
 
-	XMLparserTag* currentTagInBlock =* currentTag;
+	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
 	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "id";
-	currentAttributeInBlock->value =* groupID;
+	currentAttributeInBlock->value = *groupID;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 
 	currentTagInBlock->firstLowerLevelTag = new XMLparserTag();
@@ -548,7 +548,7 @@ void writeSVGconnector(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col,
 	xPos2String = xPos2Stringcharstar;
 	yPos2String = yPos2Stringcharstar;
 
-	XMLparserTag* currentTagInBlock =* currentTag;
+	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "path";
 	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";

@@ -302,7 +302,7 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 			LDreference* newReference = new LDreference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded =* numSpritesAdded + 1;
+			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if((spriteTextString[spriteTextIndex] >= 'A') && (spriteTextString[spriteTextIndex] <= 'Z'))
 		{
@@ -323,7 +323,7 @@ LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextStrin
 			LDreference* newReference = new LDreference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded =* numSpritesAdded + 1;
+			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if(spriteTextString[spriteTextIndex] == ' ')
 		{
@@ -396,7 +396,7 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			LDreference* newReference = new LDreference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded =* numSpritesAdded + 1;
+			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if((spriteTextString[spriteTextIndex] >= 'A') && (spriteTextString[spriteTextIndex] <= 'Z'))
 		{
@@ -420,7 +420,7 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			LDreference* newReference = new LDreference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded =* numSpritesAdded + 1;
+			*numSpritesAdded = *numSpritesAdded + 1;
 
 		}
 		else if(((unsigned char)spriteTextString[spriteTextIndex] > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)spriteTextString[spriteTextIndex] <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
@@ -443,7 +443,7 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			LDreference* newReference = new LDreference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded =* numSpritesAdded + 1;
+			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if(spriteTextString[spriteTextIndex] == ' ')
 		{
