@@ -3,7 +3,7 @@
  * File Name: SHAREDvector.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a7e 12-June-2012
+ * Project Version: 3a8a 14-June-2012
  *
  *******************************************************************************/
 
@@ -34,6 +34,10 @@ void initialiseVector(vec * vect);
 void calculateNormalOfTri(vec * pt1, vec * pt2, vec * pt3, vec * normal);
 
 void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * rotationVector);
+//void calculateRotationVectorFromVector(vec* vector, vec * rotationVector);	//this appears incorrect - don't use it ... //added 14 June 2012
+//void generateXYZRotationMatrix(vec * vector, mat * rotationMatrix);		//this appears incorrect - don't use it ... //added 14 June 2012
+void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix);
+void transposeMatrix(mat * matx);
 
 double calculateInteriorAngleOfAPolygonVertex(vec * pt1centre, vec * pt2, vec * pt3);
 
@@ -131,12 +135,13 @@ void createRotationxMatrix(mat* matrix, double rotation);
 void createRotationyMatrix(mat* matrix, double rotation);
 void createRotationzMatrix(mat* matrix, double rotation);
 double convertDegreesToRadian(double degrees);
+double convertRadianToDegrees(double radian);
 //void rotateMatrix(mat * matrix, char rotationAxis, double rotationDegrees);
 void copyMatrix2IntoMatrix1(mat* mat1, mat* mat2);
 void scaleMatrix(mat * matrix, double scaleFactor);
 
 double calculateAngleOfVector3D(vec * vect1, int axis);
-
+void createRotatationMatrix(mat * matrix, vec * rotationRadians);
 
 
 

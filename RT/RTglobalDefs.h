@@ -3,7 +3,7 @@
  * File Name: RTglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a7e 12-June-2012
+ * Project Version: 3a8a 14-June-2012
  * Description: RT specific global definitions
  *
  *******************************************************************************/
@@ -28,6 +28,25 @@
 #define CONTRAST_MAP_GENERATION_KERNEL_HEIGHT_NO_INTERPIXEL (3)
 #define CONTRAST_MAP_GENERATION_KERNEL_WIDTH_INTERPIXEL (2)
 #define CONTRAST_MAP_GENERATION_KERNEL_HEIGHT_INTERPIXEL (2)
+
+
+
+
+	/**********
+	OR RAYTRACER ACCURACY RESOLUTION VARIABLES
+	***********/
+
+//#define OLDcalculateLuminosityLevelFromRGBMap
+#define RT_CONVERT_LDR_OBJECT_SCALES_PROPERLY
+#define RT_CONVERT_LDR_OBJECT_ROTATION_PROPERLY
+
+//#define TRY_UNTESTED_SOFTWARE	//all the following are seriously untested
+#ifdef TRY_UNTESTED_SOFTWARE
+	#define RT_CONVERT_LDR_OBJECT_TRANSLATION_PROPERLY_VERSIONB (untested - may overcome no draw centre pixel line/column of object issue with RT_CONVERT_LDR_OBJECT_TRANSLATION_PROPERLY)
+#else
+	#define RT_CONVERT_LDR_OBJECT_TRANSLATION_PROPERLY
+#endif
+
 
 
 #endif

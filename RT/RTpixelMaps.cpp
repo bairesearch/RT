@@ -3,7 +3,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a7e 12-June-2012
+ * Project Version: 3a8a 14-June-2012
  *
  *******************************************************************************/
 
@@ -1346,8 +1346,14 @@ void createDepthMapFromDepth24BitPixmapImage(pixmap * depth24BitPixMap, double *
 			setLumOrContrastOrDepthMapValue(x, y, imageWidth, depth, depthMap);
 
 			//cout << depth << " ";
+			
+			#ifdef OR_DEBUG_PRINT_DEPTH_MAP
+			cout << depth << " ";
+			#endif
 		}
-		//cout << "\n" << endl;
+		#ifdef OR_DEBUG_PRINT_DEPTH_MAP
+		cout << "\n" << endl;
+		#endif
 	}
 }
 

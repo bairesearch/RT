@@ -3,7 +3,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a7e 12-June-2012
+ * Project Version: 3a8a 14-June-2012
  *
  *******************************************************************************/
 
@@ -18,6 +18,9 @@
 #include <time.h>
 #include <math.h>
 using namespace std;
+
+
+
 
 
 /*
@@ -55,6 +58,107 @@ void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * 
 	rotationVector->y = atan2(deformationMatrix->a.z, sqrt(pow(deformationMatrix->b.z, 2.0) + pow(deformationMatrix->c.z, 2.0)));
 	rotationVector->z = atan2(deformationMatrix->b.z, deformationMatrix->c.z);
 }
+
+/*
+void calculateRotationVectorFromVector(vec* vector, vec * rotationVector)
+{
+	//http://planning.cs.uiuc.edu/node103.html
+	rotationVector->x = atan2(vector->y, vector->z);
+	rotationVector->y = atan2(vector->x * cos(rotationVector->x), vector->z);
+	rotationVector->z = atan2(cos(rotationVector->x), sin(rotationVector->x)*sin(rotationVector->y));
+}
+
+
+//from http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/wwh-calculating-a-rotation-matrix-based-on-lo-r665
+void generateXYZRotationMatrix(vec * vector, mat * rotationMatrix)
+{
+	// Get our direction vector (the Z vector component of the matrix)
+	// and make sure it's normalized into a unit vector
+
+	vec zAxis;
+	zAxis.x = vector->x;
+	zAxis.y = vector->y;
+	zAxis.z = vector->z;
+	normaliseVector(&zAxis);
+
+	// Build the Y vector of the matrix (handle the degenerate case
+	// in the way that 3DS does) -- This is not the TRUE vector, only
+	// a reference vector.
+
+	vec yAxis;
+	if (!zAxis.x && !zAxis.z)
+	{
+		yAxis.x = -(zAxis.y);
+		yAxis.y = 0.0;
+		yAxis.z = 0.0;
+	}
+	else
+	{
+		yAxis.x = 0.0;
+		yAxis.y = 1.0;
+		yAxis.z = 0.0;
+	}
+	
+	// Build the X axis vector based on the two existing vectors
+	vec xAxis;
+	crossProduct(&yAxis, &zAxis, &xAxis);
+	normaliseVector(&xAxis);
+
+	// Correct the Y reference vector
+	crossProduct(&xAxis, &zAxis, &yAxis);
+	normaliseVector(&yAxis);
+	yAxis.x = -(yAxis.x);
+	yAxis.y = -(yAxis.y);
+	yAxis.z = -(yAxis.z);
+	
+	makeMatrix(&xAxis, &yAxis, &zAxis, rotationMatrix);
+
+}
+*/
+
+//from; http://stackoverflow.com/questions/349050/calculating-a-lookat-matrix
+void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix)
+{
+	/*
+	zaxis = normal(At - Eye)
+	xaxis = normal(cross(Up, zaxis))
+	yaxis = cross(zaxis, xaxis)	
+	*/
+	
+	vec zaxis;
+	subtractVectorsRT(at, eye, &zaxis);
+	normaliseVector(&zaxis);
+
+	vec xaxis;
+	crossProduct(up, &zaxis, &xaxis);
+	normaliseVector(&xaxis);
+	
+	vec yaxis;
+	crossProduct(&zaxis, &xaxis, &yaxis);
+	
+	makeMatrix(&xaxis, &yaxis, &zaxis, rotationMatrix);
+	
+}
+
+void transposeMatrix(mat * matx)
+{
+	double tmp;
+
+	tmp = matx->a.y;
+	matx->a.y = matx->b.x;
+	matx->b.x = tmp;
+
+	tmp = matx->a.z;
+	matx->a.z = matx->c.x;
+	matx->c.x = tmp;
+
+	tmp = matx->b.z;
+	matx->b.z = matx->c.y;
+	matx->c.y = tmp;
+}
+
+
+
 
 
 double calculateInteriorAngleOfAPolygonVertex(vec * pt1centre, vec * pt2, vec * pt3)
@@ -265,6 +369,7 @@ double calculateAngleOfVector3D(vec * vect1, int axis)
 	return angle;
 
 }
+
 
 
 
@@ -654,6 +759,12 @@ double convertDegreesToRadian(double degrees)
 	return (degrees/180*PI);
 }
 
+double convertRadianToDegrees(double radian)
+{
+	return (radian*180/PI);
+}
+
+
 void createIdentityMatrix(mat* matrix)
 {
 	matrix->a.x = 1;
@@ -704,6 +815,9 @@ void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadia
 		createRotationzMatrix(matrix, rotationRadians);
 	}
 }
+
+
+
 
 
 

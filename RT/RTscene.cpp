@@ -3,7 +3,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a7e 12-June-2012
+ * Project Version: 3a8a 14-June-2012
  *
  *******************************************************************************/
 
@@ -475,7 +475,7 @@ scene_info * parseTalFileGetSceneInfo(scene_info *si)
 		createScaleMatrix(width, length, height, &scaleMatrix);
 
 		multAdvancedMatrix(&inverseRotationyMatrix, &inverseRotationxMatrix,&tmpAdvancedMatrix);
-		multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
+		multAdvancedMatrix(&inverseRotationzMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);		//This used to be (before 14 June 2012);  multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix, &tmpAdvancedMatrix2);
 		multAdvancedMatrix(&tmpAdvancedMatrix2, &scaleMatrix, &tmpAdvancedMatrix3);
 		multAdvancedMatrix(&translationMatrix, &tmpAdvancedMatrix3, &standardMatrix);
 
