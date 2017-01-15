@@ -23,7 +23,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c5c 21-December-2012
+ * Project Version: 3c6c 22-July-2013
  *
  *******************************************************************************/
 
@@ -210,10 +210,6 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 
 void draw3DtrisPrimitivesReferenceListToOpenGL()
 {
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
-
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -281,10 +277,6 @@ void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 		}
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = getTimeAsLong();
 	}
-
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
 
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -383,10 +375,6 @@ void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 
 void draw3DprimitivesReferenceListToOpenGL()
 {
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
-
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -469,10 +457,6 @@ void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 		}
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart = getTimeAsLong();
 	}
-
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
 
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -598,10 +582,6 @@ void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 
 void draw2DquadsPrimitivesReferenceListToOpenGL()
 {
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
-
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -762,10 +742,6 @@ void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLa
 
 void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 {
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
-
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use white background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -788,10 +764,6 @@ void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 
 void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 {
-	#ifndef  __FREEGLUT_EXT_H__
-		cout << "freeglut appears not to be installed" << endl;
-	#endif
-
 	glClearColor(OPEN_GL_BACKGROUND_COLOUR_R,OPEN_GL_BACKGROUND_COLOUR_G,OPEN_GL_BACKGROUND_COLOUR_B,0.0);	//use black background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
