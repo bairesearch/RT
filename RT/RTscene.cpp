@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f2b 22-June-2015
+ * Project Version: 3f3a 10-July-2015
  *
  *******************************************************************************/
 
@@ -95,7 +95,7 @@ int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles
 
 	exitParser();
 
-	setCurrentDirectory(tempFolderCharStar);
+	setCurrentDirectory(tempFolder);
 
 
 	if(!rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))

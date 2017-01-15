@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f2b 22-June-2015
+ * Project Version: 3f3a 10-July-2015
  *
  *******************************************************************************/
 
@@ -114,8 +114,7 @@ int main(int argc,char* *argv)
 	lightSourcePosition.x = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_X;
 	lightSourcePosition.y = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Y;
 	lightSourcePosition.z = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z;
-	char* lightSourceColour = new char[10];
-	strcpy(lightSourceColour, TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR);
+	string lightSourceColour = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR;
 
 	/*==============================================================
 	* Interpret parameters from Command-line Arguments
@@ -132,11 +131,11 @@ int main(int argc,char* *argv)
 	if ((argumentExists(argc,argv,"-iotal")) || (argumentExists(argc,argv,"-ildr")))
 	{
 		if (argumentExists(argc,argv,"-iotal"))
-		topLevelSceneFileNameCollapsedForRayTracing=getCharArgument(argc,argv,"-iotal");
+		topLevelSceneFileNameCollapsedForRayTracing=getStringArgument(argc,argv,"-iotal");
 
 		if (argumentExists(argc,argv,"-ildr"))
 		{
-			topLevelSceneFileName=getCharArgument(argc,argv,"-ildr");
+			topLevelSceneFileName=getStringArgument(argc,argv,"-ildr");
 			useLDRfile = true;
 		}
 
@@ -144,7 +143,7 @@ int main(int argc,char* *argv)
 		lightingMode=getFloatArgument(argc,argv,"-lighting");
 
 		if (argumentExists(argc,argv,"-oppm"))
-		imageFileName=getCharArgument(argc,argv,"-oppm");
+		imageFileName=getStringArgument(argc,argv,"-oppm");
 
 		if (argumentExists(argc,argv,"-width"))
 		viewinfo.imageWidth=getFloatArgument(argc,argv,"-width");
@@ -198,41 +197,41 @@ int main(int argc,char* *argv)
 		lightSourcePosition.z=getFloatArgument(argc,argv,"-lightz");
 
 		if (argumentExists(argc,argv,"-lightcol"))
-		lightSourceColour=getCharArgument(argc,argv,"-lightcol");
+		lightSourceColour=getStringArgument(argc,argv,"-lightcol");
 
-		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];
-		getCurrentDirectory(currentFolder);
+		string currentFolder = "";
+		currentFolder = getCurrentDirectory();
 
 		if (argumentExists(argc,argv,"-workingfolder"))
 		{
-			workingFolderCharStar=getCharArgument(argc,argv,"-workingfolder");
+			workingFolder=getStringArgument(argc,argv,"-workingfolder");
 		}
 		else
 		{
-			workingFolderCharStar = currentFolder;
+			workingFolder = currentFolder;
 		}
 		if (argumentExists(argc,argv,"-exefolder"))
 		{
-			exeFolderCharStar=getCharArgument(argc,argv,"-exefolder");
+			exeFolder=getStringArgument(argc,argv,"-exefolder");
 		}
 		else
 		{
-			exeFolderCharStar = currentFolder;
+			exeFolder = currentFolder;
 		}
 		if (argumentExists(argc,argv,"-tempfolder"))
 		{
-			tempFolderCharStar=getCharArgument(argc,argv,"-tempfolder");
+			tempFolder=getStringArgument(argc,argv,"-tempfolder");
 		}
 		else
 		{
-			tempFolderCharStar = currentFolder;
+			tempFolder = currentFolder;
 		}
 
-		setCurrentDirectory(workingFolderCharStar);
+		setCurrentDirectory(workingFolder);
 
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3f2b 22-June-2015" << endl;
+			cout << "OpenRT.exe - Project Version: 3f3a 10-July-2015" << endl;
 			exit(1);
 		}
 	}
@@ -254,7 +253,7 @@ int main(int argc,char* *argv)
 			exit(0);
 		}
 
-		setCurrentDirectory(tempFolderCharStar);
+		setCurrentDirectory(tempFolder);
 
 		write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
 		write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);

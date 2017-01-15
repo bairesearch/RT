@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f2b 22-June-2015
+ * Project Version: 3f3a 10-July-2015
  *
  *******************************************************************************/
 
@@ -88,22 +88,17 @@ double maxDouble(double a, double b);	//should be turned into a macro instead
 
 double absDouble(double val);
 
-#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-int argumentExists(int argc, char* *argv, char* keystr);
-float getFloatArgument(int argc, char* *argv, char* keystr);
-char* getCharArgument(int argc,char* *argv,char* keystr);
-#endif
 bool argumentExists(int argc, char* *argv, string keystr);
 float getFloatArgument(int argc, char* *argv, string keystr);
 string getStringArgument(int argc, char* *argv, string keystr);
 void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>* inputFileNamesVector);
-void changeDirectoryString(string newDirectory);
-string getCurrentDirectoryString();
+void changeDirectory(string newDirectory);
 
-void getCurrentDirectory(char* folder);
-void setCurrentDirectory(const char* folder);
-void createDirectory(const char* folder);
-bool directoryExists(const char* folder);
+string getCurrentDirectory();
+void setCurrentDirectory(string folder);
+	void setCurrentDirectory(string* folder);
+void createDirectory(string* folder);
+bool directoryExists(string* folder);
 
 void copyColours(colour* colToModify, colour* colToCopy);
 

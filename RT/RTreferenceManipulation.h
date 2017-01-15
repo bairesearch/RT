@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3f2b 22-June-2015
+ * Project Version: 3f3a 10-July-2015
  *
  *******************************************************************************/
 
@@ -39,8 +39,8 @@
 #include "LDreferenceClass.h"
 #include "RTviewinfo.h"
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour);
-	bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour);
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, string lightSourceColour);
+	bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, string lightSourceColour);
 	bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
 		bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference);
 

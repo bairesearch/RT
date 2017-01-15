@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f2b 22-June-2015
+ * Project Version: 3f3a 10-July-2015
  *
  *******************************************************************************/
 
@@ -186,77 +186,6 @@ double absDouble(double val)
 	}
 }
 
-#ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-
-int argumentExists(int argc, char* *argv, char* keystr)
-{
-	for(int i=1; i<argc; i++)
-	{
-		//cout << "argv[i] = " << argv[i] << endl;
-		if(strcmp(argv[i],keystr) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-
-float getFloatArgument(int argc, char* *argv, char* keystr)
-{
-	float result=0.0;
-	bool foundArgument = false;
-
-	for(int i=1; i<argc; i++)
-	{
-		if(!foundArgument)
-		{
-			if(strcmp(argv[i], keystr) == 0)
-			{
-				result = atof(argv[i+1]);
-				foundArgument = true;
-			}
-		}
-	}
-	if(!foundArgument)
-	{
-		fprintf(stderr,"Error: getFloatArgument(%s)\n",keystr);
-		result = -999999999.0F;
-		return result;
-	}
-	else
-	{
-		return result;
-	}
-	result;
-}
-
-char* getCharArgument(int argc,char* *argv,char* keystr)
-{
-	char* result;
-	bool foundArgument = false;
-
-	result=(char* ) malloc(4096);
-	result[0]=0;
-
-	for(int i=1; i<argc; i++)
-	{
-		if(!foundArgument)
-		{
-			if(strcmp(argv[i], keystr) == 0)
-			{
-				sprintf(result,"%s",argv[i+1]);
-				foundArgument = true;
-			}
-		}
-	}
-	if(!foundArgument)
-	{
-		fprintf(stderr,"Error: getCharArgument(%s)\n",keystr);
-	}
-	return result;
-}
-#endif
-
 bool argumentExists(int argc, char* *argv, string keystr)
 {
 	for(int i=1; i<argc; i++)
@@ -349,7 +278,7 @@ void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>
 	}
 }
 
-void changeDirectoryString(string newDirectory)
+void changeDirectory(string newDirectory)
 {
 	char* newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
 	#ifdef LINUX
@@ -359,7 +288,7 @@ void changeDirectoryString(string newDirectory)
 	#endif
 }
 
-string getCurrentDirectoryString()
+string getCurrentDirectory()
 {
 	char currentFolderCharStar[EXE_FOLDER_PATH_MAX_LENGTH];
 	#ifdef LINUX
@@ -371,45 +300,44 @@ string getCurrentDirectoryString()
 	return currentFolder;
 }
 
-void getCurrentDirectory(char* folder)
+void setCurrentDirectory(string folder)
 {
+	setCurrentDirectory(&folder);
+}
+
+void setCurrentDirectory(string* folder)
+{
+	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
-	getcwd(folder, EXE_FOLDER_PATH_MAX_LENGTH);
+	chdir(folderCharStar);
 	#else
-	::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, folder);
+	::SetCurrentDirectory(folderCharStar);
 	#endif
 }
 
-void setCurrentDirectory(const char* folder)
+void createDirectory(string* folder)
 {
+	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
-	chdir(folder);
+	mkdir(folderCharStar, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
 	#else
-	::SetCurrentDirectory(folder);
+	::CreateDirectory(folderCharStar, NULL);
 	#endif
 }
 
-void createDirectory(const char* folder)
+bool directoryExists(string* folder)
 {
-	#ifdef LINUX
-	mkdir(folder, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
-	#else
-	::CreateDirectory(folder, NULL);
-	#endif
-}
-
-bool directoryExists(const char* folder)
-{
+	const char* folderCharStar = folder->c_str();
 	bool folderExists = false;
 
 	#ifdef LINUX
 	struct stat st;
-	if(stat(folder, &st) == 0)
+	if(stat(folderCharStar, &st) == 0)
 	{
 		folderExists = true;
 	}
 	#else
-	DWORD ftyp = GetFileAttributes(folder);
+	DWORD ftyp = GetFileAttributes(folderCharStar);
 	if(ftyp != INVALID_FILE_ATTRIBUTES)
 	{
 		if(ftyp & FILE_ATTRIBUTE_DIRECTORY)
@@ -418,7 +346,7 @@ bool directoryExists(const char* folder)
 		}
 	}
 	/*
-	if((GetFileAttributes(folder)) != INVALID_FILE_ATTRIBUTES)
+	if((GetFileAttributes(folderCharStar)) != INVALID_FILE_ATTRIBUTES)
 	{
 		folderExists = true;
 	}
