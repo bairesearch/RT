@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -15,6 +15,9 @@
 #include "SHAREDglobalDefs.h"
 #include "LDreferenceClass.h"
 
+#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also
+#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also
+	
 #define RGB_RED (0)
 #define RGB_GREEN (1)
 #define RGB_BLUE (2)
@@ -37,9 +40,9 @@
 		
 #elif defined USE_OR
 	//black? magenta?
-	#define OPEN_GL_BACKGROUND_COLOUR_R (OR_SNAPSHOT_BACKGROUND_COLOUR_R_NORM)
-	#define OPEN_GL_BACKGROUND_COLOUR_G (OR_SNAPSHOT_BACKGROUND_COLOUR_G_NORM)
-	#define OPEN_GL_BACKGROUND_COLOUR_B (OR_SNAPSHOT_BACKGROUND_COLOUR_B_NORM)
+	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)		//255 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
+	#define OPEN_GL_BACKGROUND_COLOUR_G (0.0)		//0 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
+	#define OPEN_GL_BACKGROUND_COLOUR_B (0.0)		//255 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
 #else
 	//black
 	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)
@@ -74,7 +77,7 @@ extern double opengl3DMatrixTransformation3TranslationFactorX;
 extern double opengl3DMatrixTransformation3TranslationFactorY;
 extern double opengl3DMatrixTransformation3TranslationFactorZ;
 
-int initiateOpenGL(int width, int height);
+int initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings);
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
 void setViewPort2DOrtho(double left, double right, double bottom, double top);
 void setViewPort3D(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFacingPoly, vec * viewportWidthHeightDepth);

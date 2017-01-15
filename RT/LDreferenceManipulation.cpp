@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceManipulation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -542,7 +542,7 @@ bool write2DReferencesLayerToFileObject(ofstream * writeFileObject, Reference * 
 			copyVectors(&(collapsedReference.vertex3relativePosition), &(currentReference->vertex3absolutePosition));
 			copyVectors(&(collapsedReference.vertex4relativePosition), &(currentReference->vertex4absolutePosition));
 
-		#ifdef USE_RT
+		#ifdef USE_LD_ABSOLUTE_COLOUR
 			collapsedReference.colour = currentReference->absoluteColour;
 		#endif
 

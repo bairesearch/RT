@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -29,6 +29,13 @@
 	#include <time.h>
 	#include <math.h>
 	using namespace std;
+#endif
+
+#ifdef USE_RT
+	#define USE_LD_ABSOLUTE_COLOUR
+#endif
+#ifdef USE_ANN	//for opengl support 
+	#define USE_LD_ABSOLUTE_COLOUR
 #endif
 
 #define TAL_FILE_COLOUR_BLACK_RGB "000000"
@@ -210,7 +217,7 @@ public:
 
 	int type;
 
-#ifdef USE_RT
+#ifdef USE_LD_ABSOLUTE_COLOUR
 	unsigned int absoluteColour;
 #endif
 

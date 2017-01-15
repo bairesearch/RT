@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: XMLParserClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -17,11 +17,6 @@
 #define XML_FILE_NAME "rules.xml"
 
 
-#define CHAR_NEW_LINE '\n'
-#define CHAR_NEW_LINE_STR "\n"
-#define CHAR_TAB '\t'
-#define CHAR_TAB_STR "\t"
-#define CHAR_SPACE ' '
 #define CHAR_TAG_OPEN '<'
 #define CHAR_TAG_OPEN_STR "<"
 #define CHAR_TAG_CLOSE '>'
@@ -153,7 +148,7 @@ bool writeXMLFileInefficient(string xmlFileName, XMLParserTag * firstTagInXMLFil
 		result = false;
 	}
 
-	XMLFileByteArray[XMLFileByteArrayCurrentPosition] = CHAR_NEW_LINE;	//need to add a new line onto the end of the file
+	XMLFileByteArray[XMLFileByteArrayCurrentPosition] = CHAR_NEWLINE;	//need to add a new line onto the end of the file
 	XMLFileByteArrayCurrentPosition++;
 
 	writeByteArrayToFile(xmlFileName.c_str(), XMLFileByteArray, XMLFileByteArrayCurrentPosition);
@@ -191,7 +186,7 @@ bool writeXMLFile(string xmlFileName, XMLParserTag * firstTagInXMLFile)
 	}
 
 	//Added by RBB 30 August 2009 - required for Windows SW to re-read xml files
-	writeFileObject.put(CHAR_NEW_LINE); //(s.cStr())[i]
+	writeFileObject.put(CHAR_NEWLINE); //(s.cStr())[i]
 
 	writeFileObject.close();
 
@@ -293,7 +288,7 @@ bool addTagLayerToFileObject(XMLParserTag * firstTagInCurrentLayer, ofstream * w
 
 void incrementLineAndAddTabsToFileObject(ofstream * writeFileObject, int treeLayer)
 {
-	writeFileObject->put(CHAR_NEW_LINE); //(s.cStr())[i]
+	writeFileObject->put(CHAR_NEWLINE); //(s.cStr())[i]
 
 	for(int i=0; i < treeLayer; i++)
 	{
@@ -415,7 +410,7 @@ bool addTagLayerToByteArrayInefficient(XMLParserTag * firstTagInCurrentLayer, ch
 
 void incrementLineAndAddTabsToByteArrayInefficient(char * XMLFileByteArray, long * XMLFileByteArrayCurrentPosition, int treeLayer)
 {
-	XMLFileByteArray[*XMLFileByteArrayCurrentPosition] = CHAR_NEW_LINE;
+	XMLFileByteArray[*XMLFileByteArrayCurrentPosition] = CHAR_NEWLINE;
 	*XMLFileByteArrayCurrentPosition = (*XMLFileByteArrayCurrentPosition + 1);
 
 	for(int i=0; i < treeLayer; i++)
@@ -1077,7 +1072,7 @@ bool isBlankCharTabOrNewLine(ifstream * parseFileObject, char c)
 {
 	bool result;
 
-	if(c == CHAR_NEW_LINE)
+	if(c == CHAR_NEWLINE)
 	{
 		lineCount++;
 		charCount=0;
@@ -1121,7 +1116,7 @@ bool isBlankChar(ifstream * parseFileObject, char c)
 		result = true;
 	}
 */
-	if(c == CHAR_NEW_LINE)
+	if(c == CHAR_NEWLINE)
 	{
 		lineCount++;
 		charCount=0;

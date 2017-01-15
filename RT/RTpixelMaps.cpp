@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: RTpixelMaps.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -20,9 +20,12 @@
 #include <math.h>
 using namespace std;
 
+/*now located in RTglobalDefs.h...
 #ifndef USE_OR
+
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH;
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_HEIGHT;
+
 		
 double MAX_LUMINOSITY_CONTRAST;
 double MAX_NORMAL_CONTRAST;
@@ -35,12 +38,8 @@ double EDGE_LUMINOSITY_THRESHOLD;
 
 double ESTIMATE_MAX_DEPTH_T_REAL;
 
-bool OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL;
-bool OR_PRINT_ALGORITHM_AND_TIME_DETAILS;
-bool OR_GENERATE_IMAGE_COMPARITOR_RESULTS_NO_EXPLICIT_CONFIDENTIAL_WARNINGS;
-bool OR_PRINT_ALGORITHM_PROGRESS;
-
 #endif
+*/
 
 #ifndef USE_OR
 void fillInRTRulesExternVariables()
@@ -58,11 +57,7 @@ void fillInRTRulesExternVariables()
 	EDGE_LUMINOSITY_THRESHOLD = (MAX_LUMINOSITY*LUMINOSITY_FRACTION_THRESHOLD);
 
 	ESTIMATE_MAX_DEPTH_T_REAL = (20.0);
-
-	OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL = false;
-	OR_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
-	OR_GENERATE_IMAGE_COMPARITOR_RESULTS_NO_EXPLICIT_CONFIDENTIAL_WARNINGS = true;
-	OR_PRINT_ALGORITHM_PROGRESS = false;
+	
 }
 #endif
 

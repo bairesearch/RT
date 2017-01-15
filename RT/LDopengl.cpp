@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -24,7 +24,7 @@ using namespace std;
 #include <GL/freeglut.h>	//need to use freeglut as it contains extensions functions which glut does not have; glutMainLoopEvent()
 
 
-#ifdef USE_RT	//need absoluteColour
+#ifdef USE_LD_ABSOLUTE_COLOUR
 
 mat opengl2DMultiplicationMatrix;
 double opengl2DMatrixTransformation1ScaleFactor = 0.0;
@@ -43,6 +43,13 @@ double opengl3DMatrixTransformation2iiZRotationFactor = 0.0;
 double opengl3DMatrixTransformation3TranslationFactorX = 0.0;
 double opengl3DMatrixTransformation3TranslationFactorY = 0.0;
 double opengl3DMatrixTransformation3TranslationFactorZ = 0.0;
+
+
+//these can no longer be configured dynamically through ORrules.xml
+static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL = false;
+static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
+static bool LD_OPENGL_PRINT_ALGORITHM_PROGRESS = false;
+
 
 Reference * firstReferenceInPrimitivesReferenceListGlobal;
 
@@ -64,8 +71,6 @@ void shearMatrix(float shearX, float shearY)
 		0.0, 0.0, 0.0, 1.0 };
 	glMultMatrixf(m);
 }
-
-
 
 void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap)
 {
@@ -248,9 +253,9 @@ void draw3DTrisPrimitivesReferenceListToOpenGL()
 void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
-	if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS)
+	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t start: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
@@ -339,15 +344,15 @@ void draw3DTrisPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 	glFlush();
 
 
-	if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS)
+	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
 		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = getTimeAsLong();
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
 		}
@@ -442,9 +447,9 @@ void draw3DPrimitivesReferenceListToOpenGL()
 void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 {
 	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
-	if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS)
+	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t start: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
@@ -574,15 +579,15 @@ void draw2DQuadsPrimitivesReferenceListToOpenGLWithPredefinedMatrixOperations()
 	glFlush();
 
 
-	if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS)
+	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
 		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = getTimeAsLong();
-		if(OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
+		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
 			cout << "\t\t\t\t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawScene = " << time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd-time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart << endl;
 		}
@@ -1095,27 +1100,19 @@ void setViewPort3D(vec * eyeFacingPoly, vec * viewatFacingPoly, vec * viewupFaci
 
 
 
-int initiateOpenGL(int width, int height)
+int initiateOpenGL(int width, int height, int windowPositionX, int windowPositionY, bool confidentialWarnings)
 {
 	int argc =0;
 	glutInit(&argc, NULL);	//&argc, argv
-	if(OR_PRINT_ALGORITHM_PROGRESS)
+	if(LD_OPENGL_PRINT_ALGORITHM_PROGRESS)
 	{
 		cout << "glut initialised" << endl;
 	}
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_SINGLE | GLUT_RGBA);
 	
-#ifdef USE_OR
-	int OPENGL_WINDOW_POSITION_X = (OR_SNAPSHOT_WINDOW_POSITION_X);
-	int OPENGL_WINDOW_POSITION_Y = (OR_SNAPSHOT_WINDOW_POSITION_Y);
-#else
-	int OPENGL_WINDOW_POSITION_X = (0);
-	int OPENGL_WINDOW_POSITION_Y = (0);
-#endif
-	
-	glutInitWindowPosition(OPENGL_WINDOW_POSITION_X,OPENGL_WINDOW_POSITION_Y);
-	glutInitWindowSize(width,height);
-	if(OR_GENERATE_IMAGE_COMPARITOR_RESULTS_NO_EXPLICIT_CONFIDENTIAL_WARNINGS)
+	glutInitWindowPosition(windowPositionX, windowPositionY);
+	glutInitWindowSize(width, height);
+	if(confidentialWarnings)
 	{
 		glutCreateWindow("Generating...");
 	}

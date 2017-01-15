@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: LDparser.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  *
  *******************************************************************************/
 
@@ -623,18 +623,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						currentReference->colour = colourRead;
 						*/
 						currentReference->colour = (unsigned int)(atof(colour));
-					#ifdef USE_RT
-						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
-						{
-							currentReference->absoluteColour = parentReference->absoluteColour;
-						}
-						else
-						{
-							currentReference->absoluteColour = currentReference->colour;
-						}
-					#endif
-
-					#ifdef USE_CS
+					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
 							currentReference->absoluteColour = parentReference->absoluteColour;
@@ -915,17 +904,7 @@ bool parseFile(char * parseFileName, Reference * initialReference, Reference * p
 						currentReference->colour = colourRead;
 						*/
 						currentReference->colour = (unsigned int)(atof(colour));
-					#ifdef USE_RT
-						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
-						{
-							currentReference->absoluteColour = parentReference->absoluteColour;
-						}
-						else
-						{
-							currentReference->absoluteColour = currentReference->colour;
-						}
-					#endif
-					#ifdef USE_CS
+					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
 							currentReference->absoluteColour = parentReference->absoluteColour;
