@@ -310,8 +310,7 @@ public:
 	RTviewInfo(void);
 	~RTviewInfo(void);
 
-	int imageWidth;			//IMAGESIZE
-	int imageHeight;		//IMAGESIZE
+	int imageWidth, imageHeight;	//IMAGESIZE
 
 	vec eye;			//EYE
 	vec viewAt;			//VIEWAT
