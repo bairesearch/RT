@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3i15b 11-August-2016
+ * Project Version: 3i16a 27-August-2016
  *
  *******************************************************************************/
 
@@ -165,7 +165,9 @@ bool readXMLfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 	}
 	else
 	{
-		if(!parseTagOpen(&parseFileObject, firstTagInXMLfile, "noCurrentTagName", false, 0))
+		bool isSubTag = false;	//first tag in file is not a subtag
+		int treeLayer = 0;
+		if(!parseTagOpen(&parseFileObject, firstTagInXMLfile, "noCurrentTagName", isSubTag, treeLayer))
 		{
 			result = false;
 		}
@@ -175,39 +177,54 @@ bool readXMLfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 	return result;
 }
 
-
 bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
-
+	bool endOfFile = false;
+	
 	bool finishedParsingObject = false;
 	while(!finishedParsingObject && result)
 	{
 		if(!(parseFileObject->get(currentToken)))
 		{
 			result = false;
+			endOfFile = true;
 		}
 		charCount++;
 
-		if(isBlankChar(parseFileObject, currentToken))
-		{
-
-		}
-		else if(currentToken == CHAR_TAG_OPEN)
+		if(currentToken == CHAR_TAG_OPEN)
 		{
 			parseTagName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
 			finishedParsingObject = true;
 		}
 		else
 		{
-			cout << "currentToken = " << currentToken << ":" << (int)currentToken << endl;
-			cout << "XML_PARSER_ERROR 1: invalid tag opening" << endl;
-			throwGenericXMLParseError();
-			result = false;
+			#ifdef XML_PARSER_DO_NOT_ALLOW_TAG_VALUE_TO_BE_DEFINED_AFTER_SUBTAG
+			if(isBlankChar(parseFileObject, currentToken))
+			{
+
+			}
+			else
+			{
+				cout << "currentToken = " << currentToken << ":" << (int)currentToken << endl;
+				cout << "XML_PARSER_ERROR 1: invalid tag opening" << endl;
+				throwGenericXMLParseError();
+				result = false;
+			}			
+			#else
+			currentTag->value = currentTag->value + currentToken;
+			#ifndef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
+			if(currentToken == CHAR_NEWLINE)
+			{
+				lineCount++;
+				charCount=0;
+			}
+			#endif
+			#endif
 		}
 	}
-
+	
 	return result;
 }
 
@@ -216,7 +233,9 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 	bool result = true;
 	char currentToken;
 	string tagName = "";
-
+	
+	bool firstChar = true;
+	
 	bool finishedParsingObject = false;
 	bool endTagFound = false;
 
@@ -226,51 +245,11 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 		{
 			result = false;
 		}
-
 		charCount++;
 
-		if(isBlankChar(parseFileObject, currentToken))
+		if(firstChar)
 		{
-			if(!endTagFound)
-			{
-				currentTag->name = tagName;
-				#ifdef XML_DEBUG
-				//cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
-				#endif
-				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
-				{
-					result = false;
-				}
-
-				finishedParsingObject = true;
-			}
-			else
-			{
-				cout << "XML_PARSER_ERROR 2: end tag found containing white space" << endl;
-				throwGenericXMLParseError();
-				result = false;
-			}
-		}
-		else if(currentToken == CHAR_TAG_END)
-		{
-			#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
-			if(tagName != "")
-			{
-				cout << "XML_PARSER_ERROR 3: incorrect end tag indicator detected" << endl;
-				throwGenericXMLParseError();
-				result = false;
-			}
-			else
-			{
-			#endif
-				endTagFound = true;
-			#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
-			}
-			#endif
-		}
-		else if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
-		{
-			if(tagName == "")
+			if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
 			{
 				if(!parseTagComment(parseFileObject, currentToken))
 				{
@@ -278,122 +257,84 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 				}
 				parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
 				finishedParsingObject = true;
+			}	
+			firstChar = false;	
+		}
+		
+		if(!finishedParsingObject)
+		{	
+			if(isBlankChar(parseFileObject, currentToken))
+			{
+				if(!endTagFound)
+				{
+					currentTag->name = tagName;
+					#ifdef XML_DEBUG
+					cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
+					#endif
+					if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
+					{
+						result = false;
+					}
+
+					finishedParsingObject = true;
+				}
+				else
+				{
+					cout << "XML_PARSER_ERROR 2: end tag found containing white space" << endl;
+					throwGenericXMLParseError();
+					result = false;
+				}
 			}
-			else
+			else if(currentToken == CHAR_TAG_END)
+			{
+				#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
+				if(tagName != "")
+				{
+					cout << "XML_PARSER_ERROR 3: incorrect end tag indicator detected" << endl;
+					throwGenericXMLParseError();
+					result = false;
+				}
+				else
+				{
+				#endif
+					endTagFound = true;
+				#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
+				}
+				#endif
+			}
+			else if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
 			{
 				cout << "XML_PARSER_ERROR 4: invalid comment openining" << endl;
 				throwGenericXMLParseError();
 				result = false;
 			}
-		}
-		else if(currentToken == CHAR_TAG_CLOSE)
-		{
-			if(tagName == "")
+			else if(currentToken == CHAR_TAG_CLOSE)
 			{
-				cout << "XML_PARSER_ERROR 5: empty tag name" << endl;
-				throwGenericXMLParseError();
-				result = false;
-			}
-			else
-			{
-				if(!isSubTag)
+				if(tagName == "")
 				{
-					currentTag->name = tagName;
-					if(endTagFound)
-					{
-
-					}
-					else
-					{
-						XMLparserTag* newLowerLevelTag = new XMLparserTag();
-						currentTag->firstLowerLevelTag = newLowerLevelTag;
-						if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, tagName, treeLayer))
-						{//go up a level in the tree
-							result = false;
-						}
-					}
-
-					//continue parsing at same level
-					XMLparserTag* newTag = new XMLparserTag();
-					currentTag->nextTag = newTag;
-					currentTag = currentTag->nextTag;
-					parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
+					cout << "XML_PARSER_ERROR 5: empty tag name" << endl;
+					throwGenericXMLParseError();
+					result = false;
 				}
 				else
 				{
-					if(endTagFound)
+					if(!processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, false, tagName))
 					{
-						if(tagName == parentTagName)
-						{
-							//finished parsing subtags within the value of this tag
-						}
-						#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
-						else
-						{//subtab+end detected with no attributes - this is illegal
-							cout << "XML_PARSER_ERROR 6: subtab+end detected with no attributes - this is illegal" << endl;
-							throwGenericXMLParseError();
-							result = false;
-						}
-						#else
-						else
-						{
-							//subtab+end detected without attributes
-
-							//NB currentTag->name has not already been filled
-							currentTag->name = tagName;
-
-							XMLparserTag* newTag = new XMLparserTag();
-							currentTag->nextTag = newTag;
-							currentTag = currentTag->nextTag;
-							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
-						}
-						#endif
+						result = false;
 					}
-					else
-					{
-						#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
-						if(tagName == parentTagName)
-						{
-							cout << "XML_PARSER_ERROR 7: subtab detected with same name as parent tab - this is illegal" << endl;
-							throwGenericXMLParseError();
-							result = false;
-						}
-						else
-						{
-						#endif
-							currentTag->name = tagName;
-
-							XMLparserTag* newLowerLevelTag = new XMLparserTag();
-							currentTag->firstLowerLevelTag = newLowerLevelTag;
-							if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, tagName, treeLayer))
-							{//go up a level in the tree
-								result = false;
-							}
-
-							//continue parsing at same level
-							XMLparserTag* newTag = new XMLparserTag();
-							currentTag->nextTag = newTag;
-							currentTag = currentTag->nextTag;
-							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
-						#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
-						}
-						#endif
-					}
+					finishedParsingObject = true;
 				}
-
-				finishedParsingObject = true;
 			}
-		}
-		else
-		{
-			tagName = tagName+currentToken;
+			else
+			{
+				tagName = tagName+currentToken;
+			}
 		}
 	}
 
 	return result;
 
 }
-
 
 bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
@@ -445,75 +386,10 @@ bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, 
 			}
 			else
 			{
-				if(!isSubTag)
+				if(!processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, true, currentTag->name))
 				{
-					//NB currentTag->name has already been filled in in parseTagName()
-					if(endTagFound)
-					{
-					}
-					else
-					{
-						XMLparserTag* newLowerLevelTag = new XMLparserTag();
-						currentTag->firstLowerLevelTag = newLowerLevelTag;
-						if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, currentTag->name, treeLayer))
-						{//go up a level in the tree
-							result = false;
-						}
-					}
-
-					//continue parsing at same level
-					XMLparserTag* newTag = new XMLparserTag();
-					currentTag->nextTag = newTag;
-					currentTag = currentTag->nextTag;
-					parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
-
+					result = false;
 				}
-				else
-				{
-					if(endTagFound)
-					{
-						if(currentTag->name == parentTagName)
-						{
-							//finished parsing subtags within the value of this tag
-						}
-						else
-						{//subtab+end detected with attributes
-
-							//NB currentTag->name has already been filled in in parseTagName()
-							XMLparserTag* newTag = new XMLparserTag();
-							currentTag->nextTag = newTag;
-							currentTag = currentTag->nextTag;
-							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
-						}
-					}
-					else
-					{
-						if(currentTag->name == parentTagName)
-						{
-							cout << "XML_PARSER_ERROR 11: subtab detected with same name as parent tab - this is illegal" << endl;
-							throwGenericXMLParseError();
-							result = false;
-						}
-						else
-						{
-							//NB currentTag->name has already been filled in in parseTagName()
-
-							XMLparserTag* newLowerLevelTag = new XMLparserTag();
-							currentTag->firstLowerLevelTag = newLowerLevelTag;
-							if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, currentTag->name, treeLayer))
-							{//go up a level in the tree
-								result = false;
-							}
-
-							//continue parsing at same level
-							XMLparserTag* newTag = new XMLparserTag();
-							currentTag->nextTag = newTag;
-							currentTag = currentTag->nextTag;
-							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
-						}
-					}
-				}
-
 				finishedParsingObject = true;
 			}
 		}
@@ -544,7 +420,6 @@ bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, 
 
 	return result;
 }
-
 
 bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
@@ -629,11 +504,18 @@ bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag,
 	return result;
 }
 
-bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream* parseFileObject, XMLparserTag* tag, XMLparserTag* subTag, string tagName, int treeLayer)
+bool parseTagValueAssumingExistenceOfSubtagsAndClose(ifstream* parseFileObject, XMLparserTag* currentTag, int treeLayer)
 {
 	bool result = true;
+	
+	string tagName = currentTag->name;
+	
+	XMLparserTag* newLowerLevelTag = new XMLparserTag();
+	currentTag->firstLowerLevelTag = newLowerLevelTag;
+	XMLparserTag* subTag = newLowerLevelTag;
+							
 	char currentToken;
-	string tagValue="";
+	string tagValue = "";
 
 	bool finishedParsingObject = false;
 
@@ -647,20 +529,20 @@ bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream* parseFileObject, 
 
 		if(currentToken == CHAR_TAG_OPEN)
 		{
-			tag->value = tagValue;
+			currentTag->value = tagValue;
 			treeLayer = treeLayer+1;
 			parseTagName(parseFileObject, subTag, tagName, true, treeLayer);
 			finishedParsingObject = true;
 		}
-	#ifdef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
+		#ifdef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
 		else if(isBlankCharTabOrNewLine(parseFileObject, currentToken))
 		{//NB spaces are added to the value however tabs and new lines are not
 
 		}
-	#endif
+		#endif
 		else
 		{
-			tagValue = tagValue+currentToken;
+			tagValue = tagValue + currentToken;	//allow tag value contents before subtag but not after....
 			#ifndef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
 			if(currentToken == CHAR_NEWLINE)
 			{
@@ -699,8 +581,8 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 					if(currentToken == CHAR_DASH)
 					{//foundSecondDash
 						#ifdef XML_DEBUG
-						//cout << "found legal comment opening" << endl;
-						//throwGenericXMLParseError();
+						cout << "found legal comment opening" << endl;
+						throwGenericXMLParseError();
 						#endif
 					}
 					else
@@ -741,8 +623,8 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 					{
 						finishedParsingObject = true;
 						#ifdef XML_DEBUG
-						//cout << "found legal comment close" << endl;
-						//throwGenericXMLParseError();
+						cout << "found legal comment close" << endl;
+						throwGenericXMLParseError();
 						#endif
 					}
 					else
@@ -788,6 +670,118 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 	return result;
 
 }
+
+XMLparserTag* createNewTag(XMLparserTag* currentTag)
+{
+	XMLparserTag* newTag = new XMLparserTag();
+	currentTag->nextTag = newTag;	
+	currentTag = currentTag->nextTag;
+	return currentTag;
+}
+					
+bool processTagClose(ifstream* parseFileObject, XMLparserTag** currentTag, string parentTagName, bool isSubTag, int treeLayer, bool endTagFound, bool parsingAttributeName, string tagName)
+{
+	bool result = true;
+	if(!isSubTag)
+	{
+		if(!parsingAttributeName)
+		{
+			(*currentTag)->name = tagName;
+			#ifdef XML_DEBUG
+			cout << "processTagClose1{}: parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
+			#endif
+		}
+		//else (*currentTag)->name has already been filled in in parseTagName()
+
+		if(endTagFound)
+		{
+
+		}
+		else
+		{
+			if(!parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
+			{//go up a level in the tree
+				result = false;
+			}
+		}
+
+		//continue parsing at same level
+		*currentTag = createNewTag(*currentTag);
+		parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+	}
+	else
+	{
+		if(endTagFound)
+		{
+			if(tagName == parentTagName)
+			{
+				//finished parsing subtags within the value of this tag
+			}
+			else
+			{
+				#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
+				if(!parsingAttributeName)	//CHECKTHIS requirement
+				{
+					//subtag+end detected with no attributes - this is illegal
+					cout << "XML_PARSER_ERROR 6: subtag+end detected with no attributes - this is illegal" << endl;
+					throwGenericXMLParseError();
+					result = false;
+				}
+				else
+				{
+				#endif
+					//subtag+end detected without attributes
+					if(!parsingAttributeName)
+					{
+						//NB (*currentTag)->name has not already been filled
+						(*currentTag)->name = tagName;
+						#ifdef XML_DEBUG
+						cout << "processTagClose2{}: parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
+						#endif
+					}
+					//else (*currentTag)->name has already been filled in in parseTagName()
+
+					*currentTag = createNewTag(*currentTag);
+					parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+				#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
+				}
+				#endif
+			}
+		}
+		else
+		{
+			#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
+			if(tagName == parentTagName)
+			{
+				cout << "XML_PARSER_ERROR 7: subtag detected with same name as parent tab - this is illegal" << endl;
+				throwGenericXMLParseError();
+				result = false;
+			}
+			else
+			{
+			#endif
+				if(!parsingAttributeName)
+				{
+					(*currentTag)->name = tagName;
+				}
+				//else (*currentTag)->name has already been filled in in parseTagName()
+
+				if(!parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
+				{//go up a level in the tree
+					result = false;
+				}
+
+				//continue parsing at same level
+				*currentTag = createNewTag(*currentTag);
+				parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+			#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
+			}
+			#endif
+		}
+	}
+	return result;
+}
+
 
 
 

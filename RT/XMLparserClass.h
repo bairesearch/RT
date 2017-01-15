@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3i15b 11-August-2016
+ * Project Version: 3i16a 27-August-2016
  *
  *******************************************************************************/
 
@@ -41,6 +41,8 @@
 
 //#define XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
 
+//#define XML_DEBUG
+
 #ifdef USE_GIA
 	/*yet untested without GIA;
 	#define XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_INSIDE_ATTRIBUTE_VALUE
@@ -51,6 +53,7 @@
 	#define XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE	//new 5 April 2012 - to support Stanford NLP Core XML files with end tag immediately following tag name, without a preceeding space eg <basic-dependencies/>
 	#define XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_INSIDE_ATTRIBUTE_VALUE
 	#define XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
+	#define XML_PARSER_DO_NOT_ALLOW_TAG_VALUE_TO_BE_DEFINED_AFTER_SUBTAG		//added 3i16a for Doxygen support, eg " *" in "<type><ref refid="classGIArelation" kindref="compound">GIArelation</ref> *</type>"
 #endif
 
 #define XML_FILE_MAX_SIZE (100000000)		//100MB
@@ -107,8 +110,10 @@ bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 	bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer);
 		bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer);
 			bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer);
-		bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream* parseFileObject, XMLparserTag* tag, XMLparserTag* subTag, string tagName, int treeLayer);
+		bool parseTagValueAssumingExistenceOfSubtagsAndClose(ifstream* parseFileObject, XMLparserTag* currentTag, int treeLayer);
 		bool parseTagComment(ifstream* parseFileObject, char type);
+		bool processTagClose(ifstream* parseFileObject, XMLparserTag** currentTag, string parentTagName, bool isSubTag, int treeLayer, bool endTagFound, bool parsingAttributeName, string tagName);
+		XMLparserTag* createNewTag(XMLparserTag* currentTag);
 
 //Low Level
 bool isBlankChar(ifstream* parseFileObject, char c);
