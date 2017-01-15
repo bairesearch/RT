@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -38,6 +38,7 @@
 #include "math.h"
 #include "LDreferenceManipulation.h"
 #include "SHAREDvector.h"
+#include "SHAREDvars.h"	//required for writeByteArrayToFile
 
 #include "XMLrulesClass.h"
 

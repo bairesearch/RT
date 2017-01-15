@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  *
  *******************************************************************************/
 
@@ -86,7 +86,6 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 	bool convertReferenceToString(Reference * currentReference, char * referenceString);
 bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * writeFileObject);
 
-void writeByteArrayToFile(char * fileName, char * fileByteArray, int fileByteArraySize);
 bool readFileIntoByteArray(char * fileName, char * fileByteArray, int * fileNumberOfLines, int * fileByteArraySize);
 bool readFileIntoString(string fileName, string * fileContentsString, int * fileNumberOfLines, int * fileByteArraySize);
 void copyFilesInefficient(char * newFileName, char * fileToCopyName);

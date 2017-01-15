@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 
 
 #include "XMLparserClass.h"
-
+#include "SHAREDvars.h"	//required for writeByteArrayToFile/writeStringToFileObject
 
 
 #define XML_FILE_NAME "rules.xml"
@@ -320,13 +320,6 @@ void addTabsToFileObject(ofstream * writeFileObject, int treeLayer)
 
 }
 
-void writeStringToFileObject(string s, ofstream * writeFileObject)
-{
-	for(int i=0; i < s.size(); i++)
-	{
-		writeFileObject->put(s[i]); //(s.cStr())[i]
-	}
-}
 
 
 
@@ -452,16 +445,6 @@ void writeStringToByteArrayInefficient(string s, char * XMLfileByteArray, long *
 
 
 
-void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileByteArraySize)
-{
-	ofstream parseFileObject(fileName);
-
-	// Exactly 8 bytes written
-	parseFileObject.write(fileByteArray, (sizeof(char)*fileByteArraySize));
-
-	parseFileObject.close();
-
-}
 
 
 

@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  *
  *******************************************************************************/
 
@@ -143,12 +143,10 @@ bool writeXMLfile(string xmlFileName, XMLparserTag * firstTagInXMLfile);
 	bool addTagLayerToFileObject(XMLparserTag * firstTagInCurrentLayer, ofstream * writeFileObject, int treeLayer);
 		void incrementLineAndAddTabsToFileObject(ofstream * writeFileObject, int treeLayer);
 		void addTabsToFileObject(ofstream * writeFileObject, int treeLayer);
-		void writeStringToFileObject(string s, ofstream * writeFileObject);
 
 	bool addTagLayerToByteArrayInefficient(XMLparserTag * firstTagInCurrentLayer, char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer);
 		void incrementLineAndAddTabsToByteArrayInefficient(char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer);
 		void addTabsToByteArrayInefficient(char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer);
 		void writeStringToByteArrayInefficient(string s, char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition);
-	void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileByteArraySize);
 
 #endif

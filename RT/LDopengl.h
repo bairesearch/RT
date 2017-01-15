@@ -26,7 +26,7 @@
  * File Name: LDopengl.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  *
  *******************************************************************************/
 
@@ -105,6 +105,7 @@ int initiateOpenGL(int width, int height, int windowPositionX, int windowPositio
 void setViewPort2Dortho(double left, double right, double bottom, double top);
 void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
 void setViewPort3Ddynamic(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
+double maxDouble2(double float1, double float2);
 void setViewPort3Dbasic();
 void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
 
@@ -121,6 +122,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstRe
 		void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer);
 
 void draw3DprimitivesReferenceListToOpenGL();
+void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
 
 	void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap);
 	void writeScreenToDepthMap(int width, int height, double * depthMap);

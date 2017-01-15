@@ -26,12 +26,13 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d6a 05-August-2014
+ * Project Version: 3e2a 29-August-2014
  *
  *******************************************************************************/
 
 #include "LDreferenceManipulation.h"
 #include "SHAREDvector.h"
+#include "SHAREDvars.h"	//required for writeByteArrayToFile
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -794,16 +795,7 @@ bool openFileAndCopyDataIntoCurrentFileObject(char * fileToOpenName, ofstream * 
 
 
 
-void writeByteArrayToFile(char * fileName, char * fileByteArray, int fileByteArraySize)
-{
-	ofstream parseFileObject(fileName);
 
-	// Exactly 8 bytes written
-	parseFileObject.write(fileByteArray, (sizeof(char)*fileByteArraySize));
-
-	parseFileObject.close();
-
-}
 
 bool readFileIntoByteArray(char * fileName, char * fileByteArray, int * fileNumberOfLines, int * fileByteArraySize)
 {
