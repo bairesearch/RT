@@ -52,8 +52,8 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-#define COMPILE_NLC
-//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_NLC
+#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -247,7 +247,7 @@ extern string tempFolder;
 #define TM_STRUCT_YEAR_OFFSET 1900
 
 #define INT_DEFAULT_VALUE (-1)
-#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//string::npos
+#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//std::string::npos
 #define BOOL_IRRELEVANT (false)
 #define INT_IRRELEVANT (0)
 
