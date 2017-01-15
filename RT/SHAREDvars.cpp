@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h1a 14-November-2015
+ * Project Version: 3h1b 14-November-2015
  *
  *******************************************************************************/
 
@@ -217,7 +217,7 @@ float getFloatArgument(int argc, char* *argv, string keystr)
 	}
 	if(!foundArgument)
 	{
-		cout << "Error: getFloatArgument(" << keystr << ")" << endl;
+		cout << "Error: getFloatArgument{}; " << keystr << endl;
 		result = -999999999.0F;
 		return result;
 	}
@@ -245,7 +245,7 @@ string getStringArgument(int argc, char* *argv, string keystr)
 	}
 	if(!foundArgument)
 	{
-		cout << "Error: getStringArgument(" << keystr << ")" << endl;
+		cout << "Error: getStringArgument{}; " << keystr << endl;
 	}
 	return stringArgument;
 }
@@ -274,7 +274,7 @@ void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>
 	}
 	if(!foundArgument)
 	{
-		cout << "Error: getStringArrayArgument(" << keystr << ")" << endl;
+		cout << "Error: getStringArrayArgument{}; " << keystr << endl;
 	}
 }
 
