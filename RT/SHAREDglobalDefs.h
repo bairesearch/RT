@@ -223,7 +223,7 @@ extern char * tempFolderCharStar;
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
 #define STRING_SPACE " "
-
+#define STRING_FULLSTOP "."
 
 
 #endif
