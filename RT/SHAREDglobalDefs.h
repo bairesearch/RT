@@ -23,7 +23,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c7b 12-October-2013
+ * Project Version: 3c8a 13-October-2013
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -50,10 +50,10 @@ using namespace std;
 	//current/active tests;
 //#define COMPILE_CF
 //#define COMPILE_NLPI
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
-//#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
+#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
 //#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
 //#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe

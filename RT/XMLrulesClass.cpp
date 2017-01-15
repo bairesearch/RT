@@ -23,7 +23,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3c7b 12-October-2013
+ * Project Version: 3c8a 13-October-2013
  *
  *******************************************************************************/
 
@@ -35,6 +35,7 @@ RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
 RulesClass * CSrulesSprite;
 RulesClass * CSrulesDraw;
+XMLparserTag * CSfirstTagInXMLfile;
 #endif
 #ifdef USE_GIA
 RulesClass * GIArulesSprite;
@@ -137,13 +138,13 @@ bool parseCSrulesXMLfile()
 {
 	bool result = true;
 
- 	XMLparserTag * firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!readXMLfile(CS_RULES_XML_FILE_NAME, firstTagInXMLfile))
+ 	CSfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+ 	if(!readXMLfile(CS_RULES_XML_FILE_NAME, CSfirstTagInXMLfile))
  	{
 		result = false;
 	}
 
-	XMLparserTag * currentTag = firstTagInXMLfile;
+	XMLparserTag * currentTag = CSfirstTagInXMLfile;
 
 	CSrulesSprite = new RulesClass();
 	CSrulesDraw = new RulesClass();
@@ -152,9 +153,6 @@ bool parseCSrulesXMLfile()
 	{
 		result = false;
 	}
-
-	delete firstTagInXMLfile;
-
 
 	return result;
 }
