@@ -247,7 +247,7 @@ extern string tempFolder;
 #define TM_STRUCT_YEAR_OFFSET 1900
 
 #define INT_DEFAULT_VALUE (-1)
-#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)
+#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//string::npos
 #define BOOL_IRRELEVANT (false)
 #define INT_IRRELEVANT (0)
 
