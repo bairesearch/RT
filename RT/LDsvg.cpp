@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c5b 15-December-2012
+ * Project Version: 3c5c 21-December-2012
  *
  *******************************************************************************/
 
@@ -42,7 +42,7 @@ using namespace std;
 
 bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
 {
-	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, -100, 1920, 1400);	
+	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);	
 }
 
 bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
