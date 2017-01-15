@@ -516,6 +516,7 @@ bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LD
 
 
 
+
 /*this is not complete yet - just use an Identity matrix - ie do not rotate the sprite according to the user POV*/
 void LDgenerateSpriteRotationMatrix(vec* spriteSceneCoords, vec* eyeCoords, mat* spriteRotationMatrix)
 {
