@@ -26,10 +26,13 @@
  * File Name: LDmysql.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19d 15-December-2016
+ * Project Version: 3i19e 15-December-2016
  *
  *******************************************************************************/
 
+
+#ifndef HEADER_LD_MYSQL
+#define HEADER_LD_MYSQL
 
 #include "SHAREDglobalDefs.h"
 
@@ -55,3 +58,5 @@ bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength);	//
 long performSQLgetNumRowsQuery(string tableName);
 void performSQLdeleteAllRowsQuery(string tableName);
 void endMySQLserverConnection();
+
+#endif

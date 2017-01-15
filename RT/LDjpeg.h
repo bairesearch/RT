@@ -26,9 +26,13 @@
  * File Name: LDjpeg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i19d 15-December-2016
+ * Project Version: 3i19e 15-December-2016
  *
  *******************************************************************************/
+
+
+#ifndef HEADER_LD_JPEG
+#define HEADER_LD_JPEG
 
 #include "SHAREDglobalDefs.h"
 #ifdef USE_OR
@@ -41,4 +45,4 @@ void setPointerToDCTtableHTMLoutputString(string* pointer);
 
 int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput);
 
-
+#endif
