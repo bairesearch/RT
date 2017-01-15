@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d5a 18-July-2014
+ * Project Version: 3d5b 27-July-2014
  *
  *******************************************************************************/
 
@@ -116,5 +116,7 @@ string convertBoolToString(bool boolean);
 
 bool textInTextArray(string text, string * textArray, int arraySize);
 bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound);
+bool charInCharArray(char c, char * charArray, int arraySize);
+string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString);
 
 #endif

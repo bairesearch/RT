@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d5a 18-July-2014
+ * Project Version: 3d5b 27-July-2014
  *
  *******************************************************************************/
 
@@ -498,3 +498,36 @@ bool textInTextArray(string text, string * textArray, int arraySize, int * array
 	}
 	return result;
 }
+
+bool charInCharArray(char c, char * charArray, int arraySize)
+{
+	bool result = false;
+	for(int i=0; i<arraySize; i++)
+	{
+		if(c == charArray[i])
+		{
+			result = true;
+		}
+	}
+	return result;
+}
+
+
+string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString)
+{
+	string text = *textOrig; 
+	int pos = 0;
+	while((pos = text.find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
+	{
+		text.replace(pos, stringToFind.length(), replacementString);
+		pos = pos + replacementString.length();
+	}
+	/*
+	cout << "\n*textOrig = " << *textOrig << endl;
+	cout << "stringToFind = " << stringToFind << endl;
+	cout << "replacementString = " << replacementString << endl;
+	cout << "text = " << text << endl;
+	*/
+	return text;
+}
+

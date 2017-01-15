@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d5a 18-July-2014
+ * Project Version: 3d5b 27-July-2014
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -238,6 +238,7 @@ extern string tempFolder;
 #define CHAR_INVERTED_COMMAS '"'
 #define CHAR_APOSTROPHE '\''
 #define CHAR_BACKSLASH '\\'
+#define CHAR_EQUALS '='
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
@@ -247,7 +248,7 @@ extern string tempFolder;
 #define TM_STRUCT_YEAR_OFFSET 1900
 
 #define INT_DEFAULT_VALUE (-1)
-#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//string::npos
+#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//std::string::npos
 #define BOOL_IRRELEVANT (false)
 #define INT_IRRELEVANT (0)
 
