@@ -49,8 +49,8 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-//#define COMPILE_NLPI
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+#define COMPILE_NLPI
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
