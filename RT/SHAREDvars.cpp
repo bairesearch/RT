@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3h14a 11-December-2015
  *
  *******************************************************************************/
 
@@ -186,7 +186,7 @@ double absDouble(double val)
 	}
 }
 
-bool argumentExists(int argc, char* *argv, string keystr)
+bool argumentExists(int argc, char** argv, string keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
@@ -199,7 +199,7 @@ bool argumentExists(int argc, char* *argv, string keystr)
 	return false;
 }
 
-float getFloatArgument(int argc, char* *argv, string keystr)
+float getFloatArgument(int argc, char** argv, string keystr)
 {
 	float result=0.0;
 	bool foundArgument = false;
@@ -227,7 +227,7 @@ float getFloatArgument(int argc, char* *argv, string keystr)
 	}
 }
 
-string getStringArgument(int argc, char* *argv, string keystr)
+string getStringArgument(int argc, char** argv, string keystr)
 {
 	string stringArgument = "";
 	bool foundArgument = false;
@@ -250,7 +250,7 @@ string getStringArgument(int argc, char* *argv, string keystr)
 	return stringArgument;
 }
 
-void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>* inputFileNamesVector)
+void getStringArrayArgument(int argc, char** argv, string keystr, vector<string>* inputFileNamesVector)
 {
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
@@ -597,6 +597,12 @@ void appendStringToFile(string fileName, string* s)
 
 string getFileContents(string inputFileName)
 {
+	int numberLines = 0;
+	return getFileContents(inputFileName, &numberLines);
+}
+
+string getFileContents(string inputFileName, int* numberLines)
+{
 	string fileContents = "";
 	
 	bool result = true;
@@ -617,6 +623,7 @@ string getFileContents(string inputFileName)
 			fileContents = fileContents + currentLine + CHAR_NEWLINE;
 			currentLineNumber++;
 		}
+		*numberLines = currentLineNumber;
 	}
 	#ifdef CS_DEBUG_GENERATE_OBJECT_ORIENTED_CODE
 	//cout << "fileContents = " << fileContents << endl;

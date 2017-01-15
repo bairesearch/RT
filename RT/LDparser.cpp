@@ -26,7 +26,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7d 27-January-2015
+ * Project Version: 3h14a 11-December-2015
  *
  *******************************************************************************/
 
@@ -35,7 +35,7 @@
 #include "SHAREDvector.h"
 #include "LDreferenceClass.h"
 #ifdef USE_LRRC
-//#include "LRRCparser.h"
+#include "LRRCparser.h"
 #endif
 
 
@@ -131,7 +131,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 				parseFileName = removeWhiteSpaceFromString(parseFileName);
 				parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
 				parseFileObject.open(parseFileNameInPartsDir.c_str());
-				if(!parseFileObject.rdbuf( )->is_open( ))
+				if(!parseFileObject.rdbuf()->is_open())
 				{
 					parseFileObject.close();
 
@@ -514,7 +514,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 
-						currentReference->colour = (unsigned int)(atof(colour.c_str()));
+						currentReference->colour = (unsigned int)(convertStringToDouble(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -526,18 +526,18 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						}
 					#endif
 
-						currentReference->vertex1relativePosition.x = (atof(vertex1X.c_str()));
-						currentReference->vertex1relativePosition.y = (atof(vertex1Y.c_str()));
-						currentReference->vertex1relativePosition.z = (atof(vertex1Z.c_str()));
-						currentReference->vertex2relativePosition.x = (atof(vertex2X.c_str()));
-						currentReference->vertex2relativePosition.y = (atof(vertex2Y.c_str()));
-						currentReference->vertex2relativePosition.z = (atof(vertex2Z.c_str()));
-						currentReference->vertex3relativePosition.x = (atof(vertex3X.c_str()));
-						currentReference->vertex3relativePosition.y = (atof(vertex3Y.c_str()));
-						currentReference->vertex3relativePosition.z = (atof(vertex3Z.c_str()));
-						currentReference->vertex4relativePosition.x = (atof(vertex4X.c_str()));
-						currentReference->vertex4relativePosition.y = (atof(vertex4Y.c_str()));
-						currentReference->vertex4relativePosition.z = (atof(vertex4Z.c_str()));
+						currentReference->vertex1relativePosition.x = (convertStringToDouble(vertex1X));
+						currentReference->vertex1relativePosition.y = (convertStringToDouble(vertex1Y));
+						currentReference->vertex1relativePosition.z = (convertStringToDouble(vertex1Z));
+						currentReference->vertex2relativePosition.x = (convertStringToDouble(vertex2X));
+						currentReference->vertex2relativePosition.y = (convertStringToDouble(vertex2Y));
+						currentReference->vertex2relativePosition.z = (convertStringToDouble(vertex2Z));
+						currentReference->vertex3relativePosition.x = (convertStringToDouble(vertex3X));
+						currentReference->vertex3relativePosition.y = (convertStringToDouble(vertex3Y));
+						currentReference->vertex3relativePosition.z = (convertStringToDouble(vertex3Z));
+						currentReference->vertex4relativePosition.x = (convertStringToDouble(vertex4X));
+						currentReference->vertex4relativePosition.y = (convertStringToDouble(vertex4Y));
+						currentReference->vertex4relativePosition.z = (convertStringToDouble(vertex4Z));
 
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
@@ -746,7 +746,7 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
-						currentReference->colour = (unsigned int)(atof(colour.c_str()));
+						currentReference->colour = (unsigned int)(convertStringToDouble(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -758,22 +758,22 @@ bool parseFile(string parseFileName, LDreference* initialReference, LDreference*
 						}
 					#endif
 
-						currentReference->relativePosition.x = (atof(coordX.c_str()));
-						currentReference->relativePosition.y = (atof(coordY.c_str()));
-						currentReference->relativePosition.z = (atof(coordZ.c_str()));
+						currentReference->relativePosition.x = (convertStringToDouble(coordX));
+						currentReference->relativePosition.y = (convertStringToDouble(coordY));
+						currentReference->relativePosition.z = (convertStringToDouble(coordZ));
 
 							//26-jan-07 change; take into account rotation of parent reference in calculation of child reference absolute coordinates;
 					#ifndef NO_ROTATION_OF_MODELS_ALLOWED
 
-						currentReference->deformationMatrix.a.x = (atof(rotation1.c_str()));
-						currentReference->deformationMatrix.b.x = (atof(rotation2.c_str()));
-						currentReference->deformationMatrix.c.x = (atof(rotation3.c_str()));
-						currentReference->deformationMatrix.a.y = (atof(rotation4.c_str()));
-						currentReference->deformationMatrix.b.y = (atof(rotation5.c_str()));
-						currentReference->deformationMatrix.c.y = (atof(rotation6.c_str()));
-						currentReference->deformationMatrix.a.z = (atof(rotation7.c_str()));
-						currentReference->deformationMatrix.b.z = (atof(rotation8.c_str()));
-						currentReference->deformationMatrix.c.z = (atof(rotation9.c_str()));
+						currentReference->deformationMatrix.a.x = (convertStringToDouble(rotation1));
+						currentReference->deformationMatrix.b.x = (convertStringToDouble(rotation2));
+						currentReference->deformationMatrix.c.x = (convertStringToDouble(rotation3));
+						currentReference->deformationMatrix.a.y = (convertStringToDouble(rotation4));
+						currentReference->deformationMatrix.b.y = (convertStringToDouble(rotation5));
+						currentReference->deformationMatrix.c.y = (convertStringToDouble(rotation6));
+						currentReference->deformationMatrix.a.z = (convertStringToDouble(rotation7));
+						currentReference->deformationMatrix.b.z = (convertStringToDouble(rotation8));
+						currentReference->deformationMatrix.c.z = (convertStringToDouble(rotation9));
 
 						multiplyMatricies(&(currentReference->absoluteDeformationMatrix), &(parentReference->absoluteDeformationMatrix), &(currentReference->deformationMatrix));
 

@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7d 27-January-2015
+ * Project Version: 3h14a 11-December-2015
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -40,7 +40,7 @@
 #include "XMLrulesClass.h"
 #include "math.h"
 #ifdef USE_LRRC
-//#include "LRRCrules.h"
+#include "LRRCrules.h"
 #endif
 
 int SPRITE_DEFAULT_COLOUR;
@@ -240,11 +240,7 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 	}
 	
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_NAME_START;
-	
-	char tempString[SPRITE_INDEX_MAGNITUDE];
-	sprintf(tempString, "%d", spriteIndex);
-	spriteReferenceFileName = spriteReferenceFileName + tempString;
-
+	spriteReferenceFileName = spriteReferenceFileName + convertIntToString(spriteIndex);
 	spriteReferenceFileName = spriteReferenceFileName + SPRITE_EXTENSION;
 
 	//create the "spritex.ldr" file that will be referenced by the scene file
