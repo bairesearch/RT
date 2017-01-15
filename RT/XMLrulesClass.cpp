@@ -49,6 +49,9 @@ XMLparserTag* GIAfirstTagInXMLfile;
 #ifdef USE_OR
 XMLrulesClass* ORrulesObjectRecognition;
 #endif
+#ifdef USE_NLC
+XMLparserTag* NLCfirstTagInXMLfile;
+#endif
 
 static string nullString;
 static bool nullBool;
@@ -88,6 +91,21 @@ XMLrulesClass::~XMLrulesClass()
 	}
 }
 
+
+#ifdef USE_NLC
+bool parseNLCrulesXMLfile()
+{
+	bool result = true;
+
+ 	NLCfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+	if(!readXMLfile(NLC_RULES_XML_FILE_NAME, NLCfirstTagInXMLfile))
+ 	{
+		result = false;
+	}
+
+	return result;
+}
+#endif
 
 #ifdef USE_GIA
 bool parseGIArulesXMLfile()

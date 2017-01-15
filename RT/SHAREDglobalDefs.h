@@ -41,8 +41,8 @@
 
 	//current/active tests;
 //#define COMPILE_CF
-//#define COMPILE_NLC
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+#define COMPILE_NLC
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -231,6 +231,7 @@ using namespace std;
 #define CHAR_BACKSLASH '\\'
 #define CHAR_EQUALS '='
 #define CHAR_INVERTEDCOMMAS '"'
+#define CHAR_DECIMALPLACE (CHAR_FULLSTOP)
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"

@@ -41,6 +41,7 @@
 #define CS_RULES_XML_FILE_NAME "CSrules.xml"
 #define OR_RULES_XML_FILE_NAME "ORrules.xml"
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
+#define NLC_RULES_XML_FILE_NAME "NLCrules.xml"
 
 #define RULES_XML_TAG_rules ((string)"rules")
 #define RULES_XML_TAG_miscellaneousItem ((string)"miscellaneousItem")
@@ -83,14 +84,18 @@ public:
 
 //High Level
 
-#ifdef USE_CS
-bool parseCSrulesXMLfile();
-	bool parseCSRulesTag(XMLparserTag* currentTag);
+#ifdef USE_NLC
+bool parseNLCrulesXMLfile();
 #endif
 
 #ifdef USE_GIA
 bool parseGIArulesXMLfile();
 	bool parseGIARulesTag(XMLparserTag* currentTag);
+#endif
+
+#ifdef USE_CS
+bool parseCSrulesXMLfile();
+	bool parseCSRulesTag(XMLparserTag* currentTag);
 #endif
 
 #ifdef USE_OR
@@ -118,6 +123,8 @@ extern XMLparserTag* GIAfirstTagInXMLfile;
 #ifdef USE_OR
 extern XMLrulesClass* ORrulesObjectRecognition;
 #endif
-
+#ifdef USE_NLC
+extern XMLparserTag* NLCfirstTagInXMLfile;
+#endif
 
 #endif
