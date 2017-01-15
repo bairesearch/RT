@@ -194,6 +194,10 @@
 #include <unordered_map>	//requires C++11
 #include <utility> // make_pair
 #endif
+#ifdef USE_NLC
+#include <algorithm>
+#include <stack>
+#endif
 #include <map>
 using namespace std;
 
