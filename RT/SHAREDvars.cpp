@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7d 27-January-2015
+ * Project Version: 3e7e 27-January-2015
  *
  *******************************************************************************/
 
@@ -566,4 +566,34 @@ void writeStringToFile(string* fileName, string* s)
 	}
 
 	writeFileObject.close();
+}
+
+string getFileContents(string inputFileName)
+{
+	string fileContents = "";
+	
+	bool result = true;
+	ifstream parseFileObject(inputFileName.c_str());
+	if(!parseFileObject.rdbuf( )->is_open( ))
+	{
+		// file does not exist in current directory.
+		cout << "Error: input file does not exist in current directory: " << inputFileName << endl;
+		//exit(0);
+		result = false;
+	}
+	else
+	{
+		string currentLine = "";
+		int currentLineNumber = 0;
+		while(getline(parseFileObject, currentLine))
+		{
+			fileContents = fileContents + currentLine + CHAR_NEWLINE;
+			currentLineNumber++;
+		}
+	}
+	#ifdef CS_DEBUG_GENERATE_OBJECT_ORIENTED_CODE
+	//cout << "fileContents = " << fileContents << endl;
+	#endif
+	
+	return fileContents;
 }

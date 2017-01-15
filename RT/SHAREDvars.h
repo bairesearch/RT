@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7d 27-January-2015
+ * Project Version: 3e7e 27-January-2015
  *
  *******************************************************************************/
 
@@ -123,5 +123,7 @@ string replaceAllOccurancesOfString(string* textOrig, string stringToFind, strin
 void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByteArraySize);
 void writeStringToFileObject(string s, ofstream* writeFileObject);
 void writeStringToFile(string* fileName, string* s);
+
+string getFileContents(string inputFileName);
 
 #endif
