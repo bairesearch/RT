@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3i18a 21-September-2016
+ * Project Version: 3i18b 21-September-2016
  *
  *******************************************************************************/
 

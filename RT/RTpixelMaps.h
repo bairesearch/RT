@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i18a 21-September-2016
+ * Project Version: 3i18b 21-September-2016
  *
  *******************************************************************************/
 
@@ -129,8 +129,10 @@ void generatePixmapFromLuminosityMap(string imageFileName, int imageWidth, int i
 void generatePixmapFromBooleanMap(string imageFileName, int imageWidth, int imageHeight, bool* booleanMap);
 void generatePixmapFromEnumIntMap(string filename, int imageWidth, int imageHeight, int* intMap);
 void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char* rgbMap);
+	#ifdef USE_OR
 	void normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, int imageHeight, unsigned char* rgbMap);
 		double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char* rgbMap);
+	#endif
 void generateBooleanDiffMapFromRGBMaps(string imageFileName, int imageWidth, int imageHeight, unsigned char* rgbMap1, unsigned char* rgbMap2);
 
 void generatePixmapFromDepthMap24Bit(string imageFileName, int imageWidth, int imageHeight, double* depthMap, double depthScale, double depthOffset);

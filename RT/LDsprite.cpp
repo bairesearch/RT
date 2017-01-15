@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i18a 21-September-2016
+ * Project Version: 3i18b 21-September-2016
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -40,7 +40,7 @@
 #include "XMLrulesClass.h"
 #include "math.h"
 #ifdef USE_LRRC
-#include "LRRCrules.h"
+//#include "LRRCrules.h"
 #endif
 
 int SPRITE_DEFAULT_COLOUR;
