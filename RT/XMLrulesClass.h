@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: XMLrulesClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -95,21 +115,6 @@ bool parseORRulesXMLFile();
 bool parseANNRulesXMLFile();
 	bool parseANNRulesTag(XMLParserTag * currentTag);
 
-#ifdef USE_LRRC
-bool parseLRRCRulesXMLFile();
-#endif
-	#ifdef USE_LRRC
-	bool parseLRRCRulesTag(XMLParserTag * currentTag);
-		bool parseTagUnitCombatDetails(XMLParserTag * currentTag);
-			bool parseTagArmour(XMLParserTag * currentTag);
-				bool parseTagHead(XMLParserTag * currentTag);
-				bool parseTagTorso(XMLParserTag * currentTag);
-				bool parseTagShield(XMLParserTag * currentTag);
-			bool parseTagWeapons(XMLParserTag * currentTag);
-				bool parseTagCloseCombat(XMLParserTag * currentTag);
-				bool parseTagLongDistanceCombat(XMLParserTag * currentTag);
-	#endif
-
 
 bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
 bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
@@ -118,19 +123,6 @@ bool addRulesClassObjectBasedOnTag(XMLParserTag * currentTag, RulesClass * curre
 //bool parseSectionTagAndAddObjectsWithAttributes(RulesClass * firstReferenceToObjectClass, string parentTagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
 //bool parseTagAndAddObjectWithAttributes(RulesClass * firstReferenceToObjectClass, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name);
 
-#ifdef USE_LRRC
-extern RulesClass * LRRCrulesUnitTypeDetails;
-extern RulesClass * LRRCrulesUnitCombatDetailsDefenceHead;
-extern RulesClass * LRRCrulesUnitCombatDetailsDefenceTorso;
-extern RulesClass * LRRCrulesUnitCombatDetailsDefenceShield;
-extern RulesClass * LRRCrulesUnitCombatDetailsAttackCloseCombat;
-extern RulesClass * LRRCrulesUnitCombatDetailsAttackLongDistance;
-extern RulesClass * LRRCrulesBuildingDetails;
-extern RulesClass * LRRCrulesTerrainDetails;
-extern RulesClass * LRRCrulesUnitTypeCatagories;
-extern RulesClass * LRRCrulesMiscellaneous;
-extern RulesClass * LRRCrulesSprite;
-#endif
 extern RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
 extern RulesClass * CSrulesSprite;

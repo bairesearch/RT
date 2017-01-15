@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: SHAREDglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: General Intelligence Algorithm
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -21,21 +41,21 @@
 #include <time.h>
 #include <math.h>
 using namespace std;
-	
-	
+
+
 	/**********
 	SOURCE PROJECT VARIABLES;
 	***********/
 
 	//current/active tests;
-#define COMPILE_OR		//compileOR.bat -> OR.exe
-//#define COMPILE_GIA		//compileGIA.bat -> GIA.exe
+//#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
+#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
-//#define COMPILE_CS		//compileCS.bat -> CS.exe
-//#define COMPILE_RT		//compileRT.bat -> RT.exe
-//#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> ANN.exe
-//#define COMPILE_ANN		//compileANN.bat -> ANN.exe
-//#define COMPILE_LRRC		//compileLRRC.bat -> LRRC.exe
+//#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
+//#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
+//#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
+//#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe
+//#define COMPILE_LRRC		//compileLRRC.bat -> OpenLRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
 
 //inactive tests;
@@ -59,11 +79,11 @@ using namespace std;
 #define LINUX
 #ifndef LINUX
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
-	//#include <windows.h>
+	//#include <windows.h>	//incompatible with LDjpeg.h (must only include windows.h when need to)
 #endif
 
-		
-	
+
+
 
 #define EXE_FOLDER_PATH_MAX_LENGTH (1000)
 extern char * exeFolderCharStar;
@@ -76,8 +96,8 @@ extern char * tempFolderCharStar;
 	/**********
 	COMPILATION TYPE DEPENDENT VARIABLES;
 	***********/
-	
-	
+
+
 #ifdef COMPILE_GIA_WITH_CE
 	#define USE_GIA
 	#define USE_CE
@@ -193,6 +213,7 @@ extern char * tempFolderCharStar;
 #define CHAR_END_OF_STRING '\0'
 #define CHAR_DEL (127)
 #define CHAR_IRRELEVANT (CHAR_DEL)
+#define CHAR_FORWARDSLASH '/'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"

@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -114,7 +134,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 	{
 		dctCoeffArrayYCb[i] = 0;
 	}
-											
+
 
 	/* This struct contains the JPEG decompression parameters and pointers to
 	* working space (which is allocated as needed by the JPEG library).
@@ -172,7 +192,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 	*/
 
 
-	
+
 	coefficientarrays = jpeg_read_coefficients(&cinfo);
 
 	//added 8 June 2012
@@ -182,22 +202,22 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
 		#else
 		printf("\n\n\nyBlock = %d", yBlock);
-		#endif				
+		#endif
 	}
-	
+
   	for(c=0; c< cinfo.num_components; c++)
 	{
-		//added 8 June 2012	
+		//added 8 June 2012
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>";
 			#else
 			printf("\n\n\nyBlock = %d", yBlock);
-			#endif				
+			#endif
 		}
-					
-				
+
+
 		DCTwidth_in_blocks = cinfo.comp_info[c].width_in_blocks;
 		DCTheight_in_blocks = cinfo.comp_info[c].height_in_blocks;
 
@@ -216,7 +236,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE>";
 					#else
 					printf("\nxBlock = %d", xBlock);
-					#endif						
+					#endif
 				}
 				block = blockrow[xBlock];
 
@@ -229,8 +249,8 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TR>";
 						#else
 						printf("\n");
-						#endif							
-					
+						#endif
+
 					}
 					for(x=0; x<dctCoeffArrayWidth; x++)
 					{
@@ -255,7 +275,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 						/*
 						}
 						*/
-						
+
 						if(printOutput)
 						{
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
@@ -265,7 +285,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 							#else
 							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);
 							printf("%d\t", block[i]);
-							#endif							
+							#endif
 						}
 
 					}
@@ -273,27 +293,27 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 					{
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR>";
-						#endif							
+						#endif
 					}
 				}
 				if(printOutput)
 				{
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TABLE>";
-					#endif				
+					#endif
 				}
 
-			}	
+			}
 		}
-		
+
 		//added 8 June 2012
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TD>";
-			#endif				
+			#endif
 		}
-		
+
 	}
 
 	//added 8 June 2012
@@ -301,10 +321,10 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 	{
 		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
-		#endif				
+		#endif
 	}
-		
-			
+
+
 	if(printOutput)
 	{
 		#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
@@ -319,8 +339,8 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename
 		*/
 		#endif
 	}
-	
-	
+
+
 
 	/* This is an important step since it will release a good deal of memory. */
 	jpeg_destroy_decompress(&cinfo);

@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -13,6 +33,8 @@
 //#include <stdio.h>
 #include <math.h>
 */
+
+
 
 
 #include <stdio.h>
@@ -29,8 +51,9 @@ using namespace std;
 #include "RTscene.h"
 #include "RTpixelMaps.h"
 
-
-
+#ifndef LINUX
+	#include <windows.h>
+#endif
 
 
 static int lightingMode = DEFAULT_LIGHTING_MODE;
@@ -73,7 +96,7 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 	#ifndef USE_OR
 	fillInRTRulesExternVariables();
 	#endif
-	
+
 	//printf("Raytrace Started\n");
 
 	int result = TRUE;
@@ -91,7 +114,7 @@ int rayTraceScene(char * talFileName, char * imageFileName, int outputImageFiles
 	exit_parser();
 
 	#ifdef LINUX
-	chdir(tempFolderCharStar);						
+	chdir(tempFolderCharStar);
 	#else
 	::SetCurrentDirectory(tempFolderCharStar);
 	#endif
@@ -368,7 +391,7 @@ void parseTalFileInitialiseParser(char *talFileName)
 
   	if(!f)
 	{
-		printf("error; no file name specified in code execution, and no standard input given to rt.exe executable");
+		printf("error; no file name specified in code execution, and no standard input given to OpenRT.exe executable");
 		exit(0);
 	}
 	else

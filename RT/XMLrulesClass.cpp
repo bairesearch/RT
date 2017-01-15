@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -18,24 +38,6 @@
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
 
 #define RULES_XML_TAG_rules ((string)"rules")
-#ifdef USE_LRRC
-#define RULES_XML_TAG_unitTypeDetails ((string)"unitTypeDetails")
-#define RULES_XML_TAG_part ((string)"part")
-#define RULES_XML_TAG_unitCombatDetails ((string)"unitCombatDetails")
-#define RULES_XML_TAG_armour ((string)"armour")
-#define RULES_XML_TAG_head ((string)"head")
-#define RULES_XML_TAG_torso ((string)"torso")
-#define RULES_XML_TAG_shield ((string)"shield")
-#define RULES_XML_TAG_weapons ((string)"weapons")
-#define RULES_XML_TAG_closeCombat ((string)"closeCombat")
-#define RULES_XML_TAG_longDistance ((string)"longDistance")
-#define RULES_XML_TAG_other ((string)"other")
-#define RULES_XML_TAG_buildingDetails ((string)"buildingDetails")
-#define RULES_XML_TAG_terrainDefenceDetails ((string)"terrainDefenceDetails")
-#define RULES_XML_TAG_unitTypeCatagories ((string)"unitTypeCatagories")
-#define RULES_XML_TAG_unitType ((string)"unitType")
-#define RULES_XML_TAG_miscellaneous ((string)"miscellaneous")
-#endif
 #define RULES_XML_TAG_miscellaneousItem ((string)"miscellaneousItem")
 #define RULES_XML_TAG_sprite ((string)"sprite")
 #ifdef USE_CS
@@ -49,19 +51,6 @@
 #endif
 
 #define RULES_XML_ATTRIBUTE_name ((string)"name")
-#ifdef USE_LRRC
-#define RULES_XML_ATTRIBUTE_partID ((string)"partID")
-#define RULES_XML_ATTRIBUTE_partIDLen ((string)"partIDLen")
-#define RULES_XML_ATTRIBUTE_defenceMod ((string)"defenceMod")
-#define RULES_XML_ATTRIBUTE_closeCombatAttackMod ((string)"closeCombatAttackMod")
-#define RULES_XML_ATTRIBUTE_mountedAttackBonus ((string)"mountedAttackBonus")
-#define RULES_XML_ATTRIBUTE_attackBonusAgainstMounted ((string)"attackBonusAgainstMounted")
-#define RULES_XML_ATTRIBUTE_longDistanceAttackMod ((string)"longDistanceAttackMod")
-#define RULES_XML_ATTRIBUTE_longDistanceRange ((string)"longDistanceRange")
-#define RULES_XML_ATTRIBUTE_enum ((string)"enum")
-#define RULES_XML_ATTRIBUTE_maxTravel ((string)"maxTravel")
-#define RULES_XML_ATTRIBUTE_buildingMod ((string)"buildingMod")
-#endif
 #define RULES_XML_ATTRIBUTE_stringValue ((string)"stringValue")
 #define RULES_XML_ATTRIBUTE_fractionalValue ((string)"fractionalValue")
 
@@ -99,19 +88,7 @@
 #define RULES_XML_ATTRIBUTE_value "value"
 */
 
-#ifdef USE_LRRC
-RulesClass * LRRCrulesUnitTypeDetails;
-RulesClass * LRRCrulesUnitCombatDetailsDefenceHead;
-RulesClass * LRRCrulesUnitCombatDetailsDefenceTorso;
-RulesClass * LRRCrulesUnitCombatDetailsDefenceShield;
-RulesClass * LRRCrulesUnitCombatDetailsAttackCloseCombat;
-RulesClass * LRRCrulesUnitCombatDetailsAttackLongDistance;
-RulesClass * LRRCrulesBuildingDetails;
-RulesClass * LRRCrulesTerrainDetails;
-RulesClass * LRRCrulesUnitTypeCatagories;
-RulesClass * LRRCrulesMiscellaneous;
-RulesClass * LRRCrulesSprite;
-#endif
+
 RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
 RulesClass * CSrulesSprite;
@@ -373,385 +350,6 @@ bool parseANNRulesTag(XMLParserTag * currentTag)
 
 
 
-#ifdef USE_LRRC
-
-
-bool parseLRRCRulesXMLFile()
-{
-	bool result = true;
-
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
- 	if(!readXMLFile(LRRC_RULES_XML_FILE_NAME, firstTagInXMLFile))
- 	{
-		result = false;
-	}
-
-	/*
-	#define TEMP_XML_FILE_NAME "temp.xml"
- 	if(!writeXMLFile(TEMP_XML_FILE_NAME, firstTagInXMLFile))
- 	{
-		result = false;
-	}
-	*/
-
-	XMLParserTag * currentTag = firstTagInXMLFile;
-
-	LRRCrulesUnitTypeDetails = new RulesClass();
-	LRRCrulesUnitCombatDetailsDefenceHead = new RulesClass();
-	LRRCrulesUnitCombatDetailsDefenceTorso = new RulesClass();
-	LRRCrulesUnitCombatDetailsDefenceShield = new RulesClass();
-	LRRCrulesUnitCombatDetailsAttackCloseCombat = new RulesClass();
-	LRRCrulesUnitCombatDetailsAttackLongDistance = new RulesClass();
-	LRRCrulesBuildingDetails = new RulesClass();
-	LRRCrulesTerrainDetails = new RulesClass();
-	LRRCrulesUnitTypeCatagories = new RulesClass();
-	LRRCrulesMiscellaneous = new RulesClass();
-	LRRCrulesSprite = new RulesClass();
-
-
-
-
-	if(!parseLRRCRulesTag(currentTag))
-	{
-		result = false;
-	}
-
-	delete firstTagInXMLFile;
-
-
-	/*
-	RulesClass * currentReferenceToObjectClass;
-
-	currentReferenceToObjectClass = LRRCrulesUnitTypeDetails;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesUnitCombatDetailsDefenceHead;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesUnitCombatDetailsDefenceTorso;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesUnitCombatDetailsDefenceShield;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesUnitCombatDetailsAttackCloseCombat;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesUnitCombatDetailsAttackLongDistance;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-	currentReferenceToObjectClass = LRRCrulesBuildingDetails;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-
-	currentReferenceToObjectClass = LRRCrulesTerrainDetails;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-
-	currentReferenceToObjectClass = LRRCrulesUnitTypeCatagories;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-
-	currentReferenceToObjectClass = LRRCrulesMiscellaneous;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-
-
-	currentReferenceToObjectClass = LRRCrulesSprite;
-	while(currentReferenceToObjectClass->next != NULL)
-	{
-		cout << "name = " << currentReferenceToObjectClass->name << endl;
-		cout << "stringValue = " << currentReferenceToObjectClass->stringValue << endl;
-		cout << "fractionalValue = " << currentReferenceToObjectClass->fractionalValue << endl;
-		cout << "attribute4 = " << currentReferenceToObjectClass->attribute4 << endl;
-		cout << "attribute5 = " << currentReferenceToObjectClass->attribute5 << endl;
-		cout << "attribute6 = " << currentReferenceToObjectClass->attribute6 << endl;
-		cout << "attribute7 = " << currentReferenceToObjectClass->attribute7 << endl;
-		cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
-		currentReferenceToObjectClass = currentReferenceToObjectClass->next;
-	}
-	*/
-
-	return result;
-}
-
-bool parseLRRCRulesTag(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	XMLParserTag * currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
-	if(result)
-	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_unitTypeDetails, LRRCrulesUnitTypeDetails, RULES_XML_TAG_part, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, nullString, nullString, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!parseTagUnitCombatDetails(currentTagUpdated))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_buildingDetails, LRRCrulesBuildingDetails, RULES_XML_TAG_part, 4, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_buildingMod, nullString, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_terrainDefenceDetails, LRRCrulesTerrainDetails, RULES_XML_TAG_part, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, nullString, nullString, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_unitTypeCatagories, LRRCrulesUnitTypeCatagories, RULES_XML_TAG_unitType, 5, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_enum, RULES_XML_ATTRIBUTE_maxTravel, RULES_XML_ATTRIBUTE_defenceMod, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_miscellaneous, LRRCrulesMiscellaneous, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, LRRCrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
-		{
-			result = false;
-		}
-	}
-
-	return result;
-}
-
-
-
-
-bool parseTagUnitCombatDetails(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	XMLParserTag * currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_unitCombatDetails, &result);
-	if(result)
-	{
-		if(!parseTagArmour(currentTagUpdated))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!parseTagWeapons(currentTagUpdated))
-		{
-			result = false;
-		}
-	}
-
-	return result;
-}
-
-bool parseTagArmour(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	XMLParserTag * currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_armour, &result);
-	if(result)
-	{
-		if(!parseTagHead(currentTagUpdated))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!parseTagTorso(currentTagUpdated))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!parseTagShield(currentTagUpdated))
-		{
-			result = false;
-		}
-	}
-
-	return result;
-}
-
-bool parseTagHead(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	addRulesClassObjectsBasedOnSectionTag(currentTag, RULES_XML_TAG_head, LRRCrulesUnitCombatDetailsDefenceHead, RULES_XML_TAG_part, 4, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_defenceMod, nullString, nullString, nullString, nullString);
-
-	return result;
-}
-
-bool parseTagTorso(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	addRulesClassObjectsBasedOnSectionTag(currentTag, RULES_XML_TAG_torso, LRRCrulesUnitCombatDetailsDefenceTorso, RULES_XML_TAG_part, 4, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_defenceMod, nullString, nullString, nullString, nullString);
-
-	return result;
-}
-
-bool parseTagShield(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	addRulesClassObjectsBasedOnSectionTag(currentTag, RULES_XML_TAG_shield, LRRCrulesUnitCombatDetailsDefenceShield, RULES_XML_TAG_part, 4, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_defenceMod, nullString, nullString, nullString, nullString);
-
-	return result;
-}
-
-
-bool parseTagWeapons(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	XMLParserTag * currentTagUpdated = currentTag;
-	currentTagUpdated = parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_weapons, &result);
-	if(result)
-	{
-		if(!parseTagCloseCombat(currentTagUpdated))
-		{
-			result = false;
-		}
-		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!parseTagLongDistanceCombat(currentTagUpdated))
-		{
-			result = false;
-		}
-	}
-
-	return result;
-}
-
-bool parseTagCloseCombat(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	addRulesClassObjectsBasedOnSectionTag(currentTag, RULES_XML_TAG_closeCombat, LRRCrulesUnitCombatDetailsAttackCloseCombat, RULES_XML_TAG_part, 6, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_closeCombatAttackMod, RULES_XML_ATTRIBUTE_mountedAttackBonus, RULES_XML_ATTRIBUTE_attackBonusAgainstMounted, nullString, nullString);
-
-	return result;
-}
-
-bool parseTagLongDistanceCombat(XMLParserTag * currentTag)
-{
-	bool result = true;
-
-	addRulesClassObjectsBasedOnSectionTag(currentTag, RULES_XML_TAG_longDistance, LRRCrulesUnitCombatDetailsAttackLongDistance, RULES_XML_TAG_part, 5, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_partID, RULES_XML_ATTRIBUTE_partIDLen, RULES_XML_ATTRIBUTE_longDistanceAttackMod, RULES_XML_ATTRIBUTE_longDistanceRange, nullString, nullString, nullString);
-
-	return result;
-}
-
-#endif
 
 
 bool addRulesClassObjectsBasedOnSectionTag(XMLParserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attribute1Name, string attribute2Name, string attribute3Name, string attribute4Name, string attribute5Name, string attribute6Name, string attribute7Name, string attribute8Name)

@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -28,15 +48,15 @@ static double SPRITE_DICE_WIDTH_IN_LDRAW_UNITS;
 static double SPRITE_TEXT_DICE_Y_OFFSET;
 	static double SPRITE_LINE_SPACING_RATIO;	//derivable
 	static double SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
-	
+
 static double SPRITE_TEXT_SCALE_FACTOR;
-static double SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS;	
-static double SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS;		
+static double SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS;
+static double SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS;
 static double SPRITE_CHAR_SPACING_RATIO;
 static double SPRITE_TEXT_PADDING_IN_LDRAW_UNITS;
 	static double SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
 	static double SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
-	
+
 static double SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS;
 static double SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS;
 
@@ -51,12 +71,10 @@ double spriteTextKernelArray[ANSI_NUMBER_CHARACTERS];
 void fillInLDSpriteExternVariables()
 {
 	//extract common sprite variables from either xml file (LRRC or ANN)
-	#ifdef USE_LRRC
-		RulesClass * currentReferenceRulesClass = LRRCrulesSprite;
-	#elif defined USE_CS
+	#ifdef USE_CS
 		RulesClass * currentReferenceRulesClass = CSrulesSprite;
 	#elif defined USE_GIA
-		RulesClass * currentReferenceRulesClass = GIArulesSprite;		
+		RulesClass * currentReferenceRulesClass = GIArulesSprite;
 	#else
 		RulesClass * currentReferenceRulesClass = ANNrulesSprite;
 	#endif
@@ -86,8 +104,8 @@ void fillInLDSpriteExternVariables()
 		{
 			SPRITE_TEXT_DICE_Y_OFFSET = currentReferenceRulesClass->fractionalValue;
 		}
-				
-		
+
+
 		else if(currentReferenceRulesClass->name == SPRITE_TEXT_SCALE_FACTOR_NAME)
 		{
 			SPRITE_TEXT_SCALE_FACTOR = currentReferenceRulesClass->fractionalValue;
@@ -95,7 +113,7 @@ void fillInLDSpriteExternVariables()
 		else if(currentReferenceRulesClass->name == SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS_NAME)
 		{
 			SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
-		}		
+		}
 		else if(currentReferenceRulesClass->name == SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS_NAME)
 		{
 			SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
@@ -103,12 +121,12 @@ void fillInLDSpriteExternVariables()
 		else if(currentReferenceRulesClass->name == SPRITE_CHAR_SPACING_RATIO_NAME)
 		{
 			SPRITE_CHAR_SPACING_RATIO = currentReferenceRulesClass->fractionalValue;
-		}				
+		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXT_PADDING_IN_LDRAW_UNITS_NAME)
 		{
 			SPRITE_TEXT_PADDING_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
 		}
-		
+
 
 
 		else if(currentReferenceRulesClass->name == SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS_NAME)
@@ -119,7 +137,7 @@ void fillInLDSpriteExternVariables()
 		{
 			SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
 		}
-		
+
 
 		else if(currentReferenceRulesClass->name == SPRITE_NAME_START_NAME)
 		{
@@ -194,7 +212,7 @@ void fillInLDSpriteExternVariables()
 	spriteTextKernelArray[90] = 5.0;
 	spriteTextKernelArray[46] = 2.0;
 
-	
+
 }
 
 
@@ -252,8 +270,8 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string * spriteTextStri
 	int spriteTextIndex;
 
 	vec spriteSubmodelCurrentReferencePosition;
-	spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);		//NB can remove *scale 
-	spriteSubmodelCurrentReferencePosition.y = 0.0 + (double)SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS*scale;			//NB can remove *scale 
+	spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);		//NB can remove *scale
+	spriteSubmodelCurrentReferencePosition.y = 0.0 + (double)SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS*scale;			//NB can remove *scale
 	spriteSubmodelCurrentReferencePosition.z = 0.0;
 
 
@@ -272,8 +290,8 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string * spriteTextStri
 		if(spriteText[spriteTextIndex] == '\n')
 		{
 			spriteLineNumber++;
-			spriteSubmodelCurrentReferencePosition.y  = spriteSubmodelCurrentReferencePosition.y + (double)SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS*scale;		//NB can remove *scale 
-			spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);						//NB can remove *scale 
+			spriteSubmodelCurrentReferencePosition.y  = spriteSubmodelCurrentReferencePosition.y + (double)SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS*scale;		//NB can remove *scale
+			spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);						//NB can remove *scale
 		}
 		else if(((spriteText[spriteTextIndex] >= '0') && (spriteText[spriteTextIndex] <= '9')) || (spriteText[spriteTextIndex] == CHAR_PLUS) || (spriteText[spriteTextIndex] == CHAR_MINUS) || (spriteText[spriteTextIndex] == CHAR_EQUALS) || (spriteText[spriteTextIndex] == CHAR_FULLSTOP))
 		{

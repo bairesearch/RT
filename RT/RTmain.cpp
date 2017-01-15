@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -14,16 +34,21 @@
 #include "RTreferenceManipulation.h"
 #include "LDreferenceManipulation.h"
 
+#ifndef LINUX
+	#include <windows.h>
+#endif
+
+
 /*OLD;
 int main()
 {
 	//setLightingMode(LIGHTING_MODE_BASIC);
 	setLightingMode(LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR);	//Default = LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR
-	rayTraceScene(NULL, "brick.ppm", TRUE, FALSE, NULL, NULL, NULL, NULL);		//uses standard input for tal file "eg rt.exe < test.tal"
+	rayTraceScene(NULL, "brick.ppm", TRUE, FALSE, NULL, NULL, NULL, NULL);		//uses standard input for tal file "eg OpenRT.exe < test.tal"
 }
 */
 
-static char errmessage[] = "Usage:  RT.exe [options]"
+static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n"
 "\n\twhere options are any of the following"
 "\n"
@@ -55,7 +80,7 @@ static char errmessage[] = "Usage:  RT.exe [options]"
 "\n\t-lightcol [string]: light point source colour (def: white)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables RT.exe and (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables OpenRT.exe and (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-version          : print version"
@@ -183,20 +208,20 @@ int main(int argc,char **argv)
 		if (exists_argument(argc,argv,"-lightcol"))
 		lightSourceColour=get_char_argument(argc,argv,"-lightcol");
 
-		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];	
+		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];
 		#ifdef LINUX
-		getcwd(currentFolder, EXE_FOLDER_PATH_MAX_LENGTH);					
+		getcwd(currentFolder, EXE_FOLDER_PATH_MAX_LENGTH);
 		#else
 		::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolder);
 		#endif
-		
+
 		if (exists_argument(argc,argv,"-workingfolder"))
 		{
 			workingFolderCharStar=get_char_argument(argc,argv,"-workingfolder");
 		}
 		else
 		{
-			workingFolderCharStar = currentFolder;		
+			workingFolderCharStar = currentFolder;
 		}
 		if (exists_argument(argc,argv,"-exefolder"))
 		{
@@ -216,14 +241,14 @@ int main(int argc,char **argv)
 		}
 
 		#ifdef LINUX
-		chdir(workingFolderCharStar);						
+		chdir(workingFolderCharStar);
 		#else
 		::SetCurrentDirectory(workingFolderCharStar);
-		#endif	
-				
+		#endif
+
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "rt.exe version: 1pXy" << endl;
+			cout << "OpenRT.exe version: 1pXy" << endl;
 			exit(1);
 		}
 	}
@@ -246,14 +271,14 @@ int main(int argc,char **argv)
 		}
 
 		#ifdef LINUX
-		chdir(tempFolderCharStar);						
+		chdir(tempFolderCharStar);
 		#else
 		::SetCurrentDirectory(tempFolderCharStar);
 		#endif
 
 		write2DReferenceListCollapsedTo1DToFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
 		write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);
-			
+
 	}
 
 	setLightingMode(lightingMode);

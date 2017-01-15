@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -41,7 +61,7 @@ int main()
 void testMySQLserverConnection()
 {
 		//tcp://127.0.0.1:3306"
-	initiateMySQLserverConnection("localhost", "rich", "Esteban7", "objectRecog");
+	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
 	performSQLSelectQuery("SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )", sqlCommandOutput);
 	cout << "sqlCommandOutput = " << sqlCommandOutput << endl;
@@ -133,7 +153,7 @@ bool performSQLRealSelectQuery(char * sqlCommand, unsigned long stringLength)
 
 	return true;
 }
- 
+
 
 
 //not yet working...

@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -33,7 +53,7 @@ long getTimeAsLong()
 	gettimeofday(&tv, &tz);
 	tm=localtime(&tv.tv_sec);
 	long timeAsLong = long(tm->tm_hour) * 60 * 60 * 1000000 + long(tm->tm_min) * 60 * 1000000 + long(tm->tm_sec) * 1000000 + long(tv.tv_usec);	//time in microseconds
-	return timeAsLong;  
+	return timeAsLong;
 
 	#else
 	/*doesnt work;
@@ -67,7 +87,7 @@ long getTimeAsLong()
 	return systemTimeIn_ms;
 
 	#endif
-	
+
 
 }
 
@@ -182,7 +202,7 @@ int exists_argument(int argc,char **argv,char *keystr)
 	for(i=1;i<argc;i++)
 	{
 		//cout << "argv[i] = " << argv[i] << endl;
-		if(strcmp(argv[i],keystr) == 0) 
+		if(strcmp(argv[i],keystr) == 0)
 		{
 			return 1;
 		}
@@ -208,7 +228,7 @@ float get_float_argument(int argc,char **argv,char *keystr)
 		fprintf(stderr,"Error: get_float_argument(%s)\n",keystr);
 		return (float) -999999999;
 	}
-	
+
 	else return result;
 }
 
@@ -228,11 +248,11 @@ char *get_char_argument(int argc,char **argv,char *keystr)
 			break;
 		}
 	}
-	if(i == argc) 
+	if(i == argc)
 	{
 		fprintf(stderr,"Error: get_char_argument(%s)\n",keystr);
 	}
-	
+
 	return result;
 }
 /*

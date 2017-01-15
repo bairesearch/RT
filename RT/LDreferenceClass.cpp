@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+
+/*******************************************************************************
  *
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -100,9 +120,7 @@ Reference::Reference(void)
 	type = REFERENCE_TYPE_UNDEFINED;
 
 	/*Additional values used with recursive parser*/
-#ifdef USE_LRRC
-	subModelDetails = NULL;
-#endif
+
 	firstReferenceWithinSubModel = NULL;
 
 
@@ -121,12 +139,7 @@ Reference::~Reference()
 
 		//cout << "deleteing reference i=" << i << endl;
 		//i++;
-	#ifdef USE_LRRC
-		if(n->subModelDetails != NULL)
-		{
-			delete n->subModelDetails;
-		}
-	#endif
+
 		if(n->firstReferenceWithinSubModel != NULL)
 		{
 			delete n->firstReferenceWithinSubModel;
@@ -137,13 +150,6 @@ Reference::~Reference()
 		n = nn;
 	}
 
-
-#ifdef USE_LRRC
-	if(this->subModelDetails != NULL)
-	{
-		delete this->subModelDetails;
-	}
-#endif
 	if(this->firstReferenceWithinSubModel != NULL)
 	{
 		delete this->firstReferenceWithinSubModel;
@@ -248,16 +254,10 @@ Reference::Reference(string referenceName, int referenceColour, bool createNewSu
 
 	if(createNewSubmodel)
 	{
-		#ifdef USE_LRRC
-		subModelDetails = new ModelDetails();
-		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
-		#ifdef USE_LRRC
-		subModelDetails = NULL;
-		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 
@@ -356,16 +356,10 @@ Reference::Reference(bool createNewSubmodel)
 
 	if(createNewSubmodel)
 	{
-		#ifdef USE_LRRC
-		subModelDetails = new ModelDetails();
-		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 	else
 	{
-		#ifdef USE_LRRC
-		subModelDetails = NULL;
-		#endif
 		firstReferenceWithinSubModel = NULL;
 	}
 
@@ -404,7 +398,7 @@ void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
 	unsigned char g;
 	unsigned char b;
 
-	
+
 	if(dataFileColour == DAT_FILE_COLOUR_BLACK)
 	{
 		r = DAT_FILE_COLOUR_BLACK_RGB_R;
@@ -502,11 +496,11 @@ void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
 		b = DAT_FILE_COLOUR_DARKRED_RGB_B;
 	}
 	else if(dataFileColour == DAT_FILE_COLOUR_AQUA)
-	{			
+	{
 		r = DAT_FILE_COLOUR_AQUA_RGB_R;
 		g = DAT_FILE_COLOUR_AQUA_RGB_G;
 		b = DAT_FILE_COLOUR_AQUA_RGB_B;
-	}		
+	}
 	else
 	{
 		cout << "invalid dat file colour for conversion to RGB" << endl;
