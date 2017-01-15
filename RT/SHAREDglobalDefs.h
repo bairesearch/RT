@@ -41,13 +41,13 @@
 
 	//current/active tests;
 //#define COMPILE_CF
-#define COMPILE_NLC
+//#define COMPILE_NLC
 //#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
-//#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
+#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
 //#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe
 //#define COMPILE_LRRC		//compileLRRC.bat -> OpenLRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
