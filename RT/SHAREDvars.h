@@ -117,6 +117,7 @@ string convertLongToString(long number);
 bool textInTextArray(string text, string* textArray, int arraySize);
 bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound);
 bool charInCharArray(char c, char* charArray, int arraySize);
+bool intInIntArray(int iTest, int* intArray, int arraySize);
 string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString);
 string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
 

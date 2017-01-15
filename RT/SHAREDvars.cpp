@@ -509,6 +509,19 @@ bool charInCharArray(char c, char* charArray, int arraySize)
 	return result;
 }
 
+bool intInIntArray(int iTest, int* intArray, int arraySize)
+{
+	bool result = false;
+	for(int i=0; i<arraySize; i++)
+	{
+		if(iTest == intArray[i])
+		{
+			result = true;
+		}
+	}
+	return result;
+}
+
 
 string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString)
 {

@@ -192,6 +192,7 @@
 #include <vector>
 #ifdef USE_GIA
 #include <unordered_map>	//requires C++11
+#include <utility> // make_pair
 #endif
 #include <map>
 using namespace std;
