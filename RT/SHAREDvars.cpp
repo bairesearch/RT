@@ -498,3 +498,16 @@ bool textInTextArray(string text, string * textArray, int arraySize, int * array
 	}
 	return result;
 }
+
+bool charInCharArray(char c, char * charArray, int arraySize)
+{
+	bool result = false;
+	for(int i=0; i<arraySize; i++)
+	{
+		if(c == charArray[i])
+		{
+			result = true;
+		}
+	}
+	return result;
+}
