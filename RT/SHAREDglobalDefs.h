@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f7a 16-August-2015
+ * Project Version: 3f7b 16-August-2015
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -248,7 +248,7 @@ using namespace std;
 #define TM_STRUCT_YEAR_OFFSET 1900
 
 #define INT_DEFAULT_VALUE (-1)
-#define CPP_STRING_FIND_RESULT_FAIL_VALUE (-1)	//std::string::npos
+#define CPP_STRING_FIND_RESULT_FAIL_VALUE string::npos	//-1
 #define BOOL_IRRELEVANT (false)
 #define INT_IRRELEVANT (0)
 

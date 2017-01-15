@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f7a 16-August-2015
+ * Project Version: 3f7b 16-August-2015
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
