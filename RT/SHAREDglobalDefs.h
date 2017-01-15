@@ -3,7 +3,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a6b 30-Apr-2012
+ * Project Version: 3a6c 07-May-2012
  * Preconditions: Assume Linux EL5 or Windows XP or is installed
  *
  * 1. Object Recognition Software Installation Instructions;
@@ -606,19 +606,20 @@
 
 	//current/active tests;
 //#define COMPILE_OR		//or.exe
-#define COMPILE_GIA
+//#define COMPILE_GIA
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_TH_OR_IMAGE_CATEGORISTION_NN	//ORTHimageCategorisationNN.exe
 //#define COMPILE_CS		//cs.exe
 //#define COMPILE_RT		//rt.exe
 //#define COMPILE_ANN_WITH_RT	//ann.exe
 //#define COMPILE_ANN		//ann.exe
-
-	//inactive tests;
-//#define COMPILE_LRRC_WITH_ANN
-//#define COMPILE_TH_ANN_WITH_LRRC
-//#define COMPILE_LRRC
+#define COMPILE_LRRC
 //#define COMPILE_OLC
+
+//inactive tests;
+//#define COMPILE_LRRC_WITH_ANN		[compilation broken; requires updating]
+//#define COMPILE_TH_ANN_WITH_LRRC	[compilation broken; requires updating]
+
 
 	//old tests
 //#define COMPILE_TH_OR_METHOD_2DOD
@@ -2896,6 +2897,7 @@ OR SQL VARIABLES;
 #ifdef COMPILE_LRRC_WITH_ANN
 	#define USE_LRRC
 	#define USE_ANN
+	#define USE_RT
 #endif
 
 #ifdef COMPILE_TH_ANN_WITH_LRRC
