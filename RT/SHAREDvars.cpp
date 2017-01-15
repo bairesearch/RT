@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3h1f 14-November-2015
+ * Project Version: 3h9a 09-December-2015
  *
  *******************************************************************************/
 
@@ -624,3 +624,32 @@ string getFileContents(string inputFileName)
 	
 	return fileContents;
 }
+
+bool fileExists(string inputFileName)
+{	
+	bool result = true;
+	ifstream parseFileObject(inputFileName.c_str());
+	if(!parseFileObject.rdbuf()->is_open())
+	{
+		result = false;
+	}
+	else
+	{
+		parseFileObject.close();
+	}
+	
+	return result;
+}
+
+/*
+	bool result = false;
+ 	FILE* pFile = NULL;
+	const char* fileNameCharStar = fileName.c_str();
+  	pFile = fopen(fileNameCharStar,"r");
+	if(pFile != NULL)
+	{
+		result = true;
+	}
+	return result;
+*/
+
