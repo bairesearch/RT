@@ -390,8 +390,8 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
 
 			LDreference* newReference = new LDreference();
-			spriteSubmodelCurrentReference -> next = newReference;
-			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
+			spriteSubmodelCurrentReference->next = newReference;
+			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference->next;
 			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if((spriteTextString[spriteTextIndex] >= 'A') && (spriteTextString[spriteTextIndex] <= 'Z'))
@@ -414,8 +414,8 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
 
 			LDreference* newReference = new LDreference();
-			spriteSubmodelCurrentReference -> next = newReference;
-			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
+			spriteSubmodelCurrentReference->next = newReference;
+			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference->next;
 			*numSpritesAdded = *numSpritesAdded + 1;
 
 		}
@@ -437,8 +437,8 @@ LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitRefere
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
 
 			LDreference* newReference = new LDreference();
-			spriteSubmodelCurrentReference -> next = newReference;
-			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
+			spriteSubmodelCurrentReference->next = newReference;
+			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference->next;
 			*numSpritesAdded = *numSpritesAdded + 1;
 		}
 		else if(spriteTextString[spriteTextIndex] == ' ')
