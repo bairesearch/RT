@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -47,7 +47,7 @@ using namespace std;
 #include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Reference* firstReference, bool useCustomViewInfo, ViewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
 {
 	ofstream writeFileObject;
 	writeFileObject.open(fileName.c_str());
@@ -68,7 +68,7 @@ bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Refe
 
 
 
-bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, ViewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
+bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, RTviewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
 {
 	/*
 	#ifdef COMPILE_TH_RT
@@ -294,9 +294,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomView
 	return true;
 }
 
-bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, Reference* firstReferenceInLayer)
+bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer)
 {
-	Reference* currentReference = firstReferenceInLayer;
+	LDreference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 		if((currentReference->isSubModelReference)
@@ -324,7 +324,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 				//cout << "currentReference->deformationMatrix.c.z = " << currentReference->deformationMatrix.c.z << endl;
 				//cout << "currentReference->relativePosition.z = " << currentReference->relativePosition.z << endl;
 
-				Reference collapsedReference;
+				LDreference collapsedReference;
 				copyReferences(&collapsedReference, currentReference, currentReference->type);
 
 				if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
@@ -354,7 +354,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 }
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, Reference* currentReference)
+bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference)
 {
 
 	bool result = true;

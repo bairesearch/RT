@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -34,26 +34,26 @@
 
 //xml comments not yet supported by this parser
 
-RulesClass* ANNrulesSprite;	//common sprite xml file is ANNrules.xml
+XMLrulesClass* ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
-RulesClass* CSrulesSprite;
-RulesClass* CSrulesDraw;
+XMLrulesClass* CSrulesSprite;
+XMLrulesClass* CSrulesDraw;
 XMLparserTag* CSfirstTagInXMLfile;
 #endif
 #ifdef USE_GIA
-RulesClass* GIArulesSprite;
-RulesClass* GIArulesDraw;
+XMLrulesClass* GIArulesSprite;
+XMLrulesClass* GIArulesDraw;
 XMLparserTag* GIAfirstTagInXMLfile;
 #endif
 #ifdef USE_OR
-RulesClass* ORrulesObjectRecognition;
+XMLrulesClass* ORrulesObjectRecognition;
 #endif
 
 static string nullString;
 static bool nullBool;
-static RulesClass nullRulesObject;
+static XMLrulesClass nullRulesObject;
 
-RulesClass::RulesClass(void)
+XMLrulesClass::XMLrulesClass(void)
 {
 	name = "";					//attribute 1
 
@@ -79,7 +79,7 @@ RulesClass::RulesClass(void)
 	*/
 }
 
-RulesClass::~RulesClass()
+XMLrulesClass::~XMLrulesClass()
 {
 	if(next != NULL)
 	{
@@ -101,8 +101,8 @@ bool parseGIArulesXMLfile()
 
 	XMLparserTag* currentTag = GIAfirstTagInXMLfile;
 
-	GIArulesSprite = new RulesClass();
-	GIArulesDraw = new RulesClass();
+	GIArulesSprite = new XMLrulesClass();
+	GIArulesDraw = new XMLrulesClass();
 
 	if(!parseGIARulesTag(currentTag))
 	{
@@ -149,8 +149,8 @@ bool parseCSrulesXMLfile()
 
 	XMLparserTag* currentTag = CSfirstTagInXMLfile;
 
-	CSrulesSprite = new RulesClass();
-	CSrulesDraw = new RulesClass();
+	CSrulesSprite = new XMLrulesClass();
+	CSrulesDraw = new XMLrulesClass();
 
 	if(!parseCSRulesTag(currentTag))
 	{
@@ -199,7 +199,7 @@ bool parseORrulesXMLfile()
 
 	XMLparserTag* currentTag = firstTagInXMLfile;
 
-	ORrulesObjectRecognition = new RulesClass();
+	ORrulesObjectRecognition = new XMLrulesClass();
 
 	if(!parseORrulesTag(currentTag))
 	{
@@ -253,7 +253,7 @@ bool parseANNrulesXMLfile()
 
 	XMLparserTag* currentTag = firstTagInXMLfile;
 
-	ANNrulesSprite = new RulesClass();
+	ANNrulesSprite = new XMLrulesClass();
 
 	if(!parseANNrulesTag(currentTag))
 	{
@@ -292,7 +292,7 @@ bool parseANNrulesTag(XMLparserTag* currentTag)
 
 
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sectionTagName, RulesClass* firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
+bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
 {
 	bool result = true;
 
@@ -300,7 +300,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sect
 	{
 		XMLparserTag* currentLowerLevelTag = currentTag->firstLowerLevelTag;
 
-		RulesClass* currentReferenceToObjectClass = firstReferenceToObjectClass;
+		XMLrulesClass* currentReferenceToObjectClass = firstReferenceToObjectClass;
 
 		while(currentLowerLevelTag->nextTag != NULL)
 		{
@@ -321,7 +321,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sect
 				cout << "attribute8 = " << currentReferenceToObjectClass->attribute8 << endl;
 				*/
 
-				RulesClass* newObject = new RulesClass();
+				XMLrulesClass* newObject = new XMLrulesClass();
 				currentReferenceToObjectClass->next = newObject;
 				currentReferenceToObjectClass = currentReferenceToObjectClass->next;
 			}
@@ -341,7 +341,7 @@ bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sect
 }
 
 
-bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, RulesClass* currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
+bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8)
 {
 	bool result = true;
 

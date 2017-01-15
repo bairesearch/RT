@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -201,15 +201,15 @@ using namespace std;
 
 	/*a matrix is defined by 3 vectors side by side*/
 
-class Reference{
+class LDreference{
 private:
 	/*There are currently no private attributes of this class*/
 public:
 
-	Reference(void); // constructor declaration
-	Reference(string referenceName, int referenceColour, bool createNewSubmodel); // constructor declaration
-	Reference(bool createNewSubmodel);
-	~Reference();	//  and destructor.
+	LDreference(void); // constructor declaration
+	LDreference(string referenceName, int referenceColour, bool createNewSubmodel); // constructor declaration
+	LDreference(bool createNewSubmodel);
+	~LDreference();	//  and destructor.
 
 	vec relativePosition;
 	vec absolutePosition;
@@ -217,7 +217,7 @@ public:
 	mat absoluteDeformationMatrix;
 	unsigned int colour;
 	string name;
-	Reference* next;
+	LDreference* next;
 
 		/*new parameters added to parseFile() 18-mar-07*/
 	vec vertex1relativePosition;
@@ -246,12 +246,12 @@ public:
 	#ifdef USE_LRRC
 	ModelDetails* subModelDetails;
 	#endif		
-	Reference* firstReferenceWithinSubModel;
+	LDreference* firstReferenceWithinSubModel;
 };
 
-void copyReferencePosition(Reference* r, Reference* referenceToCopy);
+void copyReferencePosition(LDreference* r, LDreference* referenceToCopy);
 
-int obtainReferencePlayerID(Reference* referenceInThisPhaseStartSceneFile);
+int obtainReferencePlayerID(LDreference* referenceInThisPhaseStartSceneFile);
 
 void convertLdrawColourToDatFileRGB(int dataFileColour, colour* col);
 

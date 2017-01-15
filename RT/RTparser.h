@@ -26,7 +26,7 @@
  * File Name: RTparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -55,15 +55,15 @@ typedef enum {
 
 
 /*
- * lightSource
+ * RTlightSource
  * Light source parameters
  */
-class lightSource
+class RTlightSource
 {
 public:
 
-	lightSource(void);
-	~lightSource(void);
+	RTlightSource(void);
+	~RTlightSource(void);
 
 	lightType type;
 
@@ -81,14 +81,14 @@ typedef enum {
 
 
 /*
- * pieceInfo
+ * RTpieceInfo
  * standard attributes common to all pieces
  */
-class pieceInfo
+class RTpieceInfo
 {
 public:
-	pieceInfo(void);
-	~pieceInfo(void);
+	RTpieceInfo(void);
+	~RTpieceInfo(void);
 
 	pieceType type;		// the type of the piece
 
@@ -107,18 +107,18 @@ public:
 
 
 /*
- * brick_info, plate_info, tile_info, decalInfo, baseplate_info
+ * brick_info, plate_info, tile_info, RTdecalInfo, baseplate_info
  * structures to hold additional information about specific types of piece
  */
 
 
 
-/* dimensionsInfo*/
-class dimensionsInfo
+/* RTdimensionsInfo*/
+class RTdimensionsInfo
 {
 public:
-	dimensionsInfo(void);
-	~dimensionsInfo(void);
+	RTdimensionsInfo(void);
+	~RTdimensionsInfo(void);
 
 	double width;		// width of the object
 	double length;		// length of the object
@@ -130,12 +130,12 @@ public:
 
 
 
-/* decalInfo*/
-class decalInfo
+/* RTdecalInfo*/
+class RTdecalInfo
 {
 public:
-	decalInfo(void);
-	~decalInfo(void);
+	RTdecalInfo(void);
+	~RTdecalInfo(void);
 
 	double width;		// width of the decal in the scene
 	double length;		// length of the decal
@@ -148,16 +148,16 @@ public:
 
 
 /*
- * unknownInfo
+ * RTunknownInfo
  * Generic structure used to hold "unknown" commands; i.e., those not
  * handled above.  Parameters are stored as an array of
  * null-terminated char arrays, one element per parameter supplied.
  */
-class unknownInfo
+class RTunknownInfo
 {
 public:
-	unknownInfo(void);
-	~unknownInfo(void);
+	RTunknownInfo(void);
+	~RTunknownInfo(void);
 
 	char* commandString;	// the name of the unknown command
 
@@ -182,7 +182,7 @@ int readViewport();
 
 
 /* Return the details of the viewport description.*/
-ViewInfo* get_view_info();
+RTviewInfo* get_view_info();
 
 
 
@@ -195,7 +195,7 @@ int nextLightSource();
 
 
 /* Return the details of the last light source read in.*/
-lightSource* get_light_info();
+RTlightSource* get_light_info();
 
 
 
@@ -208,34 +208,34 @@ int nextSceneCommand();
 
 
 /*
- * Return a pointer to a `pieceInfo' structure containing the details
+ * Return a pointer to a `RTpieceInfo' structure containing the details
  * of the last scene description command read in.
  * Beware -- this and the other get_*_info routines below return the
  * same structure every time, so you will have to copy any data out
  * each time or it will be overwritten!
  */
-pieceInfo* getPieceInfo();
+RTpieceInfo* getPieceInfo();
 
 /*
- * Return a pointer to a `dimensionsInfo' structure.  Only meaningful if
+ * Return a pointer to a `RTdimensionsInfo' structure.  Only meaningful if
  * the last scene description command was not a decal or unknown
  */
-dimensionsInfo* getDimensionsInfo();
+RTdimensionsInfo* getDimensionsInfo();
 
 
 
 	//not tested;
 /*
- * Return a pointer to a `decalInfo' structure.  Only meaningful if
+ * Return a pointer to a `RTdecalInfo' structure.  Only meaningful if
  * the last scene description command was a DECAL.
  */
-decalInfo* getDecalInfo();
+RTdecalInfo* getDecalInfo();
 
 /*
- * Return a pointer to an `unknownInfo' structure.  Only meaningful
+ * Return a pointer to an `RTunknownInfo' structure.  Only meaningful
  * if the last scene description command was not known to the parser.
  */
-unknownInfo* getUnknownInfo();
+RTunknownInfo* getUnknownInfo();
 
 void exitParser();
 

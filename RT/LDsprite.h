@@ -26,7 +26,7 @@
  * File Name: LDsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -110,14 +110,14 @@ extern int SPRITE_DEFAULT_COLOUR;
 void fillInLDspriteExternVariables();
 
 string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName);
-Reference* LDaddTextualSpriteInfoStringToReferenceList(Reference* unitReference, string spriteTextString, int spriteColourArray[], Reference* spriteSubmodelInitialReference, int spriteNumberOfLines, int* numSpritesAdded, bool addIndividualSprites);
-Reference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, Reference* currentReference, vec* position, int* numSpritesAdded, bool addIndividualSprites, int colour, double scale);
+LDreference* LDaddTextualSpriteInfoStringToReferenceList(LDreference* unitReference, string spriteTextString, int spriteColourArray[], LDreference* spriteSubmodelInitialReference, int spriteNumberOfLines, int* numSpritesAdded, bool addIndividualSprites);
+LDreference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, LDreference* currentReference, vec* position, int* numSpritesAdded, bool addIndividualSprites, int colour, double scale);
 
 
-bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, Reference* spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor);
+bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LDreference* spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor);
 
 /*low level sprite routines*/
 void LDgenerateSpriteRotationMatrix(vec* spriteSceneCoords, vec* eyeCoords, mat* spriteRotationMatrix);
-void LDspriteSubmodelFillTextualReference(Reference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale);
+void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale);
 
 #endif

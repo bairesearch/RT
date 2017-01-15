@@ -26,7 +26,7 @@
  * File Name: RTscene.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -84,38 +84,38 @@ the 2/15 -HEIGHT_OF_BASEPLATE- fraction...*/
 
 
 /*
-typedef struct light lightingInfo;
+typedef struct light RTlightingInfo;
 struct light
 {
-	lightSource ls;
-	lightingInfo* nextLight;
+	RTlightSource ls;
+	RTlightingInfo* nextLight;
 };
 */
 
-class lightingInfo
+class RTlightingInfo
 {
 public:
 
-	lightingInfo(void);
-	~lightingInfo(void);
+	RTlightingInfo(void);
+	~RTlightingInfo(void);
 
-	lightSource ls;
-	lightingInfo* nextLight;
+	RTlightSource ls;
+	RTlightingInfo* nextLight;
 };
 
 
 int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
-	int rayTraceSceneWithoutParse(ViewInfo* vi, sceneInfo* si, lightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
+	int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
 
 void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew);
 void setLightingMode(int newLightingMode);
 
 void parseTalFileInitialiseParser(string talFileName);
-ViewInfo* parseTalFileGetViewInfo(ViewInfo* vi);
-lightingInfo* parseTalFileGetLightInfo(lightingInfo* li);
-sceneInfo* parseTalFileGetSceneInfo(sceneInfo* si);
+RTviewInfo* parseTalFileGetViewInfo(RTviewInfo* vi);
+RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li);
+RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si);
 
-void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, ViewInfo* vi, sceneInfo* si, lightingInfo* li);
+void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li);
 
 
 typedef struct advancedColour colourAdvanced;
@@ -124,22 +124,22 @@ struct advancedColour
 	double r, g, b;
 };
 
-void calculateTransparencyColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb);
+void calculateTransparencyColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb);
 
-void calculateUVNScalars(ViewInfo* vi, vec* uvn, int x, int y);
+void calculateUVNScalars(RTviewInfo* vi, vec* uvn, int x, int y);
 
-void calculateAmbientDiffuseSpecular(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
+void calculateAmbientDiffuseSpecular(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
 
-void calculateBasicColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
+void calculateBasicColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
 
 
 bool stripExtension(string filenameWithExtension, string* filenameWithoutExtension);
 bool addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension);
 
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, ViewInfo* vi);
+void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi);
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  ViewInfo* vi);
+void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  RTviewInfo* vi);
 
 
 #endif

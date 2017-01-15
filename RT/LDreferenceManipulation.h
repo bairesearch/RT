@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -59,23 +59,23 @@
 	#define FILE_FLOAT_PRECISION "%0.4f"
 #endif
 
-Reference* search1DrefListFindLastReference(Reference* initialReferenceInList);
-bool search1DrefListFindRef(Reference* referenceToFind, Reference* initialReferenceInList);		//not currently used
-bool search1DrefListNameAndColourFindRef(Reference* referenceToFind, Reference* initialReferenceInList);
-bool search1DrefListReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList);	//not currently used
-bool search1DrefListNameAndColourReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList);
-bool search1DrefListAddReference(Reference* initialReferenceInList, Reference* referenceToAdd);
-bool compareReferenceNameAndColour(Reference* reference, string referenceName, int referenceColour);
-void copyReferences(Reference* referenceNew, Reference* referenceToCopy, int type);
-bool compareReferences(Reference* reference1, Reference* reference2, int type);
+LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInList);
+bool search1DrefListFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList);		//not currently used
+bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList);
+bool search1DrefListReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);	//not currently used
+bool search1DrefListNameAndColourReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList);
+bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreference* referenceToAdd);
+bool compareReferenceNameAndColour(LDreference* reference, string referenceName, int referenceColour);
+void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int type);
+bool compareReferences(LDreference* reference1, LDreference* reference2, int type);
 
 
 string convertPositionCoordinatesToString(vec* spriteSceneCoords);
 string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* spriteSceneCoords);
 
-bool writeReferencesToFile(string fileName, Reference* firstReference);
-bool addReferenceToFileObject(ofstream* writeFileObject, Reference* currentReference);
-	bool convertReferenceToString(Reference* currentReference, string* referenceString);
+bool writeReferencesToFile(string fileName, LDreference* firstReference);
+bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
+	bool convertReferenceToString(LDreference* currentReference, string* referenceString);
 bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream* writeFileObject);
 
 bool readFileIntoString(string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
@@ -84,11 +84,11 @@ void copyFiles(string newFileName, string fileToCopyName);
 /*sprite routines*/
 string convertRotationMatrixToString(mat* rotationMatrix);
 
-bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference* firstSpriteInReferenceList, int spriteListByteArrayLines);
+bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, int spriteListByteArrayLines);
 
-bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference* firstReference);
-	bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, Reference* firstReferenceInLayer);
+bool write2DreferenceListCollapsedTo1DtoFile(string fileName, LDreference* firstReference);
+	bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
 
-bool joinReferenceLists(Reference* initialReferenceInMainList, Reference* initialReferenceInAdditionalList);
+bool joinReferenceLists(LDreference* initialReferenceInMainList, LDreference* initialReferenceInAdditionalList);
 
 #endif

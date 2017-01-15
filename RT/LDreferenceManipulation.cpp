@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -61,10 +61,10 @@ using namespace std;
 
 
 
-Reference* search1DrefListFindLastReference(Reference* initialReferenceInList)
+LDreference* search1DrefListFindLastReference(LDreference* initialReferenceInList)
 {
-	Reference* lastReference;
-	Reference* currentReference = initialReferenceInList;
+	LDreference* lastReference;
+	LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -78,11 +78,11 @@ Reference* search1DrefListFindLastReference(Reference* initialReferenceInList)
 
 
 
-bool search1DrefListFindRef(Reference* referenceToFind, Reference* initialReferenceInList)
+bool search1DrefListFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference* currentReference = initialReferenceInList;
+	LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -97,11 +97,11 @@ bool search1DrefListFindRef(Reference* referenceToFind, Reference* initialRefere
 	return foundReference;
 }
 
-bool search1DrefListNameAndColourFindRef(Reference* referenceToFind, Reference* initialReferenceInList)
+bool search1DrefListNameAndColourFindRef(LDreference* referenceToFind, LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference* currentReference = initialReferenceInList;
+	LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -116,11 +116,11 @@ bool search1DrefListNameAndColourFindRef(Reference* referenceToFind, Reference* 
 	return foundReference;
 }
 
-bool search1DrefListReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList)
+bool search1DrefListReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference* currentReference = initialReferenceInList;
+	LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -136,11 +136,11 @@ bool search1DrefListReplaceRef(Reference* referenceToFind, Reference* referenceT
 	return foundReference;
 }
 
-bool search1DrefListNameAndColourReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList)
+bool search1DrefListNameAndColourReplaceRef(LDreference* referenceToFind, LDreference* referenceToReplaceWith, LDreference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference* currentReference = initialReferenceInList;
+	LDreference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -156,15 +156,15 @@ bool search1DrefListNameAndColourReplaceRef(Reference* referenceToFind, Referenc
 	return foundReference;
 }
 
-bool search1DrefListAddReference(Reference* initialReferenceInList, Reference* referenceToAdd)
+bool search1DrefListAddReference(LDreference* initialReferenceInList, LDreference* referenceToAdd)
 {
 	bool foundReference = true;
 
-	Reference* currentReference = initialReferenceInList;
+	LDreference* currentReference = initialReferenceInList;
 
 	if(currentReference->next == NULL)
 	{
-		Reference* newReference = new Reference();
+		LDreference* newReference = new LDreference();
 		copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 		currentReference->next = newReference;
 	}
@@ -176,7 +176,7 @@ bool search1DrefListAddReference(Reference* initialReferenceInList, Reference* r
 
 			if(currentReference->next == NULL)
 			{
-				Reference* newReference = new Reference();
+				LDreference* newReference = new LDreference();
 				copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 				currentReference->next = newReference;
 				currentReference = currentReference->next;
@@ -189,7 +189,7 @@ bool search1DrefListAddReference(Reference* initialReferenceInList, Reference* r
 
 
 
-bool compareReferenceNameAndColour(Reference* reference, string referenceName, int referenceColour)
+bool compareReferenceNameAndColour(LDreference* reference, string referenceName, int referenceColour)
 {
 	bool result = true;
 
@@ -206,7 +206,7 @@ bool compareReferenceNameAndColour(Reference* reference, string referenceName, i
 }
 
 /*
-bool compareSubmodelReferencesNameAndColour(Reference* reference1, Reference* reference2)
+bool compareSubmodelReferencesNameAndColour(LDreference* reference1, LDreference* reference2)
 {
 	bool result = true;
 
@@ -224,7 +224,7 @@ bool compareSubmodelReferencesNameAndColour(Reference* reference1, Reference* re
 */
 
 
-bool compareReferences(Reference* reference1, Reference* reference2, int type)
+bool compareReferences(LDreference* reference1, LDreference* reference2, int type)
 {
 	bool result = true;
 
@@ -284,7 +284,7 @@ bool compareReferences(Reference* reference1, Reference* reference2, int type)
 	return result;
 }
 
-void copyReferences(Reference* referenceNew, Reference* referenceToCopy, int type)
+void copyReferences(LDreference* referenceNew, LDreference* referenceToCopy, int type)
 {
 	referenceNew->type = referenceToCopy->type;
 	referenceNew->colour = referenceToCopy->colour;
@@ -378,7 +378,7 @@ string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* sprit
 
 
 
-bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference* firstReference)
+bool write2DreferenceListCollapsedTo1DtoFile(string fileName, LDreference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -390,11 +390,11 @@ bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference* firstRe
 }
 
 
-bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, Reference* firstReferenceInLayer)
+bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, LDreference* firstReferenceInLayer)
 {
 	bool result = true;
 
-	Reference* currentReference = firstReferenceInLayer;
+	LDreference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 		if(currentReference->isSubModelReference)
@@ -404,7 +404,7 @@ bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, Reference* fi
 		}
 		else
 		{
-			Reference collapsedReference;
+			LDreference collapsedReference;
 			copyReferences(&collapsedReference, currentReference, currentReference->type);
 
 			collapsedReference.relativePosition.x = currentReference->absolutePosition.x; //- currentReference->relativePosition.x;	//collapse 2D reference list to top level 1D reference list
@@ -436,11 +436,11 @@ bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, Reference* fi
 }
 
 
-bool writeReferencesToFile(string fileName, Reference* firstReference)
+bool writeReferencesToFile(string fileName, LDreference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
-	Reference* currentReference = firstReference;
+	LDreference* currentReference = firstReference;
 	while(currentReference->next != NULL)
 	{
 		addReferenceToFileObject(&writeFileObject, currentReference);
@@ -455,7 +455,7 @@ bool writeReferencesToFile(string fileName, Reference* firstReference)
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool convertReferenceToString(Reference* currentReference, string* referenceString)
+bool convertReferenceToString(LDreference* currentReference, string* referenceString)
 {
 	bool result = true;
 
@@ -534,7 +534,7 @@ bool convertReferenceToString(Reference* currentReference, string* referenceStri
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool addReferenceToFileObject(ofstream* writeFileObject, Reference* currentReference)
+bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference)
 {
 	bool result = true;
 
@@ -745,7 +745,7 @@ void copyFiles(string newFileName, string fileToCopyName)
 
 
 
-bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference* firstSpriteInReferenceList, int spriteListByteArrayLines)
+bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, int spriteListByteArrayLines)
 {
 	bool result = true;
 
@@ -755,13 +755,13 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 	openFileAndCopyDataIntoCurrentFileObject(sceneFileName, &writeFileObject);
 
 	//add sprite header
-	Reference spriteHeaderReference;
+	LDreference spriteHeaderReference;
 	spriteHeaderReference.type = REFERENCE_TYPE_COMMENT;
 	spriteHeaderReference.name = SPRITE_HEADER_NAME;
 	addReferenceToFileObject(&writeFileObject, &spriteHeaderReference);
 
 	//add sprite data
-	Reference* currentReference = firstSpriteInReferenceList;
+	LDreference* currentReference = firstSpriteInReferenceList;
 	while(currentReference->next != NULL)
 	{
 		addReferenceToFileObject(&writeFileObject, currentReference);
@@ -769,7 +769,7 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 	}
 
 	//add sprite trailer
-	Reference spriteTrailerReference;
+	LDreference spriteTrailerReference;
 	spriteTrailerReference.type = REFERENCE_TYPE_COMMENT;
 	spriteTrailerReference.name = SPRITE_TRAILER_NAME;
 	addReferenceToFileObject(&writeFileObject, &spriteTrailerReference);
@@ -883,9 +883,9 @@ string convertRotationMatrixToString(mat* rotationMatrix)
 
 
 
-bool joinReferenceLists(Reference* initialReferenceInMainList, Reference* initialReferenceInAdditionalList)
+bool joinReferenceLists(LDreference* initialReferenceInMainList, LDreference* initialReferenceInAdditionalList)
 {
-	Reference* currentReferenceInMainList = initialReferenceInMainList;
+	LDreference* currentReferenceInMainList = initialReferenceInMainList;
 	while(currentReferenceInMainList->next != NULL)
 	{
 		currentReferenceInMainList = currentReferenceInMainList->next;

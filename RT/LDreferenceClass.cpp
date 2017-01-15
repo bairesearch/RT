@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -38,9 +38,9 @@
 
 
 
-Reference::Reference(void)
+LDreference::LDreference(void)
 {
-	//Define default values for Reference
+	//Define default values for LDreference
 
 	relativePosition.x = 0.0;
 	relativePosition.y = 0.0;
@@ -129,7 +129,7 @@ Reference::Reference(void)
 	firstReferenceWithinSubModel = NULL;
 }
 
-Reference::~Reference()
+LDreference::~LDreference()
 {
 	#ifdef USE_LRRC
 	if(subModelDetails != NULL)
@@ -149,9 +149,9 @@ Reference::~Reference()
 
 
 
-Reference::Reference(string referenceName, int referenceColour, bool createNewSubmodel)
+LDreference::LDreference(string referenceName, int referenceColour, bool createNewSubmodel)
 {
-	//Define default values for Reference
+	//Define default values for LDreference
 
 	relativePosition.x = 0.0;
 	relativePosition.y = 0.0;
@@ -255,9 +255,9 @@ Reference::Reference(string referenceName, int referenceColour, bool createNewSu
 
 
 
-Reference::Reference(bool createNewSubmodel)
+LDreference::LDreference(bool createNewSubmodel)
 {
-	//Define default values for Reference
+	//Define default values for LDreference
 
 	relativePosition.x = 0.0;
 	relativePosition.y = 0.0;
@@ -358,7 +358,7 @@ Reference::Reference(bool createNewSubmodel)
 	}
 }
 
-void copyReferencePosition(Reference* r, Reference* referenceToCopy)
+void copyReferencePosition(LDreference* r, LDreference* referenceToCopy)
 {
 	r->relativePosition.x = referenceToCopy->relativePosition.x;
 	r->relativePosition.y = referenceToCopy->relativePosition.y;
@@ -370,7 +370,7 @@ void copyReferencePosition(Reference* r, Reference* referenceToCopy)
 
 
 
-int obtainReferencePlayerID(Reference* referenceInThisPhaseStartSceneFile)
+int obtainReferencePlayerID(LDreference* referenceInThisPhaseStartSceneFile)
 {
 	#ifdef GAME_USE_FILENAME_AS_UNIQUE_UNIT_IDS
 	return referenceInThisPhaseStartSceneFile->colour;

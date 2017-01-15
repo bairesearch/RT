@@ -26,9 +26,9 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: contains methods to raytrace a primitive through a given point (x, y)
- *              on the screen with the given sceneInfo structure and accompanying
+ *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
  *
  *******************************************************************************/
@@ -76,18 +76,18 @@
 #define CUBE 1
 #define CYLINDER 2
 
-sceneInfo::sceneInfo(void)
+RTsceneInfo::RTsceneInfo(void)
 {
 	nextScene = NULL;
 }
 
-sceneInfo::~sceneInfo(void)
+RTsceneInfo::~RTsceneInfo(void)
 {
 	delete nextScene;
 }
 
 
-void rayTrace(ViewInfo* vi, sceneInfo* si, mat* tildaMat, vec* uvn)
+void rayTrace(RTviewInfo* vi, RTsceneInfo* si, mat* tildaMat, vec* uvn)
 {
 	advancedMat finalReverseMatrix;
 	advancedMat relevantFinalReverseMatrix;
@@ -1371,7 +1371,7 @@ void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* f
 
 
 
-void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1419,7 +1419,7 @@ void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* nor
 	}
 }
 
-void calculatePrimTri(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void calculatePrimTri(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1483,7 +1483,7 @@ void calculatePrimTri(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm
 
 
 	//define a line as 3 quads
-void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1611,7 +1611,7 @@ void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* 
 }
 
 
-void calculatePrimLine(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
+void calculatePrimLine(vec* p0, vec* p1, double* tInOut, RTpieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix)
 {
 	vec tmp_structure;	/*used for vector manipulation*/
 	vec tmp2_structure;	/*used for vector manipulation*/
@@ -1680,9 +1680,9 @@ void calculatePrimLine(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* nor
 
 
 #ifndef RT_T_TRANSFORM_TEST
-void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm)
+void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm)
 #else
-void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
+void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
 #endif
 {
 
@@ -1776,7 +1776,7 @@ void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double
 
 
 	//norm is not used
-void drawPointNoLighting(sceneInfo* si, advancedMat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec* norm)
+void drawPointNoLighting(RTsceneInfo* si, advancedMat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec* norm)
 {
 	si -> tIn = tIn;
 	si -> tOut = tOut;
@@ -1784,7 +1784,7 @@ void drawPointNoLighting(sceneInfo* si, advancedMat* reverseMatrix, double tIn, 
 
 
 	//added October 08
-void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, ViewInfo* vi, vec* p, vec* uvn)
+void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, RTviewInfo* vi, vec* p, vec* uvn)
 {
 	//1. create tilda matrix
 

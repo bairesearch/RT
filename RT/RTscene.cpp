@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -59,12 +59,12 @@ static float lightingSpecular = SPECULAR;
 static float lightingDiffuse = DIFFUSE;
 
 
-lightingInfo::lightingInfo(void)
+RTlightingInfo::RTlightingInfo(void)
 {
 	nextLight = NULL;
 }
 
-lightingInfo::~lightingInfo(void)
+RTlightingInfo::~RTlightingInfo(void)
 {
 	delete nextLight;
 }
@@ -95,9 +95,9 @@ int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles
 
 	int result = TRUE;
 
-	ViewInfo* vi = NULL;
-	sceneInfo* si = NULL;
-	lightingInfo* li = NULL;
+	RTviewInfo* vi = NULL;
+	RTsceneInfo* si = NULL;
+	RTlightingInfo* li = NULL;
 
 	parseTalFileInitialiseParser(talFileName);
 	vi = parseTalFileGetViewInfo(vi);
@@ -128,7 +128,7 @@ int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles
 
 }
 
-int rayTraceSceneWithoutParse(ViewInfo* vi, sceneInfo* si, lightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	int result = TRUE;
 
@@ -298,9 +298,9 @@ bool addExtension(string filenameWithoutExtension, string extension, string* fil
 
 
 
-sceneInfo* addSceneToEnd(sceneInfo* si_orig, sceneInfo* new_node)
+RTsceneInfo* addSceneToEnd(RTsceneInfo* si_orig, RTsceneInfo* new_node)
 {
-	sceneInfo* tmp;
+	RTsceneInfo* tmp;
 	if(si_orig == NULL)
 	{
 		return new_node;
@@ -314,10 +314,10 @@ sceneInfo* addSceneToEnd(sceneInfo* si_orig, sceneInfo* new_node)
 	return si_orig;
 }
 
-lightingInfo* addLightToEnd(lightingInfo* li_orig, lightingInfo* new_node)
+RTlightingInfo* addLightToEnd(RTlightingInfo* li_orig, RTlightingInfo* new_node)
 {
 
-	lightingInfo* tmp;
+	RTlightingInfo* tmp;
 
 
 	if(li_orig == NULL)
@@ -365,7 +365,7 @@ void parseTalFileInitialiseParser(string talFileName)
 	}
 }
 
-ViewInfo* parseTalFileGetViewInfo(ViewInfo* vi)
+RTviewInfo* parseTalFileGetViewInfo(RTviewInfo* vi)
 {
 	if(! readViewport())
 	{
@@ -379,12 +379,12 @@ ViewInfo* parseTalFileGetViewInfo(ViewInfo* vi)
 }
 
 
-lightingInfo* parseTalFileGetLightInfo(lightingInfo* li)
+RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li)
 {
 	while(nextLightSource())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
-		lightingInfo* nd = new lightingInfo(); //(lightingInfo*)malloc(sizeof(lightingInfo));
+		RTlightingInfo* nd = new RTlightingInfo(); //(RTlightingInfo*)malloc(sizeof(RTlightingInfo));
 
 		nd->ls =* (get_light_info());
 		nd->nextLight = NULL;
@@ -398,7 +398,7 @@ lightingInfo* parseTalFileGetLightInfo(lightingInfo* li)
 }
 
 
-sceneInfo* parseTalFileGetSceneInfo(sceneInfo* si)
+RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si)
 {
 	double height;
 	double width;
@@ -428,7 +428,7 @@ sceneInfo* parseTalFileGetSceneInfo(sceneInfo* si)
   	while (nextSceneCommand())
 	{
 		/*the first time round, read info commands do not provide relevant pointers!*/
-		sceneInfo* nd = new sceneInfo(); //(sceneInfo*)malloc(sizeof(sceneInfo));
+		RTsceneInfo* nd = new RTsceneInfo(); //(RTsceneInfo*)malloc(sizeof(RTsceneInfo));
 		nd->pi =* (getPieceInfo());
 		nd->di =* (getDimensionsInfo());
 		nd-> tIn = 0.0;
@@ -488,7 +488,7 @@ sceneInfo* parseTalFileGetSceneInfo(sceneInfo* si)
 	return si;
 }
 
-void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, ViewInfo* vi, sceneInfo* si, lightingInfo* li)
+void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li)
 {
 
 
@@ -577,7 +577,7 @@ void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap,
 
 
 
-			sceneInfo* nd = si;
+			RTsceneInfo* nd = si;
 
 			/*calculates UVN Scalars*/
 			calculateUVNScalars(vi, uvn, x, y);
@@ -630,9 +630,9 @@ void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap,
 
 
 
-void calculateBasicColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void calculateBasicColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
-	sceneInfo* nd;
+	RTsceneInfo* nd;
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -708,7 +708,7 @@ void calculateBasicColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour*
 
 
 
-int compare_tin(sceneInfo* p, sceneInfo* q, void* pointer)
+int compare_tin(RTsceneInfo* p, RTsceneInfo* q, void* pointer)
 {
 	//printf("\nhere1\n");
 	if(p->tIn < q->tIn)
@@ -733,10 +733,10 @@ int compare_tin(sceneInfo* p, sceneInfo* q, void* pointer)
 
 
 
-void calculateTransparencyColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb)
+void calculateTransparencyColour(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb)
 {
-	sceneInfo* nd_orig;
-	sceneInfo* nd;
+	RTsceneInfo* nd_orig;
+	RTsceneInfo* nd;
 
 	/*temporarily, TRANSPARENCY is a global variable coverting all bricktypes.
 	This can easily be changed to individual brick/piece types but the current .tal
@@ -832,7 +832,7 @@ void calculateTransparencyColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, 
 	/* calculateAmbientDiffuseSpecular is a modified version
 	of shading.c's get_point_value method*/
 
-void calculateAmbientDiffuseSpecular(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
+void calculateAmbientDiffuseSpecular(RTviewInfo* vi, RTsceneInfo* si, RTlightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface)
 {
 		/*light info declarations*/
 
@@ -853,14 +853,14 @@ void calculateAmbientDiffuseSpecular(ViewInfo* vi, sceneInfo* si, lightingInfo* 
 	double ambientGreen = lightingAmbientGreen;
 	double ambientBlue = lightingAmbientBlue;
 	colourAdvanced col;
-	lightingInfo* nd2;
+	RTlightingInfo* nd2;
 	vec tmp, tmp2, tmp3;
 	double diff_amt, spec_amt;
 
 
 		/*for scene info traversing declarations..*/
 
-	sceneInfo* nd;	/*stands for 'node'*/
+	RTsceneInfo* nd;	/*stands for 'node'*/
 	double minTIn;
 	int count, recordedCountForMinTIn;
 
@@ -1029,7 +1029,7 @@ void calculateAmbientDiffuseSpecular(ViewInfo* vi, sceneInfo* si, lightingInfo* 
 
 
 
-void calculateUVNScalars(ViewInfo* vi, vec* uvn, int x, int y)
+void calculateUVNScalars(RTviewInfo* vi, vec* uvn, int x, int y)
 {
 	double u, v, n;
 
@@ -1046,7 +1046,7 @@ void calculateUVNScalars(ViewInfo* vi, vec* uvn, int x, int y)
 	return;
 }
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, ViewInfo* vi)
+void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, RTviewInfo* vi)
 {
 	//this function requires viewAt, viewUp and eye vectors to be defined
 
@@ -1086,7 +1086,7 @@ void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzW
 
 }
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  ViewInfo* vi)
+void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  RTviewInfo* vi)
 {
 	for(int y = 0; y < (imageHeight); y++)
 	{

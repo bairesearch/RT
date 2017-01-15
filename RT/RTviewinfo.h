@@ -26,7 +26,7 @@
  * File Name: RTviewinfo.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -308,16 +308,16 @@ using namespace std;
 #define TAL_FILE_REF_END "end"
 
 /*
- * ViewInfo
+ * RTviewInfo
  * View frame parameters
  */
 
-class ViewInfo
+class RTviewInfo
 {
 public:
 
-	ViewInfo(void);
-	~ViewInfo(void);
+	RTviewInfo(void);
+	~RTviewInfo(void);
 
 	int imageWidth, imageHeight;	//IMAGESIZE
 

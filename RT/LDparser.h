@@ -26,7 +26,7 @@
  * File Name: LDparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -49,7 +49,7 @@
 #define LD_PARSER_ALLOW_WHITE_SPACE (true)
 
 //generic parser
-bool parseFile(string parseFileName, Reference* initialReference, Reference* parentReference, bool recurseIntoPartsDir);
+bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, bool recurseIntoPartsDir);
 
 double calcModXPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix);
 double calcModYPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix);

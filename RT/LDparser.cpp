@@ -26,7 +26,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -50,7 +50,7 @@ using namespace std;
 
 
 
-bool parseFile(string parseFileName, Reference* initialReference, Reference* parentReference, bool recurseIntoPartsDir)
+bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, bool recurseIntoPartsDir)
 {
 	bool result = true;
 
@@ -118,7 +118,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 	string rotation9 = "";
 	string subPartFileName = "";
 
-	Reference* currentReference = initialReference;
+	LDreference* currentReference = initialReference;
 
 	ifstream parseFileObject;
 	parseFileObject.open(parseFileName.c_str());
@@ -253,7 +253,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						type = REFERENCE_TYPE_UNDEFINED;
 						cout << "1" << endl;
 						cout << "readingType = " << readingType << endl;
-						cout << "Invalid ModelDetails. Corrupted file has been detected. Reference Type Illegal. \n" << endl;
+						cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Illegal. \n" << endl;
 						cout << "character charCount = "<< charCount << endl;
 						cout << "lineCount = " << lineCount << endl;
 						cout << "type = " << type << endl;
@@ -272,7 +272,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 					if((c != ' ') && (type != REFERENCE_TYPE_COMMENT))
 					{
 						cout << "2" << endl;
-						cout << "\n Invalid ModelDetails. Corrupted file has been detected. Value After Reference Type is not space \n" << endl;
+						cout << "\n Invalid ModelDetails. Corrupted file has been detected. Value After LDreference Type is not space \n" << endl;
 						cout << "\n c = "<< c << endl;
 						cout << "\n character charCount = "<< charCount << endl;
 						cout << "\n lineCount = " << lineCount << endl;
@@ -387,7 +387,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 							else
 							{
 								cout << "3" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. Reference Type Line corrupt. \n" << endl;
+								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Line corrupt. \n" << endl;
 								cout << "character charCount = "<< charCount << endl;
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
@@ -407,7 +407,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 							else
 							{
 								cout << "4" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. Reference Type Quad/Tri corrupt. \n" << endl;
+								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad/Tri corrupt. \n" << endl;
 								cout << "character charCount = "<< charCount << endl;
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
@@ -451,7 +451,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 							else
 							{
 								cout << "5" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. Reference Type Quad corrupt. \n" << endl;
+								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad corrupt. \n" << endl;
 								cout << "character charCount = "<< charCount << endl;
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
@@ -470,7 +470,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 							else
 							{
 								cout << "6" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. Reference Type Tri corrupt. \n" << endl;
+								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Tri corrupt. \n" << endl;
 								cout << "character charCount = "<< charCount << endl;
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
@@ -522,7 +522,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 					{
 						finishedReadingReference = false;
 
-						//3. Record Reference information into current Reference object
+						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 
 						currentReference->colour = (unsigned int)(atof(colour.c_str()));
@@ -612,9 +612,9 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						*/
 
 
-						//4. finalise Reference object
+						//4. finalise LDreference object
 						//code to create a new reference object
-						Reference* nextReference = new Reference();
+						LDreference* nextReference = new LDreference();
 						currentReference -> next = nextReference;
 						currentReference = currentReference->next;
 					}
@@ -755,7 +755,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						finishedReadingReference = false;
 
 
-						//3. Record Reference information into current Reference object
+						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 						currentReference->colour = (unsigned int)(atof(colour.c_str()));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
@@ -806,7 +806,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						//1. Perform Recursion into sub files in designated search directory (default = current directory) if possible
 
 							//code to create a new reference object
-						Reference* subModelReference = new Reference(true);
+						LDreference* subModelReference = new LDreference(true);
 						currentReference->firstReferenceWithinSubModel = subModelReference;
 
 						#ifdef USE_LRRC
@@ -828,7 +828,7 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						else
 						{
 							#ifdef USE_LRRC
-							//2. As a custom submodel was not detected, the program updates the unitDetails object based upon Reference name (subPartFileName)
+							//2. As a custom submodel was not detected, the program updates the unitDetails object based upon LDreference name (subPartFileName)
 							updateUnitDetails(subPartFileName, parentReference->subModelDetails);
 							currentReference->subModelDetails = NULL;	//added aug 08
 							#endif						
@@ -858,10 +858,10 @@ bool parseFile(string parseFileName, Reference* initialReference, Reference* par
 						cout << "currentReference->name = " << currentReference->name << endl;
 						*/
 
-						//4. finalise Reference object
+						//4. finalise LDreference object
 
 						//code to create a new reference object
-						Reference* nextReference = new Reference();
+						LDreference* nextReference = new LDreference();
 						currentReference -> next = nextReference;
 						currentReference = currentReference->next;
 					}

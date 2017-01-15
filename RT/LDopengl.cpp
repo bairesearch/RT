@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -74,7 +74,7 @@ static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
 static bool LD_OPENGL_PRINT_ALGORITHM_PROGRESS = false;
 
 
-Reference* firstReferenceInPrimitivesReferenceListGlobal;
+LDreference* firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
@@ -212,7 +212,7 @@ void setViewPort3Dortho(double left, double right, double bottom, double top, do
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -256,7 +256,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference* firstReferenc
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(Reference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGL(LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -307,7 +307,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 	glBegin(GL_QUADS);
 
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -426,7 +426,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 	glBegin(GL_QUADS);
 
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -520,7 +520,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 
 	glBegin(GL_TRIANGLES);
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -608,7 +608,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 	glBegin(GL_TRIANGLES);
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -676,7 +676,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -708,9 +708,9 @@ static void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 }
 
 
-static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference* firstReferenceInLayer)
+static void draw3DprimitivesReferenceListToOpenGLrecurse(LDreference* firstReferenceInLayer)
 {
-	Reference* currentReference = firstReferenceInLayer;
+	LDreference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 
@@ -815,7 +815,7 @@ static void draw3DprimitivesReferenceListToOpenGL()
 	glLoadIdentity();
 	glPushMatrix();
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -889,7 +889,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 	glPushMatrix();
 
 
-	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		/*

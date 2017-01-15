@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -93,7 +93,7 @@ int main(int argc,char* *argv)
 	int version;
 	int lightingMode = LIGHTING_MODE_AMBIENT_DIFFUSE_SPECULAR;
 
-	ViewInfo viewinfo;
+	RTviewInfo viewinfo;
 	viewinfo.imageWidth = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH;
 	viewinfo.imageHeight = TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT;
 	viewinfo.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;		//CHECK THIS; preferably the eye moves around the object
@@ -232,7 +232,7 @@ int main(int argc,char* *argv)
 
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3e7a 27-January-2015" << endl;
+			cout << "OpenRT.exe - Project Version: 3e7b 27-January-2015" << endl;
 			exit(1);
 		}
 	}
@@ -246,8 +246,8 @@ int main(int argc,char* *argv)
 
 	if(useLDRfile)
 	{
-		Reference* initialReferenceInSceneFile = new Reference();
-		Reference* topLevelReferenceInSceneFile = new Reference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
+		LDreference* initialReferenceInSceneFile = new LDreference();
+		LDreference* topLevelReferenceInSceneFile = new LDreference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 		if(!parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
 		{//file does not exist
 			cout << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;

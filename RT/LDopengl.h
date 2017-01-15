@@ -26,7 +26,7 @@
  * File Name: LDopengl.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  *
  *******************************************************************************/
 
@@ -111,16 +111,16 @@ void setViewPort3Dbasic();
 void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(Reference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGL(LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
 	static void draw2DquadsPrimitivesReferenceListToOpenGL();
 	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 	static void draw3DtrisPrimitivesReferenceListToOpenGL();
 	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
 	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
-		static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference* firstReferenceInLayer);
+		static void draw3DprimitivesReferenceListToOpenGLrecurse(LDreference* firstReferenceInLayer);
 
 static void draw3DprimitivesReferenceListToOpenGL();
 static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used

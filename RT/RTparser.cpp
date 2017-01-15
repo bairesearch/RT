@@ -26,7 +26,7 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -54,43 +54,43 @@ static char* current_option;	/* internal use only!*/
 static char com_buf[256];
 
 
-lightSource::lightSource(void)
+RTlightSource::RTlightSource(void)
 {
 }
 
-lightSource::~lightSource(void)
+RTlightSource::~RTlightSource(void)
 {
 }
 
-pieceInfo::pieceInfo(void)
+RTpieceInfo::RTpieceInfo(void)
 {
 }
 
-pieceInfo::~pieceInfo(void)
+RTpieceInfo::~RTpieceInfo(void)
 {
 }
 
-dimensionsInfo::dimensionsInfo(void)
+RTdimensionsInfo::RTdimensionsInfo(void)
 {
 }
 
-dimensionsInfo::~dimensionsInfo(void)
+RTdimensionsInfo::~RTdimensionsInfo(void)
 {
 }
 
-decalInfo::decalInfo(void)
+RTdecalInfo::RTdecalInfo(void)
 {
 }
 
-decalInfo::~decalInfo(void)
+RTdecalInfo::~RTdecalInfo(void)
 {
 }
 
-unknownInfo::unknownInfo(void)
+RTunknownInfo::RTunknownInfo(void)
 {
 }
 
-unknownInfo::~unknownInfo(void)
+RTunknownInfo::~RTunknownInfo(void)
 {
 }
 
@@ -278,14 +278,14 @@ void exitParser()
 
 
 
-static dimensionsInfo _dimensions_info;
-static ViewInfo _view_info;
-static lightSource _light_source;
-static pieceInfo _piece_info;
+static RTdimensionsInfo _dimensions_info;
+static RTviewInfo _view_info;
+static RTlightSource _light_source;
+static RTpieceInfo _piece_info;
 
 	//not tested
-static decalInfo _decal_info;
-static unknownInfo _unknown_info;
+static RTdecalInfo _decal_info;
+static RTunknownInfo _unknown_info;
 
 
 /* Read in the viewport initialisation section*/
@@ -357,7 +357,7 @@ int readViewport()
 }
 
 
-ViewInfo* get_view_info()
+RTviewInfo* get_view_info()
 {
 	return &_view_info;
 }
@@ -387,7 +387,7 @@ int nextLightSource()
 }
 
 
-lightSource* get_light_info()
+RTlightSource* get_light_info()
 {
 	return &_light_source;
 }
@@ -604,21 +604,21 @@ void read_options(pieceType type)
 	}
 }
 
-dimensionsInfo* getDimensionsInfo() 
+RTdimensionsInfo* getDimensionsInfo() 
 { 
 	return &_dimensions_info; 
 }
-pieceInfo* getPieceInfo() 
+RTpieceInfo* getPieceInfo() 
 { 
 	return &_piece_info; 
 }
 
 	//not tested
-decalInfo* getDecalInfo() 
+RTdecalInfo* getDecalInfo() 
 { 
 	return &_decal_info; 
 }
-unknownInfo* getUnknownInfo() 
+RTunknownInfo* getUnknownInfo() 
 { 
 	return &_unknown_info; 
 }
