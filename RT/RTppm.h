@@ -1,21 +1,21 @@
 /*******************************************************************************
- * 
+ *
  * This file is part of BAIPROJECT.
- * 
+ *
  * BAIPROJECT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation.
- * 
+ *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License version 3 for more details
  * (a copy is included in the LICENSE file that accompanied this code).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
  * for a copy of the AGPLv3 License.
- * 
+ *
  *******************************************************************************/
 
 /*******************************************************************************
@@ -23,7 +23,7 @@
  * File Name: RTppm.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3d2b 14-April-2014
+ * Project Version: 3d2c 14-April-2014
  *
  *******************************************************************************/
 
@@ -92,9 +92,9 @@ void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b);
 pixmap *newPixmap(int wide, int high);  /*create a new blank pixmap*/
 
 pixmap *loadPPM(char *fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
-				       
+
 void writePPM(char *fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
-					
+
 void freePixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
 
 unsigned char* calcPixelAddress(pixmap *pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/

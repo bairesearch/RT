@@ -1,29 +1,29 @@
 /*******************************************************************************
- * 
+ *
  * This file is part of BAIPROJECT.
- * 
+ *
  * BAIPROJECT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation.
- * 
+ *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License version 3 for more details
  * (a copy is included in the LICENSE file that accompanied this code).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
  * for a copy of the AGPLv3 License.
- * 
+ *
  *******************************************************************************/
- 
+
 /*******************************************************************************
  *
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d2b 14-April-2014
+ * Project Version: 3d2c 14-April-2014
  *
  *******************************************************************************/
 
@@ -56,7 +56,7 @@
 #else
 	#include <windows.h>
 #endif
-	
+
 using namespace std;
 
 
@@ -218,7 +218,7 @@ float getFloatArgument(int argc, char **argv, char *keystr)
 	for(int i=1; i<argc; i++)
 	{
 		if(!foundArgument)
-		{	
+		{
 			if(strcmp(argv[i], keystr) == 0)
 			{
 				result = atof(argv[i+1]);
@@ -232,7 +232,7 @@ float getFloatArgument(int argc, char **argv, char *keystr)
 		result = -999999999.0F;
 		return result;
 	}
-	else 
+	else
 	{
 		return result;
 	}
@@ -287,7 +287,7 @@ float getFloatArgument(int argc, char **argv, string keystr)
 	for(int i=1; i<argc; i++)
 	{
 		if(!foundArgument)
-		{	
+		{
 			if(string(argv[i]) == keystr)
 			{
 				result = atof(argv[i+1]);
@@ -301,7 +301,7 @@ float getFloatArgument(int argc, char **argv, string keystr)
 		result = -999999999.0F;
 		return result;
 	}
-	else 
+	else
 	{
 		return result;
 	}
@@ -344,7 +344,7 @@ void getStringArrayArgument(int argc, char **argv, string keystr, vector<string>
 				while(((argv[i+j])[0] != CHAR_DASH) && (i+j < argc))
 				{
 					string stringArgument = string(argv[i+j]);
-					//cout << "stringArgument = " << stringArgument << endl;				
+					//cout << "stringArgument = " << stringArgument << endl;
 					inputFileNamesVector->push_back(stringArgument);
 					foundArgument = true;
 					j++;
@@ -365,7 +365,7 @@ void changeDirectoryString(string newDirectory)
 	chdir(newDirectoryCharStar);
 	#else
 	::SetCurrentDirectory(newDirectoryCharStar);
-	#endif	
+	#endif
 }
 
 string getCurrentDirectoryString()
@@ -378,7 +378,7 @@ string getCurrentDirectoryString()
 	#endif
 	string currentFolder = string(currentFolderCharStar);
 	return currentFolder;
-}				
+}
 
 void getCurrentDirectory(char * folder)
 {

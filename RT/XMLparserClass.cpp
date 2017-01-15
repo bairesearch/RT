@@ -1,21 +1,21 @@
 /*******************************************************************************
- * 
+ *
  * This file is part of BAIPROJECT.
- * 
+ *
  * BAIPROJECT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation.
- * 
+ *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License version 3 for more details
  * (a copy is included in the LICENSE file that accompanied this code).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
  * for a copy of the AGPLv3 License.
- * 
+ *
  *******************************************************************************/
 
 /*******************************************************************************
@@ -23,7 +23,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3d2b 14-April-2014
+ * Project Version: 3d2c 14-April-2014
  *
  *******************************************************************************/
 
@@ -506,7 +506,7 @@ bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject,
 		charCount++;
 
 		if(currentToken == CHAR_TAG_OPEN)
-		{		
+		{
 			tag->value = tagValue;
 			parseTagName(parseFileObject, subTag, tagName, true, ++treeLayer);
 			finishedParsingObject = true;
@@ -565,7 +565,7 @@ bool parseTagOpen(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 			result = false;
 		}
 	}
-	
+
 	return result;
 
 }
@@ -601,20 +601,20 @@ bool parseTagComment(ifstream * parseFileObject, char type)
 					else
 					{
 						cout << "found illegal comment opening" << endl;
-						throwGenericXMLParseError();	
-						result = false;	
+						throwGenericXMLParseError();
+						result = false;
 					}
 				}
 			}
 			else
 			{
 				cout << "found illegal comment opening" << endl;
-				throwGenericXMLParseError();	
-				result = false;		
+				throwGenericXMLParseError();
+				result = false;
 			}
-		}	
+		}
 	}
-	
+
 	if(result)
 	{
 		bool finishedParsingObject = false;
@@ -669,7 +669,7 @@ bool parseTagComment(ifstream * parseFileObject, char type)
 				#ifdef XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
 				cout << currentToken;
 				#endif
-				
+
 				if(currentToken == CHAR_NEWLINE)
 				{
 					lineCount++;
@@ -707,7 +707,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 			if(!endTagFound)
 			{
 				currentTag->name = tagName;
-				//cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl; 
+				//cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
 
 				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
@@ -773,7 +773,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 					currentTag->name = tagName;
 					if(endTagFound)
 					{
-					
+
 					}
 					else
 					{
@@ -1190,7 +1190,7 @@ bool getAttribute(XMLparserTag * tag, string attributeName, string * attributeVa
 	while(currentAttribute->nextAttribute != NULL)
 	{
 		if(currentAttribute->name == attributeName)
-		{	
+		{
 			result = true;
 			*attributeValueFound = currentAttribute->value;
 		}
