@@ -485,6 +485,7 @@ void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
 	else
 	{
 		cout << "invalid dat file colour for conversion to RGB" << endl;
+		cout << "dataFileColour = " << dataFileColour << endl;		
 		exit(0);
 	}
 
