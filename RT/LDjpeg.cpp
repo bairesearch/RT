@@ -23,7 +23,7 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c3a 16-November-2012
+ * Project Version: 3c3g 18-November-2012
  *
  *******************************************************************************/
 
@@ -98,7 +98,7 @@ METHODDEF(void) my_error_exit (j_common_ptr cinfo)
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 string * pointerToDCTTableHTMLOutputString;
-void setpointerToDCTTableHTMLOutputString(string * pointer)
+void setPointerToDCTtableHTMLoutputString(string * pointer)
 {
 	pointerToDCTTableHTMLOutputString = pointer;
 }
