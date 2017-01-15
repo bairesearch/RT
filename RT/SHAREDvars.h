@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvars.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -65,7 +65,7 @@
 #define OR_METHOD2DOD_DIMENSIONS (2)
 #define OR_METHOD3DOD_DIMENSIONS (3)
 
-/* common definitions */
+/* common definitions*/
 typedef struct { unsigned char r, g, b; } colour;
 typedef struct { double x, y, z; } vec;
 typedef struct { vec a; vec b; vec c; } mat;
@@ -90,39 +90,39 @@ double maxDouble(double a, double b);	//should be turned into a macro instead
 double absDouble(double val);
 
 #ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-int argumentExists(int argc, char **argv, char *keystr);
-float getFloatArgument(int argc, char **argv, char *keystr);
-char *getCharArgument(int argc,char **argv,char *keystr);
+int argumentExists(int argc, char* *argv, char* keystr);
+float getFloatArgument(int argc, char* *argv, char* keystr);
+char* getCharArgument(int argc,char* *argv,char* keystr);
 #endif
-bool argumentExists(int argc, char **argv, string keystr);
-float getFloatArgument(int argc, char **argv, string keystr);
-string getStringArgument(int argc, char **argv, string keystr);
-void getStringArrayArgument(int argc, char **argv, string keystr, vector<string> * inputFileNamesVector);
+bool argumentExists(int argc, char* *argv, string keystr);
+float getFloatArgument(int argc, char* *argv, string keystr);
+string getStringArgument(int argc, char* *argv, string keystr);
+void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>* inputFileNamesVector);
 void changeDirectoryString(string newDirectory);
 string getCurrentDirectoryString();
 
-void getCurrentDirectory(char * folder);
-void setCurrentDirectory(const char * folder);
-void createDirectory(const char * folder);
-bool directoryExists(const char * folder);
+void getCurrentDirectory(char* folder);
+void setCurrentDirectory(const char* folder);
+void createDirectory(const char* folder);
+bool directoryExists(const char* folder);
 
-void copyColours(colour * colToModify, colour * colToCopy);
+void copyColours(colour* colToModify, colour* colToCopy);
 
 bool isWhiteSpace(char c);
-string convertStringToLowerCase(string * arbitraryCaseString);
+string convertStringToLowerCase(string* arbitraryCaseString);
 
 string convertIntToString(int integer);
 string convertBoolToString(bool boolean);
 string convertLongToString(long number);
 
-bool textInTextArray(string text, string * textArray, int arraySize);
-bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound);
-bool charInCharArray(char c, char * charArray, int arraySize);
-string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString);
-string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString, bool * foundAtLeastOneInstance);
+bool textInTextArray(string text, string* textArray, int arraySize);
+bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound);
+bool charInCharArray(char c, char* charArray, int arraySize);
+string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString);
+string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
 
-void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileByteArraySize);
-void writeStringToFileObject(string s, ofstream * writeFileObject);
-void writeStringToFile(string * fileName, string * s);
+void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByteArraySize);
+void writeStringToFileObject(string s, ofstream* writeFileObject);
+void writeStringToFile(string* fileName, string* s);
 
 #endif

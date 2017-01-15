@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDjpeg.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -47,7 +47,7 @@ using namespace std;
 #endif
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-void setPointerToDCTtableHTMLoutputString(string * pointer);
+void setPointerToDCTtableHTMLoutputString(string* pointer);
 #endif
 
 int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput);

@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceManipulation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -61,10 +61,10 @@ using namespace std;
 
 
 
-Reference * search1DrefListFindLastReference(Reference * initialReferenceInList)
+Reference* search1DrefListFindLastReference(Reference* initialReferenceInList)
 {
-	Reference * lastReference;
-	Reference * currentReference = initialReferenceInList;
+	Reference* lastReference;
+	Reference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -78,11 +78,11 @@ Reference * search1DrefListFindLastReference(Reference * initialReferenceInList)
 
 
 
-bool search1DrefListFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
+bool search1DrefListFindRef(Reference* referenceToFind, Reference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference * currentReference = initialReferenceInList;
+	Reference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -97,11 +97,11 @@ bool search1DrefListFindRef(Reference * referenceToFind, Reference * initialRefe
 	return foundReference;
 }
 
-bool search1DrefListNameAndColourFindRef(Reference * referenceToFind, Reference * initialReferenceInList)
+bool search1DrefListNameAndColourFindRef(Reference* referenceToFind, Reference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference * currentReference = initialReferenceInList;
+	Reference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -116,11 +116,11 @@ bool search1DrefListNameAndColourFindRef(Reference * referenceToFind, Reference 
 	return foundReference;
 }
 
-bool search1DrefListReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
+bool search1DrefListReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference * currentReference = initialReferenceInList;
+	Reference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -136,11 +136,11 @@ bool search1DrefListReplaceRef(Reference * referenceToFind, Reference * referenc
 	return foundReference;
 }
 
-bool search1DrefListNameAndColourReplaceRef(Reference * referenceToFind, Reference * referenceToReplaceWith, Reference * initialReferenceInList)
+bool search1DrefListNameAndColourReplaceRef(Reference* referenceToFind, Reference* referenceToReplaceWith, Reference* initialReferenceInList)
 {
 	bool foundReference = false;
 
-	Reference * currentReference = initialReferenceInList;
+	Reference* currentReference = initialReferenceInList;
 
 	while(currentReference->next != NULL)
 	{
@@ -156,15 +156,15 @@ bool search1DrefListNameAndColourReplaceRef(Reference * referenceToFind, Referen
 	return foundReference;
 }
 
-bool search1DrefListAddReference(Reference * initialReferenceInList, Reference * referenceToAdd)
+bool search1DrefListAddReference(Reference* initialReferenceInList, Reference* referenceToAdd)
 {
 	bool foundReference = true;
 
-	Reference * currentReference = initialReferenceInList;
+	Reference* currentReference = initialReferenceInList;
 
 	if(currentReference->next == NULL)
 	{
-		Reference * newReference = new Reference();
+		Reference* newReference = new Reference();
 		copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 		currentReference->next = newReference;
 	}
@@ -176,7 +176,7 @@ bool search1DrefListAddReference(Reference * initialReferenceInList, Reference *
 
 			if(currentReference->next == NULL)
 			{
-				Reference * newReference = new Reference();
+				Reference* newReference = new Reference();
 				copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 				currentReference->next = newReference;
 				currentReference = currentReference->next;
@@ -189,7 +189,7 @@ bool search1DrefListAddReference(Reference * initialReferenceInList, Reference *
 
 
 
-bool compareReferenceNameAndColour(Reference * reference, string referenceName, int referenceColour)
+bool compareReferenceNameAndColour(Reference* reference, string referenceName, int referenceColour)
 {
 	bool result = true;
 
@@ -206,7 +206,7 @@ bool compareReferenceNameAndColour(Reference * reference, string referenceName, 
 }
 
 /*
-bool compareSubmodelReferencesNameAndColour(Reference * reference1, Reference * reference2)
+bool compareSubmodelReferencesNameAndColour(Reference* reference1, Reference* reference2)
 {
 	bool result = true;
 
@@ -224,7 +224,7 @@ bool compareSubmodelReferencesNameAndColour(Reference * reference1, Reference * 
 */
 
 
-bool compareReferences(Reference * reference1, Reference * reference2, int type)
+bool compareReferences(Reference* reference1, Reference* reference2, int type)
 {
 	bool result = true;
 
@@ -284,7 +284,7 @@ bool compareReferences(Reference * reference1, Reference * reference2, int type)
 	return result;
 }
 
-void copyReferences(Reference * referenceNew, Reference * referenceToCopy, int type)
+void copyReferences(Reference* referenceNew, Reference* referenceToCopy, int type)
 {
 	referenceNew->type = referenceToCopy->type;
 	referenceNew->colour = referenceToCopy->colour;
@@ -319,7 +319,7 @@ void copyReferences(Reference * referenceNew, Reference * referenceToCopy, int t
 
 
 
-string convertPositionCoordinatesToString(vec * spriteSceneCoords)
+string convertPositionCoordinatesToString(vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
 	
@@ -337,7 +337,7 @@ string convertPositionCoordinatesToString(vec * spriteSceneCoords)
 	return positionCoordinatesString;
 }
 
-string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spriteSceneCoords)
+string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec* spriteSceneCoords)
 {
 	string positionCoordinatesString = "";
 	
@@ -378,7 +378,7 @@ string convertPositionCoordinatesToStringWithCommaDelimiterPreceeding(vec * spri
 
 
 
-bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference * firstReference)
+bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
@@ -390,11 +390,11 @@ bool write2DreferenceListCollapsedTo1DtoFile(string fileName, Reference * firstR
 }
 
 
-bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * firstReferenceInLayer)
+bool write2DreferencesLayerToFileObject(ofstream* writeFileObject, Reference* firstReferenceInLayer)
 {
 	bool result = true;
 
-	Reference * currentReference = firstReferenceInLayer;
+	Reference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 		if(currentReference->isSubModelReference)
@@ -436,11 +436,11 @@ bool write2DreferencesLayerToFileObject(ofstream * writeFileObject, Reference * 
 }
 
 
-bool writeReferencesToFile(string fileName, Reference * firstReference)
+bool writeReferencesToFile(string fileName, Reference* firstReference)
 {
 	ofstream writeFileObject(fileName.c_str());
 
-	Reference * currentReference = firstReference;
+	Reference* currentReference = firstReference;
 	while(currentReference->next != NULL)
 	{
 		addReferenceToFileObject(&writeFileObject, currentReference);
@@ -455,7 +455,7 @@ bool writeReferencesToFile(string fileName, Reference * firstReference)
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool convertReferenceToString(Reference * currentReference, string * referenceString)
+bool convertReferenceToString(Reference* currentReference, string* referenceString)
 {
 	bool result = true;
 
@@ -465,13 +465,13 @@ bool convertReferenceToString(Reference * currentReference, string * referenceSt
 
 	//write reference type
 	sprintf(dataValueString, "%d", currentReference->type);
-	*referenceString = *referenceString + dataValueString;
-	*referenceString = *referenceString + CHAR_SPACE;
+	*referenceString =* referenceString + dataValueString;
+	*referenceString =* referenceString + CHAR_SPACE;
 
 	//write reference colour
 	sprintf(dataValueString, "%d", currentReference->colour);
-	*referenceString = *referenceString + dataValueString;
-	*referenceString = *referenceString + CHAR_SPACE;
+	*referenceString =* referenceString + dataValueString;
+	*referenceString =* referenceString + CHAR_SPACE;
 
 	if(currentReference->type == REFERENCE_TYPE_SUBMODEL)
 	{
@@ -481,44 +481,44 @@ bool convertReferenceToString(Reference * currentReference, string * referenceSt
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
 		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
-		*referenceString = *referenceString + positionCoordinatesString;
+		*referenceString =* referenceString + positionCoordinatesString;
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
 		copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
 		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
-		*referenceString = *referenceString + rotationMatrixString;
+		*referenceString =* referenceString + rotationMatrixString;
 
 		//write submodel name
-		*referenceString = *referenceString + currentReference->name;
+		*referenceString =* referenceString + currentReference->name;
 	}
 	else if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD) || (currentReference->type == REFERENCE_TYPE_LINE))
 	{
 		//write primitive vertex coords
 
 		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
-		*referenceString = *referenceString + positionCoordinatesString;
+		*referenceString =* referenceString + positionCoordinatesString;
 
 		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
-		*referenceString = *referenceString + positionCoordinatesString;
+		*referenceString =* referenceString + positionCoordinatesString;
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
 			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
-			*referenceString = *referenceString + positionCoordinatesString;
+			*referenceString =* referenceString + positionCoordinatesString;
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
 				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
-				*referenceString = *referenceString + positionCoordinatesString;
+				*referenceString =* referenceString + positionCoordinatesString;
 			}
 		}
 	}
 	else if(currentReference->type == REFERENCE_TYPE_COMMENT)
 	{
 		//write comment name
-		*referenceString = *referenceString + currentReference->name;
+		*referenceString =* referenceString + currentReference->name;
 	}
 	else
 	{
@@ -526,7 +526,7 @@ bool convertReferenceToString(Reference * currentReference, string * referenceSt
 	}
 
 	//write new line
-	*referenceString = *referenceString + CHAR_NEWLINE;
+	*referenceString =* referenceString + CHAR_NEWLINE;
 
 	return result;
 }
@@ -534,7 +534,7 @@ bool convertReferenceToString(Reference * currentReference, string * referenceSt
 
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentReference)
+bool addReferenceToFileObject(ofstream* writeFileObject, Reference* currentReference)
 {
 	bool result = true;
 
@@ -645,7 +645,7 @@ bool addReferenceToFileObject(ofstream * writeFileObject, Reference * currentRef
 
 
 
-bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream * writeFileObject)
+bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream* writeFileObject)
 {
 	bool result = true;
 	char c;	//current character being read in
@@ -693,9 +693,9 @@ bool openFileAndCopyDataIntoCurrentFileObject(string fileToOpenName, ofstream * 
 
 
 
-bool readFileIntoString(string fileName, string * fileContentsString, int * fileNumberOfLines, int * fileByteArraySize)
+bool readFileIntoString(string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize)
 {
-	char * fileNamecharstar = const_cast<char*>(fileName.c_str());
+	char* fileNamecharstar = const_cast<char*>(fileName.c_str());
 
 	bool result = true;
 	char c;	//current character being read in
@@ -715,7 +715,7 @@ bool readFileIntoString(string fileName, string * fileContentsString, int * file
 	{
 		while ((parseFileObject).get(c))
 		{
-			*fileContentsString = *fileContentsString + c;
+			*fileContentsString =* fileContentsString + c;
 			if(c == '\n')
 			{
 				currentLine++;
@@ -745,7 +745,7 @@ void copyFiles(string newFileName, string fileToCopyName)
 
 
 
-bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference * firstSpriteInReferenceList, int spriteListByteArrayLines)
+bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNameWithSprites, Reference* firstSpriteInReferenceList, int spriteListByteArrayLines)
 {
 	bool result = true;
 
@@ -761,7 +761,7 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 	addReferenceToFileObject(&writeFileObject, &spriteHeaderReference);
 
 	//add sprite data
-	Reference * currentReference = firstSpriteInReferenceList;
+	Reference* currentReference = firstSpriteInReferenceList;
 	while(currentReference->next != NULL)
 	{
 		addReferenceToFileObject(&writeFileObject, currentReference);
@@ -812,7 +812,7 @@ bool addSpriteReferenceListToSceneFile(string sceneFileName, string sceneFileNam
 /*sprite routines*/
 
 
-string convertRotationMatrixToString(mat * rotationMatrix)
+string convertRotationMatrixToString(mat* rotationMatrix)
 {
 	string rotationMatrixString = "";
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
@@ -883,9 +883,9 @@ string convertRotationMatrixToString(mat * rotationMatrix)
 
 
 
-bool joinReferenceLists(Reference * initialReferenceInMainList, Reference * initialReferenceInAdditionalList)
+bool joinReferenceLists(Reference* initialReferenceInMainList, Reference* initialReferenceInAdditionalList)
 {
-	Reference * currentReferenceInMainList = initialReferenceInMainList;
+	Reference* currentReferenceInMainList = initialReferenceInMainList;
 	while(currentReferenceInMainList->next != NULL)
 	{
 		currentReferenceInMainList = currentReferenceInMainList->next;

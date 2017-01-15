@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvars.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -68,10 +68,10 @@ long getTimeAsLong()
 	#ifdef LINUX
 	struct timeval tv;
 	struct timezone tz;
-	struct tm *tm;
+	struct tm* tm;
 	gettimeofday(&tv, &tz);
 	tm=localtime(&tv.tv_sec);
-	long timeAsLong = long(tm->tm_hour) * 60 * 60 * 1000000 + long(tm->tm_min) * 60 * 1000000 + long(tm->tm_sec) * 1000000 + long(tv.tv_usec);	//time in microseconds
+	long timeAsLong = long(tm->tm_hour)* 60* 60* 1000000 + long(tm->tm_min)* 60* 1000000 + long(tm->tm_sec)* 1000000 + long(tv.tv_usec);	//time in microseconds
 	return timeAsLong;
 
 	#else
@@ -97,7 +97,7 @@ long getTimeAsLong()
 
 }
 
-void copyColours(colour * colToModify, colour * colToCopy)
+void copyColours(colour* colToModify, colour* colToCopy)
 {
 	colToModify->r = colToCopy->r;
 	colToModify->g = colToCopy->g;
@@ -200,7 +200,7 @@ double absDouble(double val)
 
 #ifdef SHARED_SUPPORT_DEPRECIATED_CODE
 
-int argumentExists(int argc, char **argv, char *keystr)
+int argumentExists(int argc, char* *argv, char* keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
@@ -213,7 +213,7 @@ int argumentExists(int argc, char **argv, char *keystr)
 	return 0;
 }
 
-float getFloatArgument(int argc, char **argv, char *keystr)
+float getFloatArgument(int argc, char* *argv, char* keystr)
 {
 	float result=0.0;
 	bool foundArgument = false;
@@ -242,12 +242,12 @@ float getFloatArgument(int argc, char **argv, char *keystr)
 	result;
 }
 
-char *getCharArgument(int argc,char **argv,char *keystr)
+char* getCharArgument(int argc,char* *argv,char* keystr)
 {
-	char *result;
+	char* result;
 	bool foundArgument = false;
 
-	result=(char *) malloc(4096);
+	result=(char* ) malloc(4096);
 	result[0]=0;
 
 	for(int i=1; i<argc; i++)
@@ -269,7 +269,7 @@ char *getCharArgument(int argc,char **argv,char *keystr)
 }
 #endif
 
-bool argumentExists(int argc, char **argv, string keystr)
+bool argumentExists(int argc, char* *argv, string keystr)
 {
 	for(int i=1; i<argc; i++)
 	{
@@ -282,7 +282,7 @@ bool argumentExists(int argc, char **argv, string keystr)
 	return false;
 }
 
-float getFloatArgument(int argc, char **argv, string keystr)
+float getFloatArgument(int argc, char* *argv, string keystr)
 {
 	float result=0.0;
 	bool foundArgument = false;
@@ -310,7 +310,7 @@ float getFloatArgument(int argc, char **argv, string keystr)
 	}
 }
 
-string getStringArgument(int argc, char **argv, string keystr)
+string getStringArgument(int argc, char* *argv, string keystr)
 {
 	string stringArgument = "";
 	bool foundArgument = false;
@@ -333,7 +333,7 @@ string getStringArgument(int argc, char **argv, string keystr)
 	return stringArgument;
 }
 
-void getStringArrayArgument(int argc, char **argv, string keystr, vector<string> * inputFileNamesVector)
+void getStringArrayArgument(int argc, char* *argv, string keystr, vector<string>* inputFileNamesVector)
 {
 	bool foundArgument = false;
 	for(int i=1;i<argc;i++)
@@ -363,7 +363,7 @@ void getStringArrayArgument(int argc, char **argv, string keystr, vector<string>
 
 void changeDirectoryString(string newDirectory)
 {
-	char * newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
+	char* newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
 	#ifdef LINUX
 	chdir(newDirectoryCharStar);
 	#else
@@ -383,7 +383,7 @@ string getCurrentDirectoryString()
 	return currentFolder;
 }
 
-void getCurrentDirectory(char * folder)
+void getCurrentDirectory(char* folder)
 {
 	#ifdef LINUX
 	getcwd(folder, EXE_FOLDER_PATH_MAX_LENGTH);
@@ -392,7 +392,7 @@ void getCurrentDirectory(char * folder)
 	#endif
 }
 
-void setCurrentDirectory(const char * folder)
+void setCurrentDirectory(const char* folder)
 {
 	#ifdef LINUX
 	chdir(folder);
@@ -401,7 +401,7 @@ void setCurrentDirectory(const char * folder)
 	#endif
 }
 
-void createDirectory(const char * folder)
+void createDirectory(const char* folder)
 {
 	#ifdef LINUX
 	mkdir(folder, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
@@ -410,7 +410,7 @@ void createDirectory(const char * folder)
 	#endif
 }
 
-bool directoryExists(const char * folder)
+bool directoryExists(const char* folder)
 {
 	bool folderExists = false;
 
@@ -450,9 +450,9 @@ bool isWhiteSpace(char c)
 	return result;
 }
 
-string convertStringToLowerCase(string * arbitraryCaseString)
+string convertStringToLowerCase(string* arbitraryCaseString)
 {
-	string lowerCaseString = *arbitraryCaseString;
+	string lowerCaseString =* arbitraryCaseString;
 	for(int i=0; i<arbitraryCaseString->length(); i++)
 	{
 		lowerCaseString[i] = tolower((*arbitraryCaseString)[i]);
@@ -488,13 +488,13 @@ string convertLongToString(long number)
 	return string(tempString);
 }
 
-bool textInTextArray(string text, string * textArray, int arraySize)
+bool textInTextArray(string text, string* textArray, int arraySize)
 {
 	int arrayIndexOfResultFound = INT_DEFAULT_VALUE;
 	return textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
 }
 
-bool textInTextArray(string text, string * textArray, int arraySize, int * arrayIndexOfResultFound)
+bool textInTextArray(string text, string* textArray, int arraySize, int* arrayIndexOfResultFound)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -508,7 +508,7 @@ bool textInTextArray(string text, string * textArray, int arraySize, int * array
 	return result;
 }
 
-bool charInCharArray(char c, char * charArray, int arraySize)
+bool charInCharArray(char c, char* charArray, int arraySize)
 {
 	bool result = false;
 	for(int i=0; i<arraySize; i++)
@@ -522,17 +522,17 @@ bool charInCharArray(char c, char * charArray, int arraySize)
 }
 
 
-string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString)
+string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString)
 {
 	bool foundAtLeastOneInstance = false;
 	string text = replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
 	return text;
 }
 
-string replaceAllOccurancesOfString(string * textOrig, string stringToFind, string replacementString, bool * foundAtLeastOneInstance)
+string replaceAllOccurancesOfString(string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance)
 {
 	*foundAtLeastOneInstance = false;
-	string text = *textOrig; 
+	string text =* textOrig; 
 	int pos = 0;
 	while((pos = text.find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
 	{
@@ -541,7 +541,7 @@ string replaceAllOccurancesOfString(string * textOrig, string stringToFind, stri
 		*foundAtLeastOneInstance = true;
 	}
 	/*
-	cout << "\n*textOrig = " << *textOrig << endl;
+	cout << "\n*textOrig = " <<* textOrig << endl;
 	cout << "stringToFind = " << stringToFind << endl;
 	cout << "replacementString = " << replacementString << endl;
 	cout << "text = " << text << endl;
@@ -549,7 +549,7 @@ string replaceAllOccurancesOfString(string * textOrig, string stringToFind, stri
 	return text;
 }
 
-void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileByteArraySize)
+void writeByteArrayToFile(const char* fileName, char* fileByteArray, int fileByteArraySize)
 {
 	ofstream parseFileObject(fileName);
 
@@ -560,7 +560,7 @@ void writeByteArrayToFile(const char * fileName, char * fileByteArray, int fileB
 
 }
 
-void writeStringToFileObject(string s, ofstream * writeFileObject)
+void writeStringToFileObject(string s, ofstream* writeFileObject)
 {
 	for(int i=0; i < s.size(); i++)
 	{
@@ -568,7 +568,7 @@ void writeStringToFileObject(string s, ofstream * writeFileObject)
 	}
 }
 
-void writeStringToFile(string * fileName, string * s)
+void writeStringToFile(string* fileName, string* s)
 {
 	ofstream writeFileObject(fileName->c_str());
 

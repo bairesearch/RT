@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDsvg.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -40,17 +40,17 @@
 #include "LDreferenceClass.h"
 #include "XMLparserClass.h"
 
-bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile);
-bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
-	void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
-	void writeSVGfooter(ofstream * writeFileObject);
-void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col);
-void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
-void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSize, int col);
-void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
-XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID);
-void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID, double width);
-string convertColourRGBtoHexString(colour * colourRGB);
+bool writeSVGfile(string xmlFileName, XMLparserTag* firstTagInXMLfile);
+bool writeSVGfile(string xmlFileName, XMLparserTag* firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
+	void writeSVGheader(ofstream* writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY);
+	void writeSVGfooter(ofstream* writeFileObject);
+void writeSVGline(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col);
+void writeSVGbox(XMLparserTag** currentTag, vec* pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
+void writeSVGtext(XMLparserTag** currentTag, string text, vec* pos, int fontSize, int col);
+void writeSVGboxTransparent(XMLparserTag** currentTag, vec* pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
+XMLparserTag* writeSVGgroup(XMLparserTag** currentTag, string* groupID);
+void writeSVGconnector(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col, string* startGroupID, string* endGroupID, double width);
+string convertColourRGBtoHexString(colour* colourRGB);
 
 #endif
 

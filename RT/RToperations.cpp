@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RToperations.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -90,10 +90,10 @@ void makeAdvancedMatrix(advancedMat* matxAdv, mat* matx, int type)
 
 void multAdvancedMatrixByVector(advancedVec* vecAdv1, advancedMat* matxAdv1, advancedVec* vecAdv)
 {
-	vecAdv->x =  matxAdv1->a.x * vecAdv1->x + matxAdv1->b.x * vecAdv1->y + matxAdv1->c.x * vecAdv1->z + matxAdv1->d.x * vecAdv1->w;
-	vecAdv->y =  matxAdv1->a.y * vecAdv1->x + matxAdv1->b.y * vecAdv1->y + matxAdv1->c.y * vecAdv1->z + matxAdv1->d.y * vecAdv1->w;
-	vecAdv->z =  matxAdv1->a.z * vecAdv1->x + matxAdv1->b.z * vecAdv1->y + matxAdv1->c.z * vecAdv1->z + matxAdv1->d.z * vecAdv1->w;
-	vecAdv->w =  matxAdv1->a.w * vecAdv1->x + matxAdv1->b.w * vecAdv1->y + matxAdv1->c.w * vecAdv1->z + matxAdv1->d.w * vecAdv1->w;
+	vecAdv->x =  matxAdv1->a.x* vecAdv1->x + matxAdv1->b.x* vecAdv1->y + matxAdv1->c.x* vecAdv1->z + matxAdv1->d.x* vecAdv1->w;
+	vecAdv->y =  matxAdv1->a.y* vecAdv1->x + matxAdv1->b.y* vecAdv1->y + matxAdv1->c.y* vecAdv1->z + matxAdv1->d.y* vecAdv1->w;
+	vecAdv->z =  matxAdv1->a.z* vecAdv1->x + matxAdv1->b.z* vecAdv1->y + matxAdv1->c.z* vecAdv1->z + matxAdv1->d.z* vecAdv1->w;
+	vecAdv->w =  matxAdv1->a.w* vecAdv1->x + matxAdv1->b.w* vecAdv1->y + matxAdv1->c.w* vecAdv1->z + matxAdv1->d.w* vecAdv1->w;
 }
 
 void multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* matxAdv2, advancedMat* matxAdv)
@@ -393,7 +393,7 @@ double findGreatestValue(double val1, double val2, double val3)
 
 
 
-int findPositionOfSmallestValueAdvanced(double *array, unsigned int size)
+int findPositionOfSmallestValueAdvanced(double* array, unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -421,7 +421,7 @@ int findPositionOfSmallestValueAdvanced(double *array, unsigned int size)
 	}
 	return position;
 }
-int findPositionOfGreatestValueAdvanced(double *array, unsigned int size)
+int findPositionOfGreatestValueAdvanced(double* array, unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -453,7 +453,7 @@ int findPositionOfGreatestValueAdvanced(double *array, unsigned int size)
 
 
 
-int findPositionOfSmallestValueWhichHits(double *array, int *hitsArray, unsigned int size)
+int findPositionOfSmallestValueWhichHits(double* array, int* hitsArray, unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_LARGE_DOUBLE;
@@ -470,7 +470,7 @@ int findPositionOfSmallestValueWhichHits(double *array, int *hitsArray, unsigned
 }
 
 
-int findPositionOfGreatestValueWhichHits(double *array, int *hitsArray, unsigned int size)
+int findPositionOfGreatestValueWhichHits(double* array, int* hitsArray, unsigned int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_SMALL_DOUBLE;
@@ -489,7 +489,7 @@ int findPositionOfGreatestValueWhichHits(double *array, int *hitsArray, unsigned
 
 
 
-int findIntersectLineWithLine(vec * linept1, vec * linept2, vec * povpt1, vec * povpt2, vec * pt_int, vec * norm, double * t)
+int findIntersectLineWithLine(vec* linept1, vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, vec* norm, double* t)
 {
 	if(findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
 	{
@@ -552,8 +552,8 @@ int findIntersectLineWithLine(vec * linept1, vec * linept2, vec * povpt1, vec * 
 			//pt_int = p0 + t(p1-p0)
 			//t = (pt_int - p0) / (p1-p0)
 
-			vec * p0 = povpt1;
-			vec * p1 = povpt2;
+			vec* p0 = povpt1;
+			vec* p1 = povpt2;
 			*t = (pt_int->x - p0->x) / (p1->x - p0->x);
 
 			return true;
@@ -573,7 +573,7 @@ int findIntersectLineWithLine(vec * linept1, vec * linept2, vec * povpt1, vec * 
 
 
 
-bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec * pt_int)
+bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec* pt_int)
 {
 	bool result;
 
@@ -723,7 +723,7 @@ bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* li
 #define SAME_CLOCKNESS 1
 #define DIFF_CLOCKNESS 0
 
-int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t)
+int findIntersectLineWithTri(vec* pt1, vec* pt2, vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	double V1x, V1y, V1z;
 	double V2x, V2y, V2z;
@@ -731,7 +731,7 @@ int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec
 
 	vec vectorP1MinusP0;
 	subtractVectorsRT(linept2, linept1, &vectorP1MinusP0);
-	vec * vect = &vectorP1MinusP0;
+	vec* vect = &vectorP1MinusP0;
 
 	// vector form triangle pt1 to pt2
 	V1x = pt2->x - pt1->x;
@@ -749,7 +749,7 @@ int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec
 	norm->z = V1x*V2y - V1y*V2x;
 
 	// dot product of normal and line's vector if zero line is parallel to triangle
-	dotprod = norm->x * vect->x + norm->y * vect->y + norm->z * vect->z;
+	dotprod = norm->x* vect->x + norm->y* vect->y + norm->z* vect->z;
 
 
 	/*
@@ -795,9 +795,9 @@ int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec
 
 		}
 
-		pt_int->x = linept1->x + vect->x * (*t);
-		pt_int->y = linept1->y + vect->y * (*t);
-		pt_int->z = linept1->z + vect->z * (*t);
+		pt_int->x = linept1->x + vect->x* (*t);
+		pt_int->y = linept1->y + vect->y* (*t);
+		pt_int->z = linept1->z + vect->z* (*t);
 
 		if(checkSameClockDir(pt1, pt2, pt_int, norm) == SAME_CLOCKNESS)
 		{
@@ -840,7 +840,7 @@ int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec
 }
 
 
-int checkSameClockDir(vec * pt1, vec * pt2, vec * pt3, vec * norm)
+int checkSameClockDir(vec* pt1, vec* pt2, vec* pt3, vec* norm)
 {
 	double testi, testj, testk;
 	double dotprod;
@@ -865,7 +865,7 @@ int checkSameClockDir(vec * pt1, vec * pt2, vec * pt3, vec * norm)
 
 
 
-int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t)
+int findIntersectLineWithQuad(vec* pt1, vec* pt2, vec* pt3, vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t)
 {
 	//NB a quad is formed out of 2 tris
 

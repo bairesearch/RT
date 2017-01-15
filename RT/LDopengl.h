@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -104,29 +104,29 @@ bool initiateOpenGL(int width, int height, int windowPositionX, int windowPositi
 bool exitOpenGL();
 //void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
 void setViewPort2Dortho(double left, double right, double bottom, double top);
-void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
-void setViewPort3Ddynamic(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth);
+void setViewPort3D(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
+void setViewPort3Ddynamic(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);
 double maxDouble2(double float1, double float2);
 void setViewPort3Dbasic();
 void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODmatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGL(Reference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
 	static void draw2DquadsPrimitivesReferenceListToOpenGL();
 	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 	static void draw3DtrisPrimitivesReferenceListToOpenGL();
 	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
 	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
-		static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer);
+		static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference* firstReferenceInLayer);
 
 static void draw3DprimitivesReferenceListToOpenGL();
 static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used
 
-	void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap);
-	void writeScreenToDepthMap(int width, int height, double * depthMap);
+	void writeScreenToRGBMap(int width, int height, unsigned char* rgbMap);
+	void writeScreenToDepthMap(int width, int height, double* depthMap);
 	void updateScreen();
 
 void shearMatrix(float shearX, float shearY);

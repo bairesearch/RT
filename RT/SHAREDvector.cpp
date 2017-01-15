@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvector.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -46,14 +46,14 @@ using namespace std;
 
 
 
-void initialiseVector(vec * vect)
+void initialiseVector(vec* vect)
 {
 	vect->x = 0.0;
 	vect->y = 0.0;
 	vect->z = 0.0;
 }
 
-void calculateNormalOfTri(vec * pt1, vec * pt2, vec * pt3, vec * normal)
+void calculateNormalOfTri(vec* pt1, vec* pt2, vec* pt3, vec* normal)
 {
 	vec vec1;
 	vec vec2;
@@ -62,7 +62,7 @@ void calculateNormalOfTri(vec * pt1, vec * pt2, vec * pt3, vec * normal)
 	calculateNormal(&vec1, &vec2, normal);
 }
 
-void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * rotationVector)
+void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec* rotationVector)
 {
 	//http://planning.cs.uiuc.edu/node103.html
 	rotationVector->x = atan2(deformationMatrix->a.y, deformationMatrix->a.x);
@@ -72,7 +72,7 @@ void calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec * 
 
 
 //from; http://stackoverflow.com/questions/349050/calculating-a-lookat-matrix
-void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationMatrix)
+void generateLookAtRotationMatrix(vec* at, vec* eye, vec* up, mat* rotationMatrix)
 {
 	/*
 	zaxis = normal(At - Eye)
@@ -95,7 +95,7 @@ void generateLookAtRotationMatrix(vec * at, vec * eye, vec * up, mat * rotationM
 
 }
 
-void transposeMatrix(mat * matx)
+void transposeMatrix(mat* matx)
 {
 	double tmp;
 
@@ -116,20 +116,20 @@ void transposeMatrix(mat * matx)
 
 
 
-double calculateInteriorAngleOfAPolygonVertex(vec * pt1Centre, vec * pt2, vec * pt3)
+double calculateInteriorAngleOfAPolygonVertex(vec* pt1Centre, vec* pt2, vec* pt3)
 {
 	vec side1;
 	vec side2;
 	subtractVectorsRT(pt1Centre, pt2, &side1);
 	subtractVectorsRT(pt1Centre, pt3, &side2);
 	//subtractVectorsRT(pt3, pt1Centre, &side2);
-	double interiorAngle = acos(dotProduct(&side1, &side2) / (findMagnitudeOfVector(&side1) * findMagnitudeOfVector(&side2)));
+	double interiorAngle = acos(dotProduct(&side1, &side2) / (findMagnitudeOfVector(&side1)* findMagnitudeOfVector(&side2)));
 	return interiorAngle;
 
 }
 
 
-double calculateAreaOfTriangle3D(vec * pt1, vec * pt2, vec * pt3)
+double calculateAreaOfTriangle3D(vec* pt1, vec* pt2, vec* pt3)
 {
 	mat matrix;
 
@@ -143,11 +143,11 @@ double calculateAreaOfTriangle3D(vec * pt1, vec * pt2, vec * pt3)
 	matrix.b.z = pt3->y;
 	matrix.c.z = pt3->z;
 
-	return absDouble2(0.5 * calculateDeterminant3By3(&matrix));
+	return absDouble2(0.5* calculateDeterminant3By3(&matrix));
 }
 
 
-double calculateAreaOfTriangle(vec * pt1, vec * pt2, vec * pt3)
+double calculateAreaOfTriangle(vec* pt1, vec* pt2, vec* pt3)
 {
 	mat matrix;
 
@@ -161,7 +161,7 @@ double calculateAreaOfTriangle(vec * pt1, vec * pt2, vec * pt3)
 	matrix.b.z = pt3->y;
 	matrix.c.z = 1.0;
 
-	return absDouble2(0.5 * calculateDeterminant3By3(&matrix));
+	return absDouble2(0.5* calculateDeterminant3By3(&matrix));
 }
 
 
@@ -193,19 +193,19 @@ double absDouble2(double val)
 }
 
 
-void calculateNormal(vec * pt1, vec * pt2, vec * normal)
+void calculateNormal(vec* pt1, vec* pt2, vec* normal)
 {
 	crossProduct(pt1, pt2, normal);
 }
 
-void calculateMidDiffBetweenTwoPoints(vec * pt1, vec * pt2, vec * midDiff)
+void calculateMidDiffBetweenTwoPoints(vec* pt1, vec* pt2, vec* midDiff)
 {
 	midDiff->x = (pt2->x - pt1->x)/2.0;
 	midDiff->y = (pt2->y - pt1->y)/2.0;
 	midDiff->z = (pt2->z - pt1->z)/2.0;
 }
 
-void calculateMidPointBetweenTwoPoints(vec * pt1, vec * pt2, vec * midPoint)
+void calculateMidPointBetweenTwoPoints(vec* pt1, vec* pt2, vec* midPoint)
 {
 	vec midDiff;
 	calculateMidDiffBetweenTwoPoints(pt1, pt2, &midDiff);
@@ -261,7 +261,7 @@ void createYAxisScaleMatrix2D(mat* matrix, double scaleFactor)
 
 
 
-double calculateAngleBetweenVectors2D(vec * vect1, vec * vect2)
+double calculateAngleBetweenVectors2D(vec* vect1, vec* vect2)
 {
 	double angleBetweenVectors2D;
 	//tan angleBetweenVectors2D =  (y2-y1) / (x2 - x1)
@@ -279,7 +279,7 @@ double calculateAngleBetweenVectors2D(vec * vect1, vec * vect2)
 
 }
 
-double calculateAngleOfVector3D(vec * vect1, int axis)
+double calculateAngleOfVector3D(vec* vect1, int axis)
 {
 	double angle;
 
@@ -342,7 +342,7 @@ void createScaleMatrix2D(mat* matrix, double scaleFactor)
 
 }
 
-void multiplyVectorByMatrix(vec * vecNew, vec * vecToMultiply, mat * matrix)
+void multiplyVectorByMatrix(vec* vecNew, vec* vecToMultiply, mat* matrix)
 {
 	vecNew->x = matrix->a.x*vecToMultiply->x + matrix->b.x*vecToMultiply->y +  matrix->c.x*vecToMultiply->z;
 	vecNew->y = matrix->a.y*vecToMultiply->x + matrix->b.y*vecToMultiply->y +  matrix->c.y*vecToMultiply->z;
@@ -354,14 +354,14 @@ void multiplyVectorByMatrix(vec * vecNew, vec * vecToMultiply, mat * matrix)
 
 
 
-double findMagnitudeOfVector(vec * vect1)
+double findMagnitudeOfVector(vec* vect1)
 {
 	return sqrt(pow(vect1->x, 2) + pow(vect1->y,2) + pow(vect1->z,2));
 }
 
 
 
-void normaliseVector(vec *vect1)
+void normaliseVector(vec* vect1)
 {
 	double magnitude = findMagnitudeOfVector(vect1);
 #ifdef OR_DO_NOT_CHECK_FOR_ZERO_DIVISION_DURING_POINT_NORMAL_CALC
@@ -385,7 +385,7 @@ void normaliseVector(vec *vect1)
 	return;
 }
 
-void normaliseVectorRT(vec *vect1, vec *vect)
+void normaliseVectorRT(vec* vect1, vec* vect)
 {
 	double magnitude = findMagnitudeOfVector(vect1);
 	vect->x = (vect1->x)/magnitude;
@@ -395,28 +395,28 @@ void normaliseVectorRT(vec *vect1, vec *vect)
 }
 
 
-void addVectorsRT(vec *vect1, vec *vect2, vec* vect)
+void addVectorsRT(vec* vect1, vec* vect2, vec* vect)
 {
 	vect->x = vect1->x + vect2->x;
 	vect->y = vect1->y + vect2->y;
 	vect->z = vect1->z + vect2->z;
 }
 
-void subtractVectorsRT(vec *vect1, vec *vect2, vec *vect)
+void subtractVectorsRT(vec* vect1, vec* vect2, vec* vect)
 {
 	vect->x = vect1->x - vect2->x;
 	vect->y = vect1->y - vect2->y;
 	vect->z = vect1->z - vect2->z;
 }
 
-void negativeVector(vec *vect1, vec* vect)
+void negativeVector(vec* vect1, vec* vect)
 {
 	vect->x = -(vect1->x);
 	vect->y = -(vect1->y);
 	vect->z = -(vect1->z);
 }
 
-double dotProduct(vec *vect1, vec *vect2)
+double dotProduct(vec* vect1, vec* vect2)
 {
 	double scalar = vect1->x*vect2->x + vect1->y*vect2->y + vect1->z*vect2->z;
 	return scalar;
@@ -442,16 +442,16 @@ void divideVectorByScalarRT(vec* vect1, double divisor, vec* vect)
 
 void makeMatrix(vec* vect1, vec* vect2, vec* vect3, mat* matx)
 {
-	matx->a = *(vect1);
-	matx->b = *(vect2);
-	matx->c = *(vect3);
+	matx->a =* (vect1);
+	matx->b =* (vect2);
+	matx->c =* (vect3);
 }
 
 void multMatrixByVector(mat* matx, vec* vect1, vec* vect)
 {
-	vect->x = matx->a.x * vect1->x + matx->b.x * vect1->y + matx->c.x * vect1->z;
-	vect->y = matx->a.y * vect1->x + matx->b.y * vect1->y + matx->c.y * vect1->z;
-	vect->z = matx->a.z * vect1->x + matx->b.z * vect1->y + matx->c.z * vect1->z;
+	vect->x = matx->a.x* vect1->x + matx->b.x* vect1->y + matx->c.x* vect1->z;
+	vect->y = matx->a.y* vect1->x + matx->b.y* vect1->y + matx->c.y* vect1->z;
+	vect->z = matx->a.z* vect1->x + matx->b.z* vect1->y + matx->c.z* vect1->z;
 }
 
 void crossProduct(vec* vect1, vec* vect2, vec* vect)
@@ -482,7 +482,7 @@ void createIdentityMatrixRT(mat* matx)
 	matx->c.z = ONE;
 }
 
-void copyVectorRT(vec * vecNew, vec * vecToCopy)
+void copyVectorRT(vec* vecNew, vec* vecToCopy)
 {
 
 	vecNew->x = vecToCopy->x;
@@ -493,7 +493,7 @@ void copyVectorRT(vec * vecNew, vec * vecToCopy)
 
 
 
-bool compareVectorsArbitraryError(vec * vecA, vec * vecB, double error)
+bool compareVectorsArbitraryError(vec* vecA, vec* vecB, double error)
 {
 	bool result = true;
 	if(!compareDoublesArbitraryError(vecA->x, vecB->x, error))
@@ -514,7 +514,7 @@ bool compareVectorsArbitraryError(vec * vecA, vec * vecB, double error)
 
 
 
-bool compareVectors(vec * vecA, vec * vecB)
+bool compareVectors(vec* vecA, vec* vecB)
 {
 	bool result = true;
 	if(!compareDoubles(vecA->x, vecB->x))
@@ -532,7 +532,7 @@ bool compareVectors(vec * vecA, vec * vecB)
 	return result;
 }
 
-bool compareMatricies(mat * matA, mat * matB)
+bool compareMatricies(mat* matA, mat* matB)
 {
 	bool result = true;
 	if(!compareVectors(&(matA->a), &(matB->a)))
@@ -550,7 +550,7 @@ bool compareMatricies(mat * matA, mat * matB)
 	return result;
 }
 
-void copyVectors(vec * vecNew, vec * vecToCopy)
+void copyVectors(vec* vecNew, vec* vecToCopy)
 {
 
 	vecNew->x = vecToCopy->x;
@@ -558,14 +558,14 @@ void copyVectors(vec * vecNew, vec * vecToCopy)
 	vecNew->z = vecToCopy->z;
 }
 
-void copyMatricies(mat * matNew, mat * matToCopy)
+void copyMatricies(mat* matNew, mat* matToCopy)
 {
 	copyVectors(&(matNew->a), &(matToCopy->a));
 	copyVectors(&(matNew->b), &(matToCopy->b));
 	copyVectors(&(matNew->c), &(matToCopy->c));
 }
 
-void multiplyMatricies(mat * matNew, mat * mat1, mat * mat2)
+void multiplyMatricies(mat* matNew, mat* mat1, mat* mat2)
 {
 	matNew->a.x = mat1->a.x*mat2->a.x + mat1->b.x*mat2->a.y +  mat1->c.x*mat2->a.z;
 	matNew->b.x = mat1->a.x*mat2->b.x + mat1->b.x*mat2->b.y +  mat1->c.x*mat2->b.z;
@@ -581,7 +581,7 @@ void multiplyMatricies(mat * matNew, mat * mat1, mat * mat2)
 }
 
 
-void subtractVectors(vec * vecNew, vec * a, vec * b)
+void subtractVectors(vec* vecNew, vec* a, vec* b)
 {
 
 	vecNew->x = a->x - b->x;
@@ -589,7 +589,7 @@ void subtractVectors(vec * vecNew, vec * a, vec * b)
 	vecNew->z = a->z - b->z;
 }
 
-void addVectors(vec * vecNew, vec * a, vec * b)
+void addVectors(vec* vecNew, vec* a, vec* b)
 {
 
 	vecNew->x = a->x + b->x;
@@ -598,20 +598,20 @@ void addVectors(vec * vecNew, vec * a, vec * b)
 }
 
 
-void multiplyVectorByScalar(vec * vec, double scalar)
+void multiplyVectorByScalar(vec* vec, double scalar)
 {
-	vec->x = vec->x * scalar;
-	vec->y = vec->y * scalar;
-	vec->z = vec->z * scalar;
+	vec->x = vec->x* scalar;
+	vec->y = vec->y* scalar;
+	vec->z = vec->z* scalar;
 }
 
 
-double calculateTheDistanceBetweenTwoPoints(vec * positionOfUnit1, vec * positionOfUnit2)
+double calculateTheDistanceBetweenTwoPoints(vec* positionOfUnit1, vec* positionOfUnit2)
 {
 	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, positionOfUnit1->z, positionOfUnit2->z);
 }
 
-double calculateTheDistanceBetweenTwoPointsXYOnly(vec * positionOfUnit1, vec * positionOfUnit2)
+double calculateTheDistanceBetweenTwoPointsXYOnly(vec* positionOfUnit1, vec* positionOfUnit2)
 {
 	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, 0, 0);
 }
@@ -705,15 +705,15 @@ void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2)
 }
 
 
-void scaleMatrix(mat * matrix, double scaleFactor)
+void scaleMatrix(mat* matrix, double scaleFactor)
 {
-	matrix->a.x = matrix->a.x * scaleFactor;
-	matrix->b.y = matrix->b.y * scaleFactor;
-	matrix->c.z = matrix->c.z * scaleFactor;
+	matrix->a.x = matrix->a.x* scaleFactor;
+	matrix->b.y = matrix->b.y* scaleFactor;
+	matrix->c.z = matrix->c.z* scaleFactor;
 }
 
 
-void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadians)
+void createRotatationMatrix(mat* matrix, int rotationAxis, double rotationRadians)
 {
 	if(rotationAxis == AXIS_X)
 	{
@@ -756,10 +756,10 @@ void createRotatationMatrix(mat * matrix, int rotationAxis, double rotationRadia
 
 
 
-//void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * xinterceptionPointFound, bool * yinterceptionPointFound)	//NB an interception may be a line and not a point
+//void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* xinterceptionPointFound, bool* yinterceptionPointFound)	//NB an interception may be a line and not a point
 
 //NB uses 0 is the centre of the quad drawn by the 4 points. a, b, c, d.
-void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double * intersectionX, double * intersectionY, bool * interceptionFound, bool * interceptionPointFound)	//NB an interception may be a line and not a point
+void find2DintersectionPoint(double ax, double ay, double bx, double by, double cx, double cy, double dx, double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound)	//NB an interception may be a line and not a point
 {
 	//try for analytical solution
 
@@ -946,7 +946,7 @@ void find2DintersectionPoint(double ax, double ay, double bx, double by, double 
 
 
 
-bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double * xIntersection, double * yIntersection)
+bool find2DintersectionPointOfTwoLines(double m1, double i1, double m2, double i2, double* xIntersection, double* yIntersection)
 {
 	bool result;
 
@@ -991,7 +991,7 @@ double calcDistanceBetweenTwoPoints2D(double x1, double y1, double x2, double y2
 }
 
 
-bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double * m, double * i)
+bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2, double* m, double* i)
 {
 	bool result;
 
@@ -1004,7 +1004,7 @@ bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2
 	y1 - y2 = mx1 - mx2
 	m = (y1-y2)/(x1-x2)
 	---
-	i = y1 - ((y1-y2)/(m1-x2) * x1)
+	i = y1 - ((y1-y2)/(m1-x2)* x1)
 
 	*/
 
@@ -1021,7 +1021,7 @@ bool solve2DlineEquationWithTwoPoints(double x1, double y1, double x2, double y2
 		*m = mNumerator/mDenomenator;
 		result = true;
 	}
-	*i = y1 - ((*m) * x1);
+	*i = y1 - ((*m)* x1);
 	return result;
 }
 

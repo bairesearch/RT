@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -167,13 +167,13 @@ using namespace std;
 #define DAT_FILE_DATA_VALUE_MAX_LENGTH (32)	//OLD;15 			//assumes matrix / position data - fraction values have a max size of 10 characters
 #define DAT_FILE_DATA_VALUE_RECOMMENDED_LENGTH (6) 				//[negative sign] + [1 value before DP] + [DP] + [3 values after DP]
 
-#define DAT_FILE_REF_MAX_SIZE (DAT_FILE_REF_NUM_OF_TYPE_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_REF_NUM_OF_COLOUR_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_DATA_VALUE_MAX_LENGTH * DAT_FILE_REF_NUM_OF_POSITION_VALUES + DAT_FILE_DATA_VALUE_MAX_LENGTH * DAT_FILE_REF_NUM_OF_MATRIX_VALUES + DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX + DAT_FILE_REF_NUM_DATA_VALUES)
+#define DAT_FILE_REF_MAX_SIZE (DAT_FILE_REF_NUM_OF_TYPE_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_REF_NUM_OF_COLOUR_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_DATA_VALUE_MAX_LENGTH* DAT_FILE_REF_NUM_OF_POSITION_VALUES + DAT_FILE_DATA_VALUE_MAX_LENGTH* DAT_FILE_REF_NUM_OF_MATRIX_VALUES + DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX + DAT_FILE_REF_NUM_DATA_VALUES)
 					/*formatted;
 					#define DAT_FILE_REF_MAX_SIZE
-						(DAT_FILE_REF_NUM_OF_TYPE_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH +
-						DAT_FILE_REF_NUM_OF_COLOUR_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH +
-						DAT_FILE_DATA_VALUE_MAX_LENGTH * DAT_FILE_REF_NUM_OF_POSITION_VALUES +
-						DAT_FILE_DATA_VALUE_MAX_LENGTH * DAT_FILE_REF_NUM_OF_MATRIX_VALUES +
+						(DAT_FILE_REF_NUM_OF_TYPE_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH +
+						DAT_FILE_REF_NUM_OF_COLOUR_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH +
+						DAT_FILE_DATA_VALUE_MAX_LENGTH* DAT_FILE_REF_NUM_OF_POSITION_VALUES +
+						DAT_FILE_DATA_VALUE_MAX_LENGTH* DAT_FILE_REF_NUM_OF_MATRIX_VALUES +
 						DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX +
 						DAT_FILE_REF_NUM_DATA_VALUES)
 					*/
@@ -195,7 +195,7 @@ using namespace std;
 #define REFERENCE_TYPE_OPTIONALLINE (5)
 #define REFERENCE_TYPE_UNDEFINED (9)
 #define PRIM_REF_MAX_NUM_OF_POSITION_VALUES (12)
-#define PRIMATIVE_REF_MAX_SIZE (DAT_FILE_REF_NUM_OF_TYPE_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_REF_NUM_OF_COLOUR_VALUES * DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_DATA_VALUE_MAX_LENGTH * PRIM_REF_MAX_NUM_OF_POSITION_VALUES)
+#define PRIMATIVE_REF_MAX_SIZE (DAT_FILE_REF_NUM_OF_TYPE_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_REF_NUM_OF_COLOUR_VALUES* DAT_FILE_DATA_VALUE_MAX_LENGTH + DAT_FILE_DATA_VALUE_MAX_LENGTH* PRIM_REF_MAX_NUM_OF_POSITION_VALUES)
 
 
 
@@ -217,7 +217,7 @@ public:
 	mat absoluteDeformationMatrix;
 	unsigned int colour;
 	string name;
-	Reference * next;
+	Reference* next;
 
 		/*new parameters added to parseFile() 18-mar-07*/
 	vec vertex1relativePosition;
@@ -244,16 +244,16 @@ public:
 	/*Additional values used with recursive parser*/
 	bool isSubModelReference;
 	#ifdef USE_LRRC
-	ModelDetails * subModelDetails;
+	ModelDetails* subModelDetails;
 	#endif		
-	Reference * firstReferenceWithinSubModel;
+	Reference* firstReferenceWithinSubModel;
 };
 
-void copyReferencePosition(Reference * r, Reference * referenceToCopy);
+void copyReferencePosition(Reference* r, Reference* referenceToCopy);
 
-int obtainReferencePlayerID(Reference * referenceInThisPhaseStartSceneFile);
+int obtainReferencePlayerID(Reference* referenceInThisPhaseStartSceneFile);
 
-void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col);
+void convertLdrawColourToDatFileRGB(int dataFileColour, colour* col);
 
 
 #endif

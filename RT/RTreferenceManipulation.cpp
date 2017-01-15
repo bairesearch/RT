@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTreferenceManipulation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -47,7 +47,7 @@ using namespace std;
 #include "RToperations.h"
 
 
-bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Reference * firstReference, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
+bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Reference* firstReference, bool useCustomViewInfo, ViewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
 {
 	ofstream writeFileObject;
 	writeFileObject.open(fileName.c_str());
@@ -68,7 +68,7 @@ bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, Refe
 
 
 
-bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomViewInfo, ViewInfo * vi, bool useCustomLightSource, vec * lightSourcePosition, char * lightSourceColour)
+bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, bool useCustomViewInfo, ViewInfo* vi, bool useCustomLightSource, vec* lightSourcePosition, char* lightSourceColour)
 {
 	/*
 	#ifdef COMPILE_TH_RT
@@ -294,9 +294,9 @@ bool writeRayTraceFormatHeaderInfo(ofstream * writeFileObject, bool useCustomVie
 	return true;
 }
 
-bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject, Reference * firstReferenceInLayer)
+bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, Reference* firstReferenceInLayer)
 {
-	Reference * currentReference = firstReferenceInLayer;
+	Reference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 		if((currentReference->isSubModelReference)
@@ -354,7 +354,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream * writeFileObject
 }
 
 //preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
-bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Reference * currentReference)
+bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, Reference* currentReference)
 {
 
 	bool result = true;
@@ -535,9 +535,9 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		vec submodelRotationVector;
 		vec submodelRotationVectorDegrees;
 		calculateRotationVectorFromDeformationMatrix(&(currentReference->deformationMatrix), &submodelRotationVector);
-		submodelRotationVectorDegrees.x = submodelRotationVector.x / PI * 180.0;
-		submodelRotationVectorDegrees.y = submodelRotationVector.y / PI * 180.0;
-		submodelRotationVectorDegrees.z = submodelRotationVector.z / PI * 180.0;
+		submodelRotationVectorDegrees.x = submodelRotationVector.x / PI* 180.0;
+		submodelRotationVectorDegrees.y = submodelRotationVector.y / PI* 180.0;
+		submodelRotationVectorDegrees.z = submodelRotationVector.z / PI* 180.0;
 		string rotationVectorString = convertPositionCoordinatesToString(&submodelRotationVectorDegrees);
 	#else
 		//write rotation vector values
@@ -575,15 +575,15 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 			multAdvancedMatrix(&inverseRotationxMatrix, &tmpAdvancedMatrix1b, &tmpAdvancedMatrix2b);
 			multAdvancedMatrix(&tmpAdvancedMatrix2b, &deformationMatrixAdvanced, &tmpAdvancedMatrix3b);
 
-			width = (tmpAdvancedMatrix3b.a.x) * 2.0;
-			length = (tmpAdvancedMatrix3b.b.y) * 2.0;
-			height = (tmpAdvancedMatrix3b.c.z) * 2.0;
+			width = (tmpAdvancedMatrix3b.a.x)* 2.0;
+			length = (tmpAdvancedMatrix3b.b.y)* 2.0;
+			height = (tmpAdvancedMatrix3b.c.z)* 2.0;
 		}
 		else
 		{
-			width = (currentReference->deformationMatrix.a.x) * 2.0;
-			length = (currentReference->deformationMatrix.b.y) * 2.0;
-			height = (currentReference->deformationMatrix.c.z) * 2.0;
+			width = (currentReference->deformationMatrix.a.x)* 2.0;
+			length = (currentReference->deformationMatrix.b.y)* 2.0;
+			height = (currentReference->deformationMatrix.c.z)* 2.0;
 		}
 
 		char widthdataValueString[100];
@@ -597,7 +597,7 @@ bool addReferenceToFileObjectRayTraceFormat(ofstream * writeFileObject, Referenc
 		scaleString = scaleString + TAL_FILE_REF_WIDTH + widthdataValueString + TAL_FILE_REF_LENGTH + lengthdataValueString + TAL_FILE_REF_HEIGHT + heightdataValueString + " ";
 
 	#else
-		double widthLengthHeight = (currentReference->deformationMatrix.a.x) * 2.0;
+		double widthLengthHeight = (currentReference->deformationMatrix.a.x)* 2.0;
 
 		char dataValueString[100];
 		sprintf(dataValueString, FILE_FLOAT_PRECISION, widthLengthHeight);

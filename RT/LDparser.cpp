@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDparser.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -50,7 +50,7 @@ using namespace std;
 
 
 
-bool parseFile(string parseFileName, Reference * initialReference, Reference * parentReference, bool recurseIntoPartsDir)
+bool parseFile(string parseFileName, Reference* initialReference, Reference* parentReference, bool recurseIntoPartsDir)
 {
 	bool result = true;
 
@@ -118,7 +118,7 @@ bool parseFile(string parseFileName, Reference * initialReference, Reference * p
 	string rotation9 = "";
 	string subPartFileName = "";
 
-	Reference * currentReference = initialReference;
+	Reference* currentReference = initialReference;
 
 	ifstream parseFileObject;
 	parseFileObject.open(parseFileName.c_str());
@@ -614,7 +614,7 @@ bool parseFile(string parseFileName, Reference * initialReference, Reference * p
 
 						//4. finalise Reference object
 						//code to create a new reference object
-						Reference * nextReference = new Reference();
+						Reference* nextReference = new Reference();
 						currentReference -> next = nextReference;
 						currentReference = currentReference->next;
 					}
@@ -806,7 +806,7 @@ bool parseFile(string parseFileName, Reference * initialReference, Reference * p
 						//1. Perform Recursion into sub files in designated search directory (default = current directory) if possible
 
 							//code to create a new reference object
-						Reference * subModelReference = new Reference(true);
+						Reference* subModelReference = new Reference(true);
 						currentReference->firstReferenceWithinSubModel = subModelReference;
 
 						#ifdef USE_LRRC
@@ -861,7 +861,7 @@ bool parseFile(string parseFileName, Reference * initialReference, Reference * p
 						//4. finalise Reference object
 
 						//code to create a new reference object
-						Reference * nextReference = new Reference();
+						Reference* nextReference = new Reference();
 						currentReference -> next = nextReference;
 						currentReference = currentReference->next;
 					}
@@ -879,30 +879,30 @@ bool parseFile(string parseFileName, Reference * initialReference, Reference * p
 
 
 
-double calcModXPosBasedUponRotate(vec * childRelativePosition, mat * parentReferenceDeformationMatrix)
+double calcModXPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix)
 {
 	double xPosBasedUponRotatedParent;
 
-	xPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.x * childRelativePosition->x) + (parentReferenceDeformationMatrix->b.x * childRelativePosition->y) + (parentReferenceDeformationMatrix->c.x * childRelativePosition->z));
+	xPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.x* childRelativePosition->x) + (parentReferenceDeformationMatrix->b.x* childRelativePosition->y) + (parentReferenceDeformationMatrix->c.x* childRelativePosition->z));
 
 	return xPosBasedUponRotatedParent;
 }
 
-double calcModYPosBasedUponRotate(vec * childRelativePosition, mat * parentReferenceDeformationMatrix)
+double calcModYPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix)
 {
 	double yPosBasedUponRotatedParent;
 
-	yPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.y * childRelativePosition->x) + (parentReferenceDeformationMatrix->b.y * childRelativePosition->y) + (parentReferenceDeformationMatrix->c.y * childRelativePosition->z));
+	yPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.y* childRelativePosition->x) + (parentReferenceDeformationMatrix->b.y* childRelativePosition->y) + (parentReferenceDeformationMatrix->c.y* childRelativePosition->z));
 
 	return yPosBasedUponRotatedParent;
 }
 
 
-double calcModZPosBasedUponRotate(vec * childRelativePosition, mat * parentReferenceDeformationMatrix)
+double calcModZPosBasedUponRotate(vec* childRelativePosition, mat* parentReferenceDeformationMatrix)
 {
 	double zPosBasedUponRotatedParent;
 
-	zPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.z * childRelativePosition->x) + (parentReferenceDeformationMatrix->b.z * childRelativePosition->y) + (parentReferenceDeformationMatrix->c.z * childRelativePosition->z));
+	zPosBasedUponRotatedParent = ((parentReferenceDeformationMatrix->a.z* childRelativePosition->x) + (parentReferenceDeformationMatrix->b.z* childRelativePosition->y) + (parentReferenceDeformationMatrix->c.z* childRelativePosition->z));
 
 	return zPosBasedUponRotatedParent;
 }

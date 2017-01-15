@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDsvg.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -43,12 +43,12 @@ using namespace std;
 
 #include "LDsvg.h"
 
-bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
+bool writeSVGfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 {
 	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);
 }
 
-bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
+bool writeSVGfile(string xmlFileName, XMLparserTag* firstTagInXMLfile, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
 {
 	bool result = true;
 
@@ -72,7 +72,7 @@ bool writeSVGfile(string xmlFileName, XMLparserTag * firstTagInXMLfile, int view
 }
 
 
-void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
+void writeSVGheader(ofstream* writeFileObject, int viewBoxMinX, int viewBoxMaxX, int viewBoxMinY, int viewBoxMaxY)
 {
 	int width = viewBoxMaxX-viewBoxMinX;
 	int height = viewBoxMaxY-viewBoxMinY;
@@ -98,7 +98,7 @@ void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX
 	}
 }
 
-void writeSVGfooter(ofstream * writeFileObject)
+void writeSVGfooter(ofstream* writeFileObject)
 {
 	string footerString = "</svg>";
 	for(int i = 0; i<footerString.length(); i++)
@@ -109,7 +109,7 @@ void writeSVGfooter(ofstream * writeFileObject)
 
 
 
-void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse)
+void writeSVGbox(XMLparserTag** currentTag, vec* pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -152,9 +152,9 @@ void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double hei
 
 	if(useEllipse)
 	{
-		XMLparserTag * currentTagInBlock = *currentTag;
+		XMLparserTag* currentTagInBlock =* currentTag;
 		currentTagInBlock->name = "ellipse";
-		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "cx";
 		currentAttributeInBlock->value = xPosString;
 		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -190,9 +190,9 @@ void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double hei
 	}
 	else
 	{
-		XMLparserTag * currentTagInBlock = *currentTag;
+		XMLparserTag* currentTagInBlock =* currentTag;
 		currentTagInBlock->name = "rect";
-		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "x";
 		currentAttributeInBlock->value = xPosString;
 		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -228,7 +228,7 @@ void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double hei
 	}
 }
 
-void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity)
+void writeSVGboxTransparent(XMLparserTag** currentTag, vec* pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -275,9 +275,9 @@ void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width,
 
 	if(useEllipse)
 	{
-		XMLparserTag * currentTagInBlock = *currentTag;
+		XMLparserTag* currentTagInBlock =* currentTag;
 		currentTagInBlock->name = "ellipse";
-		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "cx";
 		currentAttributeInBlock->value = xPosString;
 		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -317,9 +317,9 @@ void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width,
 	}
 	else
 	{
-		XMLparserTag * currentTagInBlock = *currentTag;
+		XMLparserTag* currentTagInBlock =* currentTag;
 		currentTagInBlock->name = "rect";
-		XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+		XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 		currentAttributeInBlock->name = "x";
 		currentAttributeInBlock->value = xPosString;
 		currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -362,7 +362,7 @@ void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width,
 
 
 
-void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col)
+void writeSVGline(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -396,9 +396,9 @@ void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col)
 	gString = gStringcharstar;
 	bString = bStringcharstar;
 
-	XMLparserTag * currentTagInBlock = *currentTag;
+	XMLparserTag* currentTagInBlock =* currentTag;
 	currentTagInBlock->name = "g";
-	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "stroke";
 	currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -437,7 +437,7 @@ void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col)
 
 
 
-void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSize, int col)
+void writeSVGtext(XMLparserTag** currentTag, string text, vec* pos, int fontSize, int col)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -467,9 +467,9 @@ void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSi
 	gString = gStringcharstar;
 	bString = bStringcharstar;
 
-	XMLparserTag * currentTagInBlock = *currentTag;
+	XMLparserTag* currentTagInBlock =* currentTag;
 	currentTagInBlock->name = "g";
-	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";
 	currentAttributeInBlock->value = "font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400";
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
@@ -508,15 +508,15 @@ void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSi
 	//string svgText = "<g style=\"font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400\"><g style=\"stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")\"><text><tspan x=\"" + xPosString + "\" y=\"" + yPosString + "\">" + text + "</tspan></text></g></g>";
 }
 
-XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID)
+XMLparserTag* writeSVGgroup(XMLparserTag** currentTag, string* groupID)
 {
-	XMLparserTag * nextTagOnOriginalLayer = NULL;
+	XMLparserTag* nextTagOnOriginalLayer = NULL;
 
-	XMLparserTag * currentTagInBlock = *currentTag;
+	XMLparserTag* currentTagInBlock =* currentTag;
 	currentTagInBlock->name = "g";
-	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "id";
-	currentAttributeInBlock->value = *groupID;
+	currentAttributeInBlock->value =* groupID;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 
 	currentTagInBlock->firstLowerLevelTag = new XMLparserTag();
@@ -530,7 +530,7 @@ XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID)
 	return nextTagOnOriginalLayer;
 }
 
-void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID, double width)
+void writeSVGconnector(XMLparserTag** currentTag, vec* pos1, vec* pos2, int col, string* startGroupID, string* endGroupID, double width)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -558,9 +558,9 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 	xPos2String = xPos2Stringcharstar;
 	yPos2String = yPos2Stringcharstar;
 
-	XMLparserTag * currentTagInBlock = *currentTag;
+	XMLparserTag* currentTagInBlock =* currentTag;
 	currentTagInBlock->name = "path";
-	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	XMLParserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";
 	string pathStyleValue = "";
 	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:" + strokeWidthcharstar + "px;stroke-opacity:1";
@@ -577,7 +577,7 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 
 	currentAttributeInBlock->name = "id";
 	string pathIdValue = "";
-	pathIdValue = pathIdValue + "path" + *startGroupID + *endGroupID;	//pathIdValue = pathIdValue + "path-" + *startGroupID + "-" + *endGroupID;
+	pathIdValue = pathIdValue + "path" +* startGroupID +* endGroupID;	//pathIdValue = pathIdValue + "path-" +* startGroupID + "-" +* endGroupID;
 	currentAttributeInBlock->value = pathIdValue;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
@@ -589,14 +589,14 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 
 	currentAttributeInBlock->name = "inkscape:connection-start";
 	string pathConnectionStartValue = "";
-	pathConnectionStartValue = pathConnectionStartValue + "#" + *startGroupID;
+	pathConnectionStartValue = pathConnectionStartValue + "#" +* startGroupID;
 	currentAttributeInBlock->value = pathConnectionStartValue;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
 
 	currentAttributeInBlock->name = "inkscape:connection-end";
 	string pathConnectionEndValue = "";
-	pathConnectionEndValue = pathConnectionEndValue + "#" + *endGroupID;
+	pathConnectionEndValue = pathConnectionEndValue + "#" +* endGroupID;
 	currentAttributeInBlock->value = pathConnectionEndValue;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
@@ -605,7 +605,7 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 	(*currentTag) = (*currentTag)->nextTag;
 }
 
-string convertColourRGBtoHexString(colour * colourRGB)
+string convertColourRGBtoHexString(colour* colourRGB)
 {
 	string hexString = "";
 

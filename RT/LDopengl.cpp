@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDopengl.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -74,7 +74,7 @@ static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
 static bool LD_OPENGL_PRINT_ALGORITHM_PROGRESS = false;
 
 
-Reference * firstReferenceInPrimitivesReferenceListGlobal;
+Reference* firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
@@ -146,7 +146,7 @@ void setViewPort2Dortho(double left, double right, double bottom, double top)
 	gluOrtho2D(left, right, bottom, top);
 }
 
-void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth)
+void setViewPort3D(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
 {
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -159,13 +159,13 @@ void setViewPort3D(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFaci
 
 }
 
-void setViewPort3Ddynamic(vec * eyeFacingPoly, vec * viewAtFacingPoly, vec * viewUpFacingPoly, vec * viewPortWidthHeightDepth)
+void setViewPort3Ddynamic(vec* eyeFacingPoly, vec* viewAtFacingPoly, vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	double viewportWidth = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y) * 20.0;
-	double viewportHeight = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y) * 20.0;
+	double viewportWidth = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
+	double viewportHeight = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
 	glOrtho(-(viewportWidth)/2.0, (viewportWidth)/2.0, -(viewportHeight)/2.0, (viewportHeight)/2.0, -100, 100);
 
 	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewAtFacingPoly->x, viewAtFacingPoly->y, viewAtFacingPoly->z, viewUpFacingPoly->x, viewUpFacingPoly->y, viewUpFacingPoly->z);
@@ -212,7 +212,7 @@ void setViewPort3Dortho(double left, double right, double bottom, double top, do
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -256,7 +256,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(Reference * firstReferen
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(Reference * firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGL(Reference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -307,7 +307,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 	glBegin(GL_QUADS);
 
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -426,7 +426,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 	glBegin(GL_QUADS);
 
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -520,7 +520,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 
 	glBegin(GL_TRIANGLES);
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -608,7 +608,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 	glBegin(GL_TRIANGLES);
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -676,7 +676,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference * firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char * rgbMap)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(Reference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -708,9 +708,9 @@ static void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 }
 
 
-static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference * firstReferenceInLayer)
+static void draw3DprimitivesReferenceListToOpenGLrecurse(Reference* firstReferenceInLayer)
 {
-	Reference * currentReference = firstReferenceInLayer;
+	Reference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 
@@ -815,7 +815,7 @@ static void draw3DprimitivesReferenceListToOpenGL()
 	glLoadIdentity();
 	glPushMatrix();
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -889,7 +889,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 	glPushMatrix();
 
 
-	Reference * currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	Reference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		/*
@@ -983,12 +983,12 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 
 
-void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap)
+void writeScreenToRGBMap(int width, int height, unsigned char* rgbMap)
 {
 	const int bytesPerPixel = 3;	// RGB
-	const int imageSizeInBytes = bytesPerPixel * width * height;
+	const int imageSizeInBytes = bytesPerPixel* width* height;
 
-	unsigned char * pixels = new unsigned char[imageSizeInBytes];
+	unsigned char* pixels = new unsigned char[imageSizeInBytes];
 
 		// glReadPixels takes the lower-left corner, while GetViewportOffset gets the top left corner
 		//const wxPoint topLeft = GetViewportOffset();
@@ -1005,7 +1005,7 @@ void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap)
 	// glReadPixels reads the given rectangle from bottom-left to top-right, so we must
 	// reverse it
 
-	//unsigned char * rgbMap = new unsigned char[imageSizeInBytes];
+	//unsigned char* rgbMap = new unsigned char[imageSizeInBytes];
 
 	for(int y = 0; y < height; y++)
 	{
@@ -1025,9 +1025,9 @@ void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap)
 			int oldy = ((height-1)-y);
 			#endif
 
-			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_RED] = pixels[(bytesPerPixel) * (oldx + oldy * width) + RGB_RED];
-			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_GREEN] = pixels[(bytesPerPixel) * (oldx + oldy * width) + RGB_GREEN];
-			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_BLUE] = pixels[(bytesPerPixel) * (oldx + oldy * width) + RGB_BLUE];
+			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_RED] = pixels[(bytesPerPixel)* (oldx + oldy* width) + RGB_RED];
+			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_GREEN] = pixels[(bytesPerPixel)* (oldx + oldy* width) + RGB_GREEN];
+			rgbMap[y*width*RGB_NUM + x*RGB_NUM + RGB_BLUE] = pixels[(bytesPerPixel)* (oldx + oldy* width) + RGB_BLUE];
 
 		}
 	}
@@ -1037,10 +1037,10 @@ void writeScreenToRGBMap(int width, int height, unsigned char * rgbMap)
 
 }
 
-void writeScreenToDepthMap(int width, int height, double * depthMap)
+void writeScreenToDepthMap(int width, int height, double* depthMap)
 {
-	GLfloat *pixels = new GLfloat[width * height];
-	//GLuint *pixels = new GLuint[width * height];
+	GLfloat* pixels = new GLfloat[width* height];
+	//GLuint* pixels = new GLuint[width* height];
 
 	/*
 	glPixelStorei(GL_PACK_ROW_LENGTH, width);
@@ -1078,8 +1078,8 @@ void writeScreenToDepthMap(int width, int height, double * depthMap)
 			int oldy = ((height-1)-y);
 			#endif
 
-			depthMap[y*width + x] = (pixels[oldx + (oldy * width)]);
-			//depthMap[y*width + x] = ((double)(pixels[oldx + (oldy * width)]))/((double)(sizeof(GL_UNSIGNED_INT)));
+			depthMap[y*width + x] = (pixels[oldx + (oldy* width)]);
+			//depthMap[y*width + x] = ((double)(pixels[oldx + (oldy* width)]))/((double)(sizeof(GL_UNSIGNED_INT)));
 
 			#ifdef FIX_OPENGL_3DOD_TIMING_BUG
 			if(depthMap[y*width + x] > 0)

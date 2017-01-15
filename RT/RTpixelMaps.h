@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTpixelMaps.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -92,75 +92,75 @@
 */
 
 
-void printRGBMap(int imageWidth, int imageHeight, unsigned char * rgbMap);
+void printRGBMap(int imageWidth, int imageHeight, unsigned char* rgbMap);
 
-double calculateLuminosityLevelFromColour(colour * col);
+double calculateLuminosityLevelFromColour(colour* col);
 
-void setBooleanMapValue(int x, int y, int imageWidth, bool booleanVal, bool * booleanMap);
-bool getBooleanMapValue(int x, int y, int imageWidth, bool * booleanMap);
+void setBooleanMapValue(int x, int y, int imageWidth, bool booleanVal, bool* booleanMap);
+bool getBooleanMapValue(int x, int y, int imageWidth, bool* booleanMap);
 
-void setIntMapValue(int x, int y, int imageWidth, int intVal, int * intMap);
-int getIntMapValue(int x, int y, int imageWidth, int * intMap);
+void setIntMapValue(int x, int y, int imageWidth, int intVal, int* intMap);
+int getIntMapValue(int x, int y, int imageWidth, int* intMap);
 
-unsigned char getRGBMapValue(int x, int y, int imageWidth, int rgb, unsigned char * rgbMap);
-void getRGBMapValues(int x, int y, int imageWidth, unsigned char * rgbMap, colour * col);
-void setRGBMapValues(int x, int y, int imageWidth, colour * col, unsigned char * rgbMap);
-void setRGBMapValue(int x, int y, int imageWidth, int rgb, unsigned char * rgbMap, int rgbVal);
+unsigned char getRGBMapValue(int x, int y, int imageWidth, int rgb, unsigned char* rgbMap);
+void getRGBMapValues(int x, int y, int imageWidth, unsigned char* rgbMap, colour* col);
+void setRGBMapValues(int x, int y, int imageWidth, colour* col, unsigned char* rgbMap);
+void setRGBMapValue(int x, int y, int imageWidth, int rgb, unsigned char* rgbMap, int rgbVal);
 
-void setNormalMapValue(int x, int y, int imageWidth, vec * normalVal, double * normalMap);
-void getNormalMapValue(int x, int y, int imageWidth, double * normalMap, vec * normalVal);
-void setPointMapValue(int x, int y, int imageWidth, vec * pointVal, double * pointMap);
-void getPointMapValue(int x, int y, int imageWidth, double * pointMap, vec * pointVal);
-	void setVectorMapValue(int x, int y, int imageWidth, vec * vectorVal, double * vectorMap);
-	void getVectorMapValue(int x, int y, int imageWidth, double * vectorMap, vec * vectorVal);
+void setNormalMapValue(int x, int y, int imageWidth, vec* normalVal, double* normalMap);
+void getNormalMapValue(int x, int y, int imageWidth, double* normalMap, vec* normalVal);
+void setPointMapValue(int x, int y, int imageWidth, vec* pointVal, double* pointMap);
+void getPointMapValue(int x, int y, int imageWidth, double* pointMap, vec* pointVal);
+	void setVectorMapValue(int x, int y, int imageWidth, vec* vectorVal, double* vectorMap);
+	void getVectorMapValue(int x, int y, int imageWidth, double* vectorMap, vec* vectorVal);
 
-void setLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double contrastVal, double * contrastMap);
-double getLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double * contrastMap);
+void setLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double contrastVal, double* contrastMap);
+double getLumOrContrastOrDepthMapValue(int x, int y, int imageWidth, double* contrastMap);
 
-void generatePixmapFromRGBmap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap);
-void generatePixmapFromLuminosityContrastMap(string imageFileName, int imageWidth, int imageHeight, double * contrastMap);
-void generatePixmapFromDepthMapOrDepthContrastMap(string imageFileName, int imageWidth, int imageHeight, double * depthMap);
-void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(string imageFileName, int imageWidth, int imageHeight, double * depthMap, double noHitDepth, double estimateMaxDepth);
-void generateRGBMapFromDepthMapOrDepthContrastMap(int imageWidth, int imageHeight, double * depthMap, unsigned char * rgbMap);
-void generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(int imageWidth, int imageHeight, double * depthMap, unsigned char * rgbMap, double noHitDepth, double estimateMaxDepth);
-void generatePixmapFromNormalMap(string imageFileName, int imageWidth, int imageHeight, double * normalMap);
-void generateRGBMapFromNormalMap(int imageWidth, int imageHeight, double * normalMap, unsigned char * rgbMap);
-void generatePixmapFromLuminosityMap(string imageFileName, int imageWidth, int imageHeight, double * luminosityMap);
-void generatePixmapFromBooleanMap(string imageFileName, int imageWidth, int imageHeight, bool * booleanMap);
-void generatePixmapFromEnumIntMap(string filename, int imageWidth, int imageHeight, int * intMap);
-void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap);
-	void normaliseRGBMapBasedOnAverageLuminosity(unsigned char * normalisedRgbMap, int imageWidth, int imageHeight, unsigned char * rgbMap);
-		double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char * rgbMap);
-void generateBooleanDiffMapFromRGBMaps(string imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2);
+void generatePixmapFromRGBmap(string imageFileName, int imageWidth, int imageHeight, unsigned char* rgbMap);
+void generatePixmapFromLuminosityContrastMap(string imageFileName, int imageWidth, int imageHeight, double* contrastMap);
+void generatePixmapFromDepthMapOrDepthContrastMap(string imageFileName, int imageWidth, int imageHeight, double* depthMap);
+void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(string imageFileName, int imageWidth, int imageHeight, double* depthMap, double noHitDepth, double estimateMaxDepth);
+void generateRGBMapFromDepthMapOrDepthContrastMap(int imageWidth, int imageHeight, double* depthMap, unsigned char* rgbMap);
+void generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(int imageWidth, int imageHeight, double* depthMap, unsigned char* rgbMap, double noHitDepth, double estimateMaxDepth);
+void generatePixmapFromNormalMap(string imageFileName, int imageWidth, int imageHeight, double* normalMap);
+void generateRGBMapFromNormalMap(int imageWidth, int imageHeight, double* normalMap, unsigned char* rgbMap);
+void generatePixmapFromLuminosityMap(string imageFileName, int imageWidth, int imageHeight, double* luminosityMap);
+void generatePixmapFromBooleanMap(string imageFileName, int imageWidth, int imageHeight, bool* booleanMap);
+void generatePixmapFromEnumIntMap(string filename, int imageWidth, int imageHeight, int* intMap);
+void generateBooleanContrastPixmapFromRGBMap(string imageFileName, int imageWidth, int imageHeight, unsigned char* rgbMap);
+	void normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, int imageHeight, unsigned char* rgbMap);
+		double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char* rgbMap);
+void generateBooleanDiffMapFromRGBMaps(string imageFileName, int imageWidth, int imageHeight, unsigned char* rgbMap1, unsigned char* rgbMap2);
 
-void generatePixmapFromDepthMap24Bit(string imageFileName, int imageWidth, int imageHeight, double * depthMap, double depthScale, double depthOffset);
-void calculate24BitDepthPixmapPixelFromDepth(double depth, double depthScale, double depthOffset, colour * depthMap24BitPixelValue);
+void generatePixmapFromDepthMap24Bit(string imageFileName, int imageWidth, int imageHeight, double* depthMap, double depthScale, double depthOffset);
+void calculate24BitDepthPixmapPixelFromDepth(double depth, double depthScale, double depthOffset, colour* depthMap24BitPixelValue);
 
 
 
-void writeImage(string imageFileName, pixmap * pm);
-void readImage(string imageFileName, unsigned char * rgbMap);
+void writeImage(string imageFileName, pixmap* pm);
+void readImage(string imageFileName, unsigned char* rgbMap);
 
 //methods taken from ORoperations.cpp;
-void createRGBMapFromPixmapImage(pixmap * objectImage, unsigned char * rgbMap);
-	void calculateColourFromPixmapPixel(pixmap * pm, int pixelPositionInPixmap, colour * col);
-void createDepthMapFromDepth24BitPixmapImage(pixmap * depth24BitPixMap, double * depthMap, double depthScale, double depthOffset);
-	double calculateDepthFrom24BitDepthValue(colour * depthMap24BitPixelValue, double depthScale, double depthOffset);
-void createLuminosityMapFromPixmapImage(pixmap * objectImage, double * luminosityMap);
-	double calculateLuminosityLevelFromPixmapPixel(pixmap * pm, int pixelPositionInPixmap);
-void createLuminosityMapFromRGBMap(int imageWidth, int imageHeight, unsigned char * rgbMap, double * luminosityMap);
-	double calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, unsigned char * rgbMap);
-		double calculateLuminosityLevelFromRGBVal(colour * rgbVal);
-void createLuminosityContrastMapFromRGBMap(int imageWidth, int imageHeight, unsigned char * rgbMap, double * luminosityContrastMap);
-void createContrastMapFromMap(int imageWidth, int imageHeight, double * luminosityMap, double * contrastMap);
-	double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * luminosityMap, int kernelWidth, int kernelHeight, int imageWidth, int imageHeight);
+void createRGBMapFromPixmapImage(pixmap* objectImage, unsigned char* rgbMap);
+	void calculateColourFromPixmapPixel(pixmap* pm, int pixelPositionInPixmap, colour* col);
+void createDepthMapFromDepth24BitPixmapImage(pixmap* depth24BitPixMap, double* depthMap, double depthScale, double depthOffset);
+	double calculateDepthFrom24BitDepthValue(colour* depthMap24BitPixelValue, double depthScale, double depthOffset);
+void createLuminosityMapFromPixmapImage(pixmap* objectImage, double* luminosityMap);
+	double calculateLuminosityLevelFromPixmapPixel(pixmap* pm, int pixelPositionInPixmap);
+void createLuminosityMapFromRGBMap(int imageWidth, int imageHeight, unsigned char* rgbMap, double* luminosityMap);
+	double calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, unsigned char* rgbMap);
+		double calculateLuminosityLevelFromRGBVal(colour* rgbVal);
+void createLuminosityContrastMapFromRGBMap(int imageWidth, int imageHeight, unsigned char* rgbMap, double* luminosityContrastMap);
+void createContrastMapFromMap(int imageWidth, int imageHeight, double* luminosityMap, double* contrastMap);
+	double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double* luminosityMap, int kernelWidth, int kernelHeight, int imageWidth, int imageHeight);
 
-	double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, unsigned char * rgbMap, int rgbComponent, int kernelWidth, int kernelHeight, int imageWidth, int imageHeight);
+	double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, unsigned char* rgbMap, int rgbComponent, int kernelWidth, int kernelHeight, int imageWidth, int imageHeight);
 
 
 
-void createLuminosityContrastBooleanMap(int imageWidth, int imageHeight, double * luminosityContrastMap, bool * luminosityContrastBooleanMap);
-void createLuminosityBooleanMap(int imageWidth, int imageHeight, double * luminosityMap, bool * luminosityBooleanMap);
+void createLuminosityContrastBooleanMap(int imageWidth, int imageHeight, double* luminosityContrastMap, bool* luminosityContrastBooleanMap);
+void createLuminosityBooleanMap(int imageWidth, int imageHeight, double* luminosityMap, bool* luminosityBooleanMap);
 
 #ifndef USE_OR
 void fillInRTRulesExternVariables();

@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDmysql.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -48,19 +48,19 @@
 using namespace std;
 
 
-extern MYSQL * connection;
+extern MYSQL* connection;
 extern MYSQL mysql;
-extern MYSQL_RES *result;
+extern MYSQL_RES* result;
 
 
 void testMySQLserverConnection();
 
-bool initiateMySQLserverConnection(char * mysqlServerIpAddressAndPort, char * username, char * password, char * databaseName);
-bool performSQLselectQuery(char * sqlCommand, char *sqlCommandOutput);	//not complete - debug only
-bool performSQLselectQuery(char * sqlCommand);
-bool performSQLrealSelectQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
-bool performSQLinsertQuery(char * sqlCommand);
-bool performSQLrealInsertQuery(char * sqlCommand, unsigned long stringLength);	//ignores string escape character
+bool initiateMySQLserverConnection(char* mysqlServerIpAddressAndPort, char* username, char* password, char* databaseName);
+bool performSQLselectQuery(char* sqlCommand, char* sqlCommandOutput);	//not complete - debug only
+bool performSQLselectQuery(char* sqlCommand);
+bool performSQLrealSelectQuery(char* sqlCommand, unsigned long stringLength);	//ignores string escape character
+bool performSQLinsertQuery(char* sqlCommand);
+bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength);	//ignores string escape character
 long performSQLgetNumRowsQuery(string tableName);
 void performSQLdeleteAllRowsQuery(string tableName);
 void endMySQLserverConnection();

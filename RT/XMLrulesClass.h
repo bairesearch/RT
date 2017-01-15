@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: XMLrulesClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -87,45 +87,45 @@ public:
 	int attribute7;
 	int attribute8;
 
-	RulesClass * next;
+	RulesClass* next;
 };
 
 //High Level
 
 #ifdef USE_CS
 bool parseCSrulesXMLfile();
-	bool parseCSRulesTag(XMLparserTag * currentTag);
+	bool parseCSRulesTag(XMLparserTag* currentTag);
 #endif
 
 #ifdef USE_GIA
 bool parseGIArulesXMLfile();
-	bool parseGIARulesTag(XMLparserTag * currentTag);
+	bool parseGIARulesTag(XMLparserTag* currentTag);
 #endif
 
 #ifdef USE_OR
 bool parseORrulesXMLfile();
-	bool parseORrulesTag(XMLparserTag * currentTag);
+	bool parseORrulesTag(XMLparserTag* currentTag);
 #endif
 
 bool parseANNrulesXMLfile();
-	bool parseANNrulesTag(XMLparserTag * currentTag);
+	bool parseANNrulesTag(XMLparserTag* currentTag);
 
-bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag * currentTag, string sectionTagName, RulesClass * firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
-bool addRulesClassObjectBasedOnTag(XMLparserTag * currentTag, RulesClass * currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
+bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, string sectionTagName, RulesClass* firstReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
+bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, RulesClass* currentReferenceToObjectClass, string tagName, int numberOfAttributes, string attributeName1, string attributeName2, string attributeName3, string attributeName4, string attributeName5, string attributeName6, string attributeName7, string attributeName8);
 
-extern RulesClass * ANNrulesSprite;	//common sprite xml file is ANNrules.xml
+extern RulesClass* ANNrulesSprite;	//common sprite xml file is ANNrules.xml
 #ifdef USE_CS
-extern RulesClass * CSrulesSprite;
-extern RulesClass * CSrulesDraw;
-extern XMLparserTag * CSfirstTagInXMLfile;
+extern RulesClass* CSrulesSprite;
+extern RulesClass* CSrulesDraw;
+extern XMLparserTag* CSfirstTagInXMLfile;
 #endif
 #ifdef USE_GIA
-extern RulesClass * GIArulesSprite;
-extern RulesClass * GIArulesDraw;
-extern XMLparserTag * GIAfirstTagInXMLfile;
+extern RulesClass* GIArulesSprite;
+extern RulesClass* GIArulesDraw;
+extern XMLparserTag* GIAfirstTagInXMLfile;
 #endif
 #ifdef USE_OR
-extern RulesClass * ORrulesObjectRecognition;
+extern RulesClass* ORrulesObjectRecognition;
 #endif
 
 

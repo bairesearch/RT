@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTmain.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -86,7 +86,7 @@ static char errmessage[] = "Usage:  OpenRT.exe [options]"
 "\n"
 "\n";
 
-int main(int argc,char **argv)
+int main(int argc,char* *argv)
 {
 	bool result = true;
 
@@ -114,7 +114,7 @@ int main(int argc,char **argv)
 	lightSourcePosition.x = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_X;
 	lightSourcePosition.y = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Y;
 	lightSourcePosition.z = TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z;
-	char * lightSourceColour = new char[10];
+	char* lightSourceColour = new char[10];
 	strcpy(lightSourceColour, TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR);
 
 	/*==============================================================
@@ -232,7 +232,7 @@ int main(int argc,char **argv)
 
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3e6a 07-September-2014" << endl;
+			cout << "OpenRT.exe - Project Version: 3e7a 27-January-2015" << endl;
 			exit(1);
 		}
 	}
@@ -246,8 +246,8 @@ int main(int argc,char **argv)
 
 	if(useLDRfile)
 	{
-		Reference * initialReferenceInSceneFile = new Reference();
-		Reference * topLevelReferenceInSceneFile = new Reference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
+		Reference* initialReferenceInSceneFile = new Reference();
+		Reference* topLevelReferenceInSceneFile = new Reference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 		if(!parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
 		{//file does not exist
 			cout << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;

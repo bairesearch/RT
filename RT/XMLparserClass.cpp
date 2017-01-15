@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: XMLparserClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -122,11 +122,11 @@ XMLparserTag::~XMLparserTag()
 }
 
 
-XMLparserTag * parseTagDownALevel(XMLparserTag * currentTag, string sectionTagName, bool * result)
+XMLparserTag* parseTagDownALevel(XMLparserTag* currentTag, string sectionTagName, bool* result)
 {
 	*result = true;
 
-	XMLparserTag * updatedCurrentTag;
+	XMLparserTag* updatedCurrentTag;
 
 	if(currentTag->name != sectionTagName)
 	{
@@ -152,7 +152,7 @@ XMLparserTag * parseTagDownALevel(XMLparserTag * currentTag, string sectionTagNa
 
 
 
-bool writeXMLfileInefficient(string xmlFileName, XMLparserTag * firstTagInXMLfile)
+bool writeXMLfileInefficient(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 {
 	bool result = true;
 
@@ -161,7 +161,7 @@ bool writeXMLfileInefficient(string xmlFileName, XMLparserTag * firstTagInXMLfil
 
 	long XMLfileByteArrayCurrentPosition = 0;
 	long XMLFileByteArraySize = XML_FILE_MAX_SIZE;
-	char * XMLfileByteArray = new char[XMLFileByteArraySize];
+	char* XMLfileByteArray = new char[XMLFileByteArraySize];
 
 	if(!addTagLayerToByteArrayInefficient(firstTagInXMLfile, XMLfileByteArray, &XMLfileByteArrayCurrentPosition, 0))
 	{
@@ -179,7 +179,7 @@ bool writeXMLfileInefficient(string xmlFileName, XMLparserTag * firstTagInXMLfil
 }
 
 
-void writeXMLHeader(ofstream * writeFileObject)
+void writeXMLHeader(ofstream* writeFileObject)
 {
 	string headerString = "";
 	headerString = headerString + "<" + STRING_TAG_XML_DEF_FULL + ">";
@@ -190,7 +190,7 @@ void writeXMLHeader(ofstream * writeFileObject)
 }
 
 
-bool writeXMLfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
+bool writeXMLfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 {
 	bool result = true;
 
@@ -215,11 +215,11 @@ bool writeXMLfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
 
 
 
-bool addTagLayerToFileObject(XMLparserTag * firstTagInCurrentLayer, ofstream * writeFileObject, int treeLayer)
+bool addTagLayerToFileObject(XMLparserTag* firstTagInCurrentLayer, ofstream* writeFileObject, int treeLayer)
 {
 	bool result = true;
 
-	XMLparserTag * currentTag = firstTagInCurrentLayer;
+	XMLparserTag* currentTag = firstTagInCurrentLayer;
 
 	while(currentTag->nextTag != NULL)
 	{
@@ -244,7 +244,7 @@ bool addTagLayerToFileObject(XMLparserTag * firstTagInCurrentLayer, ofstream * w
 		writeStringToFileObject(tagOpeningString, writeFileObject);
 		if(tagHasAttributes)
 		{
-			XMLParserAttribute * currentAttribute = currentTag->firstAttribute;
+			XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
@@ -300,7 +300,7 @@ bool addTagLayerToFileObject(XMLparserTag * firstTagInCurrentLayer, ofstream * w
 
 }
 
-void incrementLineAndAddTabsToFileObject(ofstream * writeFileObject, int treeLayer)
+void incrementLineAndAddTabsToFileObject(ofstream* writeFileObject, int treeLayer)
 {
 	writeFileObject->put(CHAR_NEWLINE); //(s.cStr())[i]
 
@@ -311,7 +311,7 @@ void incrementLineAndAddTabsToFileObject(ofstream * writeFileObject, int treeLay
 
 }
 
-void addTabsToFileObject(ofstream * writeFileObject, int treeLayer)
+void addTabsToFileObject(ofstream* writeFileObject, int treeLayer)
 {
 	for(int i=0; i < treeLayer; i++)
 	{
@@ -324,11 +324,11 @@ void addTabsToFileObject(ofstream * writeFileObject, int treeLayer)
 
 
 
-bool addTagLayerToByteArrayInefficient(XMLparserTag * firstTagInCurrentLayer, char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer)
+bool addTagLayerToByteArrayInefficient(XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, int treeLayer)
 {
 	bool result = true;
 
-	XMLparserTag * currentTag = firstTagInCurrentLayer;
+	XMLparserTag* currentTag = firstTagInCurrentLayer;
 
 	while(currentTag->nextTag != NULL)
 	{
@@ -354,7 +354,7 @@ bool addTagLayerToByteArrayInefficient(XMLparserTag * firstTagInCurrentLayer, ch
 		writeStringToByteArrayInefficient(tagOpeningString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 		if(tagHasAttributes)
 		{
-			XMLParserAttribute * currentAttribute = currentTag->firstAttribute;
+			XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
@@ -410,7 +410,7 @@ bool addTagLayerToByteArrayInefficient(XMLparserTag * firstTagInCurrentLayer, ch
 
 }
 
-void incrementLineAndAddTabsToByteArrayInefficient(char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer)
+void incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, int treeLayer)
 {
 	XMLfileByteArray[*XMLfileByteArrayCurrentPosition] = CHAR_NEWLINE;
 	*XMLfileByteArrayCurrentPosition = (*XMLfileByteArrayCurrentPosition + 1);
@@ -423,7 +423,7 @@ void incrementLineAndAddTabsToByteArrayInefficient(char * XMLfileByteArray, long
 
 }
 
-void addTabsToByteArrayInefficient(char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition, int treeLayer)
+void addTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, int treeLayer)
 {
 	for(int i=0; i < treeLayer; i++)
 	{
@@ -434,7 +434,7 @@ void addTabsToByteArrayInefficient(char * XMLfileByteArray, long * XMLfileByteAr
 }
 
 
-void writeStringToByteArrayInefficient(string s, char * XMLfileByteArray, long * XMLfileByteArrayCurrentPosition)
+void writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition)
 {
 	for(int i=0; i < s.size(); i++)
 	{
@@ -448,7 +448,7 @@ void writeStringToByteArrayInefficient(string s, char * XMLfileByteArray, long *
 
 
 
-bool readXMLfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
+bool readXMLfile(string xmlFileName, XMLparserTag* firstTagInXMLfile)
 {
 	bool result = true;
 
@@ -475,7 +475,7 @@ bool readXMLfile(string xmlFileName, XMLparserTag * firstTagInXMLfile)
 }
 
 
-bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject, XMLparserTag * tag, XMLparserTag * subTag, string tagName, int treeLayer)
+bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream* parseFileObject, XMLparserTag* tag, XMLparserTag* subTag, string tagName, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
@@ -520,7 +520,7 @@ bool parseTagValueAssumingExistenceOfSubtabsAndClose(ifstream * parseFileObject,
 }
 
 
-bool parseTagOpen(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer)
+bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
@@ -558,7 +558,7 @@ bool parseTagOpen(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 
 
 //NB this current XML parser accepts <!-- .... --> and <? .... > as a comment, but <! .... > as a comment is not allowed
-bool parseTagComment(ifstream * parseFileObject, char type)
+bool parseTagComment(ifstream* parseFileObject, char type)
 {
 	bool result = true;
 	char currentToken;
@@ -670,7 +670,7 @@ bool parseTagComment(ifstream * parseFileObject, char type)
 
 
 
-bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer)
+bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
@@ -763,7 +763,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 					}
 					else
 					{
-						XMLparserTag * newLowerLevelTag = new XMLparserTag();
+						XMLparserTag* newLowerLevelTag = new XMLparserTag();
 						currentTag->firstLowerLevelTag = newLowerLevelTag;
 						if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, tagName, treeLayer))
 						{//go up a level in the tree
@@ -772,7 +772,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 					}
 
 					//continue parsing at same level
-					XMLparserTag * newTag = new XMLparserTag();
+					XMLparserTag* newTag = new XMLparserTag();
 					currentTag->nextTag = newTag;
 					currentTag = currentTag->nextTag;
 					parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -800,7 +800,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 							//NB currentTag->name has not already been filled
 							currentTag->name = tagName;
 
-							XMLparserTag * newTag = new XMLparserTag();
+							XMLparserTag* newTag = new XMLparserTag();
 							currentTag->nextTag = newTag;
 							currentTag = currentTag->nextTag;
 							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -821,7 +821,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 						#endif
 							currentTag->name = tagName;
 
-							XMLparserTag * newLowerLevelTag = new XMLparserTag();
+							XMLparserTag* newLowerLevelTag = new XMLparserTag();
 							currentTag->firstLowerLevelTag = newLowerLevelTag;
 							if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, tagName, treeLayer))
 							{//go up a level in the tree
@@ -829,7 +829,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 							}
 
 							//continue parsing at same level
-							XMLparserTag * newTag = new XMLparserTag();
+							XMLparserTag* newTag = new XMLparserTag();
 							currentTag->nextTag = newTag;
 							currentTag = currentTag->nextTag;
 							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -852,7 +852,7 @@ bool parseTagName(ifstream * parseFileObject, XMLparserTag * currentTag, string 
 
 }
 
-bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer)
+bool parseTagAttributeName(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
@@ -910,7 +910,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 					}
 					else
 					{
-						XMLparserTag * newLowerLevelTag = new XMLparserTag();
+						XMLparserTag* newLowerLevelTag = new XMLparserTag();
 						currentTag->firstLowerLevelTag = newLowerLevelTag;
 						if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, currentTag->name, treeLayer))
 						{//go up a level in the tree
@@ -919,7 +919,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 					}
 
 					//continue parsing at same level
-					XMLparserTag * newTag = new XMLparserTag();
+					XMLparserTag* newTag = new XMLparserTag();
 					currentTag->nextTag = newTag;
 					currentTag = currentTag->nextTag;
 					parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -937,7 +937,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 						{//subtab+end detected with attributes
 
 							//NB currentTag->name has already been filled in in parseTagName()
-							XMLparserTag * newTag = new XMLparserTag();
+							XMLparserTag* newTag = new XMLparserTag();
 							currentTag->nextTag = newTag;
 							currentTag = currentTag->nextTag;
 							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -955,7 +955,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 						{
 							//NB currentTag->name has already been filled in in parseTagName()
 
-							XMLparserTag * newLowerLevelTag = new XMLparserTag();
+							XMLparserTag* newLowerLevelTag = new XMLparserTag();
 							currentTag->firstLowerLevelTag = newLowerLevelTag;
 							if(!parseTagValueAssumingExistenceOfSubtabsAndClose(parseFileObject, currentTag, currentTag->firstLowerLevelTag, currentTag->name, treeLayer))
 							{//go up a level in the tree
@@ -963,7 +963,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 							}
 
 							//continue parsing at same level
-							XMLparserTag * newTag = new XMLparserTag();
+							XMLparserTag* newTag = new XMLparserTag();
 							currentTag->nextTag = newTag;
 							currentTag = currentTag->nextTag;
 							parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
@@ -1003,7 +1003,7 @@ bool parseTagAttributeName(ifstream * parseFileObject, XMLparserTag * currentTag
 }
 
 
-bool parseTagAttributeValue(ifstream * parseFileObject, XMLparserTag * currentTag, string parentTagName, bool isSubTag, int treeLayer)
+bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag, string parentTagName, bool isSubTag, int treeLayer)
 {
 	bool result = true;
 	char currentToken;
@@ -1061,7 +1061,7 @@ bool parseTagAttributeValue(ifstream * parseFileObject, XMLparserTag * currentTa
 
 
 				currentTag->currentAttribute->value = attributeValue;
-				XMLParserAttribute * newAttribute = new XMLParserAttribute();
+				XMLParserAttribute* newAttribute = new XMLParserAttribute();
 				currentTag->currentAttribute->nextAttribute = newAttribute;
 				currentTag->currentAttribute = currentTag->currentAttribute->nextAttribute;
 				//cout << "DEBUG: rentering parseTagAttributeName after recording an attribute. treeLayer = " << treeLayer << endl;
@@ -1095,7 +1095,7 @@ bool parseTagAttributeValue(ifstream * parseFileObject, XMLparserTag * currentTa
 //Low Level
 ////////////////////////////////////////////////////////////////////////////////
 
-bool isBlankCharTabOrNewLine(ifstream * parseFileObject, char c)
+bool isBlankCharTabOrNewLine(ifstream* parseFileObject, char c)
 {
 	bool result;
 
@@ -1116,7 +1116,7 @@ bool isBlankCharTabOrNewLine(ifstream * parseFileObject, char c)
 	return result;
 }
 
-bool isBlankChar(ifstream * parseFileObject, char c)
+bool isBlankChar(ifstream* parseFileObject, char c)
 {
 	bool result;
 
@@ -1169,10 +1169,10 @@ void throwGenericXMLParseError()
 	cout << "Error: Parsing XML File: Line = " << lineCount << ", Character = " << charCount << endl;
 }
 
-bool getAttribute(XMLparserTag * tag, string attributeName, string * attributeValueFound)
+bool getAttribute(XMLparserTag* tag, string attributeName, string* attributeValueFound)
 {
 	bool result = false;
-	XMLParserAttribute * currentAttribute = tag->firstAttribute;
+	XMLParserAttribute* currentAttribute = tag->firstAttribute;
 	while(currentAttribute->nextAttribute != NULL)
 	{
 		if(currentAttribute->name == attributeName)

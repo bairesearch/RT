@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RToperations.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -75,14 +75,14 @@ double findSmallestValue(double val1, double val2, double val3);
 double findGreatestValue(double val1, double val2, double val3);
 	/*finds the smallest/largest value of 3 given scalars*/
 
-int findPositionOfSmallestValueAdvanced(double *array, unsigned int size);
-int findPositionOfGreatestValueAdvanced(double *array, unsigned int size);
+int findPositionOfSmallestValueAdvanced(double* array, unsigned int size);
+int findPositionOfGreatestValueAdvanced(double* array, unsigned int size);
 
-int findIntersectLineWithTri(vec * pt1, vec * pt2, vec * pt3, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t);
-	int checkSameClockDir(vec * pt1, vec * pt2, vec * pt3, vec * norm);
-int findIntersectLineWithLine(vec * linept1, vec * linept2, vec * povpt1, vec * povpt2, vec * pt_int, vec * norm, double * t);
-	bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec * pt_int);
-int findIntersectLineWithQuad(vec * pt1, vec * pt2, vec * pt3, vec * pt4, vec * linept1, vec * linept2, vec * pt_int, vec * norm, double * t);
+int findIntersectLineWithTri(vec* pt1, vec* pt2, vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
+	int checkSameClockDir(vec* pt1, vec* pt2, vec* pt3, vec* norm);
+int findIntersectLineWithLine(vec* linept1, vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, vec* norm, double* t);
+	bool findIntersectLineWithLine2D(vec* povpt1, vec* povpt2, vec* linept1, vec* linept2, vec* pt_int);
+int findIntersectLineWithQuad(vec* pt1, vec* pt2, vec* pt3, vec* pt4, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
 
 
 
@@ -91,7 +91,7 @@ double findSmallestValue(double val1, double val2);
 double findGreatestValueAdvanced(double val1, double val2);
 double findGreatestValue(double val1, double val2);
 
-int findPositionOfSmallestValueWhichHits(double *array, int *hitsArray, unsigned int size);
-int findPositionOfGreatestValueWhichHits(double *array, int *hitsArray, unsigned int size);
+int findPositionOfSmallestValueWhichHits(double* array, int* hitsArray, unsigned int size);
+int findPositionOfGreatestValueWhichHits(double* array, int* hitsArray, unsigned int size);
 
 #endif

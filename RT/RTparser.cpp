@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTparser.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -37,19 +37,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* TRUE if string  s  is  S1  or  S2  */
+/* TRUE if string  s  is  S1  or  S2 */
 #define string_is(s, S1, S2)	\
 	(((s) != NULL) && ((strcmp(s, (S1)) == 0) || (strcmp(s, (S2)) == 0)))
 
 
 
-static int is_initialised;	/* safety net for invigilant users! */
-static int have_error;		/* have we encountered an error since init? */
+static int is_initialised;	/* safety net for invigilant users!*/
+static int have_error;		/* have we encountered an error since init?*/
 
-static FILE *infile;		/* input file pointer */
+static FILE* infile;		/* input file pointer*/
 
-static char *current_command;	/* name of current command */
-static char *current_option;	/* internal use only! */
+static char* current_command;	/* name of current command*/
+static char* current_option;	/* internal use only!*/
 
 static char com_buf[256];
 
@@ -96,7 +96,7 @@ unknownInfo::~unknownInfo(void)
 
 
 
-static int parse_error(const char *msg)
+static int parse_error(const char* msg)
 {
 	fprintf(stderr, "parse error: %s, current command is %s\n",
 		msg, current_command);
@@ -106,7 +106,7 @@ static int parse_error(const char *msg)
 }
 
 /*Read one byte in hex (between 0 and FF) from the string s*/
-static int read_hex_byte(char *s)
+static int read_hex_byte(char* s)
 {
 	char digit[3];
 	int num;
@@ -119,7 +119,7 @@ static int read_hex_byte(char *s)
 	return num;
 }
 
-/* Read a string of up to 255 non-whitespace chars */
+/* Read a string of up to 255 non-whitespace chars*/
 static char* read_string()
 {
 	static char buf[256];
@@ -134,9 +134,9 @@ static char* read_string()
 	}
 }
 
-void print_colour(colour *c);
+void print_colour(colour* c);
 
-/* convenience function */
+/* convenience function*/
 static void next_option()
 {
 	current_option = read_string();
@@ -145,18 +145,18 @@ static void next_option()
 
 enum{ NUM_COLOURS = 13};
 
-static char *col_name[NUM_COLOURS] =
+static char* col_name[NUM_COLOURS] =
 	{TAL_FILE_COLOUR_BLACK, TAL_FILE_COLOUR_BLUE, TAL_FILE_COLOUR_GREEN, TAL_FILE_COLOUR_CYAN, TAL_FILE_COLOUR_RED, TAL_FILE_COLOUR_MAGENTA, TAL_FILE_COLOUR_BROWN, TAL_FILE_COLOUR_LIGHTGREY, TAL_FILE_COLOUR_DARKGREY, TAL_FILE_COLOUR_YELLOW, TAL_FILE_COLOUR_WHITE, TAL_FILE_COLOUR_ORANGE, TAL_FILE_COLOUR_PURPLE};
 
-static char *col_value[NUM_COLOURS] =
+static char* col_value[NUM_COLOURS] =
 	{TAL_FILE_COLOUR_BLACK_RGB, TAL_FILE_COLOUR_BLUE_RGB, TAL_FILE_COLOUR_GREEN_RGB, TAL_FILE_COLOUR_CYAN_RGB, TAL_FILE_COLOUR_RED_RGB, TAL_FILE_COLOUR_MAGENTA_RGB, TAL_FILE_COLOUR_BROWN_RGB, TAL_FILE_COLOUR_LIGHTGREY_RGB, TAL_FILE_COLOUR_DARKGREY_RGB, TAL_FILE_COLOUR_YELLOW_RGB, TAL_FILE_COLOUR_WHITE_RGB, TAL_FILE_COLOUR_ORANGE_RGB, TAL_FILE_COLOUR_PURPLE_RGB};
 
-/* Read a colour (three values between 0 and 255) from infile */
+/* Read a colour (three values between 0 and 255) from infile*/
 static colour read_colour()
 {
 	colour c;
 	int r, g, b;
-	char *name;
+	char* name;
 	char digit[3];
 	int i;
 
@@ -191,7 +191,7 @@ static colour read_colour()
 	return c;
 }
 
-/* Read a vector (three doubles) from infile */
+/* Read a vector (three doubles) from infile*/
 static vec read_vec()
 {
 	vec v;
@@ -203,7 +203,7 @@ static vec read_vec()
 	return v;
 }
 
-/* Read a double from infile */
+/* Read a double from infile*/
 static double read_double()
 {
 	double d;
@@ -215,7 +215,7 @@ static double read_double()
 	return d;
 }
 
-/* Read a positive integer from infile */
+/* Read a positive integer from infile*/
 static int read_int()
 {
 	int i;
@@ -228,7 +228,7 @@ static int read_int()
 }
 
 
-/* Read commands until a non-comment is found.  Sets current_command. */
+/* Read commands until a non-comment is found.  Sets current_command.*/
 static void next_command()
 {
 	int c;
@@ -241,7 +241,7 @@ static void next_command()
 		 || strcmp(current_command, "#") == 0)) 
 		{
 
-			/* discard rest of line */
+			/* discard rest of line*/
 			while((c = getc(infile)) != EOF)
 			{
 				if(c == '\n')
@@ -252,7 +252,7 @@ static void next_command()
 		} 
 		else 
 		{
-			/* this is a non-comment command */
+			/* this is a non-comment command*/
 			sprintf(com_buf, "%s", current_command);
 			current_command = com_buf;
 			break;
@@ -261,8 +261,8 @@ static void next_command()
 }
 
 
-/* Initialise the parser to take input from the given file */
-void initParser(FILE *f)
+/* Initialise the parser to take input from the given file*/
+void initParser(FILE* f)
 {
 	is_initialised = 1;
 	have_error = 0;
@@ -288,7 +288,7 @@ static decalInfo _decal_info;
 static unknownInfo _unknown_info;
 
 
-/* Read in the viewport initialisation section */
+/* Read in the viewport initialisation section*/
 int readViewport()
 {
 	next_command();
@@ -357,7 +357,7 @@ int readViewport()
 }
 
 
-ViewInfo *get_view_info()
+ViewInfo* get_view_info()
 {
 	return &_view_info;
 }
@@ -387,7 +387,7 @@ int nextLightSource()
 }
 
 
-lightSource *get_light_info()
+lightSource* get_light_info()
 {
 	return &_light_source;
 }
@@ -535,7 +535,7 @@ void read_unknown(void)
 	_unknown_info.params = params;
 }
 
-static void mandatory_option(char *s)
+static void mandatory_option(char* s)
 {
  	next_option();
 	if(strcmp(s, current_option))
@@ -604,21 +604,21 @@ void read_options(pieceType type)
 	}
 }
 
-dimensionsInfo *getDimensionsInfo() 
+dimensionsInfo* getDimensionsInfo() 
 { 
 	return &_dimensions_info; 
 }
-pieceInfo *getPieceInfo() 
+pieceInfo* getPieceInfo() 
 { 
 	return &_piece_info; 
 }
 
 	//not tested
-decalInfo *getDecalInfo() 
+decalInfo* getDecalInfo() 
 { 
 	return &_decal_info; 
 }
-unknownInfo *getUnknownInfo() 
+unknownInfo* getUnknownInfo() 
 { 
 	return &_unknown_info; 
 }

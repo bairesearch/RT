@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDjpeg.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -47,30 +47,30 @@
 #include "LDjpeg.h"
 
 struct jvirt_barray_control {
-	JBLOCKARRAY mem_buffer;	/* => the in-memory buffer */
-	JDIMENSION rows_in_array;	/* total virtual array height */
-	JDIMENSION blocksperrow;	/* width of array (and of memory buffer) */
-	JDIMENSION maxaccess;		/* max rows accessed by access_virt_barray */
-	JDIMENSION rows_in_mem;	/* height of memory buffer */
-	JDIMENSION rowsperchunk;	/* allocation chunk size in mem_buffer */
-	JDIMENSION cur_start_row;	/* first logical row # in the buffer */
-	JDIMENSION first_undef_row;	/* row # of first uninitialized row */
-	boolean pre_zero;		/* pre-zero mode requested? */
-	boolean dirty;		/* do current buffer contents need written? */
-	boolean b_s_open;		/* is backing-store data valid? */
-	jvirt_barray_ptr next;	/* link to next virtual barray control block */
-	backing_store_info b_s_info;	/* System-dependent control info */
+	JBLOCKARRAY mem_buffer;	/* => the in-memory buffer*/
+	JDIMENSION rows_in_array;	/* total virtual array height*/
+	JDIMENSION blocksperrow;	/* width of array (and of memory buffer)*/
+	JDIMENSION maxaccess;		/* max rows accessed by access_virt_barray*/
+	JDIMENSION rows_in_mem;	/* height of memory buffer*/
+	JDIMENSION rowsperchunk;	/* allocation chunk size in mem_buffer*/
+	JDIMENSION cur_start_row;	/* first logical row # in the buffer*/
+	JDIMENSION first_undef_row;	/* row # of first uninitialized row*/
+	boolean pre_zero;		/* pre-zero mode requested?*/
+	boolean dirty;		/* do current buffer contents need written?*/
+	boolean b_s_open;		/* is backing-store data valid?*/
+	jvirt_barray_ptr next;	/* link to next virtual barray control block*/
+	backing_store_info b_s_info;	/* System-dependent control info*/
 };
 
 
 
 struct my_error_mgr {
-	struct jpeg_error_mgr pub;	/* "public" fields */
+	struct jpeg_error_mgr pub;	/* "public" fields*/
 
-	jmp_buf setjmp_buffer;	/* for return to caller */
+	jmp_buf setjmp_buffer;	/* for return to caller*/
 };
 
-typedef struct my_error_mgr * my_error_ptr;
+typedef struct my_error_mgr* my_error_ptr;
 
 /*
  * Here's the routine that will replace the standard error_exit method:
@@ -80,7 +80,7 @@ typedef struct my_error_mgr * my_error_ptr;
 /*
 int main()
 {
-	char * filename = "test3.jpg";
+	char* filename = "test3.jpg";
 	readJPEGfileAndPrintDCTcoefficients (filename, NULL, NULL, NULL, DCTSIZE, DCTSIZE, false);
 }
 */
@@ -88,20 +88,20 @@ int main()
 
 METHODDEF(void) my_error_exit (j_common_ptr cinfo)
 {
-	/* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
+	/* cinfo->err really points to a my_error_mgr struct, so coerce pointer*/
 	my_error_ptr myerr = (my_error_ptr) cinfo->err;
 
-	/* Always display the message. */
-	/* We could postpone this until after returning, if we chose. */
+	/* Always display the message.*/
+	/* We could postpone this until after returning, if we chose.*/
 	(*cinfo->err->output_message) (cinfo);
 
-	/* Return control to the setjmp point */
+	/* Return control to the setjmp point*/
 	longjmp(myerr->setjmp_buffer, 1);
 }
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-string * pointerToDCTTableHTMLOutputString;
-void setPointerToDCTtableHTMLoutputString(string * pointer)
+string* pointerToDCTTableHTMLOutputString;
+void setPointerToDCTtableHTMLoutputString(string* pointer)
 {
 	pointerToDCTTableHTMLOutputString = pointer;
 }
@@ -111,7 +111,7 @@ void setPointerToDCTtableHTMLoutputString(string * pointer)
 //if storeDataInArrays, assume 1 x block and 1 y block! (image size must be <= 8x8)
 int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
 {
-	jvirt_barray_ptr * coefficientarrays;
+	jvirt_barray_ptr* coefficientarrays;
 	int DCTwidth_in_blocks;
 	int DCTheight_in_blocks;
 	int c;
@@ -122,7 +122,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	int i;
 	JBLOCKARRAY blockarray;
 	JBLOCKROW blockrow;
-	JCOEF * block;
+	JCOEF* block;
 
 	//moved here 8 June 2012
 	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
@@ -148,10 +148,10 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	* struct, to avoid dangling-pointer problems.
 	*/
 	struct my_error_mgr jerr;
-	/* More stuff */
-	FILE * infile;		/* source file */
-	JSAMPARRAY buffer;		/* Output row buffer */
-	int row_stride;		/* physical row width in output buffer */
+	/* More stuff*/
+	FILE* infile;		/* source file*/
+	JSAMPARRAY buffer;		/* Output row buffer*/
+	int row_stride;		/* physical row width in output buffer*/
 
 	/* In this example we want to open the input file before doing anything else,
 	* so that the setjmp() error recovery below can assume the file is open.
@@ -164,12 +164,12 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	return 0;
 	}
 
-	/* Step 1: allocate and initialize JPEG decompression object */
+	/* Step 1: allocate and initialize JPEG decompression object*/
 
-	/* We set up the normal JPEG error routines, then override error_exit. */
+	/* We set up the normal JPEG error routines, then override error_exit.*/
 	cinfo.err = jpeg_std_error(&jerr.pub);
 	jerr.pub.error_exit = my_error_exit;
-	/* Establish the setjmp return context for my_error_exit to use. */
+	/* Establish the setjmp return context for my_error_exit to use.*/
 	if (setjmp(jerr.setjmp_buffer)) {
 	/* If we get here, the JPEG code has signaled an error.
 	* We need to clean up the JPEG object, close the input file, and return.
@@ -178,19 +178,19 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	fclose(infile);
 	return 0;
 	}
-	/* Now we can initialize the JPEG decompression object. */
+	/* Now we can initialize the JPEG decompression object.*/
 	jpeg_create_decompress(&cinfo);
 
-	/* Step 2: specify data source (eg, a file) */
+	/* Step 2: specify data source (eg, a file)*/
 
 	jpeg_stdio_src(&cinfo, infile);
 
-	/* Step 3: read file parameters with jpeg_read_header() */
+	/* Step 3: read file parameters with jpeg_read_header()*/
 
 	(void) jpeg_read_header(&cinfo, TRUE);
 	/* We can ignore the return value from jpeg_read_header since
-	*   (a) suspension is not possible with the stdio data source, and
-	*   (b) we passed TRUE to reject a tables-only JPEG file as an error.
+	*  (a) suspension is not possible with the stdio data source, and
+	*  (b) we passed TRUE to reject a tables-only JPEG file as an error.
 	* See libjpeg.txt for more info.
 	*/
 
@@ -202,7 +202,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	if(printOutput)
 	{
 		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
+		*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
 		#else
 		printf("\n\n\nyBlock = %d", yBlock);
 		#endif
@@ -214,7 +214,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>";
+			*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TD>";
 			#else
 			printf("\n\n\nyBlock = %d", yBlock);
 			#endif
@@ -236,7 +236,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 				if(printOutput)
 				{
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE>";
+					*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TABLE>";
 					#else
 					printf("\nxBlock = %d", xBlock);
 					#endif
@@ -249,7 +249,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 					if(printOutput)
 					{
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TR>";
+						*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TR>";
 						#else
 						printf("\n");
 						#endif
@@ -284,7 +284,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 							char dataValueString[100];
 							sprintf(dataValueString, "%d", block[i]);
-							*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
+							*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
 							#else
 							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);
 							printf("%d\t", block[i]);
@@ -295,14 +295,14 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 					if(printOutput)
 					{
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR>";
+						*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TR>";
 						#endif
 					}
 				}
 				if(printOutput)
 				{
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TABLE>";
+					*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TABLE>";
 					#endif
 				}
 
@@ -313,7 +313,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 		if(printOutput)
 		{
 			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TD>";
+			*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TD>";
 			#endif
 		}
 
@@ -323,7 +323,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	if(printOutput)
 	{
 		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
+		*pointerToDCTTableHTMLOutputString =* pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
 		#endif
 	}
 
@@ -345,7 +345,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 
 
 
-	/* This is an important step since it will release a good deal of memory. */
+	/* This is an important step since it will release a good deal of memory.*/
 	jpeg_destroy_decompress(&cinfo);
 
 	/* After finish_decompress, we can close the input file.
@@ -359,7 +359,7 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(string filename
 	* warnings occurred (test whether jerr.pub.num_warnings is nonzero).
 	*/
 
-	/* And we're done! */
+	/* And we're done!*/
 	return true;
 }
 

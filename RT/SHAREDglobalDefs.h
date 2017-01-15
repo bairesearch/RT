@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -91,9 +91,9 @@ using namespace std;
 #define EXE_FOLDER_PATH_MAX_LENGTH (1000)
 #define SHARED_SUPPORT_DEPRECIATED_CODE		//required for older projects
 #ifdef SHARED_SUPPORT_DEPRECIATED_CODE
-extern char * exeFolderCharStar;
-extern char * workingFolderCharStar;
-extern char * tempFolderCharStar;
+extern char* exeFolderCharStar;
+extern char* workingFolderCharStar;
+extern char* tempFolderCharStar;
 #endif
 extern string exeFolder;
 extern string workingFolder;

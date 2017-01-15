@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTraytracer.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given sceneInfo structure and accompanying
  *              perspective information.
@@ -64,29 +64,29 @@ public:
 	double tIn, tOut;		//temporary var.
 	vec p, n;			//temporary vars. p, p1, normal to face
 
-	sceneInfo *nextScene;
+	sceneInfo* nextScene;
 };
 
 
 void rayTrace(ViewInfo* vi, sceneInfo* si, mat* tildaMat, vec* uvn);
 	/*ray traces an object*/
-void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculateCube(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculateSphere(vec* p0, vec* p1, double* tInOut, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculatePrimTri(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculatePrimLine(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
-void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, pieceInfo * pi, vec * norm, advancedMat * finalReverseMatrix, advancedMat * relevantFinalReverseMatrix);
+void calculateCylinder(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculateCube(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculateSphere(vec* p0, vec* p1, double* tInOut, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculatePrimQuad(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculatePrimTri(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculatePrimLine(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
+void calculatePrimLineNEW(vec* p0, vec* p1, double* tInOut, pieceInfo* pi, vec* norm, advancedMat* finalReverseMatrix, advancedMat* relevantFinalReverseMatrix);
 
 #ifndef RT_T_TRANSFORM_TEST
-void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec * norm);
+void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm);
 #else
-void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec * norm, vec* p0, vec* p1);
+void drawPoint(sceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1);
 #endif
 
-void drawPointNoLighting(sceneInfo* si, advancedMat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec * norm);
+void drawPointNoLighting(sceneInfo* si, advancedMat* reverseMatrix, double tIn, double tOut, vec* p0, vec* p1, vec* norm);
 
-void calculatePointUsingTInWorld(double tInWorld, vec * p0, vec * p1, ViewInfo * vi, vec * p, vec * uvn);
+void calculatePointUsingTInWorld(double tInWorld, vec* p0, vec* p1, ViewInfo* vi, vec* p, vec* uvn);
 
 
 #endif

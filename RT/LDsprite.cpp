@@ -24,7 +24,7 @@
 /*******************************************************************************
  *
  * File Name: LDsprite.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
  * Project Version: 3e4a 02-September-2014
  * Description: Contains common sprite commands
@@ -74,13 +74,13 @@ double spriteTextKernelArray[ANSI_NUMBER_CHARACTERS];
 void fillInLDspriteExternVariables()
 {
 	#ifdef USE_CS
-		RulesClass * currentReferenceRulesClass = CSrulesSprite;
+		RulesClass* currentReferenceRulesClass = CSrulesSprite;
 	#elif defined USE_GIA
-		RulesClass * currentReferenceRulesClass = GIArulesSprite;
+		RulesClass* currentReferenceRulesClass = GIArulesSprite;
 	#elif defined USE_LRRC
-		RulesClass * currentReferenceRulesClass = LRRCrulesSprite;		
+		RulesClass* currentReferenceRulesClass = LRRCrulesSprite;		
 	#else
-		RulesClass * currentReferenceRulesClass = ANNrulesSprite;
+		RulesClass* currentReferenceRulesClass = ANNrulesSprite;
 	#endif
 
 	while(currentReferenceRulesClass->next != NULL)
@@ -171,8 +171,8 @@ void fillInLDspriteExternVariables()
 	SPRITE_LINE_SPACING_RATIO = (SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT);
 	SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS*SPRITE_LINE_SPACING_RATIO)*SPRITE_TEXT_SCALE_FACTOR);
 
-	SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS * SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_SCALE_FACTOR);
-	SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_DICE_WIDTH_IN_LDRAW_UNITS * SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_DICE_SCALE_FACTOR);
+	SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS* SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_SCALE_FACTOR);
+	SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_DICE_WIDTH_IN_LDRAW_UNITS* SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_DICE_SCALE_FACTOR);
 
 
 	spriteTextKernelArray[48] = 7.0;
@@ -251,15 +251,15 @@ string LDcreateSpriteReferenceName(int spriteIndex, string sceneFileName)
 	return spriteReferenceFileName;
 }
 
-Reference * LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, Reference * currentReference, vec * position, int * numSpritesAdded, bool addIndividualSprites, int colour, double scale)
+Reference* LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString, Reference* currentReference, vec* position, int* numSpritesAdded, bool addIndividualSprites, int colour, double scale)
 {
 	bool result = true;
 
-	Reference * spriteSubmodelCurrentReference = currentReference;
+	Reference* spriteSubmodelCurrentReference = currentReference;
 
 	vec spriteSubmodelCurrentReferencePosition;
-	spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);		//NB can remove *scale
-	spriteSubmodelCurrentReferencePosition.y = 0.0 + (double)SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS*scale;			//NB can remove *scale
+	spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);		//NB can remove* scale
+	spriteSubmodelCurrentReferencePosition.y = 0.0 + (double)SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS*scale;			//NB can remove* scale
 	spriteSubmodelCurrentReferencePosition.z = 0.0;
 
 
@@ -278,8 +278,8 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString
 		if(spriteTextString[spriteTextIndex] == '\n')
 		{
 			spriteLineNumber++;
-			spriteSubmodelCurrentReferencePosition.y  = spriteSubmodelCurrentReferencePosition.y + (double)SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS*scale;		//NB can remove *scale
-			spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);						//NB can remove *scale
+			spriteSubmodelCurrentReferencePosition.y  = spriteSubmodelCurrentReferencePosition.y + (double)SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS*scale;		//NB can remove* scale
+			spriteSubmodelCurrentReferencePosition.x = 0.0 - ((double)SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS*scale / 2.0);						//NB can remove* scale
 		}
 		else if(((spriteTextString[spriteTextIndex] >= '0') && (spriteTextString[spriteTextIndex] <= '9')) || (spriteTextString[spriteTextIndex] == CHAR_PLUS) || (spriteTextString[spriteTextIndex] == CHAR_MINUS) || (spriteTextString[spriteTextIndex] == CHAR_EQUALS) || (spriteTextString[spriteTextIndex] == CHAR_FULLSTOP))
 		{
@@ -299,10 +299,10 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString
 
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
 
-			Reference * newReference = new Reference();
+			Reference* newReference = new Reference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded = *numSpritesAdded + 1;
+			*numSpritesAdded =* numSpritesAdded + 1;
 		}
 		else if((spriteTextString[spriteTextIndex] >= 'A') && (spriteTextString[spriteTextIndex] <= 'Z'))
 		{
@@ -320,10 +320,10 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
 
-			Reference * newReference = new Reference();
+			Reference* newReference = new Reference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded = *numSpritesAdded + 1;
+			*numSpritesAdded =* numSpritesAdded + 1;
 		}
 		else if(spriteTextString[spriteTextIndex] == ' ')
 		{
@@ -340,11 +340,11 @@ Reference * LDaddBasicTextualSpriteStringToReferenceList(string spriteTextString
 
 
 
-Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReference, string spriteTextString, int spriteColourArray[], Reference * spriteSubmodelInitialReference, int spriteNumberOfLines, int * numSpritesAdded, bool addIndividualSprites)
+Reference* LDaddTextualSpriteInfoStringToReferenceList(Reference* unitReference, string spriteTextString, int spriteColourArray[], Reference* spriteSubmodelInitialReference, int spriteNumberOfLines, int* numSpritesAdded, bool addIndividualSprites)
 {
 	bool result = true;
 
-	Reference * spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
+	Reference* spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
 
 	vec spriteSubmodelCurrentReferencePosition;
 	spriteSubmodelCurrentReferencePosition.x = 0.0 - (SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS / 2);
@@ -393,10 +393,10 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
 
-			Reference * newReference = new Reference();
+			Reference* newReference = new Reference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded = *numSpritesAdded + 1;
+			*numSpritesAdded =* numSpritesAdded + 1;
 		}
 		else if((spriteTextString[spriteTextIndex] >= 'A') && (spriteTextString[spriteTextIndex] <= 'Z'))
 		{
@@ -417,10 +417,10 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing/2;
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
 
-			Reference * newReference = new Reference();
+			Reference* newReference = new Reference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded = *numSpritesAdded + 1;
+			*numSpritesAdded =* numSpritesAdded + 1;
 
 		}
 		else if(((unsigned char)spriteTextString[spriteTextIndex] > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)spriteTextString[spriteTextIndex] <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
@@ -440,10 +440,10 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
 
-			Reference * newReference = new Reference();
+			Reference* newReference = new Reference();
 			spriteSubmodelCurrentReference -> next = newReference;
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference -> next;
-			*numSpritesAdded = *numSpritesAdded + 1;
+			*numSpritesAdded =* numSpritesAdded + 1;
 		}
 		else if(spriteTextString[spriteTextIndex] == ' ')
 		{
@@ -469,7 +469,7 @@ Reference * LDaddTextualSpriteInfoStringToReferenceList(Reference * unitReferenc
 
 
 
-bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, Reference * spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor)
+bool LDaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, Reference* spriteListInitialReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor)
 {
 	//add sprite to spriteByteArray (replace sprite of sprite index, spriteIndex, if it already exists)
 
@@ -521,14 +521,14 @@ bool LDaddSpriteToSpriteReferenceList(vec * spriteSceneCoords, vec * eyeCoords, 
 
 
 /*this is not complete yet - just use an Identity matrix - ie do not rotate the sprite according to the user POV*/
-void LDgenerateSpriteRotationMatrix(vec * spriteSceneCoords, vec * eyeCoords, mat * spriteRotationMatrix)
+void LDgenerateSpriteRotationMatrix(vec* spriteSceneCoords, vec* eyeCoords, mat* spriteRotationMatrix)
 {
 	//TEMP - this is not complete
 	createIdentityMatrix(spriteRotationMatrix);		//CHECK THIS
 }
 
 
-void LDspriteSubmodelFillTextualReference(Reference * spriteSubmodelCurrentReference, vec * spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale)
+void LDspriteSubmodelFillTextualReference(Reference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, char characterToWrite, int spriteColour, double scale)
 {
 	string referenceNameStart = SPRITE_CHARACTER_START;
 	string referenceNameEnd = SPRITE_CHARACTER_EXTENSION;

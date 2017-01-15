@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTppm.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -96,19 +96,19 @@ using namespace std;
 
 typedef struct{
 	int wide, high;
-	unsigned char *pix;
+	unsigned char* pix;
 }pixmap;
 
-void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b);
+void placepointPPM(pixmap* pm, int x, int y, int r, int g, int b);
 
-pixmap *newPixmap(int wide, int high);  /*create a new blank pixmap*/
+pixmap* newPixmap(int wide, int high);  /*create a new blank pixmap*/
 
-pixmap *loadPPM(string fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
+pixmap* loadPPM(string fname);         /*load a ppm file into a pixmap*/	/*if fname is NULL, open standard input*/
 
-void writePPM(string fname, pixmap *pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
+void writePPM(string fname, pixmap* pm); /*write a pixmap to a ppm file*/	 /*if fname is NULL, write to stdout*/
 
-void freePixmap(pixmap *pm);           /*free the memory occupied by a pixmap*/
+void freePixmap(pixmap* pm);           /*free the memory occupied by a pixmap*/
 
-unsigned char* calcPixelAddress(pixmap *pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
+unsigned char* calcPixelAddress(pixmap* pm, int x, int y);	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
 
 #endif

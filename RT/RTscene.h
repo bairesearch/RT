@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTscene.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -88,7 +88,7 @@ typedef struct light lightingInfo;
 struct light
 {
 	lightSource ls;
-	lightingInfo *nextLight;
+	lightingInfo* nextLight;
 };
 */
 
@@ -100,22 +100,22 @@ public:
 	~lightingInfo(void);
 
 	lightSource ls;
-	lightingInfo *nextLight;
+	lightingInfo* nextLight;
 };
 
 
-int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
-	int rayTraceSceneWithoutParse(ViewInfo *vi, sceneInfo *si, lightingInfo *li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap);
+int rayTraceScene(string talFileName, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
+	int rayTraceSceneWithoutParse(ViewInfo* vi, sceneInfo* si, lightingInfo* li, string imageFileName, int outputImageFiles, int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
 
 void setSceneLightingConditions(float lightingAmbientRedNew, float lightingAmbientGreenNew, float lightingAmbientBlueNew, float lightingSpecularNew, float lightingDiffuseNew);
 void setLightingMode(int newLightingMode);
 
 void parseTalFileInitialiseParser(string talFileName);
-ViewInfo * parseTalFileGetViewInfo(ViewInfo *vi);
-lightingInfo * parseTalFileGetLightInfo(lightingInfo *li);
-sceneInfo * parseTalFileGetSceneInfo(sceneInfo *si);
+ViewInfo* parseTalFileGetViewInfo(ViewInfo* vi);
+lightingInfo* parseTalFileGetLightInfo(lightingInfo* li);
+sceneInfo* parseTalFileGetSceneInfo(sceneInfo* si);
 
-void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char * rgbMap, double * depthMap, double * normalMap, double * pointMap, ViewInfo *vi, sceneInfo *si, lightingInfo *li);
+void createImage(int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, ViewInfo* vi, sceneInfo* si, lightingInfo* li);
 
 
 typedef struct advancedColour colourAdvanced;
@@ -124,22 +124,22 @@ struct advancedColour
 	double r, g, b;
 };
 
-void calculateTransparencyColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb);
+void calculateTransparencyColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb);
 
-void calculateUVNScalars(ViewInfo *vi, vec* uvn, int x, int y);
+void calculateUVNScalars(ViewInfo* vi, vec* uvn, int x, int y);
 
-void calculateAmbientDiffuseSpecular(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
+void calculateAmbientDiffuseSpecular(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
 
-void calculateBasicColour(ViewInfo *vi, sceneInfo *si, lightingInfo *li, colour *rgb, double * tAtSurface, vec * nAtSurface, vec * pointAtSurface);
-
-
-bool stripExtension(string filenameWithExtension, string * filenameWithoutExtension);
-bool addExtension(string filenameWithoutExtension, string extension, string * filenameWithExtension);
+void calculateBasicColour(ViewInfo* vi, sceneInfo* si, lightingInfo* li, colour* rgb, double* tAtSurface, vec* nAtSurface, vec* pointAtSurface);
 
 
-void calculatePointMapValue(double xPos, double yPos, double depthVal, vec * xyzWorld, ViewInfo * vi);
+bool stripExtension(string filenameWithExtension, string* filenameWithoutExtension);
+bool addExtension(string filenameWithoutExtension, string extension, string* filenameWithExtension);
 
-void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double * pointMap, double * depthMap,  ViewInfo * vi);
+
+void calculatePointMapValue(double xPos, double yPos, double depthVal, vec* xyzWorld, ViewInfo* vi);
+
+void createPointMapUsingDepthMap(int imageWidth, int imageHeight, double* pointMap, double* depthMap,  ViewInfo* vi);
 
 
 #endif

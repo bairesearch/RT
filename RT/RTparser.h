@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTparser.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -113,7 +113,7 @@ public:
 
 
 
-/* dimensionsInfo */
+/* dimensionsInfo*/
 class dimensionsInfo
 {
 public:
@@ -130,7 +130,7 @@ public:
 
 
 
-/* decalInfo */
+/* decalInfo*/
 class decalInfo
 {
 public:
@@ -140,7 +140,7 @@ public:
 	double width;		// width of the decal in the scene
 	double length;		// length of the decal
 
-	char *filename;		// name of the image to use
+	char* filename;		// name of the image to use
 
 	int haveTransparent;	// nonzero if TRANSPARENTCOLOUR specified
 	colour transparentcolour;	// the colour, if specified
@@ -159,17 +159,17 @@ public:
 	unknownInfo(void);
 	~unknownInfo(void);
 
-	char *commandString;	// the name of the unknown command
+	char* commandString;	// the name of the unknown command
 
 	int param_count;	// how many parameters
-	char **params;		// the parameters
+	char* *params;		// the parameters
 };
 
 
 /*
  * Initialise the parser to take input from the given file.
  */
-void initParser(FILE *f);
+void initParser(FILE* f);
 
 
 
@@ -181,8 +181,8 @@ void initParser(FILE *f);
 int readViewport();
 
 
-/* Return the details of the viewport description. */
-ViewInfo *get_view_info();
+/* Return the details of the viewport description.*/
+ViewInfo* get_view_info();
 
 
 
@@ -194,8 +194,8 @@ ViewInfo *get_view_info();
 int nextLightSource();
 
 
-/* Return the details of the last light source read in. */
-lightSource *get_light_info();
+/* Return the details of the last light source read in.*/
+lightSource* get_light_info();
 
 
 
@@ -214,13 +214,13 @@ int nextSceneCommand();
  * same structure every time, so you will have to copy any data out
  * each time or it will be overwritten!
  */
-pieceInfo *getPieceInfo();
+pieceInfo* getPieceInfo();
 
 /*
  * Return a pointer to a `dimensionsInfo' structure.  Only meaningful if
  * the last scene description command was not a decal or unknown
  */
-dimensionsInfo *getDimensionsInfo();
+dimensionsInfo* getDimensionsInfo();
 
 
 
@@ -229,13 +229,13 @@ dimensionsInfo *getDimensionsInfo();
  * Return a pointer to a `decalInfo' structure.  Only meaningful if
  * the last scene description command was a DECAL.
  */
-decalInfo *getDecalInfo();
+decalInfo* getDecalInfo();
 
 /*
  * Return a pointer to an `unknownInfo' structure.  Only meaningful
  * if the last scene description command was not known to the parser.
  */
-unknownInfo *getUnknownInfo();
+unknownInfo* getUnknownInfo();
 
 void exitParser();
 

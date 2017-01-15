@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDmysql.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -39,9 +39,9 @@
 
 
 
-MYSQL *connection;
+MYSQL* connection;
 MYSQL mysql;
-MYSQL_RES *result;
+MYSQL_RES* result;
 
 
 /*
@@ -61,7 +61,7 @@ void testMySQLserverConnection()
 }
 
 
-bool initiateMySQLserverConnection(char * mysqlServerIpAddressAndPort, char * username, char * password, char * databaseName)
+bool initiateMySQLserverConnection(char* mysqlServerIpAddressAndPort, char* username, char* password, char* databaseName)
 {
 
 	mysql_init(&mysql);
@@ -76,7 +76,7 @@ bool initiateMySQLserverConnection(char * mysqlServerIpAddressAndPort, char * us
 }
 
 //not complete - debug only
-bool performSQLselectQuery(char * sqlCommand, char *sqlCommandOutput)
+bool performSQLselectQuery(char* sqlCommand, char* sqlCommandOutput)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -100,7 +100,7 @@ bool performSQLselectQuery(char * sqlCommand, char *sqlCommandOutput)
 	return true;
 }
 
-bool performSQLselectQuery(char * sqlCommand)
+bool performSQLselectQuery(char* sqlCommand)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -115,7 +115,7 @@ bool performSQLselectQuery(char * sqlCommand)
 	return true;
 }
 
-bool performSQLrealSelectQuery(char * sqlCommand, unsigned long stringLength)
+bool performSQLrealSelectQuery(char* sqlCommand, unsigned long stringLength)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -140,7 +140,7 @@ long performSQLgetNumRowsQuery(string tableName)
 
 	string sqlQueryString = "";
 	sqlQueryString = sqlQueryString + "SELECT ID, COUNT(*) FROM " + tableName;
-	char * sqlCommand = const_cast<char*>(sqlQueryString.c_str());
+	char* sqlCommand = const_cast<char*>(sqlQueryString.c_str());
 
 	query_state = mysql_query(connection, sqlCommand);
 	if (query_state !=0)
@@ -171,7 +171,7 @@ void performSQLdeleteAllRowsQuery(string tableName)
 
 	string sqlQueryString = "";
 	sqlQueryString = sqlQueryString + "DELETE FROM " + tableName;
-	char * sqlCommand = const_cast<char*>(sqlQueryString.c_str());
+	char* sqlCommand = const_cast<char*>(sqlQueryString.c_str());
 
 	query_state = mysql_query(connection, sqlCommand);
 	if (query_state !=0)
@@ -191,7 +191,7 @@ void performSQLdeleteAllRowsQuery(string tableName)
 
 
 
-bool performSQLinsertQuery(char * sqlCommand)
+bool performSQLinsertQuery(char* sqlCommand)
 {
 	int query_state;
 
@@ -206,7 +206,7 @@ bool performSQLinsertQuery(char * sqlCommand)
 }
 
 
-bool performSQLrealInsertQuery(char * sqlCommand, unsigned long stringLength)
+bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength)
 {
 	int query_state;
 

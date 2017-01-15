@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: LDreferenceClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  *
  *******************************************************************************/
 
@@ -358,7 +358,7 @@ Reference::Reference(bool createNewSubmodel)
 	}
 }
 
-void copyReferencePosition(Reference * r, Reference * referenceToCopy)
+void copyReferencePosition(Reference* r, Reference* referenceToCopy)
 {
 	r->relativePosition.x = referenceToCopy->relativePosition.x;
 	r->relativePosition.y = referenceToCopy->relativePosition.y;
@@ -370,7 +370,7 @@ void copyReferencePosition(Reference * r, Reference * referenceToCopy)
 
 
 
-int obtainReferencePlayerID(Reference * referenceInThisPhaseStartSceneFile)
+int obtainReferencePlayerID(Reference* referenceInThisPhaseStartSceneFile)
 {
 	#ifdef GAME_USE_FILENAME_AS_UNIQUE_UNIT_IDS
 	return referenceInThisPhaseStartSceneFile->colour;
@@ -382,7 +382,7 @@ int obtainReferencePlayerID(Reference * referenceInThisPhaseStartSceneFile)
 	return 1;
 }
 
-void convertLdrawColourToDatFileRGB(int dataFileColour, colour * col)
+void convertLdrawColourToDatFileRGB(int dataFileColour, colour* col)
 {
 	unsigned char r;
 	unsigned char g;
