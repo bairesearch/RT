@@ -23,7 +23,7 @@
  * File Name: SHAREDvars.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c8a 13-October-2013
+ * Project Version: 3c9a 06-February-2014
  *
  *******************************************************************************/
 
@@ -95,9 +95,13 @@ bool argumentExists(int argc, char **argv, string keystr);
 float getFloatArgument(int argc, char **argv, string keystr);
 string getStringArgument(int argc, char **argv, string keystr);
 void getStringArrayArgument(int argc, char **argv, string keystr, vector<string> * inputFileNamesVector);
-void changeDirectory(string newDirectory);
-string getCurrentDirectory();
+void changeDirectoryString(string newDirectory);
+string getCurrentDirectoryString();
 
+void getCurrentDirectory(char * folder);
+void setCurrentDirectory(const char * folder);
+void createDirectory(const char * folder);
+bool directoryExists(const char * folder);
 
 void copyColours(colour * colToModify, colour * colToCopy);
 

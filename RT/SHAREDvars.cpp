@@ -23,7 +23,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c8a 13-October-2013
+ * Project Version: 3c9a 06-February-2014
  *
  *******************************************************************************/
 
@@ -43,7 +43,22 @@
 #endif
 #include <math.h>
 #include <vector>
+
+//for file i/o;
+#ifdef LINUX
+	//#include <direct.h>
+	//#include <unistd.h>
+	//#include <stdio.h>
+	//#include <dir.h>
+	#include <sys/stat.h>	//is this needed?
+	#include <sys/types.h>	//is this needed?
+	#include <unistd.h>	//added for Ubuntu 13.1 file i/o
+#else
+	#include <windows.h>
+#endif
+	
 using namespace std;
+
 
 long getTimeAsLong()
 {
@@ -343,7 +358,7 @@ void getStringArrayArgument(int argc, char **argv, string keystr, vector<string>
 	}
 }
 
-void changeDirectory(string newDirectory)
+void changeDirectoryString(string newDirectory)
 {
 	char * newDirectoryCharStar = const_cast<char*>(newDirectory.c_str());
 	#ifdef LINUX
@@ -353,7 +368,7 @@ void changeDirectory(string newDirectory)
 	#endif	
 }
 
-string getCurrentDirectory()
+string getCurrentDirectoryString()
 {
 	char currentFolderCharStar[EXE_FOLDER_PATH_MAX_LENGTH];
 	#ifdef LINUX
@@ -364,3 +379,60 @@ string getCurrentDirectory()
 	string currentFolder = string(currentFolderCharStar);
 	return currentFolder;
 }				
+
+void getCurrentDirectory(char * folder)
+{
+	#ifdef LINUX
+	getcwd(folder, EXE_FOLDER_PATH_MAX_LENGTH);
+	#else
+	::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, folder);
+	#endif
+}
+
+void setCurrentDirectory(const char * folder)
+{
+	#ifdef LINUX
+	chdir(folder);
+	#else
+	::SetCurrentDirectory(folder);
+	#endif
+}
+
+void createDirectory(const char * folder)
+{
+	#ifdef LINUX
+	mkdir(folder, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
+	#else
+	::CreateDirectory(folder, NULL);
+	#endif
+}
+
+bool directoryExists(const char * folder)
+{
+	bool folderExists = false;
+
+	#ifdef LINUX
+	struct stat st;
+	if(stat(folder, &st) == 0)
+	{
+		folderExists = true;
+	}
+	#else
+	DWORD ftyp = GetFileAttributes(folder);
+	if(ftyp != INVALID_FILE_ATTRIBUTES)
+	{
+		if(ftyp & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			folderExists = true;
+		}
+	}
+	/*
+	if((GetFileAttributes(folder)) != INVALID_FILE_ATTRIBUTES)
+	{
+		folderExists = true;
+	}
+	*/
+	#endif
+
+	return folderExists;
+}
