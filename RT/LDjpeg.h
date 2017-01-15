@@ -47,6 +47,6 @@ using namespace std;
 void setpointerToDCTTableHTMLOutputString(string * pointer);
 #endif
 
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYCr[], signed char dctCoeffArrayYCb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
+int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYCr[], signed char dctCoeffArrayYCb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool storeDataInArrays);
 
 
