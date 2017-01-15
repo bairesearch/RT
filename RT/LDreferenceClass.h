@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -40,7 +40,7 @@
 #include "SHAREDglobalDefs.h"
 #include "SHAREDvars.h"
 #ifdef USE_LRRC
-#include "LRRCmodelClass.h"
+//#include "LRRCmodelClass.h"
 #endif
 
 #ifdef USE_RT

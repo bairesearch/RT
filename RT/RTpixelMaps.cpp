@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3e7d 27-January-2015
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 
 
 #ifdef USE_OR
-#include "ORglobalDefs.h"
+//#include "ORglobalDefs.h"
 #else
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH;
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_HEIGHT;
@@ -73,7 +73,7 @@ void fillInRTRulesExternVariables()
 
 void printRGBMap(int imageWidth, int imageHeight, unsigned char* rgbMap)
 {
-	cout << "printRGBMap{}" << endl;
+	cout << "printRGBMap()" << endl;
 
 	//fill luminosityMap
 	for(int y = 0; y < imageHeight; y++)
