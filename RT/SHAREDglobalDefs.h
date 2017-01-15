@@ -6,7 +6,8 @@
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation. The use of
  * intermediary programs or interfaces including file i/o is considered
- * remote network interaction.
+ * remote network interaction. This does not imply such arrangements
+ * do not constitute derivative works.
  *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d3b 24-May-2014
+ * Project Version: 3d4a 8-June-2014
  * Requirements: requires text parsed by RelEx (available in .CFF format <relations>)
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
@@ -51,11 +52,11 @@ using namespace std;
 
 	//current/active tests;
 //#define COMPILE_CF
-//#define COMPILE_NLC
+#define COMPILE_NLC
 //#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
-#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
+//#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
 //#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
 //#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe
