@@ -246,7 +246,8 @@ using namespace std;
 #define STRING_FULLSTOP "."
 #define STRING_COMMA ","
 #define STRING_INVERTEDCOMMAS "\""
-#define STRINGE_APOSTROPHE "'"
+#define STRING_APOSTROPHE "'"
+#define STRING_INVERTED_COMMAS "\""
 
 #define TM_STRUCT_YEAR_OFFSET 1900
 
