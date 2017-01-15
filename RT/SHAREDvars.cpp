@@ -498,28 +498,3 @@ bool textInTextArray(string text, string * textArray, int arraySize, int * array
 	}
 	return result;
 }
-
-bool charInCharArray(char c, char * charArray, int arraySize)
-{
-	bool result = false;
-	for(int i=0; i<arraySize; i++)
-	{
-		if(c == charArray[i])
-		{
-			result = true;
-		}
-	}
-	return result;
-}
-
-
-void replaceAllOccurancesOfString(string * text, string stringToFind, string replacementString)
-{
-	int pos = 0;
-	while((pos = text->find(stringToFind, pos)) != CPP_STRING_FIND_RESULT_FAIL_VALUE)
-	{
-		text->replace(pos, stringToFind.length(), replacementString);
-		pos = pos + replacementString.length();
-	}
-}
-
