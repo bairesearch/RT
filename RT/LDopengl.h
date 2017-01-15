@@ -110,16 +110,16 @@ void setViewPort3Dbasic();
 void setViewPort3Dortho(double left, double right, double bottom, double top, double back, double forward);
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
-void drawPrimitivesReferenceListToOpenGL(LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations);
+void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations);
 	static void draw2DquadsPrimitivesReferenceListToOpenGL();
 	static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 	static void draw3DtrisPrimitivesReferenceListToOpenGL();
 	static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations();
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap);
 	static void draw3DprimitivesReferenceListToOpenGLwithRecursion();
-		static void draw3DprimitivesReferenceListToOpenGLrecurse(LDreference* firstReferenceInLayer);
+		static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firstReferenceInLayer);
 
 static void draw3DprimitivesReferenceListToOpenGL();
 static void draw2DPrimitivesReferenceListToOpenGLSingleLayer();	//not used

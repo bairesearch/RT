@@ -65,7 +65,7 @@ static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
 static bool LD_OPENGL_PRINT_ALGORITHM_PROGRESS = false;
 
 
-LDreference* firstReferenceInPrimitivesReferenceListGlobal;
+const LDreference* firstReferenceInPrimitivesReferenceListGlobal;
 
 
 
@@ -203,7 +203,7 @@ void setViewPort3Dortho(double left, double right, double bottom, double top, do
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -247,7 +247,7 @@ void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(LDreference* firstRefere
 	glutPostRedisplay();
 }
 
-void drawPrimitivesReferenceListToOpenGL(LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
+void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, int dimension, bool usePredefinedODmatrixOperations)
 {
 	if(dimension == OR_METHOD3DOD_DIMENSIONS)
 	{
@@ -298,7 +298,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 	glBegin(GL_QUADS);
 
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -417,7 +417,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 	glBegin(GL_QUADS);
 
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -511,7 +511,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 
 	glBegin(GL_TRIANGLES);
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -599,7 +599,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 	glBegin(GL_TRIANGLES);
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 
@@ -667,7 +667,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
+void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, int height, unsigned char* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -699,9 +699,9 @@ static void draw3DprimitivesReferenceListToOpenGLwithRecursion()
 }
 
 
-static void draw3DprimitivesReferenceListToOpenGLrecurse(LDreference* firstReferenceInLayer)
+static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firstReferenceInLayer)
 {
-	LDreference* currentReference = firstReferenceInLayer;
+	const LDreference* currentReference = firstReferenceInLayer;
 	while(currentReference->next != NULL)
 	{
 
@@ -806,7 +806,7 @@ static void draw3DprimitivesReferenceListToOpenGL()
 	glLoadIdentity();
 	glPushMatrix();
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		float r;
@@ -880,7 +880,7 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 	glPushMatrix();
 
 
-	LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
+	const LDreference* currentReference = firstReferenceInPrimitivesReferenceListGlobal;
 	while(currentReference->next != NULL)
 	{
 		/*
