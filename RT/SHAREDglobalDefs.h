@@ -48,7 +48,8 @@ using namespace std;
 	***********/
 
 	//current/active tests;
-#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
+#define COMPILE_NLP
+//#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
 //#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
@@ -99,6 +100,10 @@ extern char * tempFolderCharStar;
 
 #ifdef COMPILE_GIALRP
 	
+#endif
+#ifdef COMPILE_NLP
+	#define USE_NLP
+	#define USE_GIA
 #endif
 #ifdef COMPILE_GIA_WITH_CE
 	#define USE_GIA
@@ -226,5 +231,6 @@ extern char * tempFolderCharStar;
 #define STRING_SPACE " "
 #define STRING_FULLSTOP "."
 
+#define TM_STRUCT_YEAR_OFFSET 1900
 
 #endif
