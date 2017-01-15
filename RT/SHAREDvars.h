@@ -108,4 +108,7 @@ bool directoryExists(const char * folder);
 
 void copyColours(colour * colToModify, colour * colToCopy);
 
+bool isWhiteSpace(char c);
+string convertStringToLowerCase(string * arbitraryCaseString);
+
 #endif

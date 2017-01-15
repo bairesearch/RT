@@ -439,3 +439,23 @@ bool directoryExists(const char * folder)
 
 	return folderExists;
 }
+
+bool isWhiteSpace(char c)
+{
+	bool result = false;
+	if((c == CHAR_SPACE) || (c == CHAR_TAB))
+	{
+		result = true;
+	}
+	return result;
+}
+
+string convertStringToLowerCase(string * arbitraryCaseString)
+{
+	string lowerCaseString = *arbitraryCaseString;
+	for(int i=0; i<arbitraryCaseString->length(); i++)
+	{
+		lowerCaseString[i] = tolower((*arbitraryCaseString)[i]);
+	}
+	return lowerCaseString;
+}
