@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  *
  *******************************************************************************/
 
@@ -182,7 +182,7 @@ bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 	bool result = true;
 	char currentToken;
 	bool endOfFile = false;
-	
+
 	bool finishedParsingObject = false;
 	while(!finishedParsingObject && result)
 	{
@@ -211,7 +211,7 @@ bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 				cout << "XML_PARSER_ERROR 1: invalid tag opening" << endl;
 				throwGenericXMLParseError();
 				result = false;
-			}			
+			}
 			#else
 			currentTag->value = currentTag->value + currentToken;
 			#ifndef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
@@ -224,7 +224,7 @@ bool parseTagOpen(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 			#endif
 		}
 	}
-	
+
 	return result;
 }
 
@@ -233,9 +233,9 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 	bool result = true;
 	char currentToken;
 	string tagName = "";
-	
+
 	bool firstChar = true;
-	
+
 	bool finishedParsingObject = false;
 	bool endTagFound = false;
 
@@ -257,12 +257,12 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 				}
 				parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
 				finishedParsingObject = true;
-			}	
-			firstChar = false;	
+			}
+			firstChar = false;
 		}
-		
+
 		if(!finishedParsingObject)
-		{	
+		{
 			if(isBlankChar(parseFileObject, currentToken))
 			{
 				if(!endTagFound)
@@ -507,13 +507,13 @@ bool parseTagAttributeValue(ifstream* parseFileObject, XMLparserTag* currentTag,
 bool parseTagValueAssumingExistenceOfSubtagsAndClose(ifstream* parseFileObject, XMLparserTag* currentTag, int treeLayer)
 {
 	bool result = true;
-	
+
 	string tagName = currentTag->name;
-	
+
 	XMLparserTag* newLowerLevelTag = new XMLparserTag();
 	currentTag->firstLowerLevelTag = newLowerLevelTag;
 	XMLparserTag* subTag = newLowerLevelTag;
-							
+
 	char currentToken;
 	string tagValue = "";
 
@@ -674,11 +674,11 @@ bool parseTagComment(ifstream* parseFileObject, char type)
 XMLparserTag* createNewTag(XMLparserTag* currentTag)
 {
 	XMLparserTag* newTag = new XMLparserTag();
-	currentTag->nextTag = newTag;	
+	currentTag->nextTag = newTag;
 	currentTag = currentTag->nextTag;
 	return currentTag;
 }
-					
+
 bool processTagClose(ifstream* parseFileObject, XMLparserTag** currentTag, string parentTagName, bool isSubTag, int treeLayer, bool endTagFound, bool parsingAttributeName, string tagName)
 {
 	bool result = true;

@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  *
  *******************************************************************************/
 
@@ -290,7 +290,7 @@ bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject,
 				//cout << "currentReference->deformationMatrix.c.z = " << currentReference->deformationMatrix.c.z << endl;
 				//cout << "currentReference->relativePosition.z = " << currentReference->relativePosition.z << endl;
 				#endif
-				
+
 				LDreference collapsedReference;
 				copyReferences(&collapsedReference, currentReference, currentReference->type);
 

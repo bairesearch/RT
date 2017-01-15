@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -45,9 +45,9 @@
 //#define COMPILE_GIA		//compileGIA.bat -> OpenGIA.exe
 //#define COMPILE_GIA_WITH_CE
 //#define COMPILE_OR		//compileOR.bat -> OpenOR.exe
-#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
+//#define COMPILE_CS		//compileCS.bat -> OpenCS.exe
 //#define COMPILE_RT		//compileRT.bat -> OpenRT.exe
-//#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
+#define COMPILE_ANN_WITH_RT	//compileANNwithRT.bat -> OpenANN.exe
 //#define COMPILE_ANN		//compileANN.bat -> OpenANN.exe
 //#define COMPILE_LRRC		//compileLRRC.bat -> OpenLRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
@@ -70,7 +70,7 @@
 	OS DEPENDENT VARIABLES;
 	***********/
 
-#define LINUX
+//#define LINUX
 #ifndef LINUX
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
 	//#include <windows.h>	//incompatible with LDjpeg.h (must only include windows.h when need to)

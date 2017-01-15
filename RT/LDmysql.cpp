@@ -26,7 +26,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -161,7 +161,7 @@ long performSQLgetNumRowsQuery(string tableName)
 	if((row = mysql_fetch_row(result)) != NULL)
 	{
 		#ifdef SQL_MYSQL_VERSION_5_7_PLUS
-		numRowsInTable = long(atof(row[0]));	
+		numRowsInTable = long(atof(row[0]));
 		#else
 		numRowsInTable = long(atof(row[1]));
 		#endif
@@ -205,7 +205,7 @@ bool performSQLinsertQuery(char* sqlCommand)
 	#ifdef LD_DEBUG
 	//cout << "performSQLinsertQuery{}: sqlCommand = " << sqlCommand << endl;
 	#endif
-	
+
 	query_state = mysql_query(connection, sqlCommand);
 	if (query_state !=0)
 	{
@@ -220,7 +220,7 @@ bool performSQLinsertQuery(char* sqlCommand)
 bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength)
 {
 	int query_state;
-	
+
 	#ifdef LD_DEBUG
 	/*
 	cout << "performSQLrealInsertQuery{}:";
@@ -231,7 +231,7 @@ bool performSQLrealInsertQuery(char* sqlCommand, unsigned long stringLength)
 	cout << endl;
 	*/
 	#endif
-	
+
 	query_state = mysql_real_query(connection, sqlCommand, stringLength);
 	if (query_state !=0)
 	{
