@@ -86,8 +86,8 @@
  */
 
 typedef struct{
-  int wide, high;
-  unsigned char *pix;
+	int wide, high;
+	unsigned char *pix;
 }pixmap;
 
 void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b);

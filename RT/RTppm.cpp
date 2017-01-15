@@ -38,90 +38,114 @@
 /*new 24bit pixmap*/
 pixmap *newPixmap(int wide, int high)
 {
-  pixmap *pm = (pixmap*)malloc(sizeof(pixmap));
-  if(!pm) return NULL;
+	pixmap *pm = (pixmap*)malloc(sizeof(pixmap));
+	if(!pm) 
+	{
+		return NULL;
+	}
 
-  pm->wide = wide;
-  pm->high = high;
-  pm->pix = (unsigned char*) malloc((long)wide*high*3);
+	pm->wide = wide;
+	pm->high = high;
+	pm->pix = (unsigned char*) malloc((long)wide*high*3);
 
-  if(!pm->pix){
-    free(pm);
-    return NULL;
-  }
-  return pm;
+	if(!pm->pix)
+	{
+		free(pm);
+		return NULL;
+	}
+	return pm;
 }
 
 void freePixmap(pixmap *pm)
 {
-  free(pm->pix);
-  free(pm);
+	free(pm->pix);
+	free(pm);
 }
 
 pixmap *loadPPM(char *fname)
 {
-  FILE *f;
-  int high, wide;
-  pixmap *npm;
-  char c;
+	FILE *f;
+	int high, wide;
+	pixmap *npm;
+	char c;
 
-  if (fname != NULL)
-    f = fopen(fname, "rb");
-  else
-    f = stdin;
-  if(!f){ /*die("couldn't open file\n");*/
-    return NULL;
-  }
+	if(fname != NULL)
+	{
+		f = fopen(fname, "rb");
+	}
+	else
+	{
+		f = stdin;
+	}
+	if(!f)
+	{ /*die("couldn't open file\n");*/
+		return NULL;
+	}
 
-  fscanf(f, "P6 %c", &c);
-  if(c == '#'){ /*Eat the comment.*/
-   while(fgetc(f) != '\n') ;
-  }else{  /*Oops, no comment after all.*/
-    ungetc(c, f);
-  }
+	fscanf(f, "P6 %c", &c);
+	if(c == '#')
+	{ /*Eat the comment.*/
+		while(fgetc(f) != '\n')
+		{
+		}
+	}
+	else
+	{  /*Oops, no comment after all.*/
+		ungetc(c, f);
+	}
 
-  if(fscanf(f, "%i %i 255", &wide, &high) != 2){
-    return NULL;
-  }
+	if(fscanf(f, "%i %i 255", &wide, &high) != 2)
+	{
+		return NULL;
+	}
 
-  fgetc(f);  /*eat the trailing white space*/
+	fgetc(f);  /*eat the trailing white space*/
 
-  npm = newPixmap(wide, high);
+	npm = newPixmap(wide, high);
 
-  if(!npm){
-    freePixmap(npm);
-    fclose(f);
-    return NULL;
-  }
+	if(!npm)
+	{
+		freePixmap(npm);
+		fclose(f);
+		return NULL;
+	}
 
-  if(fread(npm->pix, (long)wide*high*3,1, f) != 1){
-    freePixmap(npm);
-    fclose(f);
-    return NULL;
-  }
+	if(fread(npm->pix, (long)wide*high*3,1, f) != 1)
+	{
+		freePixmap(npm);
+		fclose(f);
+		return NULL;
+	}
 
-  fclose(f);
-  return npm;
+	fclose(f);
+	return npm;
 }
 
 void writePPM(char *fname, pixmap *pm)
 {
-  FILE *f;
+	FILE *f;
 
-  if (fname != NULL)
-    f = fopen(fname, "wb");
-  else
-    f = stdout;
-  if(!f) return;
+	if(fname != NULL)
+	{
+		f = fopen(fname, "wb");
+	}
+	else
+	{
+		f = stdout;
+	}
+	if(!f)
+	{
+		return;
+	}
 
-  fprintf(f, "P6 %i %i 255 ", pm->wide, pm->high);
-  fwrite(pm->pix, (long)pm->wide*pm->high*3, 1, f);
-  fclose(f);
+	fprintf(f, "P6 %i %i 255 ", pm->wide, pm->high);
+	fwrite(pm->pix, (long)pm->wide*pm->high*3, 1, f);
+	fclose(f);
 }
 
 unsigned char* calcPixelAddress(pixmap *pm, int x, int y)
 {
-  return &pm->pix[((long)pm->wide*y + x)*3];
+	return &pm->pix[((long)pm->wide*y + x)*3];
 }
 
 void placepointPPM(pixmap *pm, int x, int y, int r, int g, int b)

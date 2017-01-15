@@ -125,9 +125,13 @@ static char* read_string()
 	static char buf[256];
 
 	if (fscanf(infile, " %255s", buf) == 1)
+	{
 		return buf;
+	}
 	else
+	{
 		return 0;
+	}
 }
 
 void print_colour(colour *c);
@@ -161,8 +165,10 @@ static colour read_colour()
 	next_option();
 	name = current_option;
 
-	for(i = 0; i < NUM_COLOURS; i++){
-		if(strcmp(name, col_name[i]) == 0){
+	for(i = 0; i < NUM_COLOURS; i++)
+	{
+		if(strcmp(name, col_name[i]) == 0)
+		{
 			name = col_value[i];
 			foundColourMatch = 1;
 			break;
@@ -191,7 +197,9 @@ static vec read_vec()
 	vec v;
 
 	if (fscanf(infile, " %lg %lg %lg", &v.x, &v.y, &v.z) != 3)
+	{
 		parse_error("could not read vector");
+	}
 	return v;
 }
 
@@ -201,8 +209,9 @@ static double read_double()
 	double d;
 
 	if (fscanf(infile, " %lg", &d) != 1)
+	{
 		parse_error("could not read double");
-
+	}
 	return d;
 }
 
@@ -212,8 +221,9 @@ static int read_int()
 	int i;
 
 	if (fscanf(infile, " %d", &i) != 1)
+	{
 		parse_error("could not read positive integer");
-
+	}
 	return i;
 }
 
@@ -223,18 +233,25 @@ static void next_command()
 {
 	int c;
 
-	while ((current_command = read_string())) {
-
-		if (current_command != NULL
+	while((current_command = read_string())) 
+	{
+		if(current_command != NULL
 		 && (strcmp(current_command, "COMMENT") == 0
-		 ||  strcmp(current_command, "comment") == 0
-		 ||  strcmp(current_command, "#") == 0)) {
+		 || strcmp(current_command, "comment") == 0
+		 || strcmp(current_command, "#") == 0)) 
+		{
 
 			/* discard rest of line */
-			while ((c = getc(infile)) != EOF)
-				if (c == '\n') break;
-
-		} else {
+			while((c = getc(infile)) != EOF)
+			{
+				if(c == '\n')
+				{
+					break;
+				}
+			}
+		} 
+		else 
+		{
 			/* this is a non-comment command */
 			sprintf(com_buf, "%s", current_command);
 			current_command = com_buf;
@@ -275,42 +292,66 @@ static unknownInfo	_unknown_info;
 int readViewport()
 {
 	next_command();
-	if (string_is(current_command, "IMAGESIZE", "imagesize")) {
+	if(string_is(current_command, "IMAGESIZE", "imagesize")) 
+	{
 		_view_info.imageWidth = read_int();
 		_view_info.imageHeight = read_int();
-	} else
+	} 
+	else
+	{
 		return parse_error("IMAGESIZE expected");
+	}
 
 	next_command();
-	if (string_is(current_command, "EYE", "eye")) {
+	if(string_is(current_command, "EYE", "eye")) 
+	{
 		_view_info.eye = read_vec();
-	} else
+	} 
+	else
+	{
 		return parse_error("EYE expected");
+	}
 
 	next_command();
-	if (string_is(current_command, "VIEWAT", "viewAt")) {
+	if(string_is(current_command, "VIEWAT", "viewAt")) 
+	{
 		_view_info.viewAt = read_vec();
-	} else
+	} 
+	else
+	{
 		return parse_error("VIEWAT expected");
+	}
 
 	next_command();
-	if (string_is(current_command, "VIEWUP", "viewUp")) {
+	if(string_is(current_command, "VIEWUP", "viewUp")) 
+	{
 		_view_info.viewUp = read_vec();
-	} else
+	} 
+	else
+	{
 		return parse_error("VIEWUP expected");
+	}
 
 	next_command();
-	if (string_is(current_command, "FOCAL", "focal")) {
+	if(string_is(current_command, "FOCAL", "focal")) 
+	{
 		_view_info.focalLength = read_double();
-	} else
+	} 
+	else
+	{
 		return parse_error("FOCAL expected");
+	}
 
 	next_command();
-	if (string_is(current_command, "VIEWSIZE", "viewsize")) {
+	if(string_is(current_command, "VIEWSIZE", "viewsize")) 
+	{
 		_view_info.viewWidth = read_double();
 		_view_info.viewHeight = read_double();
-	} else
+	} 
+	else
+	{
 		return parse_error("VIEWSIZE expected");
+	}
 
 	return 1;
 }
@@ -326,12 +367,18 @@ ViewInfo *get_view_info()
 int nextLightSource()
 {
 	next_command();
-	if (string_is(current_command, "POINTSOURCE", "pointsource"))
+	if(string_is(current_command, "POINTSOURCE", "pointsource"))
+	{
 		_light_source.type = POINTSOURCE;
-	else if (string_is(current_command, "DIRECTIONAL", "directional"))
+	}
+	else if(string_is(current_command, "DIRECTIONAL", "directional"))
+	{	
 		_light_source.type = DIRECTIONAL;
+	}
 	else
+	{
 		return 0;
+	}
 
 	_light_source.pos = read_vec();
 	_light_source.col = read_colour();
@@ -355,33 +402,58 @@ static void read_options(pieceType type);
 
 int nextSceneCommand()
 {
-	if (current_command == NULL)
+	if(current_command == NULL)
+	{
 		return 0;
+	}
 	if (string_is(current_command, TAL_FILE_TYPE_BRICK, "brick"))
+	{	
 		_piece_info.type = BRICK;
-	else if (string_is(current_command, TAL_FILE_TYPE_PLATE, "plate"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_PLATE, "plate")) 
+	{
 		_piece_info.type = PLATE;
-	else if (string_is(current_command, TAL_FILE_TYPE_TILE, "tile"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_TILE, "tile"))
+	{
 		_piece_info.type = TILE;
-	else if (string_is(current_command, TAL_FILE_TYPE_DECAL, "decal"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_DECAL, "decal"))
+	{
 		_piece_info.type = DECAL;
-	else if (string_is(current_command, TAL_FILE_TYPE_BASEPLATE, "baseplate"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_BASEPLATE, "baseplate"))
+	{
 		_piece_info.type = BASEPLATE;
-	else if (string_is(current_command, TAL_FILE_TYPE_PRIM_QUAD, "prim_quad"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_PRIM_QUAD, "prim_quad"))
+	{
 		_piece_info.type = PRIM_QUAD;
-	else if (string_is(current_command, TAL_FILE_TYPE_PRIM_TRI, "prim_tri"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_PRIM_TRI, "prim_tri"))
+	{
 		_piece_info.type = PRIM_TRI;
-	else if (string_is(current_command, TAL_FILE_TYPE_SPHERE, "sphere"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_SPHERE, "sphere"))
+	{
 		_piece_info.type = SPHERE;
-	else if (string_is(current_command, TAL_FILE_TYPE_CYLINDER, "cylinder"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_CYLINDER, "cylinder"))
+	{
 		_piece_info.type = CYLINDER;
-	else if (string_is(current_command, TAL_FILE_TYPE_RECT_PRISM, "rect_prism"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_RECT_PRISM, "rect_prism"))
+	{
 		_piece_info.type = RECT_PRISM;
-	else if (string_is(current_command, TAL_FILE_TYPE_PRIM_LINE, "prim_line"))
+	}
+	else if(string_is(current_command, TAL_FILE_TYPE_PRIM_LINE, "prim_line"))
+	{
 		_piece_info.type = PRIM_LINE;
+	}
 	else
+	{
 		_piece_info.type = UNKNOWN;
-
+	}
 	_piece_info.col = read_colour();
 
 	if(_piece_info.type == PRIM_QUAD)
@@ -430,7 +502,10 @@ int nextSceneCommand()
 		read_options(_piece_info.type);
 	}
 
-	while(!string_is(current_option, "END", "end")) next_option();
+	while(!string_is(current_option, "END", "end")) 
+	{
+		next_option();
+	}
 	next_command();
 
 	return 1;
@@ -448,7 +523,8 @@ void read_unknown(void)
 	next_option();
 	param_count = 0;
 
-	while(!string_is(current_option, "END", "end")){
+	while(!string_is(current_option, "END", "end"))
+	{
 		params = (char**)realloc(params, (param_count+1)*sizeof(char*));
 		params[param_count] = strdup(current_option);
 		param_count++;
@@ -463,7 +539,9 @@ static void mandatory_option(char *s)
 {
  	next_option();
 	if(strcmp(s, current_option))
+	{
 		parse_error("mandatory option missing");
+	}
 }
 
 
@@ -503,8 +581,6 @@ void read_options(pieceType type)
 			_dimensions_info.transparency = read_double(); /*if translucent, read the transparency value*/
 			//next_option();
 		}
-
-
 	}
 	else if(type == DECAL)	//not tested
 	{
@@ -516,10 +592,9 @@ void read_options(pieceType type)
 		next_option();
 		_decal_info.filename = strdup(current_option);
 		next_option();
-		_decal_info.haveTransparent =
-			(strcmp("translucent_colour",
-				current_option) == 0);
-		if(_decal_info.haveTransparent){
+		_decal_info.haveTransparent = (strcmp("translucent_colour", current_option) == 0);
+		if(_decal_info.haveTransparent)
+		{
 			_decal_info.transparentcolour = read_colour();
 		}
 	}
@@ -529,9 +604,21 @@ void read_options(pieceType type)
 	}
 }
 
-dimensionsInfo *getDimensionsInfo() { return &_dimensions_info; }
-pieceInfo *getPieceInfo() { return &_piece_info; }
+dimensionsInfo *getDimensionsInfo() 
+{ 
+	return &_dimensions_info; 
+}
+pieceInfo *getPieceInfo() 
+{ 
+	return &_piece_info; 
+}
 
 	//not tested
-decalInfo *getDecalInfo() { return &_decal_info; }
-unknownInfo *getUnknownInfo() { return &_unknown_info; }
+decalInfo *getDecalInfo() 
+{ 
+	return &_decal_info; 
+}
+unknownInfo *getUnknownInfo() 
+{ 
+	return &_unknown_info; 
+}
