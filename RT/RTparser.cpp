@@ -26,7 +26,7 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i19a 15-December-2016
+ * Project Version: 3i19b 15-December-2016
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
