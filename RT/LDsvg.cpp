@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c3h 19-November-2012
+ * Project Version: 3c4b 01-December-2012
  *
  *******************************************************************************/
 
@@ -86,9 +86,9 @@ void writeSVGheader(ofstream * writeFileObject, int viewBoxMinX, int viewBoxMaxX
 	sprintf(viewBoxMinYstring, "%d", viewBoxMinY);
 	sprintf(viewBoxMaxYstring, "%d", viewBoxMaxY);
 	
-	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+	//string headerString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version=\"1.1\" viewBox=\"-100 -100 1920 1400\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
 	string headerString = "";
-	headerString = headerString + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg version=\"1.1\" width=\"" + widthString + "\" height=\"" + heightString + "\" viewBox=\"" + viewBoxMinXstring + " " + viewBoxMinYstring + " " + viewBoxMaxXstring + " " + viewBoxMaxYstring + "\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+	headerString = headerString + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" version=\"1.1\" width=\"" + widthString + "\" height=\"" + heightString + "\" viewBox=\"" + viewBoxMinXstring + " " + viewBoxMinYstring + " " + viewBoxMaxXstring + " " + viewBoxMaxYstring + "\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";	//NB xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" is required to support inkscape connectors
 	for(int i = 0; i<headerString.length(); i++)
 	{
 		writeFileObject->put(headerString[i]);
@@ -505,5 +505,120 @@ void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSi
 	//string svgText = "<g style=\"font-family:Arial;font-size:" + fontSizeString + "px;font-weight:400\"><g style=\"stroke:none;fill:rgb(" + rString + "," + gString + "," + bString + ")\"><text><tspan x=\"" + xPosString + "\" y=\"" + yPosString + "\">" + text + "</tspan></text></g></g>";
 }
 
+XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID)
+{
+	XMLparserTag * nextTagOnOriginalLayer = NULL;
+	
+	XMLparserTag * currentTagInBlock = *currentTag;
+	currentTagInBlock->name = "g";
+	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "id";
+	currentAttributeInBlock->value = *groupID;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	
+	currentTagInBlock->firstLowerLevelTag = new XMLparserTag();
+	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+		
+	(*currentTag)->nextTag = new XMLparserTag();
+	nextTagOnOriginalLayer = (*currentTag)->nextTag;
+	
+	(*currentTag) = (*currentTag)->firstLowerLevelTag;	//set current tag to first tag in group
+	
+	return nextTagOnOriginalLayer;
+}
 
+void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID)
+{
+	colour colourrgb;
+ 	convertLdrawColourToDatFileRGB(col, &colourrgb);
+
+	string xPosString;
+	string yPosString;
+	string xPos2String;
+	string yPos2String;
+	string rString;
+	string gString;
+	string bString;
+	char xPosStringcharstar[10];
+	char yPosStringcharstar[10];
+	char xPos2Stringcharstar[10];
+	char yPos2Stringcharstar[10];
+	sprintf(xPosStringcharstar, "%d", (int)pos1->x);	//%d
+	sprintf(yPosStringcharstar, "%d", (int)pos1->y);
+	sprintf(xPos2Stringcharstar, "%d", (int)pos2->x);
+	sprintf(yPos2Stringcharstar, "%d", (int)pos2->y);
+	string hexString = convertColourRGBtoHexString(&colourrgb);
+	xPosString = xPosStringcharstar;
+	yPosString = yPosStringcharstar;
+	xPos2String = xPos2Stringcharstar;
+	yPos2String = yPos2Stringcharstar;
+
+	XMLparserTag * currentTagInBlock = *currentTag;
+	currentTagInBlock->name = "path";
+	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
+	currentAttributeInBlock->name = "style";
+	string pathStyleValue = "";
+	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:1px;stroke-opacity:1";
+	currentAttributeInBlock->value = pathStyleValue;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+
+	currentAttributeInBlock->name = "d";
+	string pathDtagValue = "";
+	pathDtagValue = pathDtagValue + "M " + xPosString + "," + yPosString + " " + xPos2String + "," + yPos2String;
+	currentAttributeInBlock->value = pathDtagValue;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	
+	currentAttributeInBlock->name = "id";
+	string pathIdValue = "";
+	pathIdValue = pathIdValue + "path" + *startGroupID + *endGroupID;	//pathIdValue = pathIdValue + "path-" + *startGroupID + "-" + *endGroupID;	
+	currentAttributeInBlock->value = pathIdValue;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	
+	currentAttributeInBlock->name = "inkscape:connector-type";
+	currentAttributeInBlock->value = "polyline";
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	
+	currentAttributeInBlock->name = "inkscape:connection-start";
+	string pathConnectionStartValue = "";
+	pathConnectionStartValue = pathConnectionStartValue + "#" + *startGroupID;
+	currentAttributeInBlock->value = pathConnectionStartValue;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	
+	currentAttributeInBlock->name = "inkscape:connection-end";
+	string pathConnectionEndValue = "";
+	pathConnectionEndValue = pathConnectionEndValue + "#" + *endGroupID;
+	currentAttributeInBlock->value = pathConnectionEndValue;
+	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
+	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+	
+	(*currentTag)->nextTag = new XMLparserTag();
+	(*currentTag) = (*currentTag)->nextTag;
+}
+
+string convertColourRGBtoHexString(colour * colourRGB)
+{
+	string hexString = "";
+	
+	char rHex[255];   
+	sprintf(rHex, "%.2X", colourRGB->r);
+	hexString = hexString + rHex;
+
+	char gHex[255];   
+	sprintf(gHex, "%.2X", colourRGB->g);
+	hexString = hexString + gHex;
+
+	char bHex[255];   
+	sprintf(bHex, "%.2X", colourRGB->b);
+	hexString = hexString + bHex;
+	
+	//cout << "hexString = " << hexString << endl;
+	
+	return hexString;
+
+}
 

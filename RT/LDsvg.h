@@ -23,7 +23,7 @@
  * File Name: LDsvg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c3h 19-November-2012
+ * Project Version: 3c4b 01-December-2012
  *
  *******************************************************************************/
 
@@ -45,6 +45,9 @@ void writeSVGline(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col);
 void writeSVGbox(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse);
 void writeSVGtext(XMLparserTag ** currentTag, string text, vec * pos, int fontSize, int col);
 void writeSVGboxTransparent(XMLparserTag ** currentTag, vec * pos, double width, double height, int col, double boxOutlineWidth, bool useEllipse, double fillOpacity);
+XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID);
+void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID);
+string convertColourRGBtoHexString(colour * colourRGB);
 
 #endif
 
