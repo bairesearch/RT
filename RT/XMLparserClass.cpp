@@ -215,7 +215,7 @@ bool parseTagName(ifstream* parseFileObject, XMLparserTag* currentTag, string pa
 {
 	bool result = true;
 	char currentToken;
-	string tagName="";
+	string tagName = "";
 
 	bool finishedParsingObject = false;
 	bool endTagFound = false;
