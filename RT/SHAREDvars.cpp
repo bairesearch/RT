@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f5c 21-July-2015
+ * Project Version: 3f5d 21-July-2015
  *
  *******************************************************************************/
 
@@ -441,7 +441,7 @@ bool convertStringToBool(string number)
 	{
 		boolean = false;
 	}
-	if(number == "1")
+	else if(number == "1")
 	{
 		boolean = true;	//boolean = (bool)convertStringToInt(number);
 	}
