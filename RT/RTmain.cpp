@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: RTmain.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3i15a 11-August-2016
+ * Project Version: 3i15b 11-August-2016
  *
  *******************************************************************************/
 
@@ -128,81 +128,121 @@ int main(int argc,char* *argv)
 
 	bool useLDRfile = false;
 
-	if ((argumentExists(argc,argv,"-iotal")) || (argumentExists(argc,argv,"-ildr")))
+	if((argumentExists(argc,argv,"-iotal")) || (argumentExists(argc,argv,"-ildr")))
 	{
-		if (argumentExists(argc,argv,"-iotal"))
+		if(argumentExists(argc,argv,"-iotal"))
 		topLevelSceneFileNameCollapsedForRayTracing=getStringArgument(argc,argv,"-iotal");
 
-		if (argumentExists(argc,argv,"-ildr"))
+		if(argumentExists(argc,argv,"-ildr"))
 		{
 			topLevelSceneFileName=getStringArgument(argc,argv,"-ildr");
 			useLDRfile = true;
 		}
 
-		if (argumentExists(argc,argv,"-lighting"))
-		lightingMode=getFloatArgument(argc,argv,"-lighting");
+		if(argumentExists(argc,argv,"-lighting"))
+		{
+			lightingMode=getFloatArgument(argc,argv,"-lighting");
+		}
 
-		if (argumentExists(argc,argv,"-oppm"))
-		imageFileName=getStringArgument(argc,argv,"-oppm");
+		if(argumentExists(argc,argv,"-oppm"))
+		{
+			imageFileName=getStringArgument(argc,argv,"-oppm");
+		}
 
-		if (argumentExists(argc,argv,"-width"))
-		viewinfo.imageWidth=getFloatArgument(argc,argv,"-width");
+		if(argumentExists(argc,argv,"-width"))
+		{
+			viewinfo.imageWidth=getFloatArgument(argc,argv,"-width");
+		}
 
-		if (argumentExists(argc,argv,"-height"))
-		viewinfo.imageHeight=getFloatArgument(argc,argv,"-height");
+		if(argumentExists(argc,argv,"-height"))
+		{
+			viewinfo.imageHeight=getFloatArgument(argc,argv,"-height");
+		}
 
-		if (argumentExists(argc,argv,"-vieweyex"))
-		viewinfo.eye.x=getFloatArgument(argc,argv,"-vieweyex");
+		if(argumentExists(argc,argv,"-vieweyex"))
+		{
+			viewinfo.eye.x=getFloatArgument(argc,argv,"-vieweyex");
+		}
 
-		if (argumentExists(argc,argv,"-vieweyey"))
-		viewinfo.eye.y=getFloatArgument(argc,argv,"-vieweyey");
+		if(argumentExists(argc,argv,"-vieweyey"))
+		{
+			viewinfo.eye.y=getFloatArgument(argc,argv,"-vieweyey");
+		}
 
-		if (argumentExists(argc,argv,"-vieweyez"))
-		viewinfo.eye.z=getFloatArgument(argc,argv,"-vieweyez");
+		if(argumentExists(argc,argv,"-vieweyez"))
+		{
+			viewinfo.eye.z=getFloatArgument(argc,argv,"-vieweyez");
+		}
 
-		if (argumentExists(argc,argv,"-viewatx"))
-		viewinfo.viewAt.x=getFloatArgument(argc,argv,"-viewatx");
+		if(argumentExists(argc,argv,"-viewatx"))
+		{
+			viewinfo.viewAt.x=getFloatArgument(argc,argv,"-viewatx");
+		}
 
-		if (argumentExists(argc,argv,"-viewaty"))
-		viewinfo.viewAt.y=getFloatArgument(argc,argv,"-viewaty");
+		if(argumentExists(argc,argv,"-viewaty"))
+		{
+			viewinfo.viewAt.y=getFloatArgument(argc,argv,"-viewaty");
+		}
 
-		if (argumentExists(argc,argv,"-viewatz"))
-		viewinfo.viewAt.z=getFloatArgument(argc,argv,"-viewatz");
+		if(argumentExists(argc,argv,"-viewatz"))
+		{
+			viewinfo.viewAt.z=getFloatArgument(argc,argv,"-viewatz");
+		}
 
-		if (argumentExists(argc,argv,"-viewupx"))
-		viewinfo.viewUp.x=getFloatArgument(argc,argv,"-viewupx");
+		if(argumentExists(argc,argv,"-viewupx"))
+		{
+			viewinfo.viewUp.x=getFloatArgument(argc,argv,"-viewupx");
+		}
 
-		if (argumentExists(argc,argv,"-viewupy"))
-		viewinfo.viewUp.y=getFloatArgument(argc,argv,"-viewupy");
+		if(argumentExists(argc,argv,"-viewupy"))
+		{
+			viewinfo.viewUp.y=getFloatArgument(argc,argv,"-viewupy");
+		}
 
-		if (argumentExists(argc,argv,"-viewupz"))
-		viewinfo.viewUp.z=getFloatArgument(argc,argv,"-viewupz");
+		if(argumentExists(argc,argv,"-viewupz"))
+		{
+			viewinfo.viewUp.z=getFloatArgument(argc,argv,"-viewupz");
+		}
 
-		if (argumentExists(argc,argv,"-viewfocal"))
-		viewinfo.focalLength=getFloatArgument(argc,argv,"-viewfocal");
+		if(argumentExists(argc,argv,"-viewfocal"))
+		{
+			viewinfo.focalLength=getFloatArgument(argc,argv,"-viewfocal");
+		}
 
-		if (argumentExists(argc,argv,"-viewsizew"))
-		viewinfo.viewWidth=getFloatArgument(argc,argv,"-viewsizew");
+		if(argumentExists(argc,argv,"-viewsizew"))
+		{
+			viewinfo.viewWidth=getFloatArgument(argc,argv,"-viewsizew");
+		}
 
-		if (argumentExists(argc,argv,"-viewsizeh"))
-		viewinfo.viewHeight=getFloatArgument(argc,argv,"-viewsizeh");
+		if(argumentExists(argc,argv,"-viewsizeh"))
+		{
+			viewinfo.viewHeight=getFloatArgument(argc,argv,"-viewsizeh");
+		}
 
-		if (argumentExists(argc,argv,"-lightx"))
-		lightSourcePosition.x=getFloatArgument(argc,argv,"-lightx");
+		if(argumentExists(argc,argv,"-lightx"))
+		{
+			lightSourcePosition.x=getFloatArgument(argc,argv,"-lightx");
+		}
 
-		if (argumentExists(argc,argv,"-lighty"))
-		lightSourcePosition.y=getFloatArgument(argc,argv,"-lighty");
+		if(argumentExists(argc,argv,"-lighty"))
+		{
+			lightSourcePosition.y=getFloatArgument(argc,argv,"-lighty");
+		}
 
-		if (argumentExists(argc,argv,"-lightz"))
-		lightSourcePosition.z=getFloatArgument(argc,argv,"-lightz");
+		if(argumentExists(argc,argv,"-lightz"))
+		{
+			lightSourcePosition.z=getFloatArgument(argc,argv,"-lightz");
+		}
 
-		if (argumentExists(argc,argv,"-lightcol"))
-		lightSourceColour=getStringArgument(argc,argv,"-lightcol");
+		if(argumentExists(argc,argv,"-lightcol"))
+		{
+			lightSourceColour=getStringArgument(argc,argv,"-lightcol");
+		}
 
 		string currentFolder = "";
 		currentFolder = getCurrentDirectory();
 
-		if (argumentExists(argc,argv,"-workingfolder"))
+		if(argumentExists(argc,argv,"-workingfolder"))
 		{
 			workingFolder=getStringArgument(argc,argv,"-workingfolder");
 		}
@@ -210,7 +250,7 @@ int main(int argc,char* *argv)
 		{
 			workingFolder = currentFolder;
 		}
-		if (argumentExists(argc,argv,"-exefolder"))
+		if(argumentExists(argc,argv,"-exefolder"))
 		{
 			exeFolder=getStringArgument(argc,argv,"-exefolder");
 		}
@@ -218,7 +258,7 @@ int main(int argc,char* *argv)
 		{
 			exeFolder = currentFolder;
 		}
-		if (argumentExists(argc,argv,"-tempfolder"))
+		if(argumentExists(argc,argv,"-tempfolder"))
 		{
 			tempFolder=getStringArgument(argc,argv,"-tempfolder");
 		}
@@ -229,9 +269,9 @@ int main(int argc,char* *argv)
 
 		setCurrentDirectory(workingFolder);
 
-		if (argumentExists(argc,argv,"-version"))
+		if(argumentExists(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe - Project Version: 3i15a 11-August-2016" << endl;
+			cout << "OpenRT.exe - Project Version: 3i15b 11-August-2016" << endl;
 			exit(1);
 		}
 	}

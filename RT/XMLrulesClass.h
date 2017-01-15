@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: XMLrulesClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3h15a 29-February-2016
+ * Project Version: 3i15b 11-August-2016
  *
  *******************************************************************************/
 
