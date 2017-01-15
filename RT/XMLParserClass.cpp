@@ -77,6 +77,7 @@ XMLParserAttribute::XMLParserAttribute(void)
 
 XMLParserAttribute::~XMLParserAttribute()
 {
+	//cout << "delete attribute = " << name << ": " << value << endl;
 
 	if(nextAttribute != NULL)
 	{
@@ -103,12 +104,16 @@ XMLParserTag::XMLParserTag(void)
 XMLParserTag::~XMLParserTag()
 {
 
+	//cout << "delete tag = " << name << ": " << value << endl;
+	//currentAttribute = NULL;	
 	if(firstAttribute != NULL)
 	{
-		delete firstAttribute;
-	}
+		//cout << "firstAttribute->name = " << firstAttribute->name << endl;
+		delete firstAttribute;	//this causes crash for some reason... (coincidental memory allocation?)
+	}	
 	if(firstLowerLevelTag != NULL)
 	{
+		//cout << "firstLowerLevelTag->name = " << firstLowerLevelTag->name << endl;
 		delete firstLowerLevelTag;
 	}
 	if(nextTag != NULL)
