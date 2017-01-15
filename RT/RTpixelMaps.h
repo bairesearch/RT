@@ -3,7 +3,7 @@
  * File Name: RTpixelMaps.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a7a 06-June-2012
+ * Project Version: 3a7b 09-June-2012
  *
  *******************************************************************************/
 
@@ -120,6 +120,9 @@ void generatePixmapFromLuminosityMap(char * imageFileName, int imageWidth, int i
 void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imageHeight, bool * booleanMap);
 void generatePixmapFromEnumIntMap(char * filename, int imageWidth, int imageHeight, int * intMap);
 void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap);
+	void normaliseRGBMapBasedOnAverageLuminosity(unsigned char * normalisedRgbMap, int imageWidth, int imageHeight, unsigned char * rgbMap);
+		double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char * rgbMap);
+void generateBooleanDiffMapFromRGBMaps(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2);
 
 void generatePixmapFromDepthMap24Bit(char * imageFileName, int imageWidth, int imageHeight, double * depthMap, double depthScale, double depthOffset);
 void calculate24BitDepthPixmapPixelFromDepth(double depth, double depthScale, double depthOffset, colour * depthMap24BitPixelValue);
@@ -127,6 +130,8 @@ void calculate24BitDepthPixmapPixelFromDepth(double depth, double depthScale, do
 
 
 void writeImage(char * imageFileName, pixmap * pm);
+void readImage(char * imageFileName, unsigned char * rgbMap);	//added 7 June 2012
+void readImage(string * imageFileName, unsigned char * rgbMap);	//added 7 June 2012
 
 //methods taken from ORoperations.cpp;
 void createRGBMapFromPixmapImage(pixmap * objectImage, unsigned char * rgbMap);

@@ -3,7 +3,7 @@
  * File Name: LDjpeg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a7a 06-June-2012
+ * Project Version: 3a7b 09-June-2012
  *
  *******************************************************************************/
 
@@ -86,7 +86,7 @@ void setpointerToDCTTableHTMLOutputString(string * pointer)
 #endif
 
 //if storeDataInArrays, assume 1 x block and 1 y block! (image size must be <= 8x8)
-int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYCr[], signed char dctCoeffArrayYCb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool storeDataInArrays)
+int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(char * filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYCr[], signed char dctCoeffArrayYCb[], int dctCoeffArrayHeight, int dctCoeffArrayWidth, bool printOutput)
 {
 	jvirt_barray_ptr * coefficientarrays;
 	int DCTwidth_in_blocks;
@@ -101,6 +101,20 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filenam
 	JBLOCKROW blockrow;
 	JCOEF * block;
 
+	//moved here 8 June 2012
+	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
+	{
+		dctCoeffArrayY[i] = 0;
+	}
+	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
+	{
+		dctCoeffArrayYCr[i] = 0;
+	}
+	for(int i=0; i<dctCoeffArrayWidth*dctCoeffArrayHeight; i++)
+	{
+		dctCoeffArrayYCb[i] = 0;
+	}
+											
 
 	/* This struct contains the JPEG decompression parameters and pointers to
 	* working space (which is allocated as needed by the JPEG library).
@@ -160,10 +174,30 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filenam
 
 	
 	coefficientarrays = jpeg_read_coefficients(&cinfo);
-	
+
+	//added 8 June 2012
+	if(printOutput)
+	{
+		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE><TR>";
+		#else
+		printf("\n\n\nyBlock = %d", yBlock);
+		#endif				
+	}
 	
   	for(c=0; c< cinfo.num_components; c++)
 	{
+		//added 8 June 2012	
+		if(printOutput)
+		{
+			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>";
+			#else
+			printf("\n\n\nyBlock = %d", yBlock);
+			#endif				
+		}
+					
+				
 		DCTwidth_in_blocks = cinfo.comp_info[c].width_in_blocks;
 		DCTheight_in_blocks = cinfo.comp_info[c].height_in_blocks;
 
@@ -171,59 +205,41 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filenam
 
 		for(yBlock=0; yBlock<DCTheight_in_blocks; yBlock++)
 		{
-			/*
-			#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-			if(!storeDataInArrays)
-			{
-			#endif
-				printf("\n\n\nyBlock = %d", yBlock);
-				#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-				*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE>";
-				#endif				
-			#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-			}
-			#endif
-			*/
-			
+
 			blockrow = blockarray[yBlock]; //coefficients->mem_buffer[yblock]; //
 
 			for(xBlock=0; xBlock<DCTwidth_in_blocks; xBlock++)
 			{
-
-				#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-				if(!storeDataInArrays)
+				if(printOutput)
 				{
-				#endif
-					printf("\nxBlock = %d", xBlock);
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TABLE>";
+					#else
+					printf("\nxBlock = %d", xBlock);
 					#endif						
-				#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING	
 				}
-				#endif
 				block = blockrow[xBlock];
 
 				//maybe should replace DCTSIZE here with DCT_h_scaled_size/DCT_v_scaled_size?
 				for(y=0; y<dctCoeffArrayHeight; y++)
 				{
-					#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-					if(!storeDataInArrays)
+					if(printOutput)
 					{
-					#endif
-						printf("\n");
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TR>";
+						#else
+						printf("\n");
 						#endif							
 					
-					#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING	
 					}
-					#endif
 					for(x=0; x<dctCoeffArrayWidth; x++)
 					{
 						i = y*DCTSIZE + x;
 
+						/*
 						if(storeDataInArrays)
 						{
+						*/
 							if(c == 0)
 							{
 								dctCoeffArrayY[y*dctCoeffArrayWidth + x] = block[i];
@@ -236,66 +252,62 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filenam
 							{
 								dctCoeffArrayYCb[y*dctCoeffArrayWidth + x] = block[i];
 							}
+						/*
 						}
+						*/
 						
-						#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-						if(!storeDataInArrays)
+						if(printOutput)
 						{
-						#endif
-							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);
-							printf("%d\t", block[i]);
 							#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 							char dataValueString[100];
 							sprintf(dataValueString, "%d", block[i]);
 							*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "<TD>" + dataValueString + "</TD>";
+							#else
+							//printf("DCT block coeff x=%d, y=%d, is %d", x, y, block[i]);
+							printf("%d\t", block[i]);
 							#endif							
-						#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
 						}
-						#endif
 
 					}
-					#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-					if(!storeDataInArrays)
+					if(printOutput)
 					{
-					#endif
 						#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 						*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR>";
 						#endif							
-					
-					#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING	
 					}
-					#endif					
 				}
-				#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-				if(!storeDataInArrays)
+				if(printOutput)
 				{
-				#endif
 					#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 					*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TABLE>";
 					#endif				
-				#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
 				}
-				#endif					
 
-			}
-			
-			/*
-			#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-			if(!storeDataInArrays)
-			{
-			#endif
-				#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-				*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TABLE>";
-				#endif				
-			#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING
-			}
-			#endif	
-			*/		
+			}	
 		}
+		
+		//added 8 June 2012
+		if(printOutput)
+		{
+			#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+			*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TD>";
+			#endif				
+		}
+		
 	}
 
-	if(!storeDataInArrays)
+	//added 8 June 2012
+	if(printOutput)
 	{
+		#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+		*pointerToDCTTableHTMLOutputString = *pointerToDCTTableHTMLOutputString + "</TR></TABLE>";
+		#endif				
+	}
+		
+			
+	if(printOutput)
+	{
+		#ifndef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 		printf("\n number of components (y Cb Cr / R G B) = %d", c);
 		printf("\n number yBlocks = %d", yBlock);
 		printf("\n number xBlocks = %d", xBlock);
@@ -305,7 +317,9 @@ int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients (char * filenam
 		printf("\n cinfo.comp_info[c].DCT_h_scaled_size = %d", cinfo.comp_info[c].DCT_h_scaled_size);
 		printf("\n cinfo.comp_info[c].DCT_v_scaled_size = %d", cinfo.comp_info[c].DCT_v_scaled_size);
 		*/
+		#endif
 	}
+	
 	
 
 	/* This is an important step since it will release a good deal of memory. */

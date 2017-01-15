@@ -3,11 +3,12 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3a7a 06-June-2012
+ * Project Version: 3a7b 09-June-2012
  *
  *******************************************************************************/
 
 #include "RTpixelMaps.h"
+
 
 
 #include <stdio.h>
@@ -20,12 +21,11 @@
 #include <math.h>
 using namespace std;
 
-/*now located in RTglobalDefs.h...
-#ifndef USE_OR
-
+#ifdef USE_OR
+#include "ORglobalDefs.h"
+#else
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH;
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_HEIGHT;
-
 		
 double MAX_LUMINOSITY_CONTRAST;
 double MAX_NORMAL_CONTRAST;
@@ -37,9 +37,7 @@ double EDGE_LUMINOSITY_CONTRAST_THRESHOLD;   //OLD = ~0.07*MAX_LUMINOSITY_CONTRA
 double EDGE_LUMINOSITY_THRESHOLD;
 
 double ESTIMATE_MAX_DEPTH_T_REAL;
-
 #endif
-*/
 
 #ifndef USE_OR
 void fillInRTRulesExternVariables()
@@ -232,7 +230,6 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 			booleanContrastRGBColour.g = 0;
 			booleanContrastRGBColour.b = 0;
 
-			
 			double contrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityContrastMap);
 
 			int contrastThreshold;
@@ -245,9 +242,9 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 
 			if(contrastVal > contrastThreshold)
 			{
-				booleanContrastRGBColour.r = 255;
-				booleanContrastRGBColour.g = 255;
-				booleanContrastRGBColour.b = 255;
+				booleanContrastRGBColour.r = MAX_RGB_VAL;
+				booleanContrastRGBColour.g = MAX_RGB_VAL;
+				booleanContrastRGBColour.b = MAX_RGB_VAL;
 			}
 			
 			placepoint_ppm(pm, x, y, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);		
@@ -303,7 +300,7 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 				{
 					if(contrastVal > contrastThreshold)
 					{
-						booleanContrastRGBColour.r = 255;
+						booleanContrastRGBColour.r = MAX_RGB_VAL;
 					}
 
 				}
@@ -311,14 +308,14 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 				{
 					if(contrastVal > contrastThreshold)
 					{
-						booleanContrastRGBColour.g = 255;
+						booleanContrastRGBColour.g = MAX_RGB_VAL;
 					}						
 				}
 				else if(col == 2)
 				{
 					if(contrastVal > contrastThreshold)
 					{
-						booleanContrastRGBColour.b = 255;
+						booleanContrastRGBColour.b = MAX_RGB_VAL;
 					}						
 				}
 			}
@@ -333,6 +330,17 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 #elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_1_ALL_RGB_COMPONENTS_WITH_DIRECTION
 void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
+	#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
+	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
+	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
+	double contrastThresholdNormalisationFactor = averageLuminosity/averageNormalisedLuminosity;	
+	/*
+	unsigned char * normalisedRgbMap = new unsigned char[imageWidth*imageHeight*RGB_NUM];
+	void normaliseRGBMapBasedOnAverageLuminosity(normalisedRgbMap, imageWidth, imageHeight, rgbMap)
+	rgbMap = normalisedRgbMap;
+	*/
+	#endif
+	
 	int x,y;
 	pixmap* pm;
 
@@ -372,23 +380,29 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 											
 				for(int col=0; col<RGB_NUM; col++)
 				{
-					int contrastThreshold;
+					double contrastThreshold;
 					
 					#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
-					contrastThreshold = (LUMINOSITY_CONTRAST_FRACTION_THRESHOLD*MAX_LUMINOSITY)*OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//needs to be dynamic based upon normalisation based upon average rgb values in image
+						#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
+						contrastThreshold = (OR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL)*contrastThresholdNormalisationFactor;	//WRONG: normalisation should apply to entire image, not individual snapshots.. 
+						#else
+						contrastThreshold = (OR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL);					
+						//contrastThreshold = (LUMINOSITY_CONTRAST_FRACTION_THRESHOLD*MAX_LUMINOSITY)*OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//OLD			
+						#endif
 					#else
-					contrastThreshold = 0;
+					contrastThreshold = 0.0;
 					#endif
+					//cout << "contrastThreshold = " << contrastThreshold << endl;
 					
 					if(col == 0)
 					{
 						if(colCurrent.r > (colNext[comparisonDirection].r + contrastThreshold))
 						{
-							booleanContrastRGBColour.r = 255;
+							booleanContrastRGBColour.r = MAX_RGB_VAL;
 						}
 						else if(colCurrent.r <= (colNext[comparisonDirection].r - contrastThreshold))
 						{	
-							booleanContrastRGBColour.r = 255;
+							booleanContrastRGBColour.r = DARK_RED_R;	//MAX_RGB_VAL/2;
 						}
 						else
 						{
@@ -400,11 +414,11 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 					{
 						if(colCurrent.g > (colNext[comparisonDirection].g + contrastThreshold))
 						{
-							booleanContrastRGBColour.g = 255;
+							booleanContrastRGBColour.g = MAX_RGB_VAL;
 						}
 						else if(colCurrent.g <= (colNext[comparisonDirection].g - contrastThreshold))
 						{
-							booleanContrastRGBColour.g = 255;
+							booleanContrastRGBColour.g = DARK_GREEN_G;	//MAX_RGB_VAL/2;
 						}
 						else
 						{
@@ -415,123 +429,11 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 					{
 						if(colCurrent.b > (colNext[comparisonDirection].b + contrastThreshold))
 						{
-							booleanContrastRGBColour.b = 255;
+							booleanContrastRGBColour.b = MAX_RGB_VAL;
 						}
 						else if(colCurrent.b <= (colNext[comparisonDirection].b - contrastThreshold))
 						{
-							booleanContrastRGBColour.b = 255;
-						}
-						else
-						{
-						
-						}						
-					}
-				}
-				
-				if(comparisonDirection == 0)
-				{
-					placepoint_ppm(pm, (x*2)+1, y*2, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
-				}
-				else
-				{
-					placepoint_ppm(pm, (x*2), (y*2)+1, booleanContrastRGBColour.r, booleanContrastRGBColour.g, booleanContrastRGBColour.b);
-				}
-			}		
-		}
-	}
-
-	writeImage(imageFileName, pm);
-}
-#else
-void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
-{
-	int x,y;
-	pixmap* pm;
-
-	pm = new_pixmap(imageWidth*2, imageHeight*2);
-
-	for(y = 0; y < imageHeight*2; y++)
-	{
-  		for(x = 0; x < imageWidth*2; x++)
-		{
-			colour black;
-			black.r = 0;
-			black.g = 0;
-			black.b = 0;
-			placepoint_ppm(pm, x, y, black.r, black.g, black.b);
-		}
-	}
-	
-	for(y = 0; y < imageHeight-1; y++)
-	{
-  		for(x = 0; x < imageWidth-1; x++)
-		{
-
-			colour colCurrent;
-			getRGBMapValues(x, y, imageWidth,rgbMap,&colCurrent);
-			
-			colour colNext[2];
-			getRGBMapValues(x+1, y, imageWidth, rgbMap, &(colNext[0]));
-			getRGBMapValues(x, y+1, imageWidth, rgbMap, &(colNext[1]));
-			
-
-			for(int comparisonDirection=0; comparisonDirection<2; comparisonDirection++)
-			{
-				colour booleanContrastRGBColour;
-				booleanContrastRGBColour.r = 0;
-				booleanContrastRGBColour.g = 0;
-				booleanContrastRGBColour.b = 0;
-											
-				for(int col=0; col<RGB_NUM; col++)
-				{
-					int contrastThreshold;
-					
-					#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
-					contrastThreshold = OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD;	//needs to be dynamic based upon normalisation based upon average rgb values in image
-					#else
-					contrastThreshold = 0;
-					#endif
-					
-					if(col == 0)
-					{
-						if(colCurrent.r > (colNext[comparisonDirection].r + contrastThreshold))
-						{
-							booleanContrastRGBColour.r = 255;
-						}
-						else if(colCurrent.r <= (colNext[comparisonDirection].r - contrastThreshold))
-						{	
-							booleanContrastRGBColour.r = 255;
-						}
-						else
-						{
-
-						}
-
-					}
-					else if(col == 1)
-					{
-						if(colCurrent.g > (colNext[comparisonDirection].g + contrastThreshold))
-						{
-							booleanContrastRGBColour.g = 255;
-						}
-						else if(colCurrent.g <= (colNext[comparisonDirection].g - contrastThreshold))
-						{
-							booleanContrastRGBColour.g = 255;
-						}
-						else
-						{
-
-						}						
-					}
-					else if(col == 2)
-					{
-						if(colCurrent.b > (colNext[comparisonDirection].b + contrastThreshold))
-						{
-							booleanContrastRGBColour.b = 255;
-						}
-						else if(colCurrent.b <= (colNext[comparisonDirection].b - contrastThreshold))
-						{
-							booleanContrastRGBColour.b = 255;
+							booleanContrastRGBColour.b = DARK_BLUE_B;	//MAX_RGB_VAL/2;
 						}
 						else
 						{
@@ -555,6 +457,195 @@ void generateBooleanContrastPixmapFromRGBMap(char * imageFileName, int imageWidt
 	writeImage(imageFileName, pm);
 }
 #endif
+
+void generateBooleanDiffMapFromRGBMaps(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2)
+{
+	pixmap* pm;
+	pm = new_pixmap(imageWidth, imageHeight);
+	
+	for(int y = 0; y < imageHeight; y++)
+	{
+  		for(int  x = 0; x < imageWidth; x++)
+		{
+			colour colCurrent1;
+			getRGBMapValues(x, y, imageWidth, rgbMap1, &colCurrent1);
+			colour colCurrent2;
+			getRGBMapValues(x, y, imageWidth, rgbMap2, &colCurrent2);
+			
+			colour booleanColDiff;
+			booleanColDiff.r = 0;										
+			booleanColDiff.g = 0;
+			booleanColDiff.b = 0;
+			
+			for(int col=0; col<RGB_NUM; col++)
+			{
+				if(col == 0)
+				{
+					int rDiff = abs(colCurrent1.r - colCurrent2.r);
+					if((rDiff == MAX_RGB_VAL) || (rDiff == DARK_RED_R))	//positive <-> 0 || negative <-> 0: can be compensated by inserting data into multiple bins
+					{
+						booleanColDiff.r = MAX_RGB_VAL;
+					}
+					else if(rDiff == (MAX_RGB_VAL-DARK_RED_R))		//positive <-> negative: cannot be compensated by inserting data into multiple bins
+					{
+						booleanColDiff.r = DARK_RED_R;
+					}
+					else if(rDiff == 0)					//no difference: multiple bins not required
+					{
+						booleanColDiff.r = 0;
+					}
+					else
+					{
+						cout << "error: rDiff = " << rDiff << endl;
+					}
+
+				}
+				else if(col == 1)
+				{
+					int gDiff = abs(colCurrent1.g - colCurrent2.g);
+					if((gDiff == MAX_RGB_VAL) || (gDiff == DARK_GREEN_G))
+					{
+						booleanColDiff.g = MAX_RGB_VAL;
+					}
+					else if(gDiff == (MAX_RGB_VAL-DARK_GREEN_G))
+					{
+						booleanColDiff.g = DARK_GREEN_G;
+					}
+					else if(gDiff == 0)
+					{
+						booleanColDiff.g = 0;
+					}
+					else
+					{
+						cout << "error: gDiff = " << gDiff << endl;
+					}					
+				}
+				else if(col == 2)
+				{
+					int bDiff = abs(colCurrent1.b - colCurrent2.b);
+					if((bDiff == MAX_RGB_VAL) || (bDiff == DARK_BLUE_B))
+					{
+						booleanColDiff.b = MAX_RGB_VAL;
+					}
+					else if(bDiff == (MAX_RGB_VAL-DARK_BLUE_B))
+					{
+						booleanColDiff.b = DARK_BLUE_B;
+					}
+					else if(bDiff == 0)
+					{
+						booleanColDiff.b = 0;
+					}
+					else
+					{
+						cout << "error: bDiff = " << bDiff << endl;
+					}					
+				}
+			}
+
+			placepoint_ppm(pm, x, y, booleanColDiff.r, booleanColDiff.g, booleanColDiff.b);
+					
+		}
+	}
+
+	writeImage(imageFileName, pm);
+}
+
+/*
+void createBooleanDiffMapFromRGBMaps(bool * diffbooleanDiffMap, int imageWidth, int imageHeight, unsigned char * rgbMap1, unsigned char * rgbMap2)
+{
+	for(int y = 0; y < imageHeight; y++)
+	{
+  		for(int  x = 0; x < imageWidth; x++)
+		{
+			colour colCurrent1;
+			getRGBMapValues(x, y, imageWidth, rgbMap1, &colCurrent);
+			colour colCurrent2;
+			getRGBMapValues(x, y, imageWidth, rgbMap2, &colCurrent);
+			
+			bool diff = false;
+															
+			for(int col=0; col<RGB_NUM; col++)
+			{
+				if(col == 0)
+				{
+					if(colCurrent.r != colCurrent2.r)
+					{
+						diff = true;
+					}
+
+				}
+				else if(col == 1)
+				{
+					if(colCurrent.g != colCurrentg.r)
+					{
+						diff = true;
+					}						
+				}
+				else if(col == 2)
+				{
+					if(colCurrent.b != colCurrentb.r)
+					{
+						diff = true;
+					}						
+				}
+			}	
+			
+			setBooleanMapValue(x, y, imageWidth, diff, diffbooleanDiffMap);
+							
+		}
+	}
+
+}
+*/
+
+void normaliseRGBMapBasedOnAverageLuminosity(unsigned char * normalisedRgbMap, int imageWidth, int imageHeight, unsigned char * rgbMap)
+{
+	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
+	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
+	double normalisationFactor = averageNormalisedLuminosity/averageLuminosity;
+	/*
+	cout << "averageLuminosity = " << averageLuminosity << endl;
+	cout << "averageNormalisedLuminosity = " << averageNormalisedLuminosity << endl;
+	cout << "normalisationFactor = " << normalisationFactor << endl;
+	*/
+	
+	for(int y = 0; y < imageHeight; y++)
+	{
+  		for(int x = 0; x < imageWidth; x++)
+		{
+			colour col;
+			getRGBMapValues(x, y, imageWidth, rgbMap, &col);
+			
+			colour colNormalised;
+			colNormalised.r = col.r * normalisationFactor;
+			colNormalised.g = col.g * normalisationFactor;
+			colNormalised.b = col.b * normalisationFactor;
+			
+			setRGBMapValues(x, y, imageWidth, &colNormalised, normalisedRgbMap);
+		}
+	}
+}
+
+double calculateAverageLuminosity(int imageWidth, int imageHeight, unsigned char * rgbMap)
+{
+	double * luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
+	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
+	
+	double totalLuminosity = 0.0;
+	for(int y = 0; y < imageHeight; y++)
+	{
+  		for(int x = 0; x < imageWidth; x++)
+		{
+			double currentLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
+			totalLuminosity = totalLuminosity + currentLuminosity;
+		}
+	}
+	
+	double averageLuminosity = totalLuminosity/(imageWidth*imageHeight);
+	//cout << "averageLuminosity = " << averageLuminosity << endl;
+	return averageLuminosity;
+}	
+	
 
 void generatePixmapFromRGBMap(char * imageFileName, int imageWidth, int imageHeight, unsigned char * rgbMap)
 {
@@ -1050,9 +1141,9 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 		{
 		#ifdef USE_BOOLEAN_PIXMAP_DOT_ENHANCEMENT
 			#ifdef USE_BOOLEAN_PIXMAP_INVERSE
-				int r = 255;
-				int g = 255;
-				int b = 255;
+				int r = MAX_RGB_VAL;
+				int g = MAX_RGB_VAL;
+				int b = MAX_RGB_VAL;
 			#else
 				int r = 0;
 				int g = 0;
@@ -1068,16 +1159,16 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 			if(val == true)
 			{
 			#ifdef USE_BOOLEAN_PIXMAP_INVERSE
-				r = 255;
-				g = 255;
-				b = 255;
+				r = MAX_RGB_VAL;
+				g = MAX_RGB_VAL;
+				b = MAX_RGB_VAL;
 			#else
 				r = 0;
 				g = 0;
 				b = 0;
 			#endif
 
-				placepoint_ppm(pm, x, y, 255, 255, 255);
+				placepoint_ppm(pm, x, y, MAX_RGB_VAL, MAX_RGB_VAL, MAX_RGB_VAL);
 			}
 			else
 			{
@@ -1086,9 +1177,9 @@ void generatePixmapFromBooleanMap(char * imageFileName, int imageWidth, int imag
 				g = 0;
 				b = 0;
 			#else
-				r = 255;
-				g = 255;
-				b = 255;
+				r = MAX_RGB_VAL;
+				g = MAX_RGB_VAL;
+				b = MAX_RGB_VAL;
 			#endif
 				placepoint_ppm(pm, x, y, 0, 0, 0);
 			}
@@ -1142,9 +1233,33 @@ void writeImage(char * imageFileName, pixmap * pm)
 	free_pixmap(pm);
 }
 
+void readImage(char * imageFileName, unsigned char * rgbMap)
+{
+	pixmap * rgbPixMap;
+	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	rgbPixMap = load_ppm(imageFileName);
 
+	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
+	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
+	free_pixmap(rgbPixMap);
+}
 
+void readImage(string * imageFileName, unsigned char * rgbMap)
+{
+	char * imageFileNameCharStar = const_cast<char*>(imageFileName->c_str());
+	
+	pixmap * rgbPixMap;
+	//cout << "rgbPixMap = load_ppm(" << imageFileName << ");" << endl;
+	rgbPixMap = load_ppm(imageFileNameCharStar);
+
+	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
+	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
+
+	free_pixmap(rgbPixMap);
+}
+											
+											
 
 
 
@@ -1565,7 +1680,7 @@ double calculateContrastLevelWithinKernel(int pixelX, int pixelY, double * lumin
 double calculateContrastLevelWithinKernelRGBComponent(int pixelX, int pixelY, unsigned char * rgbMap, int rgbComponent, int kernelWidth, int kernelHeight, int imageWidth, int imageHeight)
 {
 	double contrastLevel = 0.0;
-
+	
 	if((kernelWidth >= 3) && (kernelHeight >= 3))
 	{//luminosity contrast map is defined for pixels
 		double centrePixelPositionInLummapLuminosity = getRGBMapValue(pixelX, pixelY, imageWidth, rgbComponent, rgbMap);

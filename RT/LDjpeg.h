@@ -3,7 +3,7 @@
  * File Name: LDjpeg.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a7a 06-June-2012
+ * Project Version: 3a7b 09-June-2012
  *
  *******************************************************************************/
 
@@ -19,7 +19,9 @@
 using namespace std;
 
 #include "SHAREDglobalDefs.h"
-
+#ifdef USE_OR
+	#include "ORglobalDefs.h"
+#endif
 
 #ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 void setpointerToDCTTableHTMLOutputString(string * pointer);
