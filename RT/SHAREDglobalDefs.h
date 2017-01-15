@@ -219,6 +219,7 @@ extern char * tempFolderCharStar;
 #define CHAR_FULLSTOP '.'
 #define CHAR_SEMICOLON ';'
 #define CHAR_COLON ':'
+#define CHAR_QUESTIONMARK '?'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
