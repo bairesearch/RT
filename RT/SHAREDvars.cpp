@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e5b 03-September-2014
+ * Project Version: 3e6a 07-September-2014
  *
  *******************************************************************************/
 
@@ -477,6 +477,15 @@ string convertBoolToString(bool boolean)
 	{
 		return "false";
 	}
+}
+
+string convertLongToString(long number)
+{
+	//return to_string(number);	//C++11
+
+	char tempString[100];
+	sprintf(tempString, "%ld", number);
+	return string(tempString);
 }
 
 bool textInTextArray(string text, string * textArray, int arraySize)
