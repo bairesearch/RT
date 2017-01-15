@@ -23,7 +23,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3c4b 01-December-2012
+ * Project Version: 3c4c 03-December-2012
  *
  *******************************************************************************/
 
@@ -527,7 +527,7 @@ XMLparserTag * writeSVGgroup(XMLparserTag ** currentTag, string * groupID)
 	return nextTagOnOriginalLayer;
 }
 
-void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID)
+void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int col, string * startGroupID, string * endGroupID, double width)
 {
 	colour colourrgb;
  	convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -543,10 +543,12 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 	char yPosStringcharstar[10];
 	char xPos2Stringcharstar[10];
 	char yPos2Stringcharstar[10];
+	char strokeWidthcharstar[10];
 	sprintf(xPosStringcharstar, "%d", (int)pos1->x);	//%d
 	sprintf(yPosStringcharstar, "%d", (int)pos1->y);
 	sprintf(xPos2Stringcharstar, "%d", (int)pos2->x);
 	sprintf(yPos2Stringcharstar, "%d", (int)pos2->y);
+	sprintf(strokeWidthcharstar, "%0.1f", width);
 	string hexString = convertColourRGBtoHexString(&colourrgb);
 	xPosString = xPosStringcharstar;
 	yPosString = yPosStringcharstar;
@@ -558,7 +560,7 @@ void writeSVGconnector(XMLparserTag ** currentTag, vec * pos1, vec * pos2, int c
 	XMLParserAttribute * currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "style";
 	string pathStyleValue = "";
-	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:1px;stroke-opacity:1";
+	pathStyleValue = pathStyleValue + "fill:none;stroke:#" + hexString + ";stroke-width:" + strokeWidthcharstar + "px;stroke-opacity:1";
 	currentAttributeInBlock->value = pathStyleValue;
 	currentAttributeInBlock->nextAttribute = new XMLParserAttribute();
 	currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
