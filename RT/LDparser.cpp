@@ -26,14 +26,14 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#include "LDparser.h"
+#include "LDparser.hpp"
 #ifdef USE_LRRC
-//#include "LRRCparser.h"
+//#include "LRRCparser.hpp"
 #endif
 
 

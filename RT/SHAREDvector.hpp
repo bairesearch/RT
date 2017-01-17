@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: SHAREDvector.h
+ * File Name: SHAREDvector.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,8 +34,8 @@
 #ifndef HEADER_SHARED_VECTOR
 #define HEADER_SHARED_VECTOR
 
-#include "SHAREDvars.h"
-#include "SHAREDglobalDefs.h"		//needed so as to know if USE_RT is defined
+#include "SHAREDvars.hpp"
+#include "SHAREDglobalDefs.hpp"		//needed so as to know if USE_RT is defined
 
 #ifdef USE_RT
 #define RELAXED_DOUBLE_MIN_PRECISION 0.03

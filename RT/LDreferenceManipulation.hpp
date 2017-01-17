@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: LDreferenceManipulation.h
+ * File Name: LDreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,9 +34,9 @@
 #ifndef HEADER_LD_REFERENCE_MANIPULATION
 #define HEADER_LD_REFERENCE_MANIPULATION
 
-#include "LDreferenceClass.h"
-#include "SHAREDvector.h"
-#include "SHAREDvars.h"	//required for writeByteArrayToFile
+#include "LDreferenceClass.hpp"
+#include "SHAREDvector.hpp"
+#include "SHAREDvars.hpp"	//required for writeByteArrayToFile
 
 #define DAT_FILE_GENERIC_MAX_SIZE (100000000)		//100MB - the maximum size of any ldraw .DAT/.LDR file
 

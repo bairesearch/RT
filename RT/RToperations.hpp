@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: RToperations.h
+ * File Name: RToperations.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -38,8 +38,8 @@
 #define LINE_INTERSECTION_BOUNDARY_ERROR_ALLOWED (0.01)
 
 
-#include "SHAREDvars.h"
-#include "SHAREDvector.h"
+#include "SHAREDvars.hpp"
+#include "SHAREDvector.hpp"
 //#include "math.h"
 
 	/*4x4 matrix manipulation methods*/

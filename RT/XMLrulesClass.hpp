@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: XMLrulesClass.h
+ * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,13 +34,13 @@
 #ifndef HEADER_XML_RULES_CLASS
 #define HEADER_XML_RULES_CLASS
 
-#include "SHAREDglobalDefs.h"
-#include "XMLparserClass.h"
-#include "SHAREDvars.h"
+#include "SHAREDglobalDefs.hpp"
+#include "XMLparserClass.hpp"
+#include "SHAREDvars.hpp"
 
 #define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
 #define CS_RULES_XML_FILE_NAME "CSrules.xml"
-#define OR_RULES_XML_FILE_NAME "ORrules.xml"
+#define OR_RULES_XML_FILE_NAME "ATORrules.xml"
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
 #define NLC_RULES_XML_FILE_NAME "NLCrules.xml"
 

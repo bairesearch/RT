@@ -26,12 +26,12 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#include "LDopengl.h"
+#include "LDopengl.hpp"
 
 //#include <GL/gl.h>
 //#include <GL/glut.h>
@@ -59,7 +59,7 @@ double opengl3DmatrixTransformation3TranslationFactorY = 0.0;
 double opengl3DmatrixTransformation3TranslationFactorZ = 0.0;
 
 
-//these can no longer be configured dynamically through ORrules.xml
+//these can no longer be configured dynamically through ATORrules.xml
 static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL = false;
 static bool LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS = false;
 static bool LD_OPENGL_PRINT_ALGORITHM_PROGRESS = false;

@@ -26,13 +26,13 @@
  * File Name: RTparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
 
 
-#include "RTparser.h"
+#include "RTparser.hpp"
 
 /* TRUE if string  s  is  S1  or  S2 */
 #define string_is(s, S1, S2)	\

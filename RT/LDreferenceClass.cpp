@@ -26,14 +26,14 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
 /*LDreferenceClass.cpp: Defines a class for references to submodels/parts/units within a scene file*/
 
-#include "LDreferenceClass.h"
+#include "LDreferenceClass.hpp"
 
 
 

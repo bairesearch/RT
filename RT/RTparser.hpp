@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: RTparser.h
+ * File Name: RTparser.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: A simple parser for TAL files
  *
  *******************************************************************************/
@@ -35,8 +35,8 @@
 #ifndef HEADER_RT_PARSER
 #define HEADER_RT_PARSER
 
-#include "SHAREDvars.h"
-#include "RTviewinfo.h"
+#include "SHAREDvars.hpp"
+#include "RTviewinfo.hpp"
 
 
 #define TAL_EXTENSION ".tal"

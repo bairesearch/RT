@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: SHAREDvars.h
+ * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 #ifndef HEADER_SHARED_VARS
 #define HEADER_SHARED_VARS
 
-#include "SHAREDglobalDefs.h"
+#include "SHAREDglobalDefs.hpp"
 
 #define MAP_VALUE_OUT_OF_RANGE (8888888.0)
 

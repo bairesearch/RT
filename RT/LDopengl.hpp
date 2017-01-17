@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: LDopengl.h
+ * File Name: LDopengl.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,8 +34,8 @@
 #ifndef HEADER_LD_OPENGL
 #define HEADER_LD_OPENGL
 
-#include "SHAREDglobalDefs.h"
-#include "LDreferenceClass.h"
+#include "SHAREDglobalDefs.hpp"
+#include "LDreferenceClass.hpp"
 
 #define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also
 #define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also

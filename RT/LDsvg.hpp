@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: LDsvg.h
+ * File Name: LDsvg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,10 +34,10 @@
 #ifndef HEADER_LD_SVG
 #define HEADER_LD_SVG
 
-#include "SHAREDglobalDefs.h"
-#include "SHAREDvars.h"
-#include "LDreferenceClass.h"
-#include "XMLparserClass.h"
+#include "SHAREDglobalDefs.hpp"
+#include "SHAREDvars.hpp"
+#include "LDreferenceClass.hpp"
+#include "XMLparserClass.hpp"
 
 class LDsvgClass
 {

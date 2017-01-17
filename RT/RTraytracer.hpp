@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: RTraytracer.h
+ * File Name: RTraytracer.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -37,9 +37,9 @@
 #define HEADER_RT_RAYTRACER
 
 
-#include "RTparser.h"		/*required for view info definitions*/
-#include "RToperations.h"	/*required for vector/colour and matrix definitions*/
-#include "RTpixelMaps.h"	//for max depth val
+#include "RTparser.hpp"		/*required for view info definitions*/
+#include "RToperations.hpp"	/*required for vector/colour and matrix definitions*/
+#include "RTpixelMaps.hpp"	//for max depth val
 
 
 //#define RT_T_TRANSFORM_TEST	//TEMP

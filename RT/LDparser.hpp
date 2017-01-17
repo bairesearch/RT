@@ -23,43 +23,43 @@
 
 /*******************************************************************************
  *
- * File Name: LDmysql.h
+ * File Name: LDparser.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_LD_MYSQL
-#define HEADER_LD_MYSQL
+#ifndef HEADER_LD_PARSER
+#define HEADER_LD_PARSER
 
-#include "SHAREDglobalDefs.h"
+#include "LDreferenceClass.hpp"
+#include "SHAREDvector.hpp"
 
-#ifndef LINUX
-	#include <winsock.h>
+#ifdef LINUX
+	#define DEFAULT_PARTS_DIRECTORY_FULL_PATH "/usr/share/local/LDRAW/PARTS/"
+	#define DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH "/usr/share/local/LDRAW/P/"
+#else
+	#define DEFAULT_PARTS_DIRECTORY_FULL_PATH "C:/Program Files/LDraw/PARTS/"
+	#define DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH "C:/Program Files/LDraw/P/"
 #endif
-#include <mysql/mysql.h>
 
+#define LD_PARSER_ALLOW_WHITE_SPACE (true)
 
-extern MYSQL* connection;
-extern MYSQL mysql;
-extern MYSQL_RES* result;
-
-
-class LDmysqlClass
+//generic parser
+class LDparserClass
 {
-	private: void testMySQLserverConnection();
+	private: SHAREDvarsClass SHAREDvars;
+	private: SHAREDvectorClass SHAREDvector;
+	public: bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, const bool recurseIntoPartsDir);
 
-	public: bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName);
-	private: bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput);	//not complete - debug only
-	private: bool performSQLselectQuery(const char* sqlCommand);
-	private: bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
-	public: bool performSQLinsertQuery(const char* sqlCommand);
-	public: bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
-	public: long performSQLgetNumRowsQuery(const string tableName);
-	public: void performSQLdeleteAllRowsQuery(const string tableName);
-	public: void endMySQLserverConnection();
+	private: double calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
+	private: double calcModYPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
+	private: double calcModZPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);
+
+	private: string removeWhiteSpaceFromString(const string s);
 };
+
 
 #endif

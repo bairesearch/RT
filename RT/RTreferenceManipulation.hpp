@@ -23,33 +23,35 @@
 
 /*******************************************************************************
  *
- * File Name: LDjpeg.h
+ * File Name: RTreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
- * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project: Raytracer Functions
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_LD_JPEG
-#define HEADER_LD_JPEG
+#ifndef HEADER_RT_REFERENCE_MANIPULATION
+#define HEADER_RT_REFERENCE_MANIPULATION
 
-#include "SHAREDglobalDefs.h"
-#ifdef USE_OR
-	#include "ATORglobalDefs.h"
-#include "SHAREDvars.h"
-#include "jpeglib.h"
-#include "jmemsys.h"
-#endif
+#define CHAR_NEWLINE '\n'
 
-#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
-class LDjpegClass
+#include "LDreferenceClass.hpp"
+#include "RTviewinfo.hpp"
+#include "LDreferenceManipulation.hpp"
+#include "SHAREDvector.hpp"
+#include "RToperations.hpp"
+
+class RTreferenceManipulationClass
 {
 	private: SHAREDvarsClass SHAREDvars;
-	public: void setPointerToDCTtableHTMLoutputString(string* pointer);
-#endif
-
-	public: int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput);
+	private: LDreferenceManipulationClass LDreferenceManipulation;
+	private: SHAREDvectorClass SHAREDvector;
+	private: RToperationsClass RToperations;
+	public: bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour);
+		private: bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour);
+		private: bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
+			private: bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference);
 };
 
 #endif

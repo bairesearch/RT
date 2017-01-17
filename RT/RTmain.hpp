@@ -23,35 +23,28 @@
 
 /*******************************************************************************
  *
- * File Name: RTreferenceManipulation.h
+ * File Name: RTmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_RT_REFERENCE_MANIPULATION
-#define HEADER_RT_REFERENCE_MANIPULATION
+#ifndef HEADER_RT_MAIN
 
-#define CHAR_NEWLINE '\n'
+#include "RTscene.hpp"
+#include "LDparser.hpp"
+#include "RTreferenceManipulation.hpp"
+#include "LDreferenceManipulation.hpp"
 
-#include "LDreferenceClass.h"
-#include "RTviewinfo.h"
-#include "LDreferenceManipulation.h"
-#include "SHAREDvector.h"
-#include "RToperations.h"
+#define HEADER_RT_MAIN
 
-class RTreferenceManipulationClass
+int main(const int argc, const char** argv);
+
+class RTmainClass
 {
-	private: SHAREDvarsClass SHAREDvars;
-	private: LDreferenceManipulationClass LDreferenceManipulation;
-	private: SHAREDvectorClass SHAREDvector;
-	private: RToperationsClass RToperations;
-	public: bool write2DReferenceListCollapsedTo1DToFileRayTraceFormat(string fileName, LDreference* firstReference, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour);
-		private: bool writeRayTraceFormatHeaderInfo(ofstream* writeFileObject, const bool useCustomViewInfo, const RTviewInfo* vi, const bool useCustomLightSource, const vec* lightSourcePosition, const string lightSourceColour);
-		private: bool write2DReferencesLayerToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* firstReferenceInLayer);
-			private: bool addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference);
 };
 
 #endif
+

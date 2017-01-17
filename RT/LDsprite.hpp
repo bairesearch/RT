@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: LDsprite.h
+ * File Name: LDsprite.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -35,12 +35,12 @@
 #ifndef HEADER_LD_SPRITE
 #define HEADER_LD_SPRITE
 
-#include "LDreferenceClass.h"
-#include "SHAREDglobalDefs.h"
-#include "LDreferenceManipulation.h"
-#include "SHAREDvector.h"
-#include "SHAREDvars.h"	//required for writeByteArrayToFile
-#include "XMLrulesClass.h"
+#include "LDreferenceClass.hpp"
+#include "SHAREDglobalDefs.hpp"
+#include "LDreferenceManipulation.hpp"
+#include "SHAREDvector.hpp"
+#include "SHAREDvars.hpp"	//required for writeByteArrayToFile
+#include "XMLrulesClass.hpp"
 #include "math.h"
 
 #define CPLUSPLUSERRORCORRECTION2 (500)

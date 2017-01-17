@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: RTscene.h
+ * File Name: RTscene.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -34,10 +34,10 @@
 #ifndef HEADER_RT_SCENE
 #define HEADER_RT_SCENE
 
-#include "RTraytracer.h"
-#include "RTparser.h"
-#include "RTppm.h"
-#include "RTpixelMaps.h"
+#include "RTraytracer.hpp"
+#include "RTparser.hpp"
+#include "RTppm.hpp"
+#include "RTpixelMaps.hpp"
 
 
 

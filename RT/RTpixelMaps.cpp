@@ -26,15 +26,15 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
-#include "RTpixelMaps.h"
+#include "RTpixelMaps.hpp"
 
 
 #ifdef USE_OR
-#include "ATORglobalDefs.h"
+#include "ATORglobalDefs.hpp"
 #else
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH;
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_HEIGHT;

@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: LDreferenceClass.h
+ * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
@@ -37,10 +37,10 @@
 #define HEADER_LD_REFERENCE_CLASS
 
 
-#include "SHAREDglobalDefs.h"
-#include "SHAREDvars.h"
+#include "SHAREDglobalDefs.hpp"
+#include "SHAREDvars.hpp"
 #ifdef USE_LRRC
-//#include "LRRCmodelClass.h"
+//#include "LRRCmodelClass.hpp"
 #endif
 
 #ifdef USE_RT

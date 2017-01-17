@@ -23,28 +23,33 @@
 
 /*******************************************************************************
  *
- * File Name: RTmain.h
+ * File Name: LDjpeg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
- * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project: Generic Construct Functions
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_RT_MAIN
+#ifndef HEADER_LD_JPEG
+#define HEADER_LD_JPEG
 
-#include "RTscene.h"
-#include "LDparser.h"
-#include "RTreferenceManipulation.h"
-#include "LDreferenceManipulation.h"
+#include "SHAREDglobalDefs.hpp"
+#ifdef USE_OR
+	#include "ATORglobalDefs.hpp"
+#include "SHAREDvars.hpp"
+#include "jpeglib.h"
+#include "jmemsys.h"
+#endif
 
-#define HEADER_RT_MAIN
-
-int main(const int argc, const char** argv);
-
-class RTmainClass
+#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+class LDjpegClass
 {
+	private: SHAREDvarsClass SHAREDvars;
+	public: void setPointerToDCTtableHTMLoutputString(string* pointer);
+#endif
+
+	public: int readVerySmallHighlyCompressedJPEGfileAndStoreDCTcoefficients(const string filename, signed char dctCoeffArrayY[], signed char dctCoeffArrayYcr[], signed char dctCoeffArrayYcb[], const int dctCoeffArrayHeight, const int dctCoeffArrayWidth, const bool printOutput);
 };
 
 #endif
-

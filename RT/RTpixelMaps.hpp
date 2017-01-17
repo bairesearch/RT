@@ -23,20 +23,20 @@
 
 /*******************************************************************************
  *
- * File Name: RTpixelMaps.h
+ * File Name: RTpixelMaps.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  *
  *******************************************************************************/
 
 #ifndef HEADER_RT_PIXELMAPS
 #define HEADER_RT_PIXELMAPS
 
-#include "RTglobalDefs.h"
-#include "SHAREDvars.h"
-#include "RTppm.h"
-#include "RTviewinfo.h"
+#include "RTglobalDefs.hpp"
+#include "SHAREDvars.hpp"
+#include "RTppm.hpp"
+#include "RTviewinfo.hpp"
 
 
 

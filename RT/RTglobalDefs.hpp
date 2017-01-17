@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: RTglobalsDefs.h
+ * File Name: RTglobalsDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: RT specific global definitions
  *
  *******************************************************************************/
@@ -35,7 +35,7 @@
 #ifndef HEADER_RT_GLOBAL_DEFS
 #define HEADER_RT_GLOBAL_DEFS
 
-#include "SHAREDglobalDefs.h"
+#include "SHAREDglobalDefs.hpp"
 
 #define RT_NO_TEXT_FEEDBACK
 
