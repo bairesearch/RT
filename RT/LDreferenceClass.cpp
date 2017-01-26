@@ -26,110 +26,46 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
 
 /*LDreferenceClass.cpp: Defines a class for references to submodels/parts/units within a scene file*/
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "LDreferenceClass.hpp"
 
 
 
 LDreference::LDreference(void)
 {
-	//Define default values for LDreference
+	initialiseLDreference("", 0, false);
+}
 
-	relativePosition.x = 0.0;
-	relativePosition.y = 0.0;
-	relativePosition.z = 0.0;
+LDreference::LDreference(string referenceName, int referenceColour, bool createNewSubmodel)
+{
+	initialiseLDreference(referenceName, referenceColour, createNewSubmodel);
+}
 
-	absolutePosition.x = 0.0;
-	absolutePosition.y = 0.0;
-	absolutePosition.z = 0.0;
-
-		//deformationMatrix initialisations here are required for bcc32 compiler
-	deformationMatrix.a.x = 1.0;
-	deformationMatrix.a.y = 0.0;
-	deformationMatrix.a.z = 0.0;
-	deformationMatrix.b.x = 0.0;
-	deformationMatrix.b.y = 1.0;
-	deformationMatrix.b.z = 0.0;
-	deformationMatrix.c.x = 0.0;
-	deformationMatrix.c.y = 0.0;
-	deformationMatrix.c.z = 1.0;
-
-	absoluteDeformationMatrix.a.x = 1.0;
-	absoluteDeformationMatrix.a.y = 0.0;
-	absoluteDeformationMatrix.a.z = 0.0;
-	absoluteDeformationMatrix.b.x = 0.0;
-	absoluteDeformationMatrix.b.y = 1.0;
-	absoluteDeformationMatrix.b.z = 0.0;
-	absoluteDeformationMatrix.c.x = 0.0;
-	absoluteDeformationMatrix.c.y = 0.0;
-	absoluteDeformationMatrix.c.z = 1.0;
-
-	colour = 0;
-	name = "";
-	next = NULL;
-	isSubModelReference = false;
-
-#ifdef USE_LD_ABSOLUTE_COLOUR
-	absoluteColour = DAT_FILE_DEFAULT_COLOUR;
-#endif
-
-		/*new parameters added to parseFile() 18-mar-07*/
-	vertex1relativePosition.x = 0.0;
-	vertex1relativePosition.y = 0.0;
-	vertex1relativePosition.z = 0.0;
-	vertex2relativePosition.x = 0.0;
-	vertex2relativePosition.y = 0.0;
-	vertex2relativePosition.z = 0.0;
-	vertex3relativePosition.x = 0.0;
-	vertex3relativePosition.y = 0.0;
-	vertex3relativePosition.z = 0.0;
-	vertex4relativePosition.x = 0.0;
-	vertex4relativePosition.y = 0.0;
-	vertex4relativePosition.z = 0.0;
-	vertex1absolutePosition.x = 0.0;
-	vertex1absolutePosition.y = 0.0;
-	vertex1absolutePosition.z = 0.0;
-	vertex2absolutePosition.x = 0.0;
-	vertex2absolutePosition.y = 0.0;
-	vertex2absolutePosition.z = 0.0;
-	vertex3absolutePosition.x = 0.0;
-	vertex3absolutePosition.y = 0.0;
-	vertex3absolutePosition.z = 0.0;
-	vertex4absolutePosition.x = 0.0;
-	vertex4absolutePosition.y = 0.0;
-	vertex4absolutePosition.z = 0.0;
-
-	vertex1absolutePositionBackup.x = 0.0;
-	vertex1absolutePositionBackup.y = 0.0;
-	vertex1absolutePositionBackup.z = 0.0;
-	vertex2absolutePositionBackup.x = 0.0;
-	vertex2absolutePositionBackup.y = 0.0;
-	vertex2absolutePositionBackup.z = 0.0;
-	vertex3absolutePositionBackup.x = 0.0;
-	vertex3absolutePositionBackup.y = 0.0;
-	vertex3absolutePositionBackup.z = 0.0;
-	vertex4absolutePositionBackup.x = 0.0;
-	vertex4absolutePositionBackup.y = 0.0;
-	vertex4absolutePositionBackup.z = 0.0;
-	referenceEnabledMethod2DOD = true;
-
-	type = REFERENCE_TYPE_UNDEFINED;
-
-	/*Additional values used with recursive parser*/
-	#ifdef USE_LRRC
-	subModelDetails = NULL;
+LDreference::LDreference(string referenceName, int referenceColour, bool createNewSubmodel, bool topLevel)
+{
+	initialiseLDreference(referenceName, referenceColour, createNewSubmodel);
+	#ifdef USE_UNREAL
+	isTopLevel = topLevel;
 	#endif
-	firstReferenceWithinSubModel = NULL;
+}
+
+LDreference::LDreference(bool createNewSubmodel)
+{
+	initialiseLDreference("", 0, createNewSubmodel);
 }
 
 LDreference::~LDreference()
 {
+	/*
 	#ifdef USE_LRRC
 	if(subModelDetails != NULL)
 	{
@@ -144,12 +80,12 @@ LDreference::~LDreference()
 	{
 		delete next;
 	}
+	*/
 }
 
-
-
-LDreference::LDreference(string referenceName, int referenceColour, bool createNewSubmodel)
+void LDreference::initialiseLDreference(string referenceName, int referenceColour, bool createNewSubmodel)
 {
+
 	//Define default values for LDreference
 
 	relativePosition.x = 0.0;
@@ -181,6 +117,44 @@ LDreference::LDreference(string referenceName, int referenceColour, bool createN
 	absoluteDeformationMatrix.c.y = 0.0;
 	absoluteDeformationMatrix.c.z = 1.0;
 
+	#ifdef USE_UNREAL
+	relativeColourString = "";
+
+	isTopLevel = false;
+
+	intermediatePosition.x = 0.0;
+	intermediatePosition.y = 0.0;
+	intermediatePosition.z = 0.0;
+
+	intermediateDeformationMatrix.a.x = 1.0;
+	intermediateDeformationMatrix.a.y = 0.0;
+	intermediateDeformationMatrix.a.z = 0.0;
+	intermediateDeformationMatrix.b.x = 0.0;
+	intermediateDeformationMatrix.b.y = 1.0;
+	intermediateDeformationMatrix.b.z = 0.0;
+	intermediateDeformationMatrix.c.x = 0.0;
+	intermediateDeformationMatrix.c.y = 0.0;
+	intermediateDeformationMatrix.c.z = 1.0;
+
+	vertex1intermediatePosition.x = 0.0;
+	vertex1intermediatePosition.y = 0.0;
+	vertex1intermediatePosition.z = 0.0;
+	vertex2intermediatePosition.x = 0.0;
+	vertex2intermediatePosition.y = 0.0;
+	vertex2intermediatePosition.z = 0.0;
+	vertex3intermediatePosition.x = 0.0;
+	vertex3intermediatePosition.y = 0.0;
+	vertex3intermediatePosition.z = 0.0;
+	vertex4intermediatePosition.x = 0.0;
+	vertex4intermediatePosition.y = 0.0;
+	vertex4intermediatePosition.z = 0.0;
+
+	//#ifdef LDRAW_VR_IO_OPTIMISATION
+	partAdditional = false;
+	partModified = false;
+	partDeleted = false;
+	//#endif
+	#endif
 
 	colour = referenceColour;
 	name = referenceName;
@@ -190,112 +164,6 @@ LDreference::LDreference(string referenceName, int referenceColour, bool createN
 #ifdef USE_RT
 	absoluteColour = DAT_FILE_DEFAULT_COLOUR;
 #endif
-
-		/*new parameters added to parseFile() 18-mar-07*/
-	vertex1relativePosition.x = 0.0;
-	vertex1relativePosition.y = 0.0;
-	vertex1relativePosition.z = 0.0;
-	vertex2relativePosition.x = 0.0;
-	vertex2relativePosition.y = 0.0;
-	vertex2relativePosition.z = 0.0;
-	vertex3relativePosition.x = 0.0;
-	vertex3relativePosition.y = 0.0;
-	vertex3relativePosition.z = 0.0;
-	vertex4relativePosition.x = 0.0;
-	vertex4relativePosition.y = 0.0;
-	vertex4relativePosition.z = 0.0;
-	vertex1absolutePosition.x = 0.0;
-	vertex1absolutePosition.y = 0.0;
-	vertex1absolutePosition.z = 0.0;
-	vertex2absolutePosition.x = 0.0;
-	vertex2absolutePosition.y = 0.0;
-	vertex2absolutePosition.z = 0.0;
-	vertex3absolutePosition.x = 0.0;
-	vertex3absolutePosition.y = 0.0;
-	vertex3absolutePosition.z = 0.0;
-	vertex4absolutePosition.x = 0.0;
-	vertex4absolutePosition.y = 0.0;
-	vertex4absolutePosition.z = 0.0;
-
-	vertex1absolutePositionBackup.x = 0.0;
-	vertex1absolutePositionBackup.y = 0.0;
-	vertex1absolutePositionBackup.z = 0.0;
-	vertex2absolutePositionBackup.x = 0.0;
-	vertex2absolutePositionBackup.y = 0.0;
-	vertex2absolutePositionBackup.z = 0.0;
-	vertex3absolutePositionBackup.x = 0.0;
-	vertex3absolutePositionBackup.y = 0.0;
-	vertex3absolutePositionBackup.z = 0.0;
-	vertex4absolutePositionBackup.x = 0.0;
-	vertex4absolutePositionBackup.y = 0.0;
-	vertex4absolutePositionBackup.z = 0.0;
-	referenceEnabledMethod2DOD = true;
-
-	type = REFERENCE_TYPE_UNDEFINED;
-
-	/*Additional values used with recursive parser*/
-
-
-	if(createNewSubmodel)
-	{
-		#ifdef USE_LRRC
-		subModelDetails = new ModelDetails();
-		#endif
-		firstReferenceWithinSubModel = NULL;
-	}
-	else
-	{
-		#ifdef USE_LRRC
-		subModelDetails = NULL;
-		#endif
-		firstReferenceWithinSubModel = NULL;
-	}
-}
-
-
-
-LDreference::LDreference(bool createNewSubmodel)
-{
-	//Define default values for LDreference
-
-	relativePosition.x = 0.0;
-	relativePosition.y = 0.0;
-	relativePosition.z = 0.0;
-
-	absolutePosition.x = 0.0;
-	absolutePosition.y = 0.0;
-	absolutePosition.z = 0.0;
-
-		//deformationMatrix initialisations here are required for bcc32 compiler
-	deformationMatrix.a.x = 1.0;
-	deformationMatrix.a.y = 0.0;
-	deformationMatrix.a.z = 0.0;
-	deformationMatrix.b.x = 0.0;
-	deformationMatrix.b.y = 1.0;
-	deformationMatrix.b.z = 0.0;
-	deformationMatrix.c.x = 0.0;
-	deformationMatrix.c.y = 0.0;
-	deformationMatrix.c.z = 1.0;
-
-	absoluteDeformationMatrix.a.x = 1.0;
-	absoluteDeformationMatrix.a.y = 0.0;
-	absoluteDeformationMatrix.a.z = 0.0;
-	absoluteDeformationMatrix.b.x = 0.0;
-	absoluteDeformationMatrix.b.y = 1.0;
-	absoluteDeformationMatrix.b.z = 0.0;
-	absoluteDeformationMatrix.c.x = 0.0;
-	absoluteDeformationMatrix.c.y = 0.0;
-	absoluteDeformationMatrix.c.z = 1.0;
-
-	colour = 0;
-	name = "";
-	next = NULL;
-
-#ifdef USE_RT
-	absoluteColour = DAT_FILE_DEFAULT_COLOUR;
-#endif
-
-	isSubModelReference = false;
 
 		/*new parameters added to parseFile() 18-mar-07*/
 	vertex1relativePosition.x = 0.0;
@@ -490,12 +358,30 @@ void LDreferenceClassClass::convertLdrawColourToDatFileRGB(const int dataFileCol
 		g = DAT_FILE_COLOUR_AQUA_RGB_G;
 		b = DAT_FILE_COLOUR_AQUA_RGB_B;
 	}
+	#ifdef USE_UNREAL
+	else if(dataFileColour == DAT_FILE_DEFAULT_COLOUR)
+	{
+		r = TAL_FILE_COLOUR_DEFAULT_RGB_R;
+		g = TAL_FILE_COLOUR_DEFAULT_RGB_G;
+		b = TAL_FILE_COLOUR_DEFAULT_RGB_B;
+	}
+	else
+	{
+		cout << "invalid dat file colour for conversion to RGB" << endl;
+		cout << "dataFileColour = " << dataFileColour << endl;
+		r = TAL_FILE_COLOUR_DEFAULT_RGB_R;
+		g = TAL_FILE_COLOUR_DEFAULT_RGB_G;
+		b = TAL_FILE_COLOUR_DEFAULT_RGB_B;
+	}
+	#else
 	else
 	{
 		cout << "invalid dat file colour for conversion to RGB" << endl;
 		cout << "dataFileColour = " << dataFileColour << endl;
 		exit(0);
 	}
+	#endif
+
 
 	col->r = r;
 	col->g = g;

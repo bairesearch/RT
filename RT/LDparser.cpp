@@ -26,11 +26,14 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "LDparser.hpp"
 #ifdef USE_LRRC
 //#include "LRRCparser.hpp"
@@ -125,7 +128,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 			{
 				parseFileObject.close();
 
-				parseFileNameInPartsDir = DEFAULT_PRIMITIVES_DIRECTORY_FULL_PATH;
+				parseFileNameInPartsDir = DEFAULT_PARTS_PRIMITIVES_DIRECTORY_FULL_PATH;
 				parseFileName = this->removeWhiteSpaceFromString(parseFileName);
 				parseFileNameInPartsDir = parseFileNameInPartsDir + parseFileName;
 				parseFileObject.open(parseFileNameInPartsDir.c_str());
@@ -551,6 +554,21 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						currentReference->vertex4absolutePosition.x = this->calcModXPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.x;
 						currentReference->vertex4absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
 						currentReference->vertex4absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
+
+						#ifdef USE_UNREAL
+						currentReference->vertex1intermediatePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.x;
+						currentReference->vertex1intermediatePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.y;
+						currentReference->vertex1intermediatePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex1relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.z;
+						currentReference->vertex2intermediatePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.x;
+						currentReference->vertex2intermediatePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.y;
+						currentReference->vertex2intermediatePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex2relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.z;
+						currentReference->vertex3intermediatePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.x;
+						currentReference->vertex3intermediatePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.y;
+						currentReference->vertex3intermediatePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex3relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.z;
+						currentReference->vertex4intermediatePosition.x = calcModXPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.x;
+						currentReference->vertex4intermediatePosition.y = calcModYPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.y;
+						currentReference->vertex4intermediatePosition.z = calcModZPosBasedUponRotate(&(currentReference->vertex4relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.z;
+						#endif
 					#else
 						currentReference->vertex1absolutePosition.x = currentReference->vertex1relativePosition.x + parentReference->absolutePosition.x;
 						currentReference->vertex1absolutePosition.y = currentReference->vertex1relativePosition.y + parentReference->absolutePosition.y;
@@ -745,6 +763,9 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 						currentReference->colour = (unsigned int)(SHAREDvars.convertStringToDouble(colour));
+						#ifdef USE_UNREAL
+						currentReference->relativeColourString = colour;
+						#endif
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -779,6 +800,16 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						currentReference->absolutePosition.y = this->calcModYPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.y;
 						currentReference->absolutePosition.z = this->calcModZPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->absoluteDeformationMatrix)) + parentReference->absolutePosition.z;
 
+						#ifdef USE_UNREAL
+						if(!(parentReference->isTopLevel))
+						{
+							SHAREDvector.multiplyMatricies(&(currentReference->intermediateDeformationMatrix), &(parentReference->intermediateDeformationMatrix), &(currentReference->deformationMatrix));
+
+							currentReference->intermediatePosition.x = calcModXPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.x;
+							currentReference->intermediatePosition.y = calcModYPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.y;
+							currentReference->intermediatePosition.z = calcModZPosBasedUponRotate(&(currentReference->relativePosition), &(parentReference->intermediateDeformationMatrix)) + parentReference->intermediatePosition.z;
+						}
+						#endif
 					#else
 						currentReference->absolutePosition.x = currentReference->relativePosition.x + parentReference->absolutePosition.x;
 						currentReference->absolutePosition.y = currentReference->relativePosition.y + parentReference->absolutePosition.y;

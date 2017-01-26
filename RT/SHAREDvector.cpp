@@ -26,11 +26,13 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
-
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "SHAREDvector.hpp"
 
 
@@ -752,10 +754,10 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 {
 	//try for analytical solution
 
-	double mEdge;
-	double iEdge;
-	double mOptionalLine;
-	double iOptionalLine;
+	double mEdge = 0.0;
+	double iEdge = 0.0;
+	double mOptionalLine = 0.0;
+	double iOptionalLine = 0.0;
 	bool edgeGradientInfinityDetected = false;
 	bool optionalLineGradientInfinityDetected = false;
 	bool edgeNoLineDetected = false;

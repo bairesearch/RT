@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
@@ -67,6 +67,7 @@
 #define TAL_FILE_COLOUR_DARKGREEN_RGB "007000"
 #define TAL_FILE_COLOUR_DARKRED_RGB "700000"
 #define TAL_FILE_COLOUR_AQUA_RGB "007070"
+#define TAL_FILE_COLOUR_DEFAULT_RGB "CCCCCC"
 
 #define DAT_FILE_COLOUR_BLACK_RGB_R (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_R (0)
@@ -85,6 +86,7 @@
 #define DAT_FILE_COLOUR_DARKGREEN_RGB_R (0)
 #define DAT_FILE_COLOUR_DARKRED_RGB_R (112)
 #define DAT_FILE_COLOUR_AQUA_RGB_R (0)
+#define TAL_FILE_COLOUR_DEFAULT_RGB_R (204)
 
 #define DAT_FILE_COLOUR_BLACK_RGB_G (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_G (0)
@@ -103,6 +105,7 @@
 #define DAT_FILE_COLOUR_DARKGREEN_RGB_G (112)
 #define DAT_FILE_COLOUR_DARKRED_RGB_G (0)
 #define DAT_FILE_COLOUR_AQUA_RGB_G (112)
+#define TAL_FILE_COLOUR_DEFAULT_RGB_G (204)
 
 #define DAT_FILE_COLOUR_BLACK_RGB_B (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_B (240)
@@ -121,7 +124,7 @@
 #define DAT_FILE_COLOUR_DARKGREEN_RGB_B (0)
 #define DAT_FILE_COLOUR_DARKRED_RGB_B (0)
 #define DAT_FILE_COLOUR_AQUA_RGB_B (112)
-
+#define TAL_FILE_COLOUR_DEFAULT_RGB_B (204)
 
 #define DAT_FILE_COLOUR_UNDEFINED (0)
 #define DAT_FILE_COLOUR_BLACK (0)
@@ -198,8 +201,11 @@ public:
 
 	LDreference(void); // constructor declaration
 	LDreference(string referenceName, int referenceColour, bool createNewSubmodel); // constructor declaration
+	LDreference(string referenceName, int referenceColour, bool createNewSubmodel, bool topLevel);
 	LDreference(bool createNewSubmodel);
 	~LDreference();	//  and destructor.
+
+	void initialiseLDreference(string referenceName, int referenceColour, bool createNewSubmodel);
 
 	vec relativePosition;
 	vec absolutePosition;
@@ -218,6 +224,21 @@ public:
 	vec vertex2absolutePosition;
 	vec vertex3absolutePosition;
 	vec vertex4absolutePosition;
+	#ifdef USE_UNREAL
+	string relativeColourString;
+	bool isTopLevel;
+	vec intermediatePosition;
+	mat intermediateDeformationMatrix;
+	vec vertex1intermediatePosition;
+	vec vertex2intermediatePosition;
+	vec vertex3intermediatePosition;
+	vec vertex4intermediatePosition;
+	//#ifdef LDRAW_VR_IO_OPTIMISATION
+	bool partAdditional;	//NOT CURRENTLY USED (could be used for optimisation purposes)
+	bool partModified;	//NOT CURRENTLY USED (could be used for optimisation purposes)
+	bool partDeleted;		//NOT CURRENTLY USED (could be used for optimisation purposes)
+	//#endif
+	#endif
 
 	vec vertex1absolutePositionBackup;
 	vec vertex2absolutePositionBackup;

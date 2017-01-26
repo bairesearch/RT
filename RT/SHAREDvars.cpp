@@ -26,10 +26,13 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "SHAREDvars.hpp"
 
 #ifdef LINUX
@@ -40,9 +43,9 @@
 #endif
 
 //for file i/o;
+#include <sys/stat.h>
+#include <sys/types.h>
 #ifdef LINUX
-	#include <sys/stat.h>	//is this needed?
-	#include <sys/types.h>	//is this needed?
 	#include <unistd.h>	//added for Ubuntu 13.1 file i/o
 #else
 	#include <windows.h>
@@ -278,7 +281,7 @@ void SHAREDvarsClass::changeDirectory(const string newDirectory)
 	#ifdef LINUX
 	chdir(newDirectoryCharStar);
 	#else
-	::SetCurrentDirectory(newDirectoryCharStar);
+	::SetCurrentDirectoryA(newDirectoryCharStar);
 	#endif
 }
 
@@ -288,7 +291,7 @@ string SHAREDvarsClass::getCurrentDirectory()
 	#ifdef LINUX
 	getcwd(currentFolderCharStar, EXE_FOLDER_PATH_MAX_LENGTH);
 	#else
-	::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolderCharStar);
+	::GetCurrentDirectoryA(EXE_FOLDER_PATH_MAX_LENGTH, currentFolderCharStar);
 	#endif
 	string currentFolder = string(currentFolderCharStar);
 	return currentFolder;
@@ -305,7 +308,7 @@ void SHAREDvarsClass::setCurrentDirectory(string* folder)
 	#ifdef LINUX
 	chdir(folderCharStar);
 	#else
-	::SetCurrentDirectory(folderCharStar);
+	::SetCurrentDirectoryA(folderCharStar);
 	#endif
 }
 
@@ -315,7 +318,7 @@ void SHAREDvarsClass::createDirectory(string* folder)
 	#ifdef LINUX
 	mkdir(folderCharStar, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
 	#else
-	::CreateDirectory(folderCharStar, NULL);
+	::CreateDirectoryA(folderCharStar, NULL);
 	#endif
 }
 
@@ -324,6 +327,7 @@ bool SHAREDvarsClass::directoryExists(string* folder)
 	const char* folderCharStar = folder->c_str();
 	bool folderExists = false;
 
+	/*
 	#ifdef LINUX
 	struct stat st;
 	if(stat(folderCharStar, &st) == 0)
@@ -339,14 +343,22 @@ bool SHAREDvarsClass::directoryExists(string* folder)
 			folderExists = true;
 		}
 	}
-	/*
-	if((GetFileAttributes(folderCharStar)) != INVALID_FILE_ATTRIBUTES)
+	#endif
+	*/
+	struct stat info;
+	if(stat(folderCharStar, &info) != 0)
+	{
+		//printf( "cannot access %s\n", pathname );
+	}
+	else if(info.st_mode & S_IFDIR)  // S_ISDIR() doesn't exist on my windows
 	{
 		folderExists = true;
+		//printf( "%s is a directory\n", pathname );
 	}
-	*/
-	#endif
-
+	else
+	{
+		//printf( "%s is no directory\n", pathname )
+	}
 	return folderExists;
 }
 
@@ -373,25 +385,25 @@ string SHAREDvarsClass::convertStringToLowerCase(const string* arbitraryCaseStri
 string SHAREDvarsClass::convertFloatToString(const float number, const string format)
 {
 	char stringCharStar[100];
-	sprintf(stringCharStar, format.c_str(), number);
+	sprintfSafeDouble(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
 string SHAREDvarsClass::convertDoubleToString(const double number, const string format)
 {
 	char stringCharStar[100];
-	sprintf(stringCharStar, format.c_str(), number);
+	sprintfSafeDouble(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
 string SHAREDvarsClass::convertIntToString(const int number)
 {
 	char stringCharStar[100];
-	sprintf(stringCharStar, "%d", number);
+	sprintfSafeInt(stringCharStar, "%d", number);
 	return string(stringCharStar);
 }
 string SHAREDvarsClass::convertUnsignedIntToString(const int number)
 {
 	char stringCharStar[100];
-	sprintf(stringCharStar, "%u", number);
+	sprintfSafeInt(stringCharStar, "%u", number);
 	return string(stringCharStar);
 }
 string SHAREDvarsClass::convertBoolToString(const bool number)
@@ -410,7 +422,7 @@ string SHAREDvarsClass::convertLongToString(const long number)
 	//return to_string(number);	//C++11
 
 	char tempString[100];
-	sprintf(tempString, "%ld", number);
+	sprintfSafeLong(tempString, "%ld", number);
 	return string(tempString);
 }
 
@@ -662,3 +674,30 @@ bool SHAREDvarsClass::fileExists(const string inputFileName)
 	return result;
 */
 
+
+void SHAREDvarsClass::sprintfSafeDouble(char* stringCharStar, const char* type, double number)
+{
+	#ifdef LINUX
+	sprintf(stringCharStar, type, number);	//snprintf
+	#else
+	snprintf(stringCharStar, sizeof(stringCharStar), type, number);
+	#endif
+}
+
+void SHAREDvarsClass::sprintfSafeInt(char* stringCharStar, const char* type, int number)
+{
+	#ifdef LINUX
+	sprintf(stringCharStar, type, number);	//snprintf
+	#else
+	snprintf(stringCharStar, sizeof(stringCharStar), type, number);
+	#endif
+}
+
+void SHAREDvarsClass::sprintfSafeLong(char* stringCharStar, const char* type, long number)
+{
+	#ifdef LINUX
+	sprintf(stringCharStar, type, number);	//snprintf
+	#else
+	snprintf(stringCharStar, sizeof(stringCharStar), type, number);
+	#endif
+}

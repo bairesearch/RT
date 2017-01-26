@@ -26,12 +26,15 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
 
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "LDsprite.hpp"
 #ifdef USE_LRRC
 //#include "LRRCrules.hpp"
@@ -256,7 +259,6 @@ LDreference* LDspriteClass::LDaddBasicTextualSpriteStringToReferenceList(string 
 
 
 	//common local variables for loop
-	double spriteCurrentCharacterSpacing;
 	int spriteLineNumber = 0;
 
 	for(int spriteTextIndex = 0; spriteTextIndex < spriteTextString.length(); spriteTextIndex++)
@@ -443,11 +445,14 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 		}
 		else
 		{
+			printf("\nunknown character - system must exit (character = %c %d)", spriteTextString[spriteTextIndex], spriteTextString[spriteTextIndex]);
+			/*
 			char temp = (char)SPRITE_CHARACTER_DICE_OFFSET;
 			char temp2 = (char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL);
 			printf("\nunknown character - system must exit (character = %c %d)", spriteTextString[spriteTextIndex], spriteTextString[spriteTextIndex]);
 			printf("\nNB SPRITE_CHARACTER_DICE_OFFSET = %c %d", temp, temp);
 			printf("\nNB (SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL) = %c %d", temp2, temp2);
+			*/
 			exit(0);
 		}
 	}
@@ -482,8 +487,6 @@ bool LDspriteClass::LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoord
 	spriteReference.relativePosition.y = spriteSceneCoords->y;
 	spriteReference.relativePosition.z = spriteSceneCoords->z;
 	spriteReference.name = spriteReferenceFileName;
-
-	int lineNumberInFileOfSprite;
 
 	if(LDreferenceManipulation.search1DrefListNameAndColourFindRef(spriteListInitialReference, &spriteReference))
 	{

@@ -26,7 +26,7 @@
  * File Name: RToperations.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
@@ -34,20 +34,18 @@
 #ifndef HEADER_RT_OPERATIONS
 #define HEADER_RT_OPERATIONS
 
-//#define MISS (-1)
-#define LINE_INTERSECTION_BOUNDARY_ERROR_ALLOWED (0.01)
-
-
 #include "SHAREDvars.hpp"
 #include "SHAREDvector.hpp"
 //#include "math.h"
+
+//#define MISS (-1)
+#define LINE_INTERSECTION_BOUNDARY_ERROR_ALLOWED (0.01)
 
 	/*4x4 matrix manipulation methods*/
 
 typedef struct { double x; double y; double z; double w;} advancedVec;
 
 typedef struct { advancedVec a; advancedVec b; advancedVec c; advancedVec d;} advancedMat;
-
 
 class RToperationsClass
 {
@@ -78,8 +76,8 @@ class RToperationsClass
 	public: double findGreatestValue(const double val1, const double val2, double val3);
 	/*finds the smallest/largest value of 3 given scalars*/
 
-	private: int findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size);
-	private: int findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size);
+	private: int findPositionOfSmallestValueAdvanced(const double* array, const int size);
+	private: int findPositionOfGreatestValueAdvanced(const double* array, const int size);
 
 	public: int findIntersectLineWithTri(const vec* pt1, const vec* pt2, const vec* pt3, vec* linept1, vec* linept2, vec* pt_int, vec* norm, double* t);
 		private: int checkSameClockDir(const vec* pt1, const vec* pt2, const vec* pt3, const vec* norm);
@@ -94,8 +92,8 @@ class RToperationsClass
 	private: double findGreatestValueAdvanced(double val1, const double val2);
 	public: double findGreatestValue(double val1, const double val2);
 
-	public: int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size);
-	public: int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size);
+	public: int findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const int size);
+	public: int findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const int size);
 };
 
 #endif

@@ -26,11 +26,14 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "LDreferenceManipulation.hpp"
 
 
@@ -307,13 +310,13 @@ string LDreferenceManipulationClass::convertPositionCoordinatesToString(const ve
 
 	char dataValueString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
 
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
 
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
 	positionCoordinatesString = positionCoordinatesString + dataValueString + CHAR_SPACE;
 
 	return positionCoordinatesString;
@@ -327,17 +330,17 @@ string LDreferenceManipulationClass::convertPositionCoordinatesToStringWithComma
 
 	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
 	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->x);
 	positionCoordinatesString = positionCoordinatesString + dataValueString;
 
 	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
 	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->y);
 	positionCoordinatesString = positionCoordinatesString + dataValueString;
 
 	positionCoordinatesString = positionCoordinatesString + CHAR_COMMA;
 	positionCoordinatesString = positionCoordinatesString + CHAR_SPACE;
-	sprintf(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
+	SHAREDvars.sprintfSafeDouble(dataValueString, FILE_FLOAT_PRECISION, spriteSceneCoords->z);
 	positionCoordinatesString = positionCoordinatesString + dataValueString;
 
 	return positionCoordinatesString;

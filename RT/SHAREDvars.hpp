@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
@@ -72,7 +72,11 @@ typedef struct { vec a; vec b; vec c; } mat;
 #ifdef COMPILE_OLC
 	#define DOUBLE_MIN_PRECISION 0.005
 #else
-	#define DOUBLE_MIN_PRECISION 0.00001
+	#ifdef USE_UNREAL
+		#define DOUBLE_MIN_PRECISION 0.001	//temporarily relaxed matrix comparison value for LDRAW_VR_DEBUG_AUTOMATICALLY_CALCULATE_UNREAL_LD_TRANSFORM_BASED_ON_EXPECTED_RESULT
+	#else
+		#define DOUBLE_MIN_PRECISION 0.00001
+	#endif
 #endif
 
 class SHAREDvarsClass
@@ -137,6 +141,10 @@ class SHAREDvarsClass
 	public: string getFileContents(const string inputFileName);
 		public: string getFileContents(const string inputFileName, int* numberLines);
 	public: bool fileExists(const string inputFileName);
+
+	public: void sprintfSafeDouble(char* stringCharStar, const char* type, double number);
+	public: void sprintfSafeInt(char* stringCharStar, const char* type, int number);
+	public: void sprintfSafeLong(char* stringCharStar, const char* type, long number);
 };
 
 

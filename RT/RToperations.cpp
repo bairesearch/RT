@@ -26,11 +26,14 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  *
  *******************************************************************************/
 
 
+#ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
+#include "ldrawVRv0.h"
+#endif //comment with COMPILE_UNREAL_PROJECT
 #include "RToperations.hpp"
 
 void RToperationsClass::createAdvancedVector(advancedVec* vec)
@@ -386,7 +389,7 @@ double RToperationsClass::findGreatestValue(const double val1, const double val2
 
 
 
-int RToperationsClass::findPositionOfSmallestValueAdvanced(const double* array, const unsigned int size)
+int RToperationsClass::findPositionOfSmallestValueAdvanced(const double* array, const int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -414,7 +417,7 @@ int RToperationsClass::findPositionOfSmallestValueAdvanced(const double* array, 
 	}
 	return position;
 }
-int RToperationsClass::findPositionOfGreatestValueAdvanced(const double* array, const unsigned int size)
+int RToperationsClass::findPositionOfGreatestValueAdvanced(const double* array, const int size)
 {
 	int position = NOT_FOUND;
 	double tmp = -1;
@@ -446,7 +449,7 @@ int RToperationsClass::findPositionOfGreatestValueAdvanced(const double* array, 
 
 
 
-int RToperationsClass::findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
+int RToperationsClass::findPositionOfSmallestValueWhichHits(const double* array, const int* hitsArray, const int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_LARGE_DOUBLE;
@@ -463,7 +466,7 @@ int RToperationsClass::findPositionOfSmallestValueWhichHits(const double* array,
 }
 
 
-int RToperationsClass::findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const unsigned int size)
+int RToperationsClass::findPositionOfGreatestValueWhichHits(const double* array, const int* hitsArray, const int size)
 {
 	int position = NOT_FOUND;
 	double tmp = REALLY_SMALL_DOUBLE;
@@ -886,7 +889,6 @@ int RToperationsClass::findIntersectLineWithQuad(const vec* pt1, const vec* pt2,
 	int triBIntersectionFound = FALSE;
 	int quadIntersectionFound = FALSE;
 
-	double tin, tout;
 	double triAtInAndOut;
 	double triBtInAndOut;
 

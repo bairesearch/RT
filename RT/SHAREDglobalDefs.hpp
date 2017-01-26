@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3a 26-January-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -35,11 +35,17 @@
 #ifndef HEADER_SHARED_GLOBAL_DEFS
 #define HEADER_SHARED_GLOBAL_DEFS
 
+
+class SHAREDglobalDefsClass
+{
+};
+
 	/**********
 	SOURCE PROJECT VARIABLES;
 	***********/
 
 	//current/active projects;
+//#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF
 #define COMPILE_NLC
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
@@ -81,6 +87,18 @@
 	/**********
 	COMPILATION TYPE DEPENDENT VARIABLES;
 	***********/
+
+#ifdef COMPILE_UNREAL_PROJECT
+	#define USE_UNREAL
+	#define USE_RT
+	#ifdef LINUX
+		#define DEFAULT_PARTS_DIRECTORY_FULL_PATH "/usr/share/local/LDRAW/PARTS/"
+		#define DEFAULT_PARTS_PRIMITIVES_DIRECTORY_FULL_PATH "/usr/share/local/LDRAW/P/"
+	#else
+		#define DEFAULT_PARTS_DIRECTORY_FULL_PATH "D:/Program Files (x86)/LDraw/PARTS/parts/"
+		#define DEFAULT_PARTS_PRIMITIVES_DIRECTORY_FULL_PATH "D:/Program Files (x86)/LDraw/PARTS/p/"
+	#endif
+#endif
 
 #ifdef COMPILE_CF
 	#define USE_CF
@@ -196,12 +214,12 @@
 #include <unordered_map>	//requires C++11
 #include <utility> // make_pair
 #endif
-#ifdef USE_NLC
 #include <algorithm>
 #include <stack>
-#endif
 #include <map>
 #include <limits>
+#include <sstream>
+#include <iomanip>
 using namespace std;
 
 
