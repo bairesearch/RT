@@ -26,7 +26,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j3a 26-January-2017
+ * Project Version: 3j3b 26-January-2017
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
