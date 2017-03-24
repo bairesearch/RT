@@ -46,13 +46,13 @@ class SHAREDglobalDefsClass
 	//current/active projects;
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF
-#define COMPILE_NLC
+//#define COMPILE_NLC
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_CE	//makefile.GIAwithCE -> GIAwithCE.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
-//#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANNwithRT.exe
+#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANNwithRT.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
 //#define COMPILE_LRRC		//compileLRRC.bat -> LRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
