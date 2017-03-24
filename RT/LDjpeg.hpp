@@ -25,7 +25,7 @@
  * File Name: LDjpeg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k1a 26-February-2017
+ * Project Version: 3k2a 21-March-2017
  *
  *******************************************************************************/
 
@@ -44,7 +44,7 @@
 class LDjpegClass
 {
 	private: SHAREDvarsClass SHAREDvars;
-	#ifdef DEBUG_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
+	#ifdef VERBOSE_OR_IMAGE_COMPARISON_DECISION_TREE_PATTERN_RECOGNITION_FOURIER_TRANSFORM_BINNING_COMPARISON_DCT_TABLES_TO_HTML
 	public: void setPointerToDCTtableHTMLoutputString(string* pointer);
 	#endif
 
