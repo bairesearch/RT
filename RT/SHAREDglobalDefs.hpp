@@ -46,8 +46,8 @@ class SHAREDglobalDefsClass
 	//current/active projects;
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF
-#define COMPILE_NLC
-//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+//#define COMPILE_NLC
+#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_CE	//makefile.GIAwithCE -> GIAwithCE.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
