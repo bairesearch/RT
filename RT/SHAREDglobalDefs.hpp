@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k2a 21-March-2017
+ * Project Version: 3k2b 21-March-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -45,29 +45,15 @@ class SHAREDglobalDefsClass
 
 	//current/active projects;
 //#define COMPILE_UNREAL_PROJECT
-//#define COMPILE_CF
-#define COMPILE_NLC
-//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
-//#define COMPILE_GIA_WITH_CE	//makefile.GIAwithCE -> GIAwithCE.exe
+//#define COMPILE_CF		//compileCF.bat -> CF.exe
+//#define COMPILE_NLC		//makefile.NLC -> NLC.exe
+#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
 //#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANNwithRT.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
-//#define COMPILE_LRRC		//compileLRRC.bat -> LRRC.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
-
-	//inactive tests;
-//#define COMPILE_TH_OR_IMAGE_CATEGORISTION_NN	//ORTHimageCategorisationNN.exe
-//#define COMPILE_LRRC_WITH_ANN		[compilation broken; requires updating]
-//#define COMPILE_TH_ANN_WITH_LRRC	[compilation broken; requires updating]
-
-	//old tests
-//#define COMPILE_TH_OR_METHOD_2DOD
-//#define COMPILE_TH_OR_METHOD_3DOD
-//#define COMPILE_TH_RT
-//#define COMPILE_TH_OR_METHOD_2DOD_WITH_ANN
-//#define COMPILE_TH_OR_METHOD_3DOD_WITH_ANN
 
 
 
@@ -78,7 +64,7 @@ class SHAREDglobalDefsClass
 #define LINUX
 #ifndef LINUX
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
-	//#include <windows.h>	//incompatible with LDjpeg.h (must only include windows.h when need to)
+	//#include <windows.h>	//incompatible with LDjpeg.hpp (must only include windows.h when need to)
 #endif
 
 #define SQL_MYSQL_VERSION_5_7_PLUS
@@ -102,10 +88,12 @@ class SHAREDglobalDefsClass
 #ifdef COMPILE_CF
 	#define USE_CF
 #endif
+
 #ifdef COMPILE_NLC
 	#define USE_NLC
 	#define USE_GIA
 #endif
+
 #ifdef COMPILE_GIA_WITH_CE
 	#define USE_GIA
 	#define USE_CE
@@ -117,8 +105,6 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
-
-
 #ifdef COMPILE_CS
 	#define USE_CS
 #endif
@@ -126,43 +112,12 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
-
-
 #ifdef COMPILE_OR
-	#define USE_OR
-#endif
-#ifdef COMPILE_TH_OR_IMAGE_CATEGORISTION_NN
-	#define USE_OR
-	#define USE_ANN
-#endif
-#ifdef COMPILE_TH_OR_METHOD_2DOD
-	#define USE_OR
-#endif
-#ifdef COMPILE_TH_OR_METHOD_3DOD
-	#define USE_OR
-	#define OR_METHOD3DOD_TEST
-#endif
-#ifdef COMPILE_TH_OR_METHOD_2DOD_WITH_ANN
-	#define USE_ANN
-	#define USE_OR
-#endif
-#ifdef COMPILE_TH_OR_METHOD_3DOD_WITH_ANN
-	#define USE_ANN
 	#define USE_OR
 #endif
 #ifdef USE_OR
 	#define USE_RT
 #endif
-
-
-
-//OLD;
-#ifdef OR_USE_OR_NEURAL_NETWORK_COMPARITOR
-	#define OR_TEST_ORI_AND_POS_NOISE_DURING_TRANING_AND_TESTING
-	#define OR_MANY_NUMBER_OF_OUTPUT_FILES
-#endif
-
-
 
 #ifdef COMPILE_ANN
 	#define USE_ANN
@@ -172,29 +127,7 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
-
-
 #ifdef COMPILE_RT
-	#define USE_RT
-#endif
-#ifdef COMPILE_TH_RT
-	#define USE_RT
-#endif
-
-
-
-#ifdef COMPILE_LRRC
-	#define USE_LRRC
-#endif
-#ifdef COMPILE_LRRC_WITH_ANN
-	#define USE_LRRC
-	#define USE_ANN
-	#define USE_RT
-#endif
-#ifdef COMPILE_TH_ANN_WITH_LRRC
-	#define USE_LRRC
-	#define USE_ANN
-	#define TH_USE_ANN_TEST_HARNESS
 	#define USE_RT
 #endif
 
