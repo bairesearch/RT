@@ -25,7 +25,7 @@
  * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -247,9 +247,9 @@ public:
 
 	int type;
 
-#ifdef USE_LD_ABSOLUTE_COLOUR
+	#ifdef USE_LD_ABSOLUTE_COLOUR
 	unsigned int absoluteColour;
-#endif
+	#endif
 
 	/*Additional values used with recursive parser*/
 	bool isSubModelReference;

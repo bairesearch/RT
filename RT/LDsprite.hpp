@@ -25,7 +25,7 @@
  * File Name: LDsprite.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -127,7 +127,7 @@ class LDspriteClass
 
 	private: bool LDaddSpriteToSpriteReferenceList(const vec* spriteSceneCoords, const vec* eyeCoords, LDreference* spriteListInitialReference, const string spriteReferenceFileName, const int spriteDefaultColour, double spriteScaleFactor);
 
-/*low level sprite routines*/
+	/*low level sprite routines*/
 	private: void LDgenerateSpriteRotationMatrix(const vec* spriteSceneCoords, const vec* eyeCoords, mat* spriteRotationMatrix);
 	private: void LDspriteSubmodelFillTextualReference(LDreference* spriteSubmodelCurrentReference, vec* spriteParagraphCurrentPosition, const char characterToWrite, int spriteColour, double scale);
 };

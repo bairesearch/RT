@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -301,7 +301,7 @@ void SHAREDvarsClass::setCurrentDirectory(string folder)
 	this->setCurrentDirectory(&folder);
 }
 
-void SHAREDvarsClass::setCurrentDirectory(string* folder)
+void SHAREDvarsClass::setCurrentDirectory(const string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
@@ -311,7 +311,7 @@ void SHAREDvarsClass::setCurrentDirectory(string* folder)
 	#endif
 }
 
-void SHAREDvarsClass::createDirectory(string* folder)
+void SHAREDvarsClass::createDirectory(const string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
@@ -321,7 +321,7 @@ void SHAREDvarsClass::createDirectory(string* folder)
 	#endif
 }
 
-bool SHAREDvarsClass::directoryExists(string* folder)
+bool SHAREDvarsClass::directoryExists(const string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	bool folderExists = false;
@@ -554,6 +554,29 @@ string SHAREDvarsClass::replaceAllOccurancesOfString(const string* textOrig, str
 	return text;
 }
 
+string SHAREDvarsClass::replaceAllOccurancesOfChar(const string* textOrig, char charToFind, char replacementChar)
+{
+	bool foundAtLeastOneInstance = false;
+	string text = this->replaceAllOccurancesOfChar(textOrig, charToFind, replacementChar, &foundAtLeastOneInstance);
+	return text;
+}
+
+string SHAREDvarsClass::replaceAllOccurancesOfChar(const string* textOrig, char charToFind, char replacementChar, bool* foundAtLeastOneInstance)
+{
+	*foundAtLeastOneInstance = false;
+	string text = *textOrig;
+	for(int i=0; i<textOrig->length(); i++)
+	{
+		if((*textOrig)[i] == charToFind)
+		{
+			*foundAtLeastOneInstance = true;
+			text[i] = replacementChar;
+		}
+	}
+	return text;
+}
+
+
 void SHAREDvarsClass::writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize)
 {
 	ofstream parseFileObject(fileName.c_str());
@@ -624,7 +647,7 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 	{
 		// file does not exist in current directory.
 		cout << "Error: input file does not exist in current directory: " << inputFileName << endl;
-		//exit(0);
+		//exit(EXIT_ERROR);
 		result = false;
 	}
 	else
@@ -643,6 +666,89 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 	#endif
 
 	return fileContents;
+}
+
+bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, string* inputFileNameArray, int* numberOfInputFilesInList)
+{
+	bool result = true;
+	*numberOfInputFilesInList = 0;
+	ifstream parseFileObject(inputListFileName.c_str());
+	if(!parseFileObject.rdbuf()->is_open())
+	{
+		//txt file does not exist in current directory.
+		result = false;
+	}
+	else
+	{
+		char currentToken;
+		int fileNameIndex = 0;
+		int charCount = 0;
+		string currentFileName = "";
+		while(parseFileObject.get(currentToken))
+		{
+			if(currentToken == CHAR_NEWLINE)
+			{
+				inputFileNameArray[fileNameIndex] = currentFileName;
+				currentFileName = "";
+				fileNameIndex++;
+			}
+			else
+			{
+				currentFileName = currentFileName + currentToken;
+			}
+			charCount++;
+		}
+		*numberOfInputFilesInList = fileNameIndex;
+	}
+	return result;
+}
+
+void SHAREDvarsClass::writeStringListToFile(const string fileName, const vector<string>* stringList)
+{
+	string s = "";
+	for(vector<string>::const_iterator stringListIter = stringList->begin(); stringListIter != stringList->end(); stringListIter++)
+	{		
+		string line = *stringListIter;
+		s = s + line + CHAR_NEWLINE;
+	}
+	
+	writeStringToFile(fileName, &s);
+}
+
+
+bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList)
+{
+	bool result = true;
+	*numberOfInputFilesInList = 0;
+	ifstream parseFileObject(inputListFileName.c_str());
+	if(!parseFileObject.rdbuf()->is_open())
+	{
+		//txt file does not exist in current directory.
+		result = false;
+	}
+	else
+	{
+		char currentToken;
+		int fileNameIndex = 0;
+		int charCount = 0;
+		string currentFileName = "";
+		while(parseFileObject.get(currentToken))
+		{
+			if(currentToken == CHAR_NEWLINE)
+			{
+				inputTextFileNameList->push_back(currentFileName);
+				currentFileName = "";
+				fileNameIndex++;
+			}
+			else
+			{
+				currentFileName = currentFileName + currentToken;
+			}
+			charCount++;
+		}
+		*numberOfInputFilesInList = fileNameIndex;
+	}
+	return result;
 }
 
 bool SHAREDvarsClass::fileExists(const string inputFileName)

@@ -25,7 +25,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -48,7 +48,7 @@ bool RTreferenceManipulationClass::write2DReferenceListCollapsedTo1DToFileRayTra
 	else
 	{
 		cout << "Error: cannot create new file, " << fileName << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 }
 
@@ -59,14 +59,14 @@ bool RTreferenceManipulationClass::writeRayTraceFormatHeaderInfo(ofstream* write
 	/*
 	#ifdef COMPILE_TH_RT
 		printf("1");
-		exit(0);
+		exit(EXIT_ERROR);
 	#elif defined COMPILE_TH_ANN_WITH_LRRC
 		printf("2");
 		printf("width= %d ", (int)TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH);
-		exit(0);
+		exit(EXIT_ERROR);
 	#else
 		printf("3");
-		exit(0);
+		exit(EXIT_ERROR);
 	#endif
 	*/
 
@@ -353,7 +353,7 @@ bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstre
 	else
 	{
 		cout << "error; cannot produce raytrace reference of type, " << currentReference->type << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	for(int i = 0; i<referenceTypeString.length(); i++)
@@ -439,7 +439,7 @@ bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstre
 	else
 	{
 		cout << "error; cannot produce raytrace reference of colour, " << currentReference->colour << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 	for(int i = 0; i<referenceColourString.length(); i++)
 	{
@@ -579,7 +579,7 @@ bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstre
 	else
 	{
 		cout << "This reference type cannot be converted to string: name=" << currentReference->name << ", type=" << currentReference->type << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	//write ref end

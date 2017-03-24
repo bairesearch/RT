@@ -25,7 +25,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -1347,7 +1347,7 @@ void RTpixelMapsClass::calculate24BitDepthPixmapPixelFromDepth(const double dept
 {
 	if(depth < 0 )
 	{
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 	int depthInt24Bit = (depth + depthOffset) / depthScale;
 	//depthInt24Bit = depthInt24Bit%((MAX_RGB_VAL+1)*(MAX_RGB_VAL+1)*(MAX_RGB_VAL+1));
@@ -1592,7 +1592,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 	else
 	{
 		cout << "error: invalid contrast map generation kernel width and/or height" << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	return contrastLevel;
@@ -1689,7 +1689,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 	else
 	{
 		cout << "error: invalid contrast map generation kernel width and/or height" << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	return contrastLevel;

@@ -25,7 +25,7 @@
  * File Name: SHAREDvector.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -155,7 +155,7 @@ class SHAREDvectorClass
 	public: void createRotationMatrixZ(mat* matrix, double rotation);
 	public: double convertDegreesToRadian(const double degrees);
 	public: double convertRadianToDegrees(const double radian);
-//void rotateMatrix(mat* matrix, char rotationAxis, double rotationDegrees);
+	//void rotateMatrix(mat* matrix, char rotationAxis, double rotationDegrees);
 	public: void copyMatrixTwoIntoMatrixOne(mat* mat1, mat* mat2);
 	public: void scaleMatrix(mat* matrix, double scaleFactor);
 
@@ -163,7 +163,7 @@ class SHAREDvectorClass
 
 
 
-//From OLCoperations.h
+	//From OLCoperations.h
 
 	public: void find2DintersectionPoint(double ax, double ay, double bx, double by, const double cx, const double cy, const double dx, const double dy, double* intersectionX, double* intersectionY, bool* interceptionFound, bool* interceptionPointFound);	//NB an interception may be a line and not a point
 		private: double calcDistanceBetweenTwoPoints2D(const double x1, const double y1, const double x2, const double y2);
@@ -173,12 +173,12 @@ class SHAREDvectorClass
 		private: bool twoPointsAreTheSame2D(const double x1, const double y1, const double x2, const double y2);
 		private: bool determineIfPointLiesOnAKnownLine2D(const double m1, const double i1, const double x3, const double y3);
 
-#ifdef USE_RT
+	#ifdef USE_RT
 	//required for raytracing operations
 	public: bool compareDoublesRelaxed(const double a, const double b);
 	private: bool determineIfPointLiesOnAKnownLine2Drelaxed(const double m1, const double i1, const double x3, const double y3);
 	private: bool twoPointsAreTheSame2Drelaxed(const double x1, const double y1, const double x2, const double y2);
-#endif
+	#endif
 
 };
 

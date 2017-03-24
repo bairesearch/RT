@@ -25,7 +25,7 @@
  * File Name: LDreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -86,7 +86,7 @@ class LDreferenceManipulationClass
 	public: bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
 	public: void copyFiles(const string newFileName, const string fileToCopyName);
 
-/*sprite routines*/
+	/*sprite routines*/
 	public: string convertRotationMatrixToString(const mat* rotationMatrix);
 
 	public: bool addSpriteReferenceListToSceneFile(const string sceneFileName, const string sceneFileNameWithSprites, LDreference* firstSpriteInReferenceList, const int spriteListByteArrayLines);

@@ -25,7 +25,7 @@
  * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -88,24 +88,24 @@ class XMLrulesClassClass
 {
 	private: XMLparserClassClass XMLparserClass;
 	private: SHAREDvarsClass SHAREDvars;
-#ifdef USE_NLC
+	#ifdef USE_NLC
 	public: bool parseNLCrulesXMLfile();
-#endif
+	#endif
 
-#ifdef USE_GIA
+	#ifdef USE_GIA
 	public: bool parseGIArulesXMLfile();
 		private: bool parseGIARulesTag(XMLparserTag* currentTag);
-#endif
+	#endif
 
-#ifdef USE_CS
+	#ifdef USE_CS
 	public: bool parseCSrulesXMLfile();
 		private: bool parseCSRulesTag(XMLparserTag* currentTag);
-#endif
+	#endif
 
-#ifdef USE_OR
+	#ifdef USE_OR
 	public: bool parseORrulesXMLfile();
 		private: bool parseORrulesTag(XMLparserTag* currentTag);
-#endif
+	#endif
 
 	public: bool parseANNrulesXMLfile();
 		private: bool parseANNrulesTag(XMLparserTag* currentTag);

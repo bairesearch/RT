@@ -25,7 +25,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -70,9 +70,9 @@ static char errmessage[] = "Usage:  RT.exe [options]"
 "\n\t-lightz [float]   : position of light point source z (def: 20)"
 "\n\t-lightcol [string]: light point source colour (def: white)"
 "\n"
-"\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
+"\n\t-inputfolder [string]   : input directory name for input files (def: same as exe)"
 "\n\t-exefolder [string]     : exe directory name for executables; RT.exe (def: same as exe)"
-"\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
+"\n\t-outputfolder [string]  : output directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-version          : print version"
 "\n"
@@ -237,13 +237,13 @@ int main(const int argc, const char** argv)
 		string currentFolder = "";
 		currentFolder = SHAREDvarsClass().getCurrentDirectory();
 
-		if(SHAREDvarsClass().argumentExists(argc,argv,"-workingfolder"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-inputfolder"))
 		{
-			workingFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-workingfolder");
+			inputFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-inputfolder");
 		}
 		else
 		{
-			workingFolder = currentFolder;
+			inputFolder = currentFolder;
 		}
 		if(SHAREDvarsClass().argumentExists(argc,argv,"-exefolder"))
 		{
@@ -253,27 +253,27 @@ int main(const int argc, const char** argv)
 		{
 			exeFolder = currentFolder;
 		}
-		if(SHAREDvarsClass().argumentExists(argc,argv,"-tempfolder"))
+		if(SHAREDvarsClass().argumentExists(argc,argv,"-outputfolder"))
 		{
-			tempFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-tempfolder");
+			outputFolder=SHAREDvarsClass().getStringArgument(argc,argv,"-outputfolder");
 		}
 		else
 		{
-			tempFolder = currentFolder;
+			outputFolder = currentFolder;
 		}
 
-		SHAREDvarsClass().setCurrentDirectory(workingFolder);
+		SHAREDvarsClass().setCurrentDirectory(inputFolder);
 
 		if(SHAREDvarsClass().argumentExists(argc,argv,"-version"))
 		{
-			cout << "RT.exe - Project Version: 3j3e 26-January-2017" << endl;
-			exit(1);
+			cout << "RT.exe - Project Version: 3k1a 26-February-2017" << endl;
+			exit(EXIT_OK);
 		}
 	}
 	else
 	{
 		printf(errmessage);
-		exit(1);
+		exit(EXIT_ERROR);
 	}
 
 	//RTsceneClass().setLightingMode(LIGHTING_MODE_BASIC);
@@ -285,10 +285,10 @@ int main(const int argc, const char** argv)
 		if(!LDparserClass().parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
 		{//file does not exist
 			cout << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;
-			exit(0);
+			exit(EXIT_ERROR);
 		}
 
-		SHAREDvarsClass().setCurrentDirectory(tempFolder);
+		SHAREDvarsClass().setCurrentDirectory(outputFolder);
 
 		LDreferenceManipulationClass().write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFile);
 		RTreferenceManipulationClass().write2DReferenceListCollapsedTo1DToFileRayTraceFormat(topLevelSceneFileNameCollapsedForRayTracing, initialReferenceInSceneFile, true, &viewinfo, useCustomLightSource, &lightSourcePosition, lightSourceColour);

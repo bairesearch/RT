@@ -25,7 +25,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -93,7 +93,7 @@ int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, 
 
 	RTparser.exitParser();
 
-	SHAREDvars.setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(outputFolder);
 
 
 	if(!this->rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))
@@ -202,7 +202,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 			if(!this->addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
-				exit(0);
+				exit(EXIT_ERROR);
 			}
 
 			//printf("outputFileNameWithExtension = %s", outputFileNameWithExtension);
@@ -210,7 +210,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 		else
 		{
 			printf("error: cannot use standard output for multiple file output");
-			exit(0);
+			exit(EXIT_ERROR);
 		}
 
 
@@ -222,7 +222,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 			if(!this->addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				printf("error: cannot add extension");
-				exit(0);
+				exit(EXIT_ERROR);
 			}
 
 			//printf("outputFileNameWithExtension = %s", outputFileNameWithExtension);
@@ -230,7 +230,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 		else
 		{
 			printf("error: cannot use standard output for multiple file output");
-			exit(0);
+			exit(EXIT_ERROR);
 		}
 
 		RTpixelMaps.writeImage(outputFileNameWithExtension, dm);
@@ -314,7 +314,7 @@ RTlightingInfo* addLightToEnd(RTlightingInfo* li_orig, RTlightingInfo* new_node)
 
 	/*
 	printf("asd");
-	exit(0);
+	exit(EXIT_ERROR);
 	*/
 
 	for(tmp = li_orig; tmp->nextLight != NULL; tmp = tmp->nextLight)
@@ -343,7 +343,7 @@ void RTsceneClass::parseTalFileInitialiseParser(const string talFileName)
   	if(!f)
 	{
 		printf("error; no file name specified in code execution, and no standard input given to RT.exe executable");
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 	else
 	{
@@ -357,7 +357,7 @@ RTviewInfo* RTsceneClass::parseTalFileGetViewInfo(RTviewInfo* vi)
 	if(! RTparser.readViewport())
 	{
 		printf("could not read viewport");
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	vi = RTparser.get_view_info();

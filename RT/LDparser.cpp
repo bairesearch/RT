@@ -25,7 +25,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -250,7 +250,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						cout << "parseFileName = " << parseFileName << endl;
 						cout << "character = " << c << endl;
 						cout << "(int)character = " << (int)c << endl;
-						exit(0);
+						exit(EXIT_ERROR);
 					}
 				}
 
@@ -267,7 +267,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						cout << "\n lineCount = " << lineCount << endl;
 						cout << "\n type = " << type << endl;
 						cout << "parseFileName = " << parseFileName << endl;
-						exit(0);
+						exit(EXIT_ERROR);
 					}
 
 					colour = "";
@@ -381,7 +381,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
 								cout << "filename = " << parentReference->name << endl;
-								exit(0);
+								exit(EXIT_ERROR);
 							}
 						#endif
 							lineCount++;
@@ -401,7 +401,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
 								cout << "filename = " << parentReference->name << endl;
-								exit(0);
+								exit(EXIT_ERROR);
 							}
 							readingVertex3X = true;
 						}
@@ -445,7 +445,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
 								cout << "filename = " << parentReference->name << endl;
-								exit(0);
+								exit(EXIT_ERROR);
 							}
 							readingVertex4X = true;
 						}
@@ -464,7 +464,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 								cout << "lineCount = " << lineCount << endl;
 								cout << "type = " << type << endl;
 								cout << "filename = " << parentReference->name << endl;
-								exit(0);
+								exit(EXIT_ERROR);
 							}
 						#endif
 							lineCount++;

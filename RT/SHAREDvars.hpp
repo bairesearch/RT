@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -101,9 +101,9 @@ class SHAREDvarsClass
 
 	public: string getCurrentDirectory();
 	public: void setCurrentDirectory(string folder);
-		public: void setCurrentDirectory(string* folder);
-	public: void createDirectory(string* folder);
-	public: bool directoryExists(string* folder);
+		public: void setCurrentDirectory(const string* folder);
+	public: void createDirectory(const string* folder);
+	public: bool directoryExists(const string* folder);
 
 	public: void copyColours(colour* colToModify, colour* colToCopy);
 
@@ -130,6 +130,9 @@ class SHAREDvarsClass
 	public: bool intInIntArray(const int iTest, const int* intArray, const int arraySize);
 	public: string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString);
 	public: string replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString, bool* foundAtLeastOneInstance);
+	public: string replaceAllOccurancesOfChar(const string* textOrig, char charToFind, char replacementChar);
+	public: string replaceAllOccurancesOfChar(const string* textOrig, char charToFind, char replacementChar, bool* foundAtLeastOneInstance);
+
 
 	public: void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize);
 	public: void writeStringToFileObject(string s, ofstream* writeFileObject);
@@ -139,6 +142,11 @@ class SHAREDvarsClass
 
 	public: string getFileContents(const string inputFileName);
 		public: string getFileContents(const string inputFileName, int* numberLines);
+	public: bool getFilesFromFileList(const string inputListFileName, string* inputFileNameArray, int* numberOfInputFilesInList);
+	public: bool getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);		
+	public: void writeStringListToFile(const string fileName, const vector<string>* stringList);
+
+		
 	public: bool fileExists(const string inputFileName);
 
 	public: void sprintfSafeDouble(char* stringCharStar, const char* type, double number);

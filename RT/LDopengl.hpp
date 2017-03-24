@@ -25,7 +25,7 @@
  * File Name: LDopengl.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -102,7 +102,7 @@ class LDopenglClass
 {
 	public: bool initiateOpenGL(const int width, const int height, const int windowPositionX, const int windowPositionY, const bool confidentialWarnings);
 	public: bool exitOpenGL();
-//void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
+	//void setViewPort(int width, int height, double xCentre, double yCentre);	//optional
 	public: void setViewPort2Dortho(const double left, const double right, const double bottom, const double top);
 	public: void setViewPort3D(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, const vec* viewPortWidthHeightDepth);
 	private: void setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* viewAtFacingPoly, const vec* viewUpFacingPoly, vec* viewPortWidthHeightDepth);

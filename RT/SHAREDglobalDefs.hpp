@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -274,10 +274,13 @@ using namespace std;
 #define INT_IRRELEVANT (0)
 #define BOOL_UNKNOWN_LEGACY (false)
 
+#define EXIT_OK (0)
+#define EXIT_ERROR (1)
+
 #define EXE_FOLDER_PATH_MAX_LENGTH (1000)
 extern string exeFolder;
-extern string workingFolder;
-extern string tempFolder;
+extern string inputFolder;
+extern string outputFolder;
 
 #define constEffective
 

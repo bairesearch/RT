@@ -25,7 +25,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  *
  *******************************************************************************/
 
@@ -234,7 +234,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDr
 	{
 		cout << "dimension = " << dimension << endl;
 		cout << "Error: illegal number dimensions" << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	glutMainLoopEvent();
@@ -278,7 +278,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGL(const LDreference* first
 	{
 		cout << "dimension = " << dimension << endl;
 		cout << "Error: illegal number dimensions" << endl;
-		exit(0);
+		exit(EXIT_ERROR);
 	}
 
 	glutMainLoopEvent();

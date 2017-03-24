@@ -25,7 +25,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j3e 26-January-2017
+ * Project Version: 3k1a 26-February-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -452,7 +452,7 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			printf("\nNB SPRITE_CHARACTER_DICE_OFFSET = %c %d", temp, temp);
 			printf("\nNB (SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL) = %c %d", temp2, temp2);
 			*/
-			exit(0);
+			exit(EXIT_ERROR);
 		}
 	}
 
