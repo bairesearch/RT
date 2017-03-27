@@ -2,17 +2,17 @@
 
 CC=g++
 #CFLAGS=-c -Wall
-CFLAGS=-c -W --no-warn
+CFLAGS=-c -W --no-warn -g
 LDFLAGS=-lglut -lGL -lGLU
 SOURCES= RTmain.cpp RTscene.cpp RToperations.cpp RTparser.cpp RTppm.cpp RTraytracer.cpp RTreferenceManipulation.cpp RTpixelMaps.cpp RTviewinfo.cpp LDparser.cpp LDreferenceManipulation.cpp LDreferenceClass.cpp SHAREDglobalDefs.cpp SHAREDvars.cpp SHAREDvector.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=RT.exe
+EXECUTABLE=OpenRT.exe
 
 all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
