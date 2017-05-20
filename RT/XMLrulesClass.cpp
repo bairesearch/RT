@@ -25,7 +25,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3k2c 21-March-2017
+ * Project Version: 3k3a 19-May-2017
  *
  *******************************************************************************/
 
