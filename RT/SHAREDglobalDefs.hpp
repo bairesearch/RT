@@ -46,8 +46,8 @@ class SHAREDglobalDefsClass
 	//current/active projects;
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
-//#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+#define COMPILE_NLC		//makefile.NLC -> NLC.exe
+//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
@@ -190,6 +190,12 @@ using namespace std;
 #define CHAR_INVERTEDCOMMAS '"'
 #define CHAR_DECIMALPLACE (CHAR_FULLSTOP)
 #define CHAR_DOLLAR '$'
+#define CHAR_GREATER_THAN '>'
+#define CHAR_LESS_THAN '<'
+#define CHAR_PLUS '+'
+#define CHAR_EXCLAMATION_MARK '!'
+#define CHAR_AMPERSAND '&'
+#define CHAR_TILDA '~'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"
