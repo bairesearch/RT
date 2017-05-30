@@ -110,6 +110,7 @@ class SHAREDvarsClass
 	public: bool isWhiteSpace(const char c);
 	public: string convertStringToLowerCase(const string* arbitraryCaseString);
 
+	public: string convertCharToString(char c);
 	public: string convertFloatToString(const float number, const string format);
 	public: string convertDoubleToString(const double number, const string format);
 	public: string convertIntToString(const int number);

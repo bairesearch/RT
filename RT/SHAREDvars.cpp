@@ -381,6 +381,11 @@ string SHAREDvarsClass::convertStringToLowerCase(const string* arbitraryCaseStri
 	return lowerCaseString;
 }
 
+string SHAREDvarsClass::convertCharToString(char c)
+{
+	return string(1, c);
+}
+
 string SHAREDvarsClass::convertFloatToString(const float number, const string format)
 {
 	char stringCharStar[100];
@@ -818,3 +823,4 @@ void SHAREDvarsClass::sprintfSafeLong(char* stringCharStar, const char* type, lo
 	#endif
 	#endif
 }
+
