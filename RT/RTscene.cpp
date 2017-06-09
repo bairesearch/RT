@@ -25,7 +25,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -201,7 +201,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 			//make normal output filename same as rgb output file name
 			if(!this->addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
-				printf("error: cannot add extension");
+				cerr << "error: cannot add extension" << endl;
 				exit(EXIT_ERROR);
 			}
 
@@ -209,7 +209,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 		}
 		else
 		{
-			printf("error: cannot use standard output for multiple file output");
+			cerr << "error: cannot use standard output for multiple file output" << endl;
 			exit(EXIT_ERROR);
 		}
 
@@ -221,7 +221,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 			//make depth output filename same as rgb output file name
 			if(!this->addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
-				printf("error: cannot add extension");
+				cerr << "error: cannot add extension" << endl;
 				exit(EXIT_ERROR);
 			}
 
@@ -229,7 +229,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 		}
 		else
 		{
-			printf("error: cannot use standard output for multiple file output");
+			cerr << "error: cannot use standard output for multiple file output" << endl;
 			exit(EXIT_ERROR);
 		}
 
@@ -312,11 +312,6 @@ RTlightingInfo* addLightToEnd(RTlightingInfo* li_orig, RTlightingInfo* new_node)
 		return new_node;
 	}
 
-	/*
-	printf("asd");
-	exit(EXIT_ERROR);
-	*/
-
 	for(tmp = li_orig; tmp->nextLight != NULL; tmp = tmp->nextLight)
 	{
 		/*nothing*/
@@ -342,7 +337,7 @@ void RTsceneClass::parseTalFileInitialiseParser(const string talFileName)
 
   	if(!f)
 	{
-		printf("error; no file name specified in code execution, and no standard input given to RT.exe executable");
+		cerr << "error; no file name specified in code execution, and no standard input given to RT.exe executable" << endl;
 		exit(EXIT_ERROR);
 	}
 	else
@@ -356,7 +351,7 @@ RTviewInfo* RTsceneClass::parseTalFileGetViewInfo(RTviewInfo* vi)
 {
 	if(! RTparser.readViewport())
 	{
-		printf("could not read viewport");
+		cerr << "could not read viewport" << endl;
 		exit(EXIT_ERROR);
 	}
 

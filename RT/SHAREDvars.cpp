@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -651,7 +651,7 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 	if(!parseFileObject.rdbuf()->is_open())
 	{
 		// file does not exist in current directory.
-		cout << "Error: input file does not exist in current directory: " << inputFileName << endl;
+		cerr << "Error: input file does not exist in current directory: " << inputFileName << endl;
 		//exit(EXIT_ERROR);
 		result = false;
 	}

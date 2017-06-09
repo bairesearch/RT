@@ -25,7 +25,7 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -711,7 +711,7 @@ bool RToperationsClass::findIntersectLineWithLine2D(const vec* povpt1, const vec
 
 		if(!xyzinterceptionPointFound && result)
 		{
-			printf("error; !xyzinterceptionPointFound && result");
+			cerr << "error; !xyzinterceptionPointFound && result" << endl;
 			exit(EXIT_ERROR);
 		}
 	}

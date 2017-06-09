@@ -25,7 +25,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -266,13 +266,13 @@ int main(const int argc, const char** argv)
 
 		if(SHAREDvarsClass().argumentExists(argc,argv,"-version"))
 		{
-			cout << "RT.exe - Project Version: 3l1b 02-June-2017" << endl;
+			cout << "RT.exe - Project Version: 3l1c 01-June-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
 	else
 	{
-		printf(errmessage);
+		cerr << errmessage << endl;
 		exit(EXIT_ERROR);
 	}
 
@@ -284,7 +284,7 @@ int main(const int argc, const char** argv)
 		LDreference* topLevelReferenceInSceneFile = new LDreference(topLevelSceneFileName, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 		if(!LDparserClass().parseFile(topLevelSceneFileName, initialReferenceInSceneFile, topLevelReferenceInSceneFile, true))
 		{//file does not exist
-			cout << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;
+			cerr << "The file: " << topLevelSceneFileName << " does not exist in the directory" << endl;
 			exit(EXIT_ERROR);
 		}
 

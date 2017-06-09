@@ -25,7 +25,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -444,7 +444,7 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 		}
 		else
 		{
-			printf("\nunknown character - system must exit (character = %c %d)", spriteTextString[spriteTextIndex], spriteTextString[spriteTextIndex]);
+			cerr << "\nunknown character - system must exit (character = " << spriteTextString[spriteTextIndex] << " " <<  spriteTextString[spriteTextIndex] << ")" << endl;
 			/*
 			char temp = (char)SPRITE_CHARACTER_DICE_OFFSET;
 			char temp2 = (char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL);

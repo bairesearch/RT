@@ -25,7 +25,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -366,8 +366,8 @@ void LDreferenceClassClass::convertLdrawColourToDatFileRGB(const int dataFileCol
 	}
 	else
 	{
-		cout << "invalid dat file colour for conversion to RGB" << endl;
-		cout << "dataFileColour = " << dataFileColour << endl;
+		cerr << "invalid dat file colour for conversion to RGB" << endl;
+		cerr << "dataFileColour = " << dataFileColour << endl;
 		r = TAL_FILE_COLOUR_DEFAULT_RGB_R;
 		g = TAL_FILE_COLOUR_DEFAULT_RGB_G;
 		b = TAL_FILE_COLOUR_DEFAULT_RGB_B;
@@ -375,8 +375,8 @@ void LDreferenceClassClass::convertLdrawColourToDatFileRGB(const int dataFileCol
 	#else
 	else
 	{
-		cout << "invalid dat file colour for conversion to RGB" << endl;
-		cout << "dataFileColour = " << dataFileColour << endl;
+		cerr << "invalid dat file colour for conversion to RGB" << endl;
+		cerr << "dataFileColour = " << dataFileColour << endl;
 		exit(EXIT_ERROR);
 	}
 	#endif

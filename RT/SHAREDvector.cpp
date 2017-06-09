@@ -25,7 +25,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -308,6 +308,7 @@ double SHAREDvectorClass::calculateAngleOfVector3D(const vec* vect1, const int a
 	}
 	else
 	{
+		cerr << "SHAREDvectorClass::calculateAngleOfVector3D{} error: illegal axis; axis = " << axis << endl;
 		exit(EXIT_ERROR);
 	}
 

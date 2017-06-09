@@ -25,7 +25,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  *
  *******************************************************************************/
 
@@ -240,16 +240,16 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 					else
 					{
 						type = REFERENCE_TYPE_UNDEFINED;
-						cout << "1" << endl;
-						cout << "readingType = " << readingType << endl;
-						cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Illegal. \n" << endl;
-						cout << "character charCount = "<< charCount << endl;
-						cout << "lineCount = " << lineCount << endl;
-						cout << "type = " << type << endl;
-						cout << "parentReference->name = " << parentReference->name << endl;
-						cout << "parseFileName = " << parseFileName << endl;
-						cout << "character = " << c << endl;
-						cout << "(int)character = " << (int)c << endl;
+						cerr << "1" << endl;
+						cerr << "readingType = " << readingType << endl;
+						cerr << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Illegal. \n" << endl;
+						cerr << "character charCount = "<< charCount << endl;
+						cerr << "lineCount = " << lineCount << endl;
+						cerr << "type = " << type << endl;
+						cerr << "parentReference->name = " << parentReference->name << endl;
+						cerr << "parseFileName = " << parseFileName << endl;
+						cerr << "character = " << c << endl;
+						cerr << "(int)character = " << (int)c << endl;
 						exit(EXIT_ERROR);
 					}
 				}
@@ -260,13 +260,13 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 					parseFileObject.get(c); //gets a blank/space
 					if((c != ' ') && (type != REFERENCE_TYPE_COMMENT))
 					{
-						cout << "2" << endl;
-						cout << "\n Invalid ModelDetails. Corrupted file has been detected. Value After LDreference Type is not space \n" << endl;
-						cout << "\n c = "<< c << endl;
-						cout << "\n character charCount = "<< charCount << endl;
-						cout << "\n lineCount = " << lineCount << endl;
-						cout << "\n type = " << type << endl;
-						cout << "parseFileName = " << parseFileName << endl;
+						cerr << "2" << endl;
+						cerr << "\n Invalid ModelDetails. Corrupted file has been detected. Value After LDreference Type is not space \n" << endl;
+						cerr << "\n c = "<< c << endl;
+						cerr << "\n character charCount = "<< charCount << endl;
+						cerr << "\n lineCount = " << lineCount << endl;
+						cerr << "\n type = " << type << endl;
+						cerr << "parseFileName = " << parseFileName << endl;
 						exit(EXIT_ERROR);
 					}
 
@@ -375,12 +375,12 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 							}
 							else
 							{
-								cout << "3" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Line corrupt. \n" << endl;
-								cout << "character charCount = "<< charCount << endl;
-								cout << "lineCount = " << lineCount << endl;
-								cout << "type = " << type << endl;
-								cout << "filename = " << parentReference->name << endl;
+								cerr << "3" << endl;
+								cerr << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Line corrupt. \n" << endl;
+								cerr << "character charCount = "<< charCount << endl;
+								cerr << "lineCount = " << lineCount << endl;
+								cerr << "type = " << type << endl;
+								cerr << "filename = " << parentReference->name << endl;
 								exit(EXIT_ERROR);
 							}
 						#endif
@@ -395,12 +395,12 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 							}
 							else
 							{
-								cout << "4" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad/Tri corrupt. \n" << endl;
-								cout << "character charCount = "<< charCount << endl;
-								cout << "lineCount = " << lineCount << endl;
-								cout << "type = " << type << endl;
-								cout << "filename = " << parentReference->name << endl;
+								cerr << "4" << endl;
+								cerr << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad/Tri corrupt. \n" << endl;
+								cerr << "character charCount = "<< charCount << endl;
+								cerr << "lineCount = " << lineCount << endl;
+								cerr << "type = " << type << endl;
+								cerr << "filename = " << parentReference->name << endl;
 								exit(EXIT_ERROR);
 							}
 							readingVertex3X = true;
@@ -439,12 +439,12 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 							}
 							else
 							{
-								cout << "5" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad corrupt. \n" << endl;
-								cout << "character charCount = "<< charCount << endl;
-								cout << "lineCount = " << lineCount << endl;
-								cout << "type = " << type << endl;
-								cout << "filename = " << parentReference->name << endl;
+								cerr << "5" << endl;
+								cerr << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Quad corrupt. \n" << endl;
+								cerr << "character charCount = "<< charCount << endl;
+								cerr << "lineCount = " << lineCount << endl;
+								cerr << "type = " << type << endl;
+								cerr << "filename = " << parentReference->name << endl;
 								exit(EXIT_ERROR);
 							}
 							readingVertex4X = true;
@@ -458,12 +458,12 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 							}
 							else
 							{
-								cout << "6" << endl;
-								cout << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Tri corrupt. \n" << endl;
-								cout << "character charCount = "<< charCount << endl;
-								cout << "lineCount = " << lineCount << endl;
-								cout << "type = " << type << endl;
-								cout << "filename = " << parentReference->name << endl;
+								cerr << "6" << endl;
+								cerr << "Invalid ModelDetails. Corrupted file has been detected. LDreference Type Tri corrupt. \n" << endl;
+								cerr << "character charCount = "<< charCount << endl;
+								cerr << "lineCount = " << lineCount << endl;
+								cerr << "type = " << type << endl;
+								cerr << "filename = " << parentReference->name << endl;
 								exit(EXIT_ERROR);
 							}
 						#endif

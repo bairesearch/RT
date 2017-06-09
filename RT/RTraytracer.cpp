@@ -25,7 +25,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -185,9 +185,9 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 	}
 	else
 	{
-		printf("CYLINDER = %d", CYLINDER);
-		printf("\nsi->pi.type = %d", si->pi.type);
-		printf("\n error: part type unknown 1 \n");
+		cerr << "CYLINDER = " << CYLINDER << endl;
+		cerr << "si->pi.type = " << si->pi.type << endl;
+		cerr << "error: part type unknown 1" << endl;
 		exit(EXIT_ERROR);
 	}
 
@@ -251,8 +251,8 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 	}
 	else
 	{
-		//printf("\nsi->pi.type = %d", si->pi.type);
-		printf("\n error: part type unknown 2 \n");
+		cerr << "si->pi.type = " << si->pi.type << endl;
+		cerr << "error: part type unknown 2" << endl;
 		exit(EXIT_ERROR);
 	}
 
@@ -323,8 +323,8 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		}
 		else
 		{
-			printf("\nsi->pi.type = %d", si->pi.type);
-			printf("\n error: part type unknown 3 \n");
+			cerr << "si->pi.type = " << si->pi.type << endl;
+			cerr << "error: part type unknown 3" << endl;
 			exit(EXIT_ERROR);
 
 		}
