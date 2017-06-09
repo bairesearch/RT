@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k4a 21-May-2017
+ * Project Version: 3l1a 02-June-2017
  *
  *******************************************************************************/
 
@@ -708,19 +708,6 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, strin
 	return result;
 }
 
-void SHAREDvarsClass::writeStringListToFile(const string fileName, const vector<string>* stringList)
-{
-	string s = "";
-	for(vector<string>::const_iterator stringListIter = stringList->begin(); stringListIter != stringList->end(); stringListIter++)
-	{		
-		string line = *stringListIter;
-		s = s + line + CHAR_NEWLINE;
-	}
-	
-	writeStringToFile(fileName, &s);
-}
-
-
 bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList)
 {
 	bool result = true;
@@ -755,6 +742,49 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vecto
 	}
 	return result;
 }
+
+bool SHAREDvarsClass::getFilesFromFileList(const string* fileContentsString, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList)
+{
+	bool result = true;
+	
+	int fileNameIndex = 0;
+	string currentFileName = "";
+		
+	for(int i=0; i<fileContentsString->length(); i++)
+	{
+		char currentToken = (*fileContentsString)[i];
+		if(currentToken == CHAR_NEWLINE)
+		{
+			inputTextFileNameList->push_back(currentFileName);
+			currentFileName = "";
+			fileNameIndex++;
+		}
+		else
+		{
+			currentFileName = currentFileName + currentToken;
+		}
+	}
+	
+	*numberOfInputFilesInList = fileNameIndex;
+
+	return result;
+}
+
+
+
+void SHAREDvarsClass::writeStringListToFile(const string fileName, const vector<string>* stringList)
+{
+	string s = "";
+	for(vector<string>::const_iterator stringListIter = stringList->begin(); stringListIter != stringList->end(); stringListIter++)
+	{		
+		string line = *stringListIter;
+		s = s + line + CHAR_NEWLINE;
+	}
+	
+	writeStringToFile(fileName, &s);
+}
+
+
 
 bool SHAREDvarsClass::fileExists(const string inputFileName)
 {

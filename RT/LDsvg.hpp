@@ -25,7 +25,7 @@
  * File Name: LDsvg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k4a 21-May-2017
+ * Project Version: 3l1a 02-June-2017
  *
  *******************************************************************************/
 
@@ -44,9 +44,10 @@ class LDsvgClass
 	private: SHAREDvarsClass SHAREDvars;
 	private: LDreferenceClassClass LDreferenceClass;
 	public: bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile);
-	public: bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY);
-		private: void writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY);
-		private: void writeSVGfooter(ofstream* writeFileObject);
+		public: bool writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY);
+			public: bool writeSVGfile(string* writeFileString, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY);
+				private: void writeSVGheader(string* writeFileString, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY);
+				private: void writeSVGfooter(string* writeFileString);
 	public: void writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col);
 	public: void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse);
 	public: void writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col);

@@ -25,7 +25,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3k4a 21-May-2017
+ * Project Version: 3l1a 02-June-2017
  *
  *******************************************************************************/
 
@@ -921,13 +921,13 @@ bool XMLparserClassClass::writeXMLfileInefficient(const string xmlFileName, cons
 }
 
 
-void XMLparserClassClass::writeXMLHeader(ofstream* writeFileObject)
+void XMLparserClassClass::writeXMLHeader(string* writeFileString)
 {
 	string headerString = "";
 	headerString = headerString + "<" + STRING_TAG_XML_DEF_FULL + ">";
 	for(int i = 0; i<headerString.length(); i++)
 	{
-		writeFileObject->put(headerString[i]);
+		*writeFileString = *writeFileString + headerString[i];
 	}
 }
 
@@ -936,28 +936,28 @@ bool XMLparserClassClass::writeXMLfile(const string xmlFileName, const XMLparser
 {
 	bool result = true;
 
-	ofstream writeFileObject(xmlFileName.c_str());
-
+	string writeFileString = "";
+	
 	#ifdef XML_WRITE_STANDARD_XML_HEADER
-	this->writeXMLHeader(&writeFileObject);
+	this->writeXMLHeader(&writeFileString);
 	#endif
 
-	if(!this->addTagLayerToFileObject(firstTagInXMLfile, &writeFileObject, 0))
+	if(!this->addTagLayerToFileObject(firstTagInXMLfile, &writeFileString, 0))
 	{
 		result = false;
 	}
 
 	//Added by RBB 30 August 2009 - required for Windows SW to re-read xml files
-	writeFileObject.put(CHAR_NEWLINE); //(s.cStr())[i]
-
-	writeFileObject.close();
+	writeFileString = writeFileString + CHAR_NEWLINE;
+	
+	SHAREDvars.writeStringToFile(xmlFileName, &writeFileString);
 
 	return result;
 }
 
 
 
-bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagInCurrentLayer, ofstream* writeFileObject, const int treeLayer)
+bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagInCurrentLayer, string* writeFileString, const int treeLayer)
 {
 	bool result = true;
 
@@ -981,16 +981,16 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 			tagHasLowerLevelTags = true;
 		}
 
-		this->incrementLineAndAddTabsToFileObject(writeFileObject, treeLayer);
+		this->incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
 		string tagOpeningString = CHAR_TAG_OPEN_STR + currentTag->name;
-		SHAREDvars.writeStringToFileObject(tagOpeningString, writeFileObject);
+		*writeFileString = *writeFileString + tagOpeningString;
 		if(tagHasAttributes)
 		{
 			const XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
-				SHAREDvars.writeStringToFileObject(attributeString, writeFileObject);
+				*writeFileString = *writeFileString + attributeString;
 
 				currentAttribute = currentAttribute->nextAttribute;
 			}
@@ -999,31 +999,30 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 		if(tagHasLowerLevelTags || tagHasValue)
 		{
 			string firstTagClosingString = CHAR_TAG_CLOSE_STR;
-			SHAREDvars.writeStringToFileObject(firstTagClosingString, writeFileObject);
-
+			*writeFileString = *writeFileString + firstTagClosingString;
+			
 			if(tagHasLowerLevelTags)
 			{
-				if(!this->addTagLayerToFileObject(currentTag->firstLowerLevelTag, writeFileObject, (treeLayer+1)))
+				if(!this->addTagLayerToFileObject(currentTag->firstLowerLevelTag, writeFileString, (treeLayer+1)))
 				{
 					result = false;
 				}
 			}
 			if(tagHasValue)
 			{
-				this->addTabsToFileObject(writeFileObject, treeLayer);
+				this->addTabsToFileObject(writeFileString, treeLayer);
 				string tagValueString = currentTag->value;
-				SHAREDvars.writeStringToFileObject(tagValueString, writeFileObject);
+				*writeFileString = *writeFileString + tagValueString;
 			}
 
-			this->incrementLineAndAddTabsToFileObject(writeFileObject, treeLayer);
+			this->incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
 			string endTagString = CHAR_TAG_OPEN_STR;
 			endTagString = endTagString + CHAR_TAG_END_STR;
 			endTagString = endTagString + ((string)(currentTag->name));
 			endTagString = endTagString + CHAR_TAG_CLOSE_STR;
 
 			//endTagString[1] = CHAR_TAG_END;	 //work around as CHAR_TAG_END_STR does not work
-			SHAREDvars.writeStringToFileObject(endTagString, writeFileObject);
-
+			*writeFileString = *writeFileString + endTagString;
 		}
 		else
 		{
@@ -1031,8 +1030,7 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 			tagEndAndClose = tagEndAndClose + CHAR_TAG_END_STR;
 			tagEndAndClose = tagEndAndClose + CHAR_TAG_CLOSE_STR;
 			//tagEndAndClose[0] = CHAR_TAG_END;		//work around as CHAR_TAG_END_STR does not work
-			SHAREDvars.writeStringToFileObject(tagEndAndClose, writeFileObject);
-
+			*writeFileString = *writeFileString + tagEndAndClose;
 		}
 
 		currentTag = currentTag->nextTag;
@@ -1042,24 +1040,22 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 
 }
 
-void XMLparserClassClass::incrementLineAndAddTabsToFileObject(ofstream* writeFileObject, const int treeLayer)
+void XMLparserClassClass::incrementLineAndAddTabsToFileObject(string* writeFileString, const int treeLayer)
 {
-	writeFileObject->put(CHAR_NEWLINE); //(s.cStr())[i]
-
+	*writeFileString = *writeFileString + CHAR_NEWLINE;
 	for(int i=0; i < treeLayer; i++)
 	{
-		writeFileObject->put(CHAR_TAB); //(s.cStr())[i]
+		*writeFileString = *writeFileString + CHAR_TAB;
 	}
 
 }
 
-void XMLparserClassClass::addTabsToFileObject(ofstream* writeFileObject, const int treeLayer)
+void XMLparserClassClass::addTabsToFileObject(string* writeFileString, const int treeLayer)
 {
 	for(int i=0; i < treeLayer; i++)
 	{
-		writeFileObject->put(CHAR_TAB); //(s.cStr())[i]
+		*writeFileString = *writeFileString + CHAR_TAB;
 	}
-
 }
 
 

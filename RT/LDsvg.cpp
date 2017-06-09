@@ -25,7 +25,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k4a 21-May-2017
+ * Project Version: 3l1a 02-June-2017
  *
  *******************************************************************************/
 
@@ -41,27 +41,39 @@ bool LDsvgClass::writeSVGfile(const string xmlFileName, const XMLparserTag* firs
 {
 	bool result = true;
 
-	ofstream writeFileObject(xmlFileName.c_str());
-
-	this->writeSVGheader(&writeFileObject, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY);
-
-	if(!XMLparserClass.addTagLayerToFileObject(firstTagInXMLfile, &writeFileObject, 0))
+	string writeFileString = "";
+	if(!writeSVGfile(&writeFileString, firstTagInXMLfile, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY))
 	{
 		result = false;
 	}
 
-	this->writeSVGfooter(&writeFileObject);
+	SHAREDvars.writeStringToFile(xmlFileName, &writeFileString);
+
+	return result;
+}
+
+bool LDsvgClass::writeSVGfile(string* writeFileString, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
+{
+	bool result = true;
+
+	writeSVGheader(writeFileString, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY);
+
+	if(!XMLparserClass.addTagLayerToFileObject(firstTagInXMLfile, writeFileString, 0))
+	{
+		result = false;
+	}
+
+	writeSVGfooter(writeFileString);
 
 	//Added by RBB 30 August 2009 - required for Windows SW to re-read xml files
-	writeFileObject.put(CHAR_NEWLINE); //(s.cStr())[i]
-
-	writeFileObject.close();
+	*writeFileString = *writeFileString + CHAR_NEWLINE;
 
 	return result;
 }
 
 
-void LDsvgClass::writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
+
+void LDsvgClass::writeSVGheader(string* writeFileString, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
 {
 	int width = viewBoxMaxX-viewBoxMinX;
 	int height = viewBoxMaxY-viewBoxMinY;
@@ -78,16 +90,16 @@ void LDsvgClass::writeSVGheader(ofstream* writeFileObject, const int viewBoxMinX
 	headerString = headerString + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" version=\"1.1\" width=\"" + widthString + "\" height=\"" + heightString + "\" viewBox=\"" + viewBoxMinXstring + " " + viewBoxMinYstring + " " + viewBoxMaxXstring + " " + viewBoxMaxYstring + "\" preserveAspectRatio=\"xMidYMid\" fill-rule=\"evenodd\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";	//NB xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" is required to support inkscape connectors
 	for(int i = 0; i<headerString.length(); i++)
 	{
-		writeFileObject->put(headerString[i]);
+		*writeFileString = *writeFileString + headerString[i];
 	}
 }
 
-void LDsvgClass::writeSVGfooter(ofstream* writeFileObject)
+void LDsvgClass::writeSVGfooter(string* writeFileString)
 {
 	string footerString = "</svg>";
 	for(int i = 0; i<footerString.length(); i++)
 	{
-		writeFileObject->put(footerString[i]);
+		*writeFileString = *writeFileString + footerString[i];
 	}
 }
 

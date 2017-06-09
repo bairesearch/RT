@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3k4a 21-May-2017
+ * Project Version: 3l1a 02-June-2017
  *
  *******************************************************************************/
 
@@ -144,7 +144,8 @@ class SHAREDvarsClass
 	public: string getFileContents(const string inputFileName);
 		public: string getFileContents(const string inputFileName, int* numberLines);
 	public: bool getFilesFromFileList(const string inputListFileName, string* inputFileNameArray, int* numberOfInputFilesInList);
-	public: bool getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);		
+	public: bool getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);
+	public: bool getFilesFromFileList(const string* fileContentsString, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);		
 	public: void writeStringListToFile(const string fileName, const vector<string>* stringList);
 
 		
