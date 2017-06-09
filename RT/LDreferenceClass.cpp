@@ -25,7 +25,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3l1d 01-June-2017
+ * Project Version: 3l1f 01-June-2017
  *
  *******************************************************************************/
 
@@ -350,6 +350,12 @@ void LDreferenceClassClass::convertLdrawColourToDatFileRGB(const int dataFileCol
 		r = DAT_FILE_COLOUR_DARKRED_RGB_R;
 		g = DAT_FILE_COLOUR_DARKRED_RGB_G;
 		b = DAT_FILE_COLOUR_DARKRED_RGB_B;
+	}
+	else if(dataFileColour == DAT_FILE_COLOUR_DARKYELLOW)
+	{
+		r = DAT_FILE_COLOUR_DARKYELLOW_RGB_R;
+		g = DAT_FILE_COLOUR_DARKYELLOW_RGB_G;
+		b = DAT_FILE_COLOUR_DARKYELLOW_RGB_B;
 	}
 	else if(dataFileColour == DAT_FILE_COLOUR_AQUA)
 	{
