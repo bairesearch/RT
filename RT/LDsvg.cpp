@@ -25,7 +25,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1c 01-June-2017
+ * Project Version: 3l1d 01-June-2017
  *
  *******************************************************************************/
 
@@ -359,8 +359,12 @@ void LDsvgClass::writeSVGline(XMLparserTag** currentTag, const vec* pos1, const 
 }
 
 
-
 void LDsvgClass::writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col)
+{
+	writeSVGtext(currentTag, text, pos, fontSize, col, false);
+}
+
+void LDsvgClass::writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col, bool svgTinySpec)
 {
 	colour colourrgb;
  	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
@@ -393,10 +397,13 @@ void LDsvgClass::writeSVGtext(XMLparserTag** currentTag, const string text, cons
 	currentTagInBlock->nextTag = new XMLparserTag();
 	currentTagInBlock->name = "text";
 
-	currentTagInBlock->firstLowerLevelTag = new XMLparserTag();
-	currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
-	currentTagInBlock->nextTag = new XMLparserTag();
-	currentTagInBlock->name = "tspan";
+	if(!svgTinySpec)
+	{
+		currentTagInBlock->firstLowerLevelTag = new XMLparserTag();
+		currentTagInBlock = currentTagInBlock->firstLowerLevelTag;
+		currentTagInBlock->nextTag = new XMLparserTag();
+		currentTagInBlock->name = "tspan";
+	}
 	currentTagInBlock->value = text;
 	currentAttributeInBlock = currentTagInBlock->firstAttribute;
 	currentAttributeInBlock->name = "x";
