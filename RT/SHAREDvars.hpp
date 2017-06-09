@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1a 02-June-2017
+ * Project Version: 3l1b 02-June-2017
  *
  *******************************************************************************/
 
@@ -143,9 +143,9 @@ class SHAREDvarsClass
 
 	public: string getFileContents(const string inputFileName);
 		public: string getFileContents(const string inputFileName, int* numberLines);
-	public: bool getFilesFromFileList(const string inputListFileName, string* inputFileNameArray, int* numberOfInputFilesInList);
-	public: bool getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);
-	public: bool getFilesFromFileList(const string* fileContentsString, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList);		
+	public: bool getLinesFromFile(const string fileName, string* fileLinesArray, int* numberOfLinesInFile);
+	public: bool getLinesFromFile(const string fileName, vector<string>* fileLinesList, int* numberOfLinesInFile);
+	public: bool getLinesFromFile(const string* fileContentsString, vector<string>* fileLinesList, int* numberOfLinesInFile);		
 	public: void writeStringListToFile(const string fileName, const vector<string>* stringList);
 
 		
@@ -154,6 +154,11 @@ class SHAREDvarsClass
 	public: void sprintfSafeDouble(char* stringCharStar, const char* type, double number);
 	public: void sprintfSafeInt(char* stringCharStar, const char* type, int number);
 	public: void sprintfSafeLong(char* stringCharStar, const char* type, long number);
+
+	public: void copyFiles(const string fileToCopyName, const string newFileName);
+	public: void copyFiles(const string folderToCopyName, const string fileToCopyName, const string newFolderName, const string newFileName);
+		public: bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
+
 };
 
 

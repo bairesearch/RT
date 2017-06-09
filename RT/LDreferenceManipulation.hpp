@@ -25,7 +25,7 @@
  * File Name: LDreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1a 02-June-2017
+ * Project Version: 3l1b 02-June-2017
  *
  *******************************************************************************/
 
@@ -81,10 +81,8 @@ class LDreferenceManipulationClass
 	public: bool writeReferencesToFile(const string fileName, LDreference* firstReference);
 	public: bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
 		private: bool convertReferenceToString(LDreference* currentReference, string* referenceString);
-	public: bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
 
 	public: bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
-	public: void copyFiles(const string newFileName, const string fileToCopyName);
 
 	/*sprite routines*/
 	public: string convertRotationMatrixToString(const mat* rotationMatrix);

@@ -25,7 +25,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1a 02-June-2017
+ * Project Version: 3l1b 02-June-2017
  *
  *******************************************************************************/
 
@@ -622,38 +622,7 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 
 
 
-bool LDreferenceManipulationClass::openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject)
-{
-	bool result = true;
-	char c;	//current character being read in
-	int currentLine = 1;
-	int index = 0;
 
-	ifstream parseFileObject(fileToOpenName.c_str());
-
-	//2. fill in the data array
-	if(!parseFileObject.rdbuf()->is_open())
-	{
-		//file does not exist in current directory.
-		cout << "file, " << fileToOpenName << " cannot be opened" << endl;
-		result = false;
-	}
-	else
-	{
-		while ((parseFileObject).get(c))
-		{
-			writeFileObject->put(c);
-			if(c == CHAR_NEWLINE)
-			{
-				currentLine++;
-			}
-			index++;
-		}
-		parseFileObject.close();
-	}
-
-	return result;
-}
 
 
 
@@ -709,15 +678,6 @@ bool LDreferenceManipulationClass::readFileIntoString(const string fileName, str
 
 
 
-void LDreferenceManipulationClass::copyFiles(const string newFileName, const string fileToCopyName)
-{
-	ofstream writeFileObject(newFileName.c_str());
-
-	this->openFileAndCopyDataIntoCurrentFileObject(fileToCopyName.c_str(), &writeFileObject);
-
-	writeFileObject.close();
-}
-
 
 
 
@@ -729,7 +689,7 @@ bool LDreferenceManipulationClass::addSpriteReferenceListToSceneFile(const strin
 	ofstream writeFileObject(sceneFileNameWithSprites.c_str());
 
 	//add original data
-	this->openFileAndCopyDataIntoCurrentFileObject(sceneFileName, &writeFileObject);
+	SHAREDvars.openFileAndCopyDataIntoCurrentFileObject(sceneFileName, &writeFileObject);
 
 	//add sprite header
 	LDreference spriteHeaderReference;

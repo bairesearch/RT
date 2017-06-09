@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1a 02-June-2017
+ * Project Version: 3l1b 02-June-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -204,6 +204,7 @@ using namespace std;
 #define CHAR_EXCLAMATION_MARK '!'
 #define CHAR_AMPERSAND '&'
 #define CHAR_TILDA '~'
+#define CHAR_FOLDER_DELIMITER '/'
 
 #define STRING_TAB "\t"
 #define STRING_NEW_LINE "\n"

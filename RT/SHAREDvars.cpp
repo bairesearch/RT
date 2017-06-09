@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1a 02-June-2017
+ * Project Version: 3l1b 02-June-2017
  *
  *******************************************************************************/
 
@@ -673,11 +673,11 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 	return fileContents;
 }
 
-bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, string* inputFileNameArray, int* numberOfInputFilesInList)
+bool SHAREDvarsClass::getLinesFromFile(const string fileName, string* fileLinesArray, int* numberOfLinesInFile)
 {
 	bool result = true;
-	*numberOfInputFilesInList = 0;
-	ifstream parseFileObject(inputListFileName.c_str());
+	*numberOfLinesInFile = 0;
+	ifstream parseFileObject(fileName.c_str());
 	if(!parseFileObject.rdbuf()->is_open())
 	{
 		//txt file does not exist in current directory.
@@ -693,7 +693,7 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, strin
 		{
 			if(currentToken == CHAR_NEWLINE)
 			{
-				inputFileNameArray[fileNameIndex] = currentFileName;
+				fileLinesArray[fileNameIndex] = currentFileName;
 				currentFileName = "";
 				fileNameIndex++;
 			}
@@ -703,16 +703,16 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, strin
 			}
 			charCount++;
 		}
-		*numberOfInputFilesInList = fileNameIndex;
+		*numberOfLinesInFile = fileNameIndex;
 	}
 	return result;
 }
 
-bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList)
+bool SHAREDvarsClass::getLinesFromFile(const string fileName, vector<string>* fileLinesList, int* numberOfLinesInFile)
 {
 	bool result = true;
-	*numberOfInputFilesInList = 0;
-	ifstream parseFileObject(inputListFileName.c_str());
+	*numberOfLinesInFile = 0;
+	ifstream parseFileObject(fileName.c_str());
 	if(!parseFileObject.rdbuf()->is_open())
 	{
 		//txt file does not exist in current directory.
@@ -728,7 +728,7 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vecto
 		{
 			if(currentToken == CHAR_NEWLINE)
 			{
-				inputTextFileNameList->push_back(currentFileName);
+				fileLinesList->push_back(currentFileName);
 				currentFileName = "";
 				fileNameIndex++;
 			}
@@ -738,12 +738,12 @@ bool SHAREDvarsClass::getFilesFromFileList(const string inputListFileName, vecto
 			}
 			charCount++;
 		}
-		*numberOfInputFilesInList = fileNameIndex;
+		*numberOfLinesInFile = fileNameIndex;
 	}
 	return result;
 }
 
-bool SHAREDvarsClass::getFilesFromFileList(const string* fileContentsString, vector<string>* inputTextFileNameList, int* numberOfInputFilesInList)
+bool SHAREDvarsClass::getLinesFromFile(const string* fileContentsString, vector<string>* fileLinesList, int* numberOfLinesInFile)
 {
 	bool result = true;
 	
@@ -755,7 +755,7 @@ bool SHAREDvarsClass::getFilesFromFileList(const string* fileContentsString, vec
 		char currentToken = (*fileContentsString)[i];
 		if(currentToken == CHAR_NEWLINE)
 		{
-			inputTextFileNameList->push_back(currentFileName);
+			fileLinesList->push_back(currentFileName);
 			currentFileName = "";
 			fileNameIndex++;
 		}
@@ -765,7 +765,7 @@ bool SHAREDvarsClass::getFilesFromFileList(const string* fileContentsString, vec
 		}
 	}
 	
-	*numberOfInputFilesInList = fileNameIndex;
+	*numberOfLinesInFile = fileNameIndex;
 
 	return result;
 }
@@ -854,3 +854,55 @@ void SHAREDvarsClass::sprintfSafeLong(char* stringCharStar, const char* type, lo
 	#endif
 }
 
+void SHAREDvarsClass::copyFiles(const string fileToCopyName, const string newFileName)
+{
+	ofstream writeFileObject(newFileName.c_str());
+
+	this->openFileAndCopyDataIntoCurrentFileObject(fileToCopyName, &writeFileObject);
+
+	writeFileObject.close();
+}
+
+void SHAREDvarsClass::copyFiles(const string folderToCopyName, const string fileToCopyName, const string newFolderName, const string newFileName)
+{
+	string newFileNameFull = newFolderName + CHAR_FOLDER_DELIMITER + newFileName;
+	ofstream writeFileObject(newFileNameFull.c_str());
+
+	string fileToCopyNameFull = folderToCopyName + CHAR_FOLDER_DELIMITER + fileToCopyName;
+	this->openFileAndCopyDataIntoCurrentFileObject(fileToCopyNameFull, &writeFileObject);
+
+	writeFileObject.close();
+}
+
+bool SHAREDvarsClass::openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject)
+{
+	bool result = true;
+	char c;	//current character being read in
+	int currentLine = 1;
+	int index = 0;
+
+	ifstream parseFileObject(fileToOpenName.c_str());
+
+	//2. fill in the data array
+	if(!parseFileObject.rdbuf()->is_open())
+	{
+		//file does not exist in current directory.
+		cout << "file, " << fileToOpenName << " cannot be opened" << endl;
+		result = false;
+	}
+	else
+	{
+		while((parseFileObject).get(c))
+		{
+			writeFileObject->put(c);
+			if(c == CHAR_NEWLINE)
+			{
+				currentLine++;
+			}
+			index++;
+		}
+		parseFileObject.close();
+	}
+
+	return result;
+}
