@@ -44,8 +44,8 @@ class SHAREDglobalDefsClass
 	***********/
 
 	//current/active projects;
-//#define COMPILE_NLCI
-#define COMPILE_GIAI
+#define COMPILE_NLCI
+//#define COMPILE_GIAI
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
