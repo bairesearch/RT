@@ -25,7 +25,7 @@
  * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3l1f 01-June-2017
+ * Project Version: 3l2a 12-June-2017
  *
  *******************************************************************************/
 
@@ -67,7 +67,7 @@
 #define TAL_FILE_COLOUR_DARKRED_RGB "700000"
 #define TAL_FILE_COLOUR_DARKYELLOW_RGB "808000"
 #define TAL_FILE_COLOUR_AQUA_RGB "007070"
-#define TAL_FILE_COLOUR_DEFAULT_RGB "CCCCCC"
+#define DAT_FILE_COLOUR_DEFAULT_RGB "CCCCCC"
 
 #define DAT_FILE_COLOUR_BLACK_RGB_R (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_R (0)
@@ -87,7 +87,7 @@
 #define DAT_FILE_COLOUR_DARKRED_RGB_R (112)
 #define DAT_FILE_COLOUR_DARKYELLOW_RGB_R (128)
 #define DAT_FILE_COLOUR_AQUA_RGB_R (0)
-#define TAL_FILE_COLOUR_DEFAULT_RGB_R (204)
+#define DAT_FILE_COLOUR_DEFAULT_RGB_R (204)
 
 #define DAT_FILE_COLOUR_BLACK_RGB_G (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_G (0)
@@ -107,7 +107,7 @@
 #define DAT_FILE_COLOUR_DARKRED_RGB_G (0)
 #define DAT_FILE_COLOUR_DARKYELLOW_RGB_G (128)
 #define DAT_FILE_COLOUR_AQUA_RGB_G (112)
-#define TAL_FILE_COLOUR_DEFAULT_RGB_G (204)
+#define DAT_FILE_COLOUR_DEFAULT_RGB_G (204)
 
 #define DAT_FILE_COLOUR_BLACK_RGB_B (0)
 #define DAT_FILE_COLOUR_BLUE_RGB_B (240)
@@ -127,7 +127,7 @@
 #define DAT_FILE_COLOUR_DARKRED_RGB_B (0)
 #define DAT_FILE_COLOUR_DARKYELLOW_RGB_B (0)
 #define DAT_FILE_COLOUR_AQUA_RGB_B (112)
-#define TAL_FILE_COLOUR_DEFAULT_RGB_B (204)
+#define DAT_FILE_COLOUR_DEFAULT_RGB_B (204)
 
 #define DAT_FILE_COLOUR_UNDEFINED (0)
 #define DAT_FILE_COLOUR_BLACK (0)

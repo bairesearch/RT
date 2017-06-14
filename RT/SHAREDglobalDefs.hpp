@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1f 01-June-2017
+ * Project Version: 3l2a 12-June-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -44,8 +44,8 @@ class SHAREDglobalDefsClass
 	***********/
 
 	//current/active projects;
-#define COMPILE_NLCI
-//#define COMPILE_GIAI
+//#define COMPILE_NLCI
+#define COMPILE_GIAI
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
@@ -94,6 +94,11 @@ class SHAREDglobalDefsClass
 #ifdef COMPILE_NLCI
 	#define USE_NLCI
 	#define USE_NLC
+	#define USE_GIA
+#endif
+
+#ifdef COMPILE_GIAI
+	#define USE_GIAI
 	#define USE_GIA
 #endif
 
@@ -207,7 +212,7 @@ using namespace std;
 #define CHAR_FOLDER_DELIMITER '/'
 
 #define STRING_TAB "\t"
-#define STRING_NEW_LINE "\n"
+#define STRING_NEWLINE "\n"
 #define STRING_SPACE " "
 #define STRING_FULLSTOP "."
 #define STRING_COMMA ","

@@ -25,7 +25,7 @@
  * File Name: LDsvg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l1f 01-June-2017
+ * Project Version: 3l2a 12-June-2017
  *
  *******************************************************************************/
 
