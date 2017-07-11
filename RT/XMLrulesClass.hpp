@@ -25,7 +25,7 @@
  * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m2a 10-July-2017
  *
  *******************************************************************************/
 
@@ -88,6 +88,7 @@ class XMLrulesClassClass
 {
 	private: XMLparserClassClass XMLparserClass;
 	private: SHAREDvarsClass SHAREDvars;
+	
 	#ifdef USE_NLC
 	public: bool parseNLCrulesXMLfile();
 	#endif
@@ -107,8 +108,10 @@ class XMLrulesClassClass
 		private: bool parseORrulesTag(XMLparserTag* currentTag);
 	#endif
 
+	#ifdef USE_ANN
 	public: bool parseANNrulesXMLfile();
 		private: bool parseANNrulesTag(XMLparserTag* currentTag);
+	#endif
 
 	private: bool addRulesClassObjectsBasedOnSectionTag(XMLparserTag* currentTag, const string sectionTagName, XMLrulesClass* firstReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);
 	private: bool addRulesClassObjectBasedOnTag(XMLparserTag* currentTag, XMLrulesClass* currentReferenceToObjectClass, const string tagName, const int numberOfAttributes, const string attributeName1, const string attributeName2, const string attributeName3, const string attributeName4, const string attributeName5, const string attributeName6, const string attributeName7, const string attributeName8);

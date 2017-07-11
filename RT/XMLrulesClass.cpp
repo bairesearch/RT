@@ -25,7 +25,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m2a 10-July-2017
  *
  *******************************************************************************/
 
@@ -131,7 +131,6 @@ bool XMLrulesClassClass::parseGIArulesXMLfile()
 
 	return result;
 }
-
 bool XMLrulesClassClass::parseGIARulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
@@ -179,7 +178,6 @@ bool XMLrulesClassClass::parseCSrulesXMLfile()
 
 	return result;
 }
-
 bool XMLrulesClassClass::parseCSRulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
@@ -231,7 +229,6 @@ bool XMLrulesClassClass::parseORrulesXMLfile()
 
 	return result;
 }
-
 bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
@@ -252,7 +249,7 @@ bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
 
 
 
-
+#ifdef USE_ANN
 bool XMLrulesClassClass::parseANNrulesXMLfile()
 {
 	bool result = true;
@@ -284,11 +281,6 @@ bool XMLrulesClassClass::parseANNrulesXMLfile()
 
 	return result;
 }
-
-
-
-
-//Top Level
 bool XMLrulesClassClass::parseANNrulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
@@ -305,8 +297,7 @@ bool XMLrulesClassClass::parseANNrulesTag(XMLparserTag* currentTag)
 
 	return result;
 }
-
-
+#endif
 
 
 

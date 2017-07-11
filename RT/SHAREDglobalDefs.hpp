@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m2a 10-July-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -50,12 +50,14 @@ class SHAREDglobalDefsClass
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+//#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
-//#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANNwithRT.exe
+//#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANN.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
+//#define COMPILE_LRRC
 
 
 
@@ -111,6 +113,10 @@ class SHAREDglobalDefsClass
 	#define USE_GIA
 	#define USE_CE
 #endif
+#ifdef COMPILE_GIA_WITH_ANN
+	#define COMPILE_GIA
+	#define USE_ANN
+#endif
 #ifdef COMPILE_GIA
 	#define USE_GIA
 #endif
@@ -132,16 +138,21 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
+
+#ifdef COMPILE_ANN_WITH_RT
+	#define COMPILE_ANN
+	#define USE_RT
+#endif
 #ifdef COMPILE_ANN
 	#define USE_ANN
-#endif
-#ifdef COMPILE_ANN_WITH_RT
-	#define USE_ANN
-	#define USE_RT
 #endif
 
 #ifdef COMPILE_RT
 	#define USE_RT
+#endif
+
+#ifdef COMPILE_LRRC
+	#define USE_LRRC
 #endif
 
 

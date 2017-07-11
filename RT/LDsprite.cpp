@@ -25,7 +25,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m2a 10-July-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -41,18 +41,20 @@
 
 int SPRITE_DEFAULT_COLOUR;
 
+#ifdef USE_LRRC
 static double SPRITE_TEXT_DICE_SCALE_FACTOR;
-static double SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT;
 static double SPRITE_DICE_WIDTH_IN_LDRAW_UNITS;
 static double SPRITE_TEXT_DICE_Y_OFFSET;
-	static double SPRITE_LINE_SPACING_RATIO;	//derivable
 	static double SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
+#endif
 
+static double SPRITE_LINE_SPACING_RATIO_BASE;
 static double SPRITE_TEXT_SCALE_FACTOR;
 static double SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS;
 static double SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS;
 static double SPRITE_CHAR_SPACING_RATIO;
 static double SPRITE_TEXT_PADDING_IN_LDRAW_UNITS;
+	static double SPRITE_LINE_SPACING_RATIO;	//derivable
 	static double SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
 	static double SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS;			//derivable
 
@@ -86,15 +88,10 @@ void LDspriteClass::fillInLDspriteExternVariables()
 			SPRITE_DEFAULT_COLOUR = currentReferenceRulesClass->fractionalValue;
 		}
 
-
-
+		#ifdef USE_LRRC
 		else if(currentReferenceRulesClass->name == SPRITE_TEXT_DICE_SCALE_FACTOR_NAME)
 		{
 			SPRITE_TEXT_DICE_SCALE_FACTOR = currentReferenceRulesClass->fractionalValue;
-		}
-		else if(currentReferenceRulesClass->name == SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT_NAME)
-		{
-			SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT = currentReferenceRulesClass->fractionalValue;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_DICE_WIDTH_IN_LDRAW_UNITS_NAME)
 		{
@@ -104,8 +101,12 @@ void LDspriteClass::fillInLDspriteExternVariables()
 		{
 			SPRITE_TEXT_DICE_Y_OFFSET = currentReferenceRulesClass->fractionalValue;
 		}
+		#endif
 
-
+		else if(currentReferenceRulesClass->name == SPRITE_LINE_SPACING_RATIO_BASE_NAME)
+		{
+			SPRITE_LINE_SPACING_RATIO_BASE = currentReferenceRulesClass->fractionalValue;
+		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXT_SCALE_FACTOR_NAME)
 		{
 			SPRITE_TEXT_SCALE_FACTOR = currentReferenceRulesClass->fractionalValue;
@@ -128,7 +129,6 @@ void LDspriteClass::fillInLDspriteExternVariables()
 		}
 
 
-
 		else if(currentReferenceRulesClass->name == SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS_NAME)
 		{
 			SPRITES_FLOATING_WIDTH_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
@@ -137,7 +137,6 @@ void LDspriteClass::fillInLDspriteExternVariables()
 		{
 			SPRITES_FLOATING_HEIGHT_IN_LDRAW_UNITS = currentReferenceRulesClass->fractionalValue;
 		}
-
 
 		else if(currentReferenceRulesClass->name == SPRITE_NAME_START_NAME)
 		{
@@ -164,11 +163,13 @@ void LDspriteClass::fillInLDspriteExternVariables()
 		currentReferenceRulesClass = currentReferenceRulesClass->next;
 	}
 
-	SPRITE_LINE_SPACING_RATIO = (SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT);
+	SPRITE_LINE_SPACING_RATIO = (SPRITE_LINE_SPACING_RATIO_BASE);
 	SPRITE_LINE_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS*SPRITE_LINE_SPACING_RATIO)*SPRITE_TEXT_SCALE_FACTOR);
 
 	SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS* SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_SCALE_FACTOR);
+	#ifdef USE_LRRC
 	SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS = ((SPRITE_DICE_WIDTH_IN_LDRAW_UNITS* SPRITE_CHAR_SPACING_RATIO)*SPRITE_TEXT_DICE_SCALE_FACTOR);
+	#endif
 
 
 	spriteTextKernelArray[48] = 7.0;
@@ -416,6 +417,7 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			*numSpritesAdded = *numSpritesAdded + 1;
 
 		}
+		#ifdef USE_LRRC
 		else if(((unsigned char)spriteTextString[spriteTextIndex] > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)spriteTextString[spriteTextIndex] <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
 		{
 			spriteCurrentCharacterSpacing = SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS;
@@ -438,6 +440,7 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			spriteSubmodelCurrentReference = spriteSubmodelCurrentReference->next;
 			*numSpritesAdded = *numSpritesAdded + 1;
 		}
+		#endif
 		else if(spriteTextString[spriteTextIndex] == ' ')
 		{
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS/2);
@@ -445,13 +448,6 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 		else
 		{
 			cerr << "\nunknown character - system must exit (character = " << spriteTextString[spriteTextIndex] << " " <<  spriteTextString[spriteTextIndex] << ")" << endl;
-			/*
-			char temp = (char)SPRITE_CHARACTER_DICE_OFFSET;
-			char temp2 = (char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL);
-			printf("\nunknown character - system must exit (character = %c %d)", spriteTextString[spriteTextIndex], spriteTextString[spriteTextIndex]);
-			printf("\nNB SPRITE_CHARACTER_DICE_OFFSET = %c %d", temp, temp);
-			printf("\nNB (SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL) = %c %d", temp2, temp2);
-			*/
 			exit(EXIT_ERROR);
 		}
 	}
@@ -538,6 +534,7 @@ void LDspriteClass::LDspriteSubmodelFillTextualReference(LDreference* spriteSubm
 
 	string tempString = "";
 
+	#ifdef USE_LRRC
 	if(((unsigned char)characterToWrite > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)characterToWrite <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
 	{
 		/*no change to currentDeformationMatrix*/
@@ -564,10 +561,13 @@ void LDspriteClass::LDspriteSubmodelFillTextualReference(LDreference* spriteSubm
 	}
 	else
 	{
+	#endif
 		SHAREDvector.createIdentityMatrix(&currentDeformationMatrix);
 		SHAREDvector.scaleMatrix(&currentDeformationMatrix, scale);
 		tempString = characterToWrite;
+	#ifdef USE_LRRC
 	}
+	#endif
 
 	SHAREDvector.copyMatrixTwoIntoMatrixOne(&(spriteSubmodelCurrentReference->deformationMatrix), &(currentDeformationMatrix));
 

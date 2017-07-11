@@ -25,7 +25,7 @@
  * File Name: LDsprite.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m2a 10-July-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -78,7 +78,7 @@
 #define SPRITE_INDEX_MAGNITUDE (5)
 
 #define SPRITE_TEXT_DICE_SCALE_FACTOR_NAME "SPRITE_TEXT_DICE_SCALE_FACTOR" //assume dice have already been appropriately scaled
-#define SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT_NAME "SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT"
+#define SPRITE_LINE_SPACING_RATIO_BASE_NAME "SPRITE_LINE_SPACING_RATIO_BASE"
 #define SPRITE_DICE_WIDTH_IN_LDRAW_UNITS_NAME "SPRITE_DICE_WIDTH_IN_LDRAW_UNITS"
 #define SPRITE_TEXT_DICE_Y_OFFSET_NAME "SPRITE_TEXT_DICE_Y_OFFSET"
 
