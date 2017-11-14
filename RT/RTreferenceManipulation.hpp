@@ -25,7 +25,7 @@
  * File Name: RTreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  *
  *******************************************************************************/
 
