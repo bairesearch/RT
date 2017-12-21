@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m6a 10-December-2017
+ * Project Version: 3m7a 13-December-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -49,8 +49,8 @@ class SHAREDglobalDefsClass
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-#define COMPILE_GIA		//makefile.GIA -> GIA.exe
-//#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
+//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe

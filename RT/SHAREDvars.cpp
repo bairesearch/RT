@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m6a 10-December-2017
+ * Project Version: 3m7a 13-December-2017
  *
  *******************************************************************************/
 
@@ -944,5 +944,12 @@ void SHAREDvarsClass::copyStringArray(const string stringArrayToCopy[], string s
 	{
 		stringArray[i] = stringArrayToCopy[i];
 	}
+}
+
+bool SHAREDvarsClass::getBitValue(int number, int x) 
+{
+	int value = (number >> x) & 1U;
+	bool result = value;
+	return result;
 }
 
