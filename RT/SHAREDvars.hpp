@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m5a 07-December-2017
+ * Project Version: 3m6a 10-December-2017
  *
  *******************************************************************************/
 
@@ -114,6 +114,7 @@ class SHAREDvarsClass
 	public: string convertFloatToString(const float number, const string format);
 	public: string convertDoubleToString(const double number, const string format);
 	public: string convertIntToString(const int number);
+	public: string convertIntToString(const int number, const string format);
 	public: string convertUnsignedIntToString(const int number);
 	public: string convertBoolToString(const bool number);
 	public: string convertLongToString(const long number);

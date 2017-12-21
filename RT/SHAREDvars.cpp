@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m5a 07-December-2017
+ * Project Version: 3m6a 10-December-2017
  *
  *******************************************************************************/
 
@@ -398,6 +398,12 @@ string SHAREDvarsClass::convertDoubleToString(const double number, const string 
 	sprintfSafeDouble(stringCharStar, format.c_str(), number);
 	return string(stringCharStar);
 }
+string SHAREDvarsClass::convertIntToString(const int number, const string format)
+{
+	char stringCharStar[100];
+	sprintfSafeInt(stringCharStar, format.c_str(), number);
+	return string(stringCharStar);
+}
 string SHAREDvarsClass::convertIntToString(const int number)
 {
 	char stringCharStar[100];
@@ -638,14 +644,36 @@ void SHAREDvarsClass::prependStringToFile(const string fileName, const string* s
 
 string SHAREDvarsClass::getFileContents(const string inputFileName)
 {
-	int numberLines = 0;
-	return this->getFileContents(inputFileName, &numberLines);
+	string fileContents = "";
+	
+	ifstream parseFileObject(inputFileName, ios::in | ios::binary);
+	if(parseFileObject)
+	{
+		parseFileObject.seekg(0, ios::end);
+		fileContents.resize(parseFileObject.tellg());
+		parseFileObject.seekg(0, ios::beg);
+		parseFileObject.read(&fileContents[0], fileContents.size());
+		parseFileObject.close();
+	}
+  
+    	return fileContents;
 }
 
 string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberLines)
 {
-	string fileContents = "";
+	string fileContents = getFileContents(inputFileName);
+	
+	*numberLines = 0;
+	for(int i=0; i<fileContents.length(); i++)
+	{
+		if(fileContents[i] == CHAR_NEWLINE)
+		{
+			*numberLines = *numberLines + 1;
+		}
+	}
 
+	/*
+	string fileContents = "";
 	bool result = true;
 	ifstream parseFileObject(inputFileName.c_str());
 	if(!parseFileObject.rdbuf()->is_open())
@@ -666,9 +694,12 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 		}
 		*numberLines = currentLineNumber;
 	}
+	*/
+	
 	#ifdef CS_DEBUG_GENERATE_OBJECT_ORIENTED_CODE
 	//cout << "fileContents = " << fileContents << endl;
 	#endif
+	
 
 	return fileContents;
 }
