@@ -25,7 +25,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -154,8 +154,8 @@ void LDopenglClass::setViewPort3Ddynamic(const vec* eyeFacingPoly, const vec* vi
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	double viewportWidth = this->maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
-	double viewportHeight = this->maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
+	double viewportWidth = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
+	double viewportHeight = maxDouble2(viewPortWidthHeightDepth->x, viewPortWidthHeightDepth->y)* 20.0;
 	glOrtho(-(viewportWidth)/2.0, (viewportWidth)/2.0, -(viewportHeight)/2.0, (viewportHeight)/2.0, -100, 100);
 
 	gluLookAt(eyeFacingPoly->x, eyeFacingPoly->y, eyeFacingPoly->z, viewAtFacingPoly->x, viewAtFacingPoly->y, viewAtFacingPoly->z, viewUpFacingPoly->x, viewUpFacingPoly->y, viewUpFacingPoly->z);
@@ -241,7 +241,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDr
 
 	//glutPostRedisplay();	CHECK THIS - may be required here instead????
 
-	this->writeScreenToRGBMap(width, height, rgbMap);
+	writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
 }
@@ -674,7 +674,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(cons
 
 	glutMainLoopEvent();
 
-	this->writeScreenToRGBMap(width, height, rgbMap);
+	writeScreenToRGBMap(width, height, rgbMap);
 
 	glutPostRedisplay();
 }

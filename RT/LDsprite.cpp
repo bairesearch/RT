@@ -25,7 +25,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Description: Contains common sprite commands
  *
  *******************************************************************************/
@@ -284,11 +284,11 @@ LDreference* LDspriteClass::LDaddBasicTextualSpriteStringToReferenceList(string 
 			{
 				vec tempAbsPos;
 				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
@@ -306,11 +306,11 @@ LDreference* LDspriteClass::LDaddBasicTextualSpriteStringToReferenceList(string 
 			{
 				vec tempAbsPos;
 				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, position);
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], colour, scale*SPRITE_TEXT_SCALE_FACTOR);
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*scale*SPRITE_TEXT_SCALE_FACTOR;
 
@@ -377,11 +377,11 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			{
 				vec tempAbsPos;
 				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
@@ -402,11 +402,11 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			{
 				vec tempAbsPos;
 				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			//spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing/2;
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (spriteTextKernelArray[spriteTextString[spriteTextIndex]]+SPRITE_TEXT_PADDING_IN_LDRAW_UNITS)*SPRITE_TEXT_SCALE_FACTOR;
@@ -427,11 +427,11 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 			{
 				vec tempAbsPos;
 				SHAREDvector.addVectors(&tempAbsPos, &spriteSubmodelCurrentReferencePosition, &(unitReference->absolutePosition));
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &tempAbsPos, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			else
 			{
-				this->LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
+				LDspriteSubmodelFillTextualReference(spriteSubmodelCurrentReference, &spriteSubmodelCurrentReferencePosition, spriteTextString[spriteTextIndex], spriteColourArray[spriteLineNumber], SPRITE_TEXT_SCALE_FACTOR);
 			}
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing;
 

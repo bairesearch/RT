@@ -25,7 +25,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  * to test sql connection;
  * 1. uncomment int main()
@@ -52,12 +52,12 @@ int main()
 
 void LDmysqlClass::testMySQLserverConnection()
 {
-	this->initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
+	initiateMySQLserverConnection("localhost", "MYSQLUSERNAME", "MYSQLPASSWORD", "objectRecog");
 	char sqlCommandOutput[1000];
 	const char* sqlCommand = "SELECT `pBinxy`, `ID` FROM `objectRecog`.`snapshot` WHERE ( ( `pBinxy` = 823 ) )";
-	this->performSQLselectQuery(sqlCommand, sqlCommandOutput);
+	performSQLselectQuery(sqlCommand, sqlCommandOutput);
 	cout << "sqlCommandOutput = " << sqlCommandOutput << endl;
-	this->endMySQLserverConnection();
+	endMySQLserverConnection();
 }
 
 

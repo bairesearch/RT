@@ -25,7 +25,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -86,17 +86,17 @@ int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, 
 	RTsceneInfo* si = NULL;
 	RTlightingInfo* li = NULL;
 
-	this->parseTalFileInitialiseParser(talFileName);
-	vi = this->parseTalFileGetViewInfo(vi);
-	li = this->parseTalFileGetLightInfo(li);
-	si = this->parseTalFileGetSceneInfo(si);
+	parseTalFileInitialiseParser(talFileName);
+	vi = parseTalFileGetViewInfo(vi);
+	li = parseTalFileGetLightInfo(li);
+	si = parseTalFileGetSceneInfo(si);
 
 	RTparser.exitParser();
 
 	SHAREDvars.setCurrentDirectory(outputFolder);
 
 
-	if(!this->rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))
+	if(!rayTraceSceneWithoutParse(vi, si, li, imageFileName, outputImageFiles, setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap))
 	{
 		result = FALSE;
 	}
@@ -130,9 +130,9 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 
 
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
-	this->createImage(true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	createImage(true, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#else
-	this->createImage(setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
+	createImage(setRGBAndDepthAndNormalAndPointMaps, rgbMap, depthMap, normalMap, pointMap, vi, si, li);
 	#endif
 
 
@@ -192,14 +192,14 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 
 		if(imageFileName != NULL)
 		{
-			this->stripExtension(imageFileName, &outputFileNameWithoutExtension);
+			stripExtension(imageFileName, &outputFileNameWithoutExtension);
 		}
 
 
 		if(imageFileName != NULL)
 		{
 			//make normal output filename same as rgb output file name
-			if(!this->addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
+			if(!addExtension(outputFileNameWithoutExtension, NORMALMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				cerr << "error: cannot add extension" << endl;
 				exit(EXIT_ERROR);
@@ -219,7 +219,7 @@ int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, con
 		if(imageFileName != NULL)
 		{
 			//make depth output filename same as rgb output file name
-			if(!this->addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
+			if(!addExtension(outputFileNameWithoutExtension, DEPTHMAP_PPM_EXTENSION, &outputFileNameWithExtension))
 			{
 				cerr << "error: cannot add extension" << endl;
 				exit(EXIT_ERROR);
@@ -562,7 +562,7 @@ void RTsceneClass::createImage(const int setRGBAndDepthAndNormalAndPointMaps, un
 			RTsceneInfo* nd = si;
 
 			/*calculates UVN Scalars*/
-			this->calculateUVNScalars(vi, uvn, x, y);
+			calculateUVNScalars(vi, uvn, x, y);
 
 			/*ray trace each piece for this point*/
 			while(nd != NULL)
@@ -575,18 +575,18 @@ void RTsceneClass::createImage(const int setRGBAndDepthAndNormalAndPointMaps, un
 
 			if(lightingMode == 0)
 			{
-				this->calculateBasicColour(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
+				calculateBasicColour(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 			else if(lightingMode == 1)
 			{
-				this->calculateTransparencyColour(vi, si, li, &col);
+				calculateTransparencyColour(vi, si, li, &col);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 
 			}
 			else if(lightingMode == 2)
 			{
-				this->calculateAmbientDiffuseSpecular(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
+				calculateAmbientDiffuseSpecular(vi, si, li, &col, &tAtSurface, &nAtSurface, &pAtSurface);
 				//placepointPPM(pm, x, y, col.r, col.g, col.b);
 			}
 
@@ -1049,7 +1049,7 @@ void RTsceneClass::calculatePointMapValue(const double xPos, const double yPos, 
 	*/
 
 	vec uvn;
-	this->calculateUVNScalars(vi, &uvn, xPos, yPos);
+	calculateUVNScalars(vi, &uvn, xPos, yPos);
 
 	vec p;
 	vec p0;
@@ -1076,7 +1076,7 @@ void RTsceneClass::createPointMapUsingDepthMap(const int imageWidth, const int i
 		{
 			vec xyzWorld;
 			double depthVal = RTpixelMaps.getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
-			this->calculatePointMapValue(x, y, depthVal, &xyzWorld, vi);
+			calculatePointMapValue(x, y, depthVal, &xyzWorld, vi);
 			RTpixelMaps.setPointMapValue(x, y, imageWidth, &xyzWorld, pointMap);
 
 		}

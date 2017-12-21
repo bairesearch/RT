@@ -25,7 +25,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -98,18 +98,18 @@ pixmap* RTppmClass::loadPPM(const string fname)
 
 	fgetc(f);  /*eat the trailing white space*/
 
-	npm = this->newPixmap(wide, high);
+	npm = newPixmap(wide, high);
 
 	if(!npm)
 	{
-		this->freePixmap(npm);
+		freePixmap(npm);
 		fclose(f);
 		return NULL;
 	}
 
 	if(fread(npm->pix, (long)wide*high*3,1, f) != 1)
 	{
-		this->freePixmap(npm);
+		freePixmap(npm);
 		fclose(f);
 		return NULL;
 	}

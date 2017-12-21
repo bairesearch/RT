@@ -25,7 +25,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 
 bool LDsvgClass::writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile)
 {
-	return this->writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);
+	return writeSVGfile(xmlFileName, firstTagInXMLfile, -100, 1920, -100, 1400);
 }
 
 bool LDsvgClass::writeSVGfile(const string xmlFileName, const XMLparserTag* firstTagInXMLfile, const int viewBoxMinX, const int viewBoxMaxX, const int viewBoxMinY, const int viewBoxMaxY)
@@ -452,7 +452,7 @@ void LDsvgClass::writeSVGconnector(XMLparserTag** currentTag, const vec* pos1, c
 	string xPos2String = SHAREDvars.convertIntToString((int)pos2->x);
 	string yPos2String = SHAREDvars.convertIntToString((int)pos2->y);
 	string strokeWidth = SHAREDvars.convertDoubleToString(width, "%0.1f");
-	string hexString = this->convertColourRGBtoHexString(&colourrgb);
+	string hexString = convertColourRGBtoHexString(&colourrgb);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "path";

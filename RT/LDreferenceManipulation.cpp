@@ -25,7 +25,7 @@
  * File Name: LDreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -70,7 +70,7 @@ bool LDreferenceManipulationClass::search1DrefListFindRef(const LDreference* ref
 
 	while(currentReference->next != NULL)
 	{
-		if(this->compareReferences(currentReference, referenceToFind, referenceToFind->type))
+		if(compareReferences(currentReference, referenceToFind, referenceToFind->type))
 		{
 			foundReference = true;
 		}
@@ -89,7 +89,7 @@ bool LDreferenceManipulationClass::search1DrefListNameAndColourFindRef(LDreferen
 
 	while(currentReference->next != NULL)
 	{
-		if(this->compareReferenceNameAndColour(currentReference, (referenceToFind->name).c_str(), referenceToFind->colour))
+		if(compareReferenceNameAndColour(currentReference, (referenceToFind->name).c_str(), referenceToFind->colour))
 		{
 			foundReference = true;
 		}
@@ -108,10 +108,10 @@ bool LDreferenceManipulationClass::search1DrefListReplaceRef(const LDreference* 
 
 	while(currentReference->next != NULL)
 	{
-		if(this->compareReferences(currentReference, referenceToFind, referenceToFind->type))
+		if(compareReferences(currentReference, referenceToFind, referenceToFind->type))
 		{
 			foundReference = true;
-			this->copyReferences(currentReference, referenceToReplaceWith, referenceToReplaceWith->type);
+			copyReferences(currentReference, referenceToReplaceWith, referenceToReplaceWith->type);
 		}
 
 		currentReference = currentReference->next;
@@ -128,10 +128,10 @@ bool LDreferenceManipulationClass::search1DrefListNameAndColourReplaceRef(LDrefe
 
 	while(currentReference->next != NULL)
 	{
-		if(this->compareReferenceNameAndColour(currentReference, (referenceToFind->name).c_str(), referenceToFind->colour))
+		if(compareReferenceNameAndColour(currentReference, (referenceToFind->name).c_str(), referenceToFind->colour))
 		{
 			foundReference = true;
-			this->copyReferences(currentReference, referenceToReplaceWith, referenceToReplaceWith->type);
+			copyReferences(currentReference, referenceToReplaceWith, referenceToReplaceWith->type);
 		}
 
 		currentReference = currentReference->next;
@@ -149,7 +149,7 @@ bool LDreferenceManipulationClass::search1DrefListAddReference(LDreference* init
 	if(currentReference->next == NULL)
 	{
 		LDreference* newReference = new LDreference();
-		this->copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
+		copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 		currentReference->next = newReference;
 	}
 	else
@@ -161,7 +161,7 @@ bool LDreferenceManipulationClass::search1DrefListAddReference(LDreference* init
 			if(currentReference->next == NULL)
 			{
 				LDreference* newReference = new LDreference();
-				this->copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
+				copyReferences(currentReference, referenceToAdd, referenceToAdd->type);
 				currentReference->next = newReference;
 				currentReference = currentReference->next;
 			}
@@ -364,7 +364,7 @@ bool LDreferenceManipulationClass::write2DreferenceListCollapsedTo1DtoFile(const
 {
 	ofstream writeFileObject(fileName.c_str());
 
-	this->write2DreferencesLayerToFileObject(&writeFileObject, firstReference);
+	write2DreferencesLayerToFileObject(&writeFileObject, firstReference);
 
 	writeFileObject.close();
 
@@ -382,12 +382,12 @@ bool LDreferenceManipulationClass::write2DreferencesLayerToFileObject(ofstream* 
 		if(currentReference->isSubModelReference)
 		{
 
-			result = this->write2DreferencesLayerToFileObject(writeFileObject, currentReference->firstReferenceWithinSubModel);
+			result = write2DreferencesLayerToFileObject(writeFileObject, currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
 			LDreference collapsedReference;
-			this->copyReferences(&collapsedReference, currentReference, currentReference->type);
+			copyReferences(&collapsedReference, currentReference, currentReference->type);
 
 			collapsedReference.relativePosition.x = currentReference->absolutePosition.x; //- currentReference->relativePosition.x;	//collapse 2D reference list to top level 1D reference list
 			collapsedReference.relativePosition.y = currentReference->absolutePosition.y; // - currentReference->relativePosition.y;	//collapse 2D reference list to top level 1D reference list
@@ -406,7 +406,7 @@ bool LDreferenceManipulationClass::write2DreferencesLayerToFileObject(ofstream* 
 
 			if(currentReference->referenceEnabledMethod2DOD)
 			{
-				this->addReferenceToFileObject(writeFileObject, &collapsedReference);
+				addReferenceToFileObject(writeFileObject, &collapsedReference);
 			}
 
 		}
@@ -425,7 +425,7 @@ bool LDreferenceManipulationClass::writeReferencesToFile(const string fileName, 
 	LDreference* currentReference = firstReference;
 	while(currentReference->next != NULL)
 	{
-		this->addReferenceToFileObject(&writeFileObject, currentReference);
+		addReferenceToFileObject(&writeFileObject, currentReference);
 		currentReference = currentReference->next;
 	}
 	// Exactly 8 bytes written
@@ -458,14 +458,14 @@ bool LDreferenceManipulationClass::convertReferenceToString(LDreference* current
 		submodelPositionCoordinatesVec.x = currentReference->relativePosition.x;
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
-		string positionCoordinatesString = this->convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
+		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
 		*referenceString = *referenceString + positionCoordinatesString;
 
 		//write rotation matrix values
 		mat submodelRotationMatrix;
 		SHAREDvector.copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
-		string rotationMatrixString = this->convertRotationMatrixToString(&submodelRotationMatrix);
+		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
 		*referenceString = *referenceString + rotationMatrixString;
 
 		//write submodel name
@@ -475,20 +475,20 @@ bool LDreferenceManipulationClass::convertReferenceToString(LDreference* current
 	{
 		//write primitive vertex coords
 
-		string positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
 		*referenceString = *referenceString + positionCoordinatesString;
 
-		positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
 		*referenceString = *referenceString + positionCoordinatesString;
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
 			*referenceString = *referenceString + positionCoordinatesString;
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
-				positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
 				*referenceString = *referenceString + positionCoordinatesString;
 			}
 		}
@@ -545,7 +545,7 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 		submodelPositionCoordinatesVec.x = currentReference->relativePosition.x;
 		submodelPositionCoordinatesVec.y = currentReference->relativePosition.y;
 		submodelPositionCoordinatesVec.z = currentReference->relativePosition.z;
-		string positionCoordinatesString = this->convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
+		string positionCoordinatesString = convertPositionCoordinatesToString(&submodelPositionCoordinatesVec);
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
@@ -555,7 +555,7 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 		mat submodelRotationMatrix;
 		SHAREDvector.copyMatrixTwoIntoMatrixOne(&submodelRotationMatrix, &(currentReference->deformationMatrix));
 
-		string rotationMatrixString = this->convertRotationMatrixToString(&submodelRotationMatrix);
+		string rotationMatrixString = convertRotationMatrixToString(&submodelRotationMatrix);
 		for(int i = 0; i<rotationMatrixString.length(); i++)
 		{
 			writeFileObject->put(rotationMatrixString[i]);
@@ -571,13 +571,13 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 	{
 		//write primitive vertex coords
 
-		string positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
+		string positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex1relativePosition));
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
 		}
 
-		positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
+		positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex2relativePosition));
 		for(int i = 0; i<positionCoordinatesString.length(); i++)
 		{
 			writeFileObject->put(positionCoordinatesString[i]);
@@ -585,7 +585,7 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 
 		if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_TRI) || (currentReference->type == REFERENCE_TYPE_QUAD))
 		{
-			positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
+			positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex3relativePosition));
 			for(int i = 0; i<positionCoordinatesString.length(); i++)
 			{
 				writeFileObject->put(positionCoordinatesString[i]);
@@ -593,7 +593,7 @@ bool LDreferenceManipulationClass::addReferenceToFileObject(ofstream* writeFileO
 
 			if((currentReference->type == REFERENCE_TYPE_OPTIONALLINE) || (currentReference->type == REFERENCE_TYPE_QUAD))
 			{
-				positionCoordinatesString = this->convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
+				positionCoordinatesString = convertPositionCoordinatesToString(&(currentReference->vertex4relativePosition));
 				for(int i = 0; i<positionCoordinatesString.length(); i++)
 				{
 					writeFileObject->put(positionCoordinatesString[i]);
@@ -695,13 +695,13 @@ bool LDreferenceManipulationClass::addSpriteReferenceListToSceneFile(const strin
 	LDreference spriteHeaderReference;
 	spriteHeaderReference.type = REFERENCE_TYPE_COMMENT;
 	spriteHeaderReference.name = SPRITE_HEADER_NAME;
-	this->addReferenceToFileObject(&writeFileObject, &spriteHeaderReference);
+	addReferenceToFileObject(&writeFileObject, &spriteHeaderReference);
 
 	//add sprite data
 	LDreference* currentReference = firstSpriteInReferenceList;
 	while(currentReference->next != NULL)
 	{
-		this->addReferenceToFileObject(&writeFileObject, currentReference);
+		addReferenceToFileObject(&writeFileObject, currentReference);
 		currentReference = currentReference->next;
 	}
 
@@ -709,7 +709,7 @@ bool LDreferenceManipulationClass::addSpriteReferenceListToSceneFile(const strin
 	LDreference spriteTrailerReference;
 	spriteTrailerReference.type = REFERENCE_TYPE_COMMENT;
 	spriteTrailerReference.name = SPRITE_TRAILER_NAME;
-	this->addReferenceToFileObject(&writeFileObject, &spriteTrailerReference);
+	addReferenceToFileObject(&writeFileObject, &spriteTrailerReference);
 
 	writeFileObject.close();
 

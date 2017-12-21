@@ -25,7 +25,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -39,9 +39,9 @@ bool RTreferenceManipulationClass::write2DReferenceListCollapsedTo1DToFileRayTra
 	writeFileObject.open(fileName.c_str());
 	if(writeFileObject.is_open())
 	{
-		this->writeRayTraceFormatHeaderInfo(&writeFileObject, useCustomViewInfo, vi, useCustomLightSource, lightSourcePosition, lightSourceColour);
+		writeRayTraceFormatHeaderInfo(&writeFileObject, useCustomViewInfo, vi, useCustomLightSource, lightSourcePosition, lightSourceColour);
 
-		this->write2DReferencesLayerToFileObjectRayTraceFormat(&writeFileObject, firstReference);
+		write2DReferencesLayerToFileObjectRayTraceFormat(&writeFileObject, firstReference);
 
 		writeFileObject.close();
 	}
@@ -266,7 +266,7 @@ bool RTreferenceManipulationClass::write2DReferencesLayerToFileObjectRayTraceFor
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "4-4SPHE.DAT"))
 		|| ((currentReference->type == REFERENCE_TYPE_SUBMODEL) && (currentReference->name == "CIRCLE.DAT"))))
 		{
-			this->write2DReferencesLayerToFileObjectRayTraceFormat(writeFileObject, currentReference->firstReferenceWithinSubModel);
+			write2DReferencesLayerToFileObjectRayTraceFormat(writeFileObject, currentReference->firstReferenceWithinSubModel);
 		}
 		else
 		{
@@ -305,7 +305,7 @@ bool RTreferenceManipulationClass::write2DReferencesLayerToFileObjectRayTraceFor
 
 				if(currentReference->referenceEnabledMethod2DOD)
 				{
-					this->addReferenceToFileObjectRayTraceFormat(writeFileObject, &collapsedReference);
+					addReferenceToFileObjectRayTraceFormat(writeFileObject, &collapsedReference);
 				}
 			}
 		}

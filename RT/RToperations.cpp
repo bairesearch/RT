@@ -25,7 +25,7 @@
  * File Name: RToperations.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -118,7 +118,7 @@ void RToperationsClass::multAdvancedMatrix(advancedMat* matxAdv1, advancedMat* m
 
 void RToperationsClass::createInverseTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->d.x = -xpos;
 	matx->d.y = -ypos;
 	matx->d.z = -zpos;
@@ -128,7 +128,7 @@ void RToperationsClass::createInverseTranslationMatrix(double xpos, double ypos,
 /*CHECK THIS ONE*/
 void RToperationsClass::createTranslationMatrix(double xpos, double ypos, double zpos, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->d.x = xpos;
 	matx->d.y = ypos;
 	matx->d.z = zpos;
@@ -137,7 +137,7 @@ void RToperationsClass::createTranslationMatrix(double xpos, double ypos, double
 
 void RToperationsClass::createScaleMatrix(double width, double length, double height, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->a.x = width;
 	matx->b.y = length;
 	matx->c.z = height;
@@ -146,7 +146,7 @@ void RToperationsClass::createScaleMatrix(double width, double length, double he
 
 void RToperationsClass::createInverseScaleMatrix(const double width, const double length, const double height, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->a.x = 1/width;
 	matx->b.y = 1/length;
 	matx->c.z = 1/height;
@@ -155,7 +155,7 @@ void RToperationsClass::createInverseScaleMatrix(const double width, const doubl
 
 void RToperationsClass::createRotationxMatrix(double rotation, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->b.y = cos(rotation);
 	matx->b.z = -sin(rotation);
 	matx->c.y = sin(rotation);
@@ -163,13 +163,13 @@ void RToperationsClass::createRotationxMatrix(double rotation, advancedMat* matx
 }
 void RToperationsClass::createInverseRotationxMatrix(double rotation, advancedMat* matx)
 {
-	this->createRotationxMatrix(rotation, matx);
-	this->invertAdvancedMatrix(matx);
+	createRotationxMatrix(rotation, matx);
+	invertAdvancedMatrix(matx);
 }
 
 void RToperationsClass::createRotationyMatrix(double rotation, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
 	matx->a.z = sin(rotation);
 	matx->c.x = -sin(rotation);
@@ -177,13 +177,13 @@ void RToperationsClass::createRotationyMatrix(double rotation, advancedMat* matx
 }
 void RToperationsClass::createInverseRotationyMatrix(double rotation, advancedMat* matx)
 {
-	this->createRotationyMatrix(rotation, matx);
-	this->invertAdvancedMatrix(matx);
+	createRotationyMatrix(rotation, matx);
+	invertAdvancedMatrix(matx);
 }
 
 void RToperationsClass::createRotationzMatrix(double rotation, advancedMat* matx)
 {
-	this->createIdentityMatrixAdvanced(matx);
+	createIdentityMatrixAdvanced(matx);
 	matx->a.x = cos(rotation);
 	matx->a.y = -sin(rotation);
 	matx->b.x = sin(rotation);
@@ -191,14 +191,14 @@ void RToperationsClass::createRotationzMatrix(double rotation, advancedMat* matx
 }
 void RToperationsClass::createInverseRotationzMatrix(double rotation, advancedMat* matx)
 {
-	this->createRotationzMatrix(rotation, matx);
-	this->invertAdvancedMatrix(matx);
+	createRotationzMatrix(rotation, matx);
+	invertAdvancedMatrix(matx);
 }
 
 void RToperationsClass::invertAdvancedMatrix(advancedMat* matx)
 {
 	/*since the matrix is orthogonal,it can be transposed instead*/
-	this->transposeAdvancedMatrix(matx);
+	transposeAdvancedMatrix(matx);
 }
 
 void RToperationsClass::transposeAdvancedMatrix(advancedMat* matx)
@@ -268,7 +268,7 @@ double RToperationsClass::findSmallestValueAdvanced(double val1, const double va
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
-		return this->findSmallestValue(val1, val2);
+		return findSmallestValue(val1, val2);
 	}
 	else if(val1 > ZERO)
 	{
@@ -301,7 +301,7 @@ double RToperationsClass::findGreatestValueAdvanced(double val1, const double va
 {
 	if((val1 > ZERO) && (val2 > ZERO))
 	{
-		return this->findGreatestValue(val1, val2);
+		return findGreatestValue(val1, val2);
 	}
 	else if(val1 > ZERO)
 	{
@@ -486,7 +486,7 @@ int RToperationsClass::findPositionOfGreatestValueWhichHits(const double* array,
 
 int RToperationsClass::findIntersectLineWithLine(const vec* linept1, const vec* linept2, vec* povpt1, vec* povpt2, vec* pt_int, const vec* norm, double* t)
 {
-	if(this->findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
+	if(findIntersectLineWithLine2D(povpt1, povpt2, linept1, linept2, pt_int))
 	{
 
 		bool boundaryCheck = true;
@@ -806,11 +806,11 @@ int RToperationsClass::findIntersectLineWithTri(const vec* pt1, const vec* pt2, 
 		pt_int->y = linept1->y + vect->y* (*t);
 		pt_int->z = linept1->z + vect->z* (*t);
 
-		if(this->checkSameClockDir(pt1, pt2, pt_int, norm) == SAME_CLOCKNESS)
+		if(checkSameClockDir(pt1, pt2, pt_int, norm) == SAME_CLOCKNESS)
 		{
-			if(this->checkSameClockDir(pt2, pt3, pt_int, norm) == SAME_CLOCKNESS)
+			if(checkSameClockDir(pt2, pt3, pt_int, norm) == SAME_CLOCKNESS)
 			{
-				if(this->checkSameClockDir(pt3, pt1, pt_int, norm) == SAME_CLOCKNESS)
+				if(checkSameClockDir(pt3, pt1, pt_int, norm) == SAME_CLOCKNESS)
 				{
 					/*
 					norm->x = -norm->x;
@@ -891,12 +891,12 @@ int RToperationsClass::findIntersectLineWithQuad(const vec* pt1, const vec* pt2,
 	double triAtInAndOut;
 	double triBtInAndOut;
 
-	if(this->findIntersectLineWithTri(pt1, pt2, pt3, linept1, linept2, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
+	if(findIntersectLineWithTri(pt1, pt2, pt3, linept1, linept2, &intersectionPointTriA, &intersectionPointNormalTriA, &triAtInAndOut))
 	{
 		triAIntersectionFound = TRUE;
 	}
 
-	if(this->findIntersectLineWithTri(pt1, pt3, pt4, linept1, linept2, &intersectionPointTriB, &intersectionPointNormalTriB, &triBtInAndOut))
+	if(findIntersectLineWithTri(pt1, pt3, pt4, linept1, linept2, &intersectionPointTriB, &intersectionPointNormalTriB, &triBtInAndOut))
 	{
 		triBIntersectionFound = TRUE;
 	}

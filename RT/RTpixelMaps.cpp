@@ -25,7 +25,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -80,7 +80,7 @@ void RTpixelMapsClass::printRGBMap(int imageWidth, const int imageHeight, unsign
 		for(int x = 0; x < imageWidth; x++)
 		{
 			colour col;
-			this->getRGBMapValues(x, y, imageWidth, rgbMap, &col);
+			getRGBMapValues(x, y, imageWidth, rgbMap, &col);
 
 			cout << int(col.r) << "\t" << int(col.g) << "\t" << int(col.b) << "\t" <<  endl;
 		}
@@ -154,22 +154,22 @@ void RTpixelMapsClass::setRGBMapValue(const int x, const int y, const int imageW
 
 void RTpixelMapsClass::setNormalMapValue(const int x, const int y, const int imageWidth, vec* normalVal, double* normalMap)
 {
-	this->setVectorMapValue(x, y, imageWidth, normalVal, normalMap);
+	setVectorMapValue(x, y, imageWidth, normalVal, normalMap);
 }
 
 void RTpixelMapsClass::getNormalMapValue(int x, int y, int imageWidth, double* normalMap, vec* normalVal)
 {
-	this->getVectorMapValue(x, y, imageWidth, normalMap, normalVal);
+	getVectorMapValue(x, y, imageWidth, normalMap, normalVal);
 }
 
 void RTpixelMapsClass::setPointMapValue(const int x, const int y, const int imageWidth, vec* pointVal, double* pointMap)
 {
-	this->setVectorMapValue(x, y, imageWidth, pointVal, pointMap);
+	setVectorMapValue(x, y, imageWidth, pointVal, pointMap);
 }
 
 void RTpixelMapsClass::getPointMapValue(int x, int y, int imageWidth, double* pointMap, vec* pointVal)
 {
-	this->getVectorMapValue(x, y, imageWidth, pointMap, pointVal);
+	getVectorMapValue(x, y, imageWidth, pointMap, pointVal);
 }
 
 
@@ -214,8 +214,8 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 
 	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
 	double* luminosityContrastMap = new double[imageWidth*imageHeight];	//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
-	this->createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
-	this->createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
+	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
+	createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
 
 	pm = RTppm.newPixmap(imageWidth, imageHeight);
 
@@ -240,7 +240,7 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 			booleanContrastRGBColour.g = 0;
 			booleanContrastRGBColour.b = 0;
 
-			double contrastVal = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityContrastMap);
+			double contrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityContrastMap);
 
 			int contrastThreshold;
 
@@ -261,7 +261,7 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 #elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_2_ALL_RGB_COMPONENTS
@@ -477,9 +477,9 @@ void RTpixelMapsClass::generateBooleanDiffMapFromRGBMaps(const string imageFileN
   		for(int  x = 0; x < imageWidth; x++)
 		{
 			colour colCurrent1;
-			this->getRGBMapValues(x, y, imageWidth, rgbMap1, &colCurrent1);
+			getRGBMapValues(x, y, imageWidth, rgbMap1, &colCurrent1);
 			colour colCurrent2;
-			this->getRGBMapValues(x, y, imageWidth, rgbMap2, &colCurrent2);
+			getRGBMapValues(x, y, imageWidth, rgbMap2, &colCurrent2);
 
 			colour booleanColDiff;
 			booleanColDiff.r = 0;
@@ -556,7 +556,7 @@ void RTpixelMapsClass::generateBooleanDiffMapFromRGBMaps(const string imageFileN
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 /*
@@ -610,7 +610,7 @@ void createBooleanDiffMapFromRGBMaps(bool* diffbooleanDiffMap, int imageWidth, i
 #ifdef USE_OR
 void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, const int imageHeight, unsigned char* rgbMap)
 {
-	double averageLuminosity = this->calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
+	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
 	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
 	double normalisationFactor = averageNormalisedLuminosity/averageLuminosity;
 
@@ -619,14 +619,14 @@ void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* no
   		for(int x = 0; x < imageWidth; x++)
 		{
 			colour col;
-			this->getRGBMapValues(x, y, imageWidth, rgbMap, &col);
+			getRGBMapValues(x, y, imageWidth, rgbMap, &col);
 
 			colour colNormalised;
 			colNormalised.r = col.r* normalisationFactor;
 			colNormalised.g = col.g* normalisationFactor;
 			colNormalised.b = col.b* normalisationFactor;
 
-			this->setRGBMapValues(x, y, imageWidth, &colNormalised, normalisedRgbMap);
+			setRGBMapValues(x, y, imageWidth, &colNormalised, normalisedRgbMap);
 		}
 	}
 }
@@ -634,14 +634,14 @@ void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* no
 double RTpixelMapsClass::calculateAverageLuminosity(int imageWidth, const int imageHeight, unsigned char* rgbMap)
 {
 	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
-	this->createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
+	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
 
 	double totalLuminosity = 0.0;
 	for(int y = 0; y < imageHeight; y++)
 	{
   		for(int x = 0; x < imageWidth; x++)
 		{
-			double currentLuminosity = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
+			double currentLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 			totalLuminosity = totalLuminosity + currentLuminosity;
 		}
 	}
@@ -664,12 +664,12 @@ void RTpixelMapsClass::generatePixmapFromRGBmap(const string imageFileName, int 
 		{
 
 			colour col;
-			this->getRGBMapValues(x, y, imageWidth,rgbMap,&col);
+			getRGBMapValues(x, y, imageWidth,rgbMap,&col);
 			RTppm.placepointPPM(pm, x, y, col.r, col.g, col.b);
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 
@@ -686,7 +686,7 @@ void RTpixelMapsClass::generatePixmapFromEnumIntMap(const string filename, const
   		for(x = 0; x < imageWidth; x++)
 		{
 			int intVal;
-			intVal = this->getIntMapValue(x, y, imageWidth, intMap);
+			intVal = getIntMapValue(x, y, imageWidth, intMap);
 
 			colour intValueColourRepresentation;
 			if(intVal == 0)
@@ -755,7 +755,7 @@ void RTpixelMapsClass::generatePixmapFromEnumIntMap(const string filename, const
 		}
 	}
 
-	this->writeImage(filename, pm);
+	writeImage(filename, pm);
 }
 
 
@@ -778,7 +778,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
   		for(x = 0; x < imageWidth; x++)
 		{
 			double contrast;
-			contrast = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastMap);
+			contrast = getLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastMap);
 			int contrastNormalised;
 			#ifdef USE_OR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
@@ -810,7 +810,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int imageWidth, const int imageHeight, const double* depthMap, unsigned char* rgbMap)
@@ -820,7 +820,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
   		for(int x = 0; x < imageWidth; x++)
 		{
 			double depthOrDepthContrastVal;
-			depthOrDepthContrastVal = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			depthOrDepthContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 			int depthOrDepthContrastValNormalised;
 			#ifdef USE_OR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
@@ -862,7 +862,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
 			col.r = depthOrDepthContrastValNormalised;
 			col.g = depthOrDepthContrastValNormalised;
 			col.b = depthOrDepthContrastValNormalised;
-			this->setRGBMapValues(x, y, imageWidth, &col, rgbMap);
+			setRGBMapValues(x, y, imageWidth, &col, rgbMap);
 		}
 	}
 }
@@ -878,7 +878,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(cons
   		for(int x = 0; x < imageWidth; x++)
 		{
 			double depthOrDepthContrastVal;
-			depthOrDepthContrastVal = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			depthOrDepthContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 			int depthOrDepthContrastValNormalised;
 
 			#ifdef USE_OR
@@ -927,7 +927,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(cons
 			col.r = depthOrDepthContrastValNormalised;
 			col.g = depthOrDepthContrastValNormalised;
 			col.b = depthOrDepthContrastValNormalised;
-			this->setRGBMapValues(x, y, imageWidth, &col, rgbMap);
+			setRGBMapValues(x, y, imageWidth, &col, rgbMap);
 		}
 	}
 }
@@ -947,7 +947,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMap(const string
 		{
 			int depthOrDepthContrastValueNormalised;
 			double depthOrDepthContrastValue;
-			depthOrDepthContrastValue = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
 			#ifdef USE_OR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
@@ -997,7 +997,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMap(const string
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(const string imageFileName, const int imageWidth, const int imageHeight, const double* depthMap, const double noHitDepth, const double estimateMaxDepth)
@@ -1014,7 +1014,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 
 			int depthOrDepthContrastValueNormalised;
 			double depthOrDepthContrastValue;
-			depthOrDepthContrastValue = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
 			#ifdef USE_OR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
@@ -1060,7 +1060,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 
@@ -1072,13 +1072,13 @@ void RTpixelMapsClass::generateRGBMapFromNormalMap(int imageWidth, const int ima
   		for(int x = 0; x < imageWidth; x++)
 		{
 			vec norm;
-			this->getNormalMapValue(x, y, imageWidth,normalMap,&norm);
+			getNormalMapValue(x, y, imageWidth,normalMap,&norm);
 
 			colour col;
 			col.r = (int)(norm.x*MAX_RGB_VAL);			//(int)((norm.x+1.0)*128.0)
 			col.g = (int)(norm.y*MAX_RGB_VAL);			//(int)((norm.y+1.0)*128.0)
 			col.b = (int)(norm.z*MAX_RGB_VAL);			//(int)((norm.z+1.0)*128.0)
-			this->setRGBMapValues(x, y, imageWidth, &col, rgbMap);
+			setRGBMapValues(x, y, imageWidth, &col, rgbMap);
 
 		}
 	}
@@ -1097,13 +1097,13 @@ void RTpixelMapsClass::generatePixmapFromNormalMap(const string imageFileName, i
   		for(x = 0; x < imageWidth; x++)
 		{
 			vec norm;
-			this->getNormalMapValue(x, y, imageWidth,normalMap,&norm);
+			getNormalMapValue(x, y, imageWidth,normalMap,&norm);
 			RTppm.placepointPPM(pm, x, y, (int)(norm.x*MAX_RGB_VAL), (int)(norm.y*MAX_RGB_VAL), (int)(norm.z*MAX_RGB_VAL));
 			//RTppm.placepointPPM(nm, x, y, (int)((norm.x+1.0)*128.0), (int)((norm.y+1.0)*128.0), (int)((norm.z+1.0)*128.0));
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 void RTpixelMapsClass::generatePixmapFromLuminosityMap(const string imageFileName, const int imageWidth, const int imageHeight, const double* luminosityMap)
@@ -1118,7 +1118,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityMap(const string imageFileNam
   		for(x = 0; x < imageWidth; x++)
 		{
 			double luminosity;
-			luminosity = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
+			luminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 			int luminosityNormalised = SHAREDvars.minInt((int)(luminosity/MAX_LUMINOSITY*MAX_RGB_VAL), MAX_RGB_VAL);
 		#ifdef USE_CONTRAST_PIXMAP_INVERSE
 			luminosityNormalised = -(luminosityNormalised-MAX_RGB_VAL);
@@ -1127,7 +1127,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityMap(const string imageFileNam
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 
@@ -1155,7 +1155,7 @@ void RTpixelMapsClass::generatePixmapFromBooleanMap(const string imageFileName, 
 			#endif
 				RTppm.placepointPPM(pm, x, y, r, g, b);
 		#else
-			bool val = this->getBooleanMapValue(x, y, imageWidth, booleanMap);
+			bool val = getBooleanMapValue(x, y, imageWidth, booleanMap);
 			int r;
 			int g;
 			int b;
@@ -1199,7 +1199,7 @@ void RTpixelMapsClass::generatePixmapFromBooleanMap(const string imageFileName, 
   		for(x = 0; x < imageWidth; x++)
 		{
 			bool val;
-			val = this->getBooleanMapValue(x, y, imageWidth, booleanMap);
+			val = getBooleanMapValue(x, y, imageWidth, booleanMap);
 			int r = 0;
 			int g = 0;
 			int b = 0;
@@ -1226,7 +1226,7 @@ void RTpixelMapsClass::generatePixmapFromBooleanMap(const string imageFileName, 
 	}
 #endif
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 
@@ -1245,9 +1245,9 @@ void RTpixelMapsClass::readImage(const string imageFileName, unsigned char* rgbM
 	rgbPixMap = RTppm.loadPPM(imageFileName);
 
 	#ifdef RT_DEBUG
-	//cout << "this->createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
+	//cout << "createRGBMapFromPixmapImage(rgbPixMap, rgbMap);" << endl;
 	#endif
-	this->createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
+	createRGBMapFromPixmapImage(rgbPixMap, rgbMap);
 
 	RTppm.freePixmap(rgbPixMap);
 }
@@ -1286,7 +1286,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMap24Bit(const string imageFileNam
 		{
 			int depthOrDepthContrastValueNormalised;
 			double depthOrDepthContrastValue;
-			depthOrDepthContrastValue = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
+			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
 			if(depthOrDepthContrastValue == RT_RAYTRACE_NO_HIT_DEPTH_T)
 			{
@@ -1294,13 +1294,13 @@ void RTpixelMapsClass::generatePixmapFromDepthMap24Bit(const string imageFileNam
 			}
 
 			colour depthMap24BitPixelValue;
-			this->calculate24BitDepthPixmapPixelFromDepth(depthOrDepthContrastValue, depthScale, depthOffset, &depthMap24BitPixelValue);
+			calculate24BitDepthPixmapPixelFromDepth(depthOrDepthContrastValue, depthScale, depthOffset, &depthMap24BitPixelValue);
 
 			RTppm.placepointPPM(pm, x, y, depthMap24BitPixelValue.r, depthMap24BitPixelValue.g, depthMap24BitPixelValue.b);
 		}
 	}
 
-	this->writeImage(imageFileName, pm);
+	writeImage(imageFileName, pm);
 }
 
 
@@ -1318,15 +1318,15 @@ void RTpixelMapsClass::createDepthMapFromDepth24BitPixmapImage(pixmap* depth24Bi
 		{
 			int pixelPositionInPixmap = y*imageWidth*3+x*3;
 			colour depthMap24BitPixelValue;
-			this->calculateColourFromPixmapPixel(depth24BitPixMap, pixelPositionInPixmap, &depthMap24BitPixelValue);
-			double depth = this->calculateDepthFrom24BitDepthValue(&depthMap24BitPixelValue, depthScale, depthOffset);
+			calculateColourFromPixmapPixel(depth24BitPixMap, pixelPositionInPixmap, &depthMap24BitPixelValue);
+			double depth = calculateDepthFrom24BitDepthValue(&depthMap24BitPixelValue, depthScale, depthOffset);
 
 			if(depth == ESTIMATE_MAX_DEPTH_T_REAL)
 			{
 				depth = RT_RAYTRACE_NO_HIT_DEPTH_T;
 			}
 
-			this->setLumOrContrastOrDepthMapValue(x, y, imageWidth, depth, depthMap);
+			setLumOrContrastOrDepthMapValue(x, y, imageWidth, depth, depthMap);
 		}
 	}
 }
@@ -1377,8 +1377,8 @@ void RTpixelMapsClass::createRGBMapFromPixmapImage(pixmap* objectImage, unsigned
 		{
 			int pixelPositionInPixmap = y*imageWidth*3+x*3;
 			colour col;
-			this->calculateColourFromPixmapPixel(objectImage, pixelPositionInPixmap, &col);
-			this->setRGBMapValues(x, y, imageWidth, &col, rgbMap);
+			calculateColourFromPixmapPixel(objectImage, pixelPositionInPixmap, &col);
+			setRGBMapValues(x, y, imageWidth, &col, rgbMap);
 		}
 	}
 }
@@ -1404,7 +1404,7 @@ void RTpixelMapsClass::createLuminosityMapFromPixmapImage(pixmap* objectImage, d
 		for(int x = 0; x < imageWidth; x++)
 		{
 			int pixelPositionInPixmap = y*imageWidth*3+x*3;
-			this->setLumOrContrastOrDepthMapValue(x, y, imageWidth, this->calculateLuminosityLevelFromPixmapPixel(objectImage, pixelPositionInPixmap), luminosityMap);
+			setLumOrContrastOrDepthMapValue(x, y, imageWidth, calculateLuminosityLevelFromPixmapPixel(objectImage, pixelPositionInPixmap), luminosityMap);
 
 		}
 	}
@@ -1431,8 +1431,8 @@ void RTpixelMapsClass::createLuminosityMapFromRGBMap(int imageWidth, const int i
 	{
 		for(int x = 0; x < imageWidth; x++)
 		{
-			double luminosityLevel = this->calculateLuminosityLevelFromRGBMap(x, y, imageWidth, rgbMap);
-			this->setLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityLevel, luminosityMap);
+			double luminosityLevel = calculateLuminosityLevelFromRGBMap(x, y, imageWidth, rgbMap);
+			setLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityLevel, luminosityMap);
 		}
 	}
 }
@@ -1442,14 +1442,14 @@ double RTpixelMapsClass::calculateLuminosityLevelFromRGBMap(int x, int y, int im
 	double luminosity;
 
 	#ifdef OLDcalculateLuminosityLevelFromRGBMap
-		unsigned char r = this->getRGBMapValue(x, y, imageWidth, RGB_RED, rgbMap);
-		unsigned char g = this->getRGBMapValue(x, y, imageWidth, RGB_GREEN, rgbMap);
-		unsigned char b = this->getRGBMapValue(x, y, imageWidth, RGB_BLUE, rgbMap);
+		unsigned char r = getRGBMapValue(x, y, imageWidth, RGB_RED, rgbMap);
+		unsigned char g = getRGBMapValue(x, y, imageWidth, RGB_GREEN, rgbMap);
+		unsigned char b = getRGBMapValue(x, y, imageWidth, RGB_BLUE, rgbMap);
 		luminosity = (r+g+b);
 	#else
 		colour col;
-		this->getRGBMapValues(x, y, imageWidth, rgbMap, &col);
-		luminosity = this->calculateLuminosityLevelFromRGBVal(&col);
+		getRGBMapValues(x, y, imageWidth, rgbMap, &col);
+		luminosity = calculateLuminosityLevelFromRGBVal(&col);
 	#endif
 
 
@@ -1478,9 +1478,9 @@ void RTpixelMapsClass::createLuminosityContrastMapFromRGBMap(int imageWidth, con
 {
 	double* luminosityMap = new double[imageWidth*imageHeight];
 
-	this->createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
+	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
 
-	this->createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
+	createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
 
 	delete luminosityMap;
 }
@@ -1496,8 +1496,8 @@ void RTpixelMapsClass::createContrastMapFromMap(const int imageWidth, const int 
 	{
 		for(int x = 0; x < imageWidth; x++)
 		{
-			double contrastVal = this->calculateContrastLevelWithinKernel(x, y, luminosityMap, kernelWidth, kernelHeight, imageWidth, imageHeight);
-			this->setLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastVal, contrastMap);
+			double contrastVal = calculateContrastLevelWithinKernel(x, y, luminosityMap, kernelWidth, kernelHeight, imageWidth, imageHeight);
+			setLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastVal, contrastMap);
 		}
 	}
 }
@@ -1512,7 +1512,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 
 	if((kernelWidth >= 3) && (kernelHeight >= 3))
 	{//luminosity contrast map is defined for pixels
-		double centrePixelPositionInLummapLuminosity = this->getLumOrContrastOrDepthMapValue(pixelX, pixelY, imageWidth, luminosityMap);
+		double centrePixelPositionInLummapLuminosity = getLumOrContrastOrDepthMapValue(pixelX, pixelY, imageWidth, luminosityMap);
 
 		for(int y = pixelY-(kernelHeight/2); y<= pixelY+(kernelHeight/2); y++)
 		{
@@ -1531,7 +1531,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 						else
 						{
 							//calc diff lum diff between centre pixel and current surrounding kernel pixel
-							double kernelCurrentPixelPositionInLummapLuminosity = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
+							double kernelCurrentPixelPositionInLummapLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
 							#ifdef USE_OR
 							if(OR_USE_CONTRAST_CALC_METHOD_B)
@@ -1562,8 +1562,8 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 
 				for(int y = pixelY; y<= pixelY+1; y++)
 				{
-					double pixelLuminosityMeasurement = this->getLumOrContrastOrDepthMapValue(pixelX, y, imageWidth, luminosityMap);
-					double adjacentPixelLuminosityMeasurement = this->getLumOrContrastOrDepthMapValue(pixelX+1, y, imageWidth, luminosityMap);
+					double pixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(pixelX, y, imageWidth, luminosityMap);
+					double adjacentPixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(pixelX+1, y, imageWidth, luminosityMap);
 
 					double currentContrastLevel = SHAREDvars.absDouble(pixelLuminosityMeasurement - adjacentPixelLuminosityMeasurement);
 
@@ -1572,8 +1572,8 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 
 				for(int x = pixelX; x<= pixelX+1; x++)
 				{
-					double pixelLuminosityMeasurement = this->getLumOrContrastOrDepthMapValue(x, pixelY, imageWidth, luminosityMap);
-					double adjacentPixelLuminosityMeasurement = this->getLumOrContrastOrDepthMapValue(x, pixelY+1, imageWidth, luminosityMap);
+					double pixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(x, pixelY, imageWidth, luminosityMap);
+					double adjacentPixelLuminosityMeasurement = getLumOrContrastOrDepthMapValue(x, pixelY+1, imageWidth, luminosityMap);
 
 					double currentContrastLevel = SHAREDvars.absDouble(pixelLuminosityMeasurement - adjacentPixelLuminosityMeasurement);
 
@@ -1608,7 +1608,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 
 	if((kernelWidth >= 3) && (kernelHeight >= 3))
 	{//luminosity contrast map is defined for pixels
-		double centrePixelPositionInLummapLuminosity = this->getRGBMapValue(pixelX, pixelY, imageWidth, rgbComponent, rgbMap);
+		double centrePixelPositionInLummapLuminosity = getRGBMapValue(pixelX, pixelY, imageWidth, rgbComponent, rgbMap);
 
 		for(int y = pixelY-(kernelHeight/2); y<= pixelY+(kernelHeight/2); y++)
 		{
@@ -1628,7 +1628,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 						{
 							//calc diff lum diff between centre pixel and current surrounding kernel pixel
 
-							double kernelCurrentPixelPositionInLummapLuminosity = this->getRGBMapValue(x, y, imageWidth, rgbComponent, rgbMap);
+							double kernelCurrentPixelPositionInLummapLuminosity = getRGBMapValue(x, y, imageWidth, rgbComponent, rgbMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
 							#ifdef USE_OR
 							if(OR_USE_CONTRAST_CALC_METHOD_B)
@@ -1659,8 +1659,8 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 
 				for(int y = pixelY; y<= pixelY+1; y++)
 				{
-					double pixelLuminosityMeasurement = this->getRGBMapValue(pixelX, y, imageWidth, rgbComponent, rgbMap);
-					double adjacentPixelLuminosityMeasurement = this->getRGBMapValue(pixelX+1, y, imageWidth, rgbComponent, rgbMap);
+					double pixelLuminosityMeasurement = getRGBMapValue(pixelX, y, imageWidth, rgbComponent, rgbMap);
+					double adjacentPixelLuminosityMeasurement = getRGBMapValue(pixelX+1, y, imageWidth, rgbComponent, rgbMap);
 
 					double currentContrastLevel = SHAREDvars.absDouble(pixelLuminosityMeasurement - adjacentPixelLuminosityMeasurement);
 
@@ -1669,8 +1669,8 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 
 				for(int x = pixelX; x<= pixelX+1; x++)
 				{
-					double pixelLuminosityMeasurement = this->getRGBMapValue(x, pixelY, imageWidth, rgbComponent, rgbMap);
-					double adjacentPixelLuminosityMeasurement = this->getRGBMapValue(x, pixelY+1, imageWidth, rgbComponent, rgbMap);
+					double pixelLuminosityMeasurement = getRGBMapValue(x, pixelY, imageWidth, rgbComponent, rgbMap);
+					double adjacentPixelLuminosityMeasurement = getRGBMapValue(x, pixelY+1, imageWidth, rgbComponent, rgbMap);
 
 					double currentContrastLevel = SHAREDvars.absDouble(pixelLuminosityMeasurement - adjacentPixelLuminosityMeasurement);
 
@@ -1714,7 +1714,7 @@ void RTpixelMapsClass::createLuminosityContrastBooleanMap(const int imageWidth, 
 	{
 		for(int x = 0; x < imageWidth; x++)
 		{
-			double luminosityContrastVal = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityContrastMap);
+			double luminosityContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityContrastMap);
 			bool luminosityContrastValPassedThreshold;
 
 			if(luminosityContrastVal > EDGE_LUMINOSITY_CONTRAST_THRESHOLD)
@@ -1743,7 +1743,7 @@ void RTpixelMapsClass::createLuminosityContrastBooleanMap(const int imageWidth, 
 			{
 				luminosityContrastValPassedThreshold = false;
 			}
-			this->setBooleanMapValue(x, y, imageWidth, luminosityContrastValPassedThreshold, luminosityContrastBooleanMap);
+			setBooleanMapValue(x, y, imageWidth, luminosityContrastValPassedThreshold, luminosityContrastBooleanMap);
 		}
 	}
 }
@@ -1754,7 +1754,7 @@ void RTpixelMapsClass::createLuminosityBooleanMap(const int imageWidth, const in
 	{
 		for(int x = 0; x < imageWidth; x++)
 		{
-			double luminosityVal = this->getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
+			double luminosityVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 			bool luminosityValPassedThreshold;
 			if(luminosityVal > EDGE_LUMINOSITY_THRESHOLD)
 			{
@@ -1764,7 +1764,7 @@ void RTpixelMapsClass::createLuminosityBooleanMap(const int imageWidth, const in
 			{
 				luminosityValPassedThreshold = false;
 			}
-			this->setBooleanMapValue(x, y, imageWidth, luminosityValPassedThreshold, luminosityBooleanMap);
+			setBooleanMapValue(x, y, imageWidth, luminosityValPassedThreshold, luminosityBooleanMap);
 		}
 	}
 }

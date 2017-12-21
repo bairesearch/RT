@@ -25,7 +25,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -124,7 +124,7 @@ bool XMLrulesClassClass::parseGIArulesXMLfile()
 	GIArulesSprite = new XMLrulesClass();
 	GIArulesDraw = new XMLrulesClass();
 
-	if(!this->parseGIARulesTag(currentTag))
+	if(!parseGIARulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -139,12 +139,12 @@ bool XMLrulesClassClass::parseGIARulesTag(XMLparserTag* currentTag)
 	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, GIArulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, GIArulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
 		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, GIArulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, GIArulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -171,7 +171,7 @@ bool XMLrulesClassClass::parseCSrulesXMLfile()
 	CSrulesSprite = new XMLrulesClass();
 	CSrulesDraw = new XMLrulesClass();
 
-	if(!this->parseCSRulesTag(currentTag))
+	if(!parseCSRulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -186,12 +186,12 @@ bool XMLrulesClassClass::parseCSRulesTag(XMLparserTag* currentTag)
 	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, CSrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, CSrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
 		currentTagUpdated=currentTagUpdated->nextTag;
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, CSrulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_draw, CSrulesDraw, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -219,7 +219,7 @@ bool XMLrulesClassClass::parseORrulesXMLfile()
 
 	ORrulesObjectRecognition = new XMLrulesClass();
 
-	if(!this->parseORrulesTag(currentTag))
+	if(!parseORrulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -237,7 +237,7 @@ bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
 	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -272,7 +272,7 @@ bool XMLrulesClassClass::parseANNrulesXMLfile()
 
 	ANNrulesSprite = new XMLrulesClass();
 
-	if(!this->parseANNrulesTag(currentTag))
+	if(!parseANNrulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -289,7 +289,7 @@ bool XMLrulesClassClass::parseANNrulesTag(XMLparserTag* currentTag)
 	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!this->addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, ANNrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_sprite, ANNrulesSprite, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}
@@ -315,7 +315,7 @@ bool XMLrulesClassClass::addRulesClassObjectsBasedOnSectionTag(XMLparserTag* cur
 
 		while(currentLowerLevelTag->nextTag != NULL)
 		{
-			if(!this->addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attributeName1, attributeName2, attributeName3, attributeName4, attributeName5, attributeName6, attributeName7, attributeName8))
+			if(!addRulesClassObjectBasedOnTag(currentLowerLevelTag, currentReferenceToObjectClass, tagName, numberOfAttributes, attributeName1, attributeName2, attributeName3, attributeName4, attributeName5, attributeName6, attributeName7, attributeName8))
 			{
 				result = false;
 			}

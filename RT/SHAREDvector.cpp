@@ -25,7 +25,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -47,9 +47,9 @@ void SHAREDvectorClass::calculateNormalOfTri(vec* pt1, vec* pt2, vec* pt3, vec* 
 {
 	vec vec1;
 	vec vec2;
-	this->subtractVectorsRT(pt2, pt1 , &vec1);
-	this->subtractVectorsRT(pt3, pt1, &vec2);
-	this->calculateNormal(&vec1, &vec2, normal);
+	subtractVectorsRT(pt2, pt1 , &vec1);
+	subtractVectorsRT(pt3, pt1, &vec2);
+	calculateNormal(&vec1, &vec2, normal);
 }
 
 void SHAREDvectorClass::calculateRotationVectorFromDeformationMatrix(mat* deformationMatrix, vec* rotationVector)
@@ -71,17 +71,17 @@ void SHAREDvectorClass::generateLookAtRotationMatrix(vec* at, vec* eye, vec* up,
 	*/
 
 	vec zaxis;
-	this->subtractVectorsRT(at, eye, &zaxis);
-	this->normaliseVector(&zaxis);
+	subtractVectorsRT(at, eye, &zaxis);
+	normaliseVector(&zaxis);
 
 	vec xaxis;
-	this->crossProduct(up, &zaxis, &xaxis);
-	this->normaliseVector(&xaxis);
+	crossProduct(up, &zaxis, &xaxis);
+	normaliseVector(&xaxis);
 
 	vec yaxis;
-	this->crossProduct(&zaxis, &xaxis, &yaxis);
+	crossProduct(&zaxis, &xaxis, &yaxis);
 
-	this->makeMatrix(&xaxis, &yaxis, &zaxis, rotationMatrix);
+	makeMatrix(&xaxis, &yaxis, &zaxis, rotationMatrix);
 
 }
 
@@ -110,10 +110,10 @@ double SHAREDvectorClass::calculateInteriorAngleOfAPolygonVertex(vec* pt1Centre,
 {
 	vec side1;
 	vec side2;
-	this->subtractVectorsRT(pt1Centre, pt2, &side1);
-	this->subtractVectorsRT(pt1Centre, pt3, &side2);
-	//this->subtractVectorsRT(pt3, pt1Centre, &side2);
-	double interiorAngle = acos(this->dotProduct(&side1, &side2) / (this->findMagnitudeOfVector(&side1)* this->findMagnitudeOfVector(&side2)));
+	subtractVectorsRT(pt1Centre, pt2, &side1);
+	subtractVectorsRT(pt1Centre, pt3, &side2);
+	//subtractVectorsRT(pt3, pt1Centre, &side2);
+	double interiorAngle = acos(dotProduct(&side1, &side2) / (findMagnitudeOfVector(&side1)* findMagnitudeOfVector(&side2)));
 	return interiorAngle;
 
 }
@@ -133,7 +133,7 @@ double SHAREDvectorClass::calculateAreaOfTriangle3D(const vec* pt1, const vec* p
 	matrix.b.z = pt3->y;
 	matrix.c.z = pt3->z;
 
-	return this->absDouble2(0.5* this->calculateDeterminant3By3(&matrix));
+	return absDouble2(0.5* calculateDeterminant3By3(&matrix));
 }
 
 
@@ -151,7 +151,7 @@ double SHAREDvectorClass::calculateAreaOfTriangle(const vec* pt1, const vec* pt2
 	matrix.b.z = pt3->y;
 	matrix.c.z = 1.0;
 
-	return this->absDouble2(0.5* this->calculateDeterminant3By3(&matrix));
+	return absDouble2(0.5* calculateDeterminant3By3(&matrix));
 }
 
 
@@ -185,7 +185,7 @@ double SHAREDvectorClass::absDouble2(const double val)
 
 void SHAREDvectorClass::calculateNormal(vec* pt1, vec* pt2, vec* normal)
 {
-	this->crossProduct(pt1, pt2, normal);
+	crossProduct(pt1, pt2, normal);
 }
 
 void SHAREDvectorClass::calculateMidDiffBetweenTwoPoints(vec* pt1, vec* pt2, vec* midDiff)
@@ -198,7 +198,7 @@ void SHAREDvectorClass::calculateMidDiffBetweenTwoPoints(vec* pt1, vec* pt2, vec
 void SHAREDvectorClass::calculateMidPointBetweenTwoPoints(vec* pt1, vec* pt2, vec* midPoint)
 {
 	vec midDiff;
-	this->calculateMidDiffBetweenTwoPoints(pt1, pt2, &midDiff);
+	calculateMidDiffBetweenTwoPoints(pt1, pt2, &midDiff);
 
 	midPoint->x = pt1->x + midDiff.x;
 	midPoint->y = pt1->y + midDiff.y;
@@ -354,7 +354,7 @@ double SHAREDvectorClass::findMagnitudeOfVector(const vec* vect1)
 
 void SHAREDvectorClass::normaliseVector(vec* vect1)
 {
-	double magnitude = this->findMagnitudeOfVector(vect1);
+	double magnitude = findMagnitudeOfVector(vect1);
 #ifdef OR_DO_NOT_CHECK_FOR_ZERO_DIVISION_DURING_POINT_NORMAL_CALC
 	vect1->x = (vect1->x)/magnitude;
 	vect1->y = (vect1->y)/magnitude;
@@ -378,7 +378,7 @@ void SHAREDvectorClass::normaliseVector(vec* vect1)
 
 void SHAREDvectorClass::normaliseVectorRT(vec* vect1, vec* vect)
 {
-	double magnitude = this->findMagnitudeOfVector(vect1);
+	double magnitude = findMagnitudeOfVector(vect1);
 	vect->x = (vect1->x)/magnitude;
 	vect->y = (vect1->y)/magnitude;
 	vect->z = (vect1->z)/magnitude;
@@ -526,15 +526,15 @@ bool SHAREDvectorClass::compareVectors(const vec* vecA, const vec* vecB)
 bool SHAREDvectorClass::compareMatricies(const mat* matA, const mat* matB)
 {
 	bool result = true;
-	if(!this->compareVectors(&(matA->a), &(matB->a)))
+	if(!compareVectors(&(matA->a), &(matB->a)))
 	{
 		result = false;
 	}
-	if(!this->compareVectors(&(matA->b), &(matB->b)))
+	if(!compareVectors(&(matA->b), &(matB->b)))
 	{
 		result = false;
 	}
-	if(!this->compareVectors(&(matA->c), &(matB->c)))
+	if(!compareVectors(&(matA->c), &(matB->c)))
 	{
 		result = false;
 	}
@@ -551,9 +551,9 @@ void SHAREDvectorClass::copyVectors(vec* vecNew, const vec* vecToCopy)
 
 void SHAREDvectorClass::copyMatricies(mat* matNew, const mat* matToCopy)
 {
-	this->copyVectors(&(matNew->a), &(matToCopy->a));
-	this->copyVectors(&(matNew->b), &(matToCopy->b));
-	this->copyVectors(&(matNew->c), &(matToCopy->c));
+	copyVectors(&(matNew->a), &(matToCopy->a));
+	copyVectors(&(matNew->b), &(matToCopy->b));
+	copyVectors(&(matNew->c), &(matToCopy->c));
 }
 
 void SHAREDvectorClass::multiplyMatricies(mat* matNew, mat* mat1, mat* mat2)
@@ -599,12 +599,12 @@ void SHAREDvectorClass::multiplyVectorByScalar(vec* vec, double scalar)
 
 double SHAREDvectorClass::calculateTheDistanceBetweenTwoPoints(const vec* positionOfUnit1, const vec* positionOfUnit2)
 {
-	return this->calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, positionOfUnit1->z, positionOfUnit2->z);
+	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, positionOfUnit1->z, positionOfUnit2->z);
 }
 
 double SHAREDvectorClass::calculateTheDistanceBetweenTwoPointsXYOnly(const vec* positionOfUnit1, const vec* positionOfUnit2)
 {
-	return this->calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, 0, 0);
+	return calculateTheDistanceBetweenTwoPoints(positionOfUnit1->x, positionOfUnit2->x, positionOfUnit1->y, positionOfUnit2->y, 0, 0);
 }
 
 double SHAREDvectorClass::calculateTheDistanceBetweenTwoPoints(const double positionXOfUnit1, const double positionXOfUnit2, const double positionYOfUnit1, const double positionYOfUnit2, const double positionZOfUnit1, const double positionZOfUnit2)
@@ -708,15 +708,15 @@ void SHAREDvectorClass::createRotatationMatrix(mat* matrix, const int rotationAx
 {
 	if(rotationAxis == AXIS_X)
 	{
-		this->createRotationMatrixX(matrix, rotationRadians);
+		createRotationMatrixX(matrix, rotationRadians);
 	}
 	else if(rotationAxis == AXIS_Y)
 	{
-		this->createRotationMatrixY(matrix, rotationRadians);
+		createRotationMatrixY(matrix, rotationRadians);
 	}
 	else if(rotationAxis == AXIS_Z)
 	{
-		this->createRotationMatrixZ(matrix, rotationRadians);
+		createRotationMatrixZ(matrix, rotationRadians);
 	}
 }
 
@@ -763,9 +763,9 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 	bool edgeNoLineDetected = false;
 	bool optionalLineNoLineDetected = false;
 
-	if(!this->twoPointsAreTheSame2D(ax, ay, cx, cy))
+	if(!twoPointsAreTheSame2D(ax, ay, cx, cy))
 	{
-		if(this->solve2DlineEquationWithTwoPoints(ax, ay, cx, cy, &mEdge, &iEdge))
+		if(solve2DlineEquationWithTwoPoints(ax, ay, cx, cy, &mEdge, &iEdge))
 		{//m != infinity
 
 		}
@@ -779,9 +779,9 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 		edgeNoLineDetected = true;
 	}
 
-	if(!this->twoPointsAreTheSame2D(bx, by, dx, dy))
+	if(!twoPointsAreTheSame2D(bx, by, dx, dy))
 	{
-		if(this->solve2DlineEquationWithTwoPoints(bx, by, dx, dy, &mOptionalLine, &iOptionalLine))
+		if(solve2DlineEquationWithTwoPoints(bx, by, dx, dy, &mOptionalLine, &iOptionalLine))
 		{//m != infinity
 
 		}
@@ -797,7 +797,7 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 
 	if(!edgeGradientInfinityDetected && !optionalLineGradientInfinityDetected && !edgeNoLineDetected && !optionalLineNoLineDetected)
 	{
-		if(this->find2DintersectionPointOfTwoLines(mEdge, iEdge, mOptionalLine, iOptionalLine, intersectionX, intersectionY))
+		if(find2DintersectionPointOfTwoLines(mEdge, iEdge, mOptionalLine, iOptionalLine, intersectionX, intersectionY))
 		{
 			*interceptionPointFound = true;
 		}
@@ -805,7 +805,7 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 		{//edge and optional lines are parallel as their gradients are equal, therefore no intersection occurs unless their y intercepts are equal also
 
 		#ifdef USE_RT
-			if(this->compareDoublesRelaxed(iEdge, iOptionalLine))
+			if(compareDoublesRelaxed(iEdge, iOptionalLine))
 		#else
 			if(SHAREDvars.compareDoubles(iEdge, iOptionalLine))
 		#endif
@@ -835,7 +835,7 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 		else if(edgeGradientInfinityDetected && optionalLineGradientInfinityDetected)
 		{//edge and optional lines are parallel as their gradients are equal, therefore no intersection occurs unless their x intercepts are equal also
 		#ifdef USE_RT
-			if(this->compareDoublesRelaxed(ax, bx))
+			if(compareDoublesRelaxed(ax, bx))
 		#else
 			if(SHAREDvars.compareDoubles(ax, bx))
 		#endif
@@ -858,9 +858,9 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 		{
 			//in this case all 4 points must be the same for an intersection to occur a, b, c, d
 		#ifdef USE_RT
-			if(this->twoPointsAreTheSame2Drelaxed(ax, ay, bx, by))
+			if(twoPointsAreTheSame2Drelaxed(ax, ay, bx, by))
 		#else
-			if(this->twoPointsAreTheSame2D(ax, ay, bx, by))
+			if(twoPointsAreTheSame2D(ax, ay, bx, by))
 		#endif
 			{
 				*interceptionPointFound = true;
@@ -873,9 +873,9 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 			if(!optionalLineGradientInfinityDetected)
 			{
 			#ifdef USE_RT
-				if(this->determineIfPointLiesOnAKnownLine2Drelaxed(mOptionalLine, iOptionalLine, ax, ay))
+				if(determineIfPointLiesOnAKnownLine2Drelaxed(mOptionalLine, iOptionalLine, ax, ay))
 			#else
-				if(this->determineIfPointLiesOnAKnownLine2D(mOptionalLine, iOptionalLine, ax, ay))
+				if(determineIfPointLiesOnAKnownLine2D(mOptionalLine, iOptionalLine, ax, ay))
 			#endif
 				{
 					*interceptionPointFound = true;
@@ -886,7 +886,7 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 			else
 			{
 			#ifdef USE_RT
-				if(this->compareDoublesRelaxed(ax, bx))
+				if(compareDoublesRelaxed(ax, bx))
 			#else
 				if(SHAREDvars.compareDoubles(ax, bx))
 			#endif
@@ -902,9 +902,9 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 			if(!edgeGradientInfinityDetected)
 			{
 			#ifdef USE_RT
-				if(this->determineIfPointLiesOnAKnownLine2Drelaxed(mEdge, iEdge, bx, by))
+				if(determineIfPointLiesOnAKnownLine2Drelaxed(mEdge, iEdge, bx, by))
 			#else
-				if(this->determineIfPointLiesOnAKnownLine2D(mEdge, iEdge, bx, by))
+				if(determineIfPointLiesOnAKnownLine2D(mEdge, iEdge, bx, by))
 			#endif
 				{
 					*interceptionPointFound = true;
@@ -915,7 +915,7 @@ void SHAREDvectorClass::find2DintersectionPoint(double ax, double ay, double bx,
 			else
 			{
 			#ifdef USE_RT
-				if(this->compareDoublesRelaxed(bx, ax))
+				if(compareDoublesRelaxed(bx, ax))
 			#else
 				if(SHAREDvars.compareDoubles(bx, ax))
 			#endif
@@ -1021,7 +1021,7 @@ bool SHAREDvectorClass::determineIfPointLiesOnLine2D(double x1, double y1, const
 	bool result = false;
 
 	double m, i;
-	if(this->solve2DlineEquationWithTwoPoints(x1, y1, x2, y2, &m, &i))
+	if(solve2DlineEquationWithTwoPoints(x1, y1, x2, y2, &m, &i))
 	{//m != infinity
 		double RHS = m*(x3) + i;
 		if(SHAREDvars.compareDoubles(y3, RHS))
@@ -1062,7 +1062,7 @@ bool SHAREDvectorClass::twoPointsAreTheSame2D(const double x1, const double y1, 
 {
 	bool result;
 
-	if(SHAREDvars.compareDoubles(this->calcDistanceBetweenTwoPoints2D(x1, y1, x2, y2), 0.0))
+	if(SHAREDvars.compareDoubles(calcDistanceBetweenTwoPoints2D(x1, y1, x2, y2), 0.0))
 	{
 		result = true;
 	}
@@ -1101,7 +1101,7 @@ bool SHAREDvectorClass::determineIfPointLiesOnAKnownLine2Drelaxed(const double m
 
 	double RHS = m1*(x3) + i1;
 
-	if(this->compareDoublesRelaxed(y3, RHS))
+	if(compareDoublesRelaxed(y3, RHS))
 	{
 		result = true;
 	}
@@ -1113,7 +1113,7 @@ bool SHAREDvectorClass::twoPointsAreTheSame2Drelaxed(const double x1, const doub
 {
 	bool result;
 
-	if(this->compareDoublesRelaxed(this->calcDistanceBetweenTwoPoints2D(x1, y1, x2, y2), 0.0))
+	if(compareDoublesRelaxed(calcDistanceBetweenTwoPoints2D(x1, y1, x2, y2), 0.0))
 	{
 		result = true;
 	}

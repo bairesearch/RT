@@ -25,7 +25,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -167,7 +167,7 @@ bool XMLparserClassClass::readXMLfile(const string xmlFileName, XMLparserTag* fi
 	{
 		bool isSubTag = false;	//first tag in file is not a subtag
 		int treeLayer = 0;
-		if(!this->parseTagOpen(&parseFileObject, firstTagInXMLfile, "noCurrentTagName", isSubTag, treeLayer))
+		if(!parseTagOpen(&parseFileObject, firstTagInXMLfile, "noCurrentTagName", isSubTag, treeLayer))
 		{
 			result = false;
 		}
@@ -195,13 +195,13 @@ bool XMLparserClassClass::parseTagOpen(ifstream* parseFileObject, XMLparserTag* 
 
 		if(currentToken == CHAR_TAG_OPEN)
 		{
-			this->parseTagName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
+			parseTagName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
 			finishedParsingObject = true;
 		}
 		else
 		{
 			#ifdef XML_PARSER_DO_NOT_ALLOW_TAG_VALUE_TO_BE_DEFINED_AFTER_SUBTAG
-			if(this->isBlankChar(parseFileObject, currentToken))
+			if(isBlankChar(parseFileObject, currentToken))
 			{
 
 			}
@@ -209,7 +209,7 @@ bool XMLparserClassClass::parseTagOpen(ifstream* parseFileObject, XMLparserTag* 
 			{
 				cout << "currentToken = " << currentToken << ":" << (int)currentToken << endl;
 				cout << "XML_PARSER_ERROR 1: invalid tag opening" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 			#else
@@ -251,11 +251,11 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 		{
 			if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
 			{
-				if(!this->parseTagComment(parseFileObject, currentToken))
+				if(!parseTagComment(parseFileObject, currentToken))
 				{
 					result = false;
 				}
-				this->parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
+				parseTagOpen(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer);
 				finishedParsingObject = true;
 			}
 			firstChar = false;
@@ -263,7 +263,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 
 		if(!finishedParsingObject)
 		{
-			if(this->isBlankChar(parseFileObject, currentToken))
+			if(isBlankChar(parseFileObject, currentToken))
 			{
 				if(!endTagFound)
 				{
@@ -271,7 +271,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 					#ifdef XML_DEBUG
 					cout << "parseTagName: " << tagName << ", treeLayer = " << treeLayer << ", lineCount = " << lineCount << endl;
 					#endif
-					if(!this->parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
+					if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 					{
 						result = false;
 					}
@@ -281,7 +281,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 				else
 				{
 					cout << "XML_PARSER_ERROR 2: end tag found containing white space" << endl;
-					this->throwGenericXMLParseError();
+					throwGenericXMLParseError();
 					result = false;
 				}
 			}
@@ -291,7 +291,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 				if(tagName != "")
 				{
 					cout << "XML_PARSER_ERROR 3: incorrect end tag indicator detected" << endl;
-					this->throwGenericXMLParseError();
+					throwGenericXMLParseError();
 					result = false;
 				}
 				else
@@ -305,7 +305,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 			else if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
 			{
 				cout << "XML_PARSER_ERROR 4: invalid comment openining" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 			else if(currentToken == CHAR_TAG_CLOSE)
@@ -313,12 +313,12 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 				if(tagName == "")
 				{
 					cout << "XML_PARSER_ERROR 5: empty tag name" << endl;
-					this->throwGenericXMLParseError();
+					throwGenericXMLParseError();
 					result = false;
 				}
 				else
 				{
-					if(!this->processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, false, tagName))
+					if(!processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, false, tagName))
 					{
 						result = false;
 					}
@@ -354,12 +354,12 @@ bool XMLparserClassClass::parseTagAttributeName(ifstream* parseFileObject, XMLpa
 		}
 		charCount++;
 
-		if(this->isBlankChar(parseFileObject, currentToken))
+		if(isBlankChar(parseFileObject, currentToken))
 		{
 			if(attributeName != "")
 			{
 				cout << "XML_PARSER_ERROR 8: invalid attribute name, attributeName = " << attributeName << ". currentTag->name = " << currentTag->name << ". parentTagName = " << parentTagName <<  endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 		}
@@ -368,7 +368,7 @@ bool XMLparserClassClass::parseTagAttributeName(ifstream* parseFileObject, XMLpa
 			if(attributeName != "")
 			{
 				cout << "XML_PARSER_ERROR 9: invalid attribute name" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 			else
@@ -381,12 +381,12 @@ bool XMLparserClassClass::parseTagAttributeName(ifstream* parseFileObject, XMLpa
 			if(attributeName != "")
 			{
 				cout << "XML_PARSER_ERROR 10: invalid attribute name, attributeName = " << attributeName << ". currentTag->name = " << currentTag->name << ". parentTagName = " << parentTagName <<  endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 			else
 			{
-				if(!this->processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, true, currentTag->name))
+				if(!processTagClose(parseFileObject, &currentTag, parentTagName, isSubTag, treeLayer, endTagFound, true, currentTag->name))
 				{
 					result = false;
 				}
@@ -398,7 +398,7 @@ bool XMLparserClassClass::parseTagAttributeName(ifstream* parseFileObject, XMLpa
 			if(attributeName != "")
 			{
 				currentTag->currentAttribute->name = attributeName;
-				if(!this->parseTagAttributeValue(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
+				if(!parseTagAttributeValue(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
 					result = false;
 				}
@@ -408,7 +408,7 @@ bool XMLparserClassClass::parseTagAttributeName(ifstream* parseFileObject, XMLpa
 			else
 			{
 				cout << "XML_PARSER_ERROR 12: empty attribute name" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 		}
@@ -439,7 +439,7 @@ bool XMLparserClassClass::parseTagAttributeValue(ifstream* parseFileObject, XMLp
 		}
 		charCount++;
 
-		if(this->isBlankChar(parseFileObject, currentToken))
+		if(isBlankChar(parseFileObject, currentToken))
 		{
 			if(attributeValueOpenedYet)
 			{
@@ -454,14 +454,14 @@ bool XMLparserClassClass::parseTagAttributeValue(ifstream* parseFileObject, XMLp
 		else if(currentToken == CHAR_TAG_END)
 		{
 			cout << "XML_PARSER_ERROR 13: invalid attribute value" << endl;
-			this->throwGenericXMLParseError();
+			throwGenericXMLParseError();
 			result = false;
 		}
 	#endif
 		else if(currentToken == CHAR_TAG_CLOSE)
 		{
 			cout << "XML_PARSER_ERROR 14: invalid attribute value" << endl;
-			this->throwGenericXMLParseError();
+			throwGenericXMLParseError();
 			result = false;
 		}
 		else if(currentToken == CHAR_TAG_ATTRIBUTE_VAL_OPEN)
@@ -487,7 +487,7 @@ bool XMLparserClassClass::parseTagAttributeValue(ifstream* parseFileObject, XMLp
 				//cout << "DEBUG: rentering parseTagAttributeName after recording an attribute. treeLayer = " << treeLayer << endl;
 				#endif
 
-				if(!this->parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
+				if(!parseTagAttributeName(parseFileObject, currentTag, parentTagName, isSubTag, treeLayer))
 				{
 					result = false;
 				}
@@ -531,11 +531,11 @@ bool XMLparserClassClass::parseTagValueAssumingExistenceOfSubtagsAndClose(ifstre
 		{
 			currentTag->value = tagValue;
 			treeLayer = treeLayer+1;
-			this->parseTagName(parseFileObject, subTag, tagName, true, treeLayer);
+			parseTagName(parseFileObject, subTag, tagName, true, treeLayer);
 			finishedParsingObject = true;
 		}
 		#ifdef XML_PARSER_DO_NOT_ALLOW_TABS_OR_NEWLINES_WITHIN_TAG_VALUE
-		else if(this->isBlankCharTabOrNewLine(parseFileObject, currentToken))
+		else if(isBlankCharTabOrNewLine(parseFileObject, currentToken))
 		{//NB spaces are added to the value however tabs and new lines are not
 
 		}
@@ -582,13 +582,13 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 					{//foundSecondDash
 						#ifdef XML_DEBUG
 						cout << "found legal comment opening" << endl;
-						this->throwGenericXMLParseError();
+						throwGenericXMLParseError();
 						#endif
 					}
 					else
 					{
 						cout << "found illegal comment opening" << endl;
-						this->throwGenericXMLParseError();
+						throwGenericXMLParseError();
 						result = false;
 					}
 				}
@@ -596,7 +596,7 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 			else
 			{
 				cout << "found illegal comment opening" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 		}
@@ -624,7 +624,7 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 						finishedParsingObject = true;
 						#ifdef XML_DEBUG
 						cout << "found legal comment close" << endl;
-						this->throwGenericXMLParseError();
+						throwGenericXMLParseError();
 						#endif
 					}
 					else
@@ -699,15 +699,15 @@ bool XMLparserClassClass::processTagClose(ifstream* parseFileObject, XMLparserTa
 		}
 		else
 		{
-			if(!this->parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
+			if(!parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
 			{//go up a level in the tree
 				result = false;
 			}
 		}
 
 		//continue parsing at same level
-		*currentTag = this->createNewTag(*currentTag);
-		this->parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+		*currentTag = createNewTag(*currentTag);
+		parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
 	}
 	else
 	{
@@ -724,7 +724,7 @@ bool XMLparserClassClass::processTagClose(ifstream* parseFileObject, XMLparserTa
 				{
 					//subtag+end detected with no attributes - this is illegal
 					cout << "XML_PARSER_ERROR 6: subtag+end detected with no attributes - this is illegal" << endl;
-					this->throwGenericXMLParseError();
+					throwGenericXMLParseError();
 					result = false;
 				}
 				else
@@ -741,8 +741,8 @@ bool XMLparserClassClass::processTagClose(ifstream* parseFileObject, XMLparserTa
 					}
 					//else (*currentTag)->name has already been filled in in parseTagName()
 
-					*currentTag = this->createNewTag(*currentTag);
-					this->parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+					*currentTag = createNewTag(*currentTag);
+					parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
 				#ifdef XML_PARSER_DO_NOT_ALLOW_CHAR_TAG_END_SLASH_WITHOUT_PRECEEDING_SPACE
 				}
 				#endif
@@ -754,7 +754,7 @@ bool XMLparserClassClass::processTagClose(ifstream* parseFileObject, XMLparserTa
 			if(tagName == parentTagName)
 			{
 				cout << "XML_PARSER_ERROR 7: subtag detected with same name as parent tab - this is illegal" << endl;
-				this->throwGenericXMLParseError();
+				throwGenericXMLParseError();
 				result = false;
 			}
 			else
@@ -766,14 +766,14 @@ bool XMLparserClassClass::processTagClose(ifstream* parseFileObject, XMLparserTa
 				}
 				//else (*currentTag)->name has already been filled in in parseTagName()
 
-				if(!this->parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
+				if(!parseTagValueAssumingExistenceOfSubtagsAndClose(parseFileObject, (*currentTag), treeLayer))
 				{//go up a level in the tree
 					result = false;
 				}
 
 				//continue parsing at same level
-				*currentTag = this->createNewTag(*currentTag);
-				this->parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
+				*currentTag = createNewTag(*currentTag);
+				parseTagOpen(parseFileObject, *currentTag, parentTagName, isSubTag, treeLayer);
 			#ifdef XML_PARSER_DO_NOT_ALLOW_SUBTAGS_WITH_SAME_NAME_AS_PARENT_TAG
 			}
 			#endif
@@ -905,7 +905,7 @@ bool XMLparserClassClass::writeXMLfileInefficient(const string xmlFileName, cons
 	long XMLFileByteArraySize = XML_FILE_MAX_SIZE;
 	char* XMLfileByteArray = new char[XMLFileByteArraySize];
 
-	if(!this->addTagLayerToByteArrayInefficient(firstTagInXMLfile, XMLfileByteArray, &XMLfileByteArrayCurrentPosition, 0))
+	if(!addTagLayerToByteArrayInefficient(firstTagInXMLfile, XMLfileByteArray, &XMLfileByteArrayCurrentPosition, 0))
 	{
 		result = false;
 	}
@@ -939,10 +939,10 @@ bool XMLparserClassClass::writeXMLfile(const string xmlFileName, const XMLparser
 	string writeFileString = "";
 	
 	#ifdef XML_WRITE_STANDARD_XML_HEADER
-	this->writeXMLHeader(&writeFileString);
+	writeXMLHeader(&writeFileString);
 	#endif
 
-	if(!this->addTagLayerToFileObject(firstTagInXMLfile, &writeFileString, 0))
+	if(!addTagLayerToFileObject(firstTagInXMLfile, &writeFileString, 0))
 	{
 		result = false;
 	}
@@ -981,7 +981,7 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 			tagHasLowerLevelTags = true;
 		}
 
-		this->incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
+		incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
 		string tagOpeningString = CHAR_TAG_OPEN_STR + currentTag->name;
 		*writeFileString = *writeFileString + tagOpeningString;
 		if(tagHasAttributes)
@@ -1003,19 +1003,19 @@ bool XMLparserClassClass::addTagLayerToFileObject(const XMLparserTag* firstTagIn
 			
 			if(tagHasLowerLevelTags)
 			{
-				if(!this->addTagLayerToFileObject(currentTag->firstLowerLevelTag, writeFileString, (treeLayer+1)))
+				if(!addTagLayerToFileObject(currentTag->firstLowerLevelTag, writeFileString, (treeLayer+1)))
 				{
 					result = false;
 				}
 			}
 			if(tagHasValue)
 			{
-				this->addTabsToFileObject(writeFileString, treeLayer);
+				addTabsToFileObject(writeFileString, treeLayer);
 				string tagValueString = currentTag->value;
 				*writeFileString = *writeFileString + tagValueString;
 			}
 
-			this->incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
+			incrementLineAndAddTabsToFileObject(writeFileString, treeLayer);
 			string endTagString = CHAR_TAG_OPEN_STR;
 			endTagString = endTagString + CHAR_TAG_END_STR;
 			endTagString = endTagString + ((string)(currentTag->name));
@@ -1087,16 +1087,16 @@ bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* 
 			tagHasLowerLevelTags = true;
 		}
 
-		this->incrementLineAndAddTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
+		incrementLineAndAddTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
 		string tagOpeningString = CHAR_TAG_OPEN_STR + currentTag->name;
-		this->writeStringToByteArrayInefficient(tagOpeningString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+		writeStringToByteArrayInefficient(tagOpeningString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 		if(tagHasAttributes)
 		{
 			const XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 			while(currentAttribute->nextAttribute != NULL)
 			{
 				string attributeString = " " + currentAttribute->name + CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR + CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR + currentAttribute->value + CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR;
-				this->writeStringToByteArrayInefficient(attributeString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+				writeStringToByteArrayInefficient(attributeString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 
 				currentAttribute = currentAttribute->nextAttribute;
 			}
@@ -1105,30 +1105,30 @@ bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* 
 		if(tagHasLowerLevelTags || tagHasValue)
 		{
 			string firstTagClosingString = CHAR_TAG_CLOSE_STR;
-			this->writeStringToByteArrayInefficient(firstTagClosingString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+			writeStringToByteArrayInefficient(firstTagClosingString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 
 			if(tagHasLowerLevelTags)
 			{
-				if(!this->addTagLayerToByteArrayInefficient(currentTag->firstLowerLevelTag, XMLfileByteArray, XMLfileByteArrayCurrentPosition, (treeLayer+1)))
+				if(!addTagLayerToByteArrayInefficient(currentTag->firstLowerLevelTag, XMLfileByteArray, XMLfileByteArrayCurrentPosition, (treeLayer+1)))
 				{
 					result = false;
 				}
 			}
 			if(tagHasValue)
 			{
-				this->addTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
+				addTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
 				string tagValueString = currentTag->value;
-				this->writeStringToByteArrayInefficient(tagValueString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+				writeStringToByteArrayInefficient(tagValueString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 			}
 
-			this->incrementLineAndAddTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
+			incrementLineAndAddTabsToByteArrayInefficient(XMLfileByteArray, XMLfileByteArrayCurrentPosition, treeLayer);
 			string endTagString = CHAR_TAG_OPEN_STR;
 			endTagString = endTagString + CHAR_TAG_END_STR;
 			endTagString = endTagString + ((string)(currentTag->name));
 			endTagString = endTagString + CHAR_TAG_CLOSE_STR;
 
 			//endTagString[1] = CHAR_TAG_END;	 //work around as CHAR_TAG_END_STR does not work
-			this->writeStringToByteArrayInefficient(endTagString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+			writeStringToByteArrayInefficient(endTagString, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 
 		}
 		else
@@ -1137,7 +1137,7 @@ bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* 
 			tagEndAndClose = tagEndAndClose + CHAR_TAG_END_STR;
 			tagEndAndClose = tagEndAndClose + CHAR_TAG_CLOSE_STR;
 			//tagEndAndClose[0] = CHAR_TAG_END;		//work around as CHAR_TAG_END_STR does not work
-			this->writeStringToByteArrayInefficient(tagEndAndClose, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
+			writeStringToByteArrayInefficient(tagEndAndClose, XMLfileByteArray, XMLfileByteArrayCurrentPosition);
 
 		}
 

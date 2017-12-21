@@ -25,7 +25,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -226,28 +226,28 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 
 	if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 	{
-		this->calculateCube(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateCube(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == CYLINDER)
 	{
-		this->calculateCylinder(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateCylinder(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == SPHERE)
 	{
-		this->calculateSphere(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculateSphere(p0Dash, p1Dash, tInOutDash, &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 			//do: ?proper order of tInOutDash in calculateSphere [ie split up into calc then draw]
 	}
 	else if(si->pi.type == PRIM_QUAD)
 	{
-		this->calculatePrimQuad(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimQuad(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_TRI)
 	{
-		this->calculatePrimTri(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimTri(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else if(si->pi.type == PRIM_LINE)
 	{
-		this->calculatePrimLine(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
+		calculatePrimLine(p0Dash, p1Dash, tInOutDash, &(si->pi), &norm, &finalReverseMatrix, &relevantFinalReverseMatrix);
 	}
 	else
 	{
@@ -276,7 +276,7 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		if((si->pi.type == BRICK) || (si->pi.type == PLATE) || (si->pi.type == TILE) || (si->pi.type == BASEPLATE) || (si->pi.type == RECT_PRISM))
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -284,7 +284,7 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		else if(si->pi.type == CYLINDER)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -292,7 +292,7 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		else if(si->pi.type == SPHERE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -300,15 +300,15 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		else if(si->pi.type == PRIM_QUAD)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_TRI)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
 			//drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
@@ -316,9 +316,9 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 		else if(si->pi.type == PRIM_LINE)
 		{
 			#ifndef RT_T_TRANSFORM_TEST
-			this->drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			//this->drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
+			//drawPointNoLighting(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#endif
 		}
 		else

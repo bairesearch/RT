@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  *
  *******************************************************************************/
 
@@ -298,7 +298,7 @@ string SHAREDvarsClass::getCurrentDirectory()
 
 void SHAREDvarsClass::setCurrentDirectory(string folder)
 {
-	this->setCurrentDirectory(&folder);
+	setCurrentDirectory(&folder);
 }
 
 void SHAREDvarsClass::setCurrentDirectory(const string* folder)
@@ -479,7 +479,7 @@ long SHAREDvarsClass::convertStringToLong(const string number)
 }
 float SHAREDvarsClass::convertStringToFloat(const string number)
 {
-	return (float)this->convertStringToDouble(number);
+	return (float)convertStringToDouble(number);
 }
 double SHAREDvarsClass::convertStringToDouble(const string number)
 {
@@ -494,7 +494,7 @@ double SHAREDvarsClass::convertStringToDouble(const string number)
 bool SHAREDvarsClass::textInTextArray(const string text, const string* textArray, const int arraySize)
 {
 	int arrayIndexOfResultFound = INT_DEFAULT_VALUE;
-	return this->textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
+	return textInTextArray(text, textArray, arraySize, &arrayIndexOfResultFound);
 }
 
 bool SHAREDvarsClass::textInTextArray(const string text, const string* textArray, const int arraySize, int* arrayIndexOfResultFound)
@@ -541,7 +541,7 @@ bool SHAREDvarsClass::intInIntArray(const int iTest, const int* intArray, const 
 string SHAREDvarsClass::replaceAllOccurancesOfString(const string* textOrig, string stringToFind, string replacementString)
 {
 	bool foundAtLeastOneInstance = false;
-	string text = this->replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
+	string text = replaceAllOccurancesOfString(textOrig, stringToFind, replacementString, &foundAtLeastOneInstance);
 	return text;
 }
 
@@ -568,7 +568,7 @@ string SHAREDvarsClass::replaceAllOccurancesOfString(const string* textOrig, str
 string SHAREDvarsClass::replaceAllOccurancesOfChar(const string* textOrig, char charToFind, char replacementChar)
 {
 	bool foundAtLeastOneInstance = false;
-	string text = this->replaceAllOccurancesOfChar(textOrig, charToFind, replacementChar, &foundAtLeastOneInstance);
+	string text = replaceAllOccurancesOfChar(textOrig, charToFind, replacementChar, &foundAtLeastOneInstance);
 	return text;
 }
 
@@ -637,9 +637,9 @@ void SHAREDvarsClass::appendStringToFile(const string fileName, string* s)
 //inefficient
 void SHAREDvarsClass::prependStringToFile(const string fileName, const string* s)
 {
-	string fileString = this->getFileContents(fileName);
+	string fileString = getFileContents(fileName);
 	fileString = fileString + *s;
-	this->writeStringToFile(fileName, &fileString);
+	writeStringToFile(fileName, &fileString);
 }
 
 string SHAREDvarsClass::getFileContents(const string inputFileName)
@@ -870,7 +870,7 @@ void SHAREDvarsClass::copyFiles(const string fileToCopyName, const string newFil
 {
 	ofstream writeFileObject(newFileName.c_str());
 
-	this->openFileAndCopyDataIntoCurrentFileObject(fileToCopyName, &writeFileObject);
+	openFileAndCopyDataIntoCurrentFileObject(fileToCopyName, &writeFileObject);
 
 	writeFileObject.close();
 }
@@ -881,7 +881,7 @@ void SHAREDvarsClass::copyFiles(const string folderToCopyName, const string file
 	ofstream writeFileObject(newFileNameFull.c_str());
 
 	string fileToCopyNameFull = folderToCopyName + CHAR_FOLDER_DELIMITER + fileToCopyName;
-	this->openFileAndCopyDataIntoCurrentFileObject(fileToCopyNameFull, &writeFileObject);
+	openFileAndCopyDataIntoCurrentFileObject(fileToCopyNameFull, &writeFileObject);
 
 	writeFileObject.close();
 }
