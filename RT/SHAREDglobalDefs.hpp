@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -179,10 +179,6 @@ class SHAREDglobalDefsClass
 using namespace std;
 
 
-
-	//ANN, LRRC, + OR;
-//Test variables (need optimisation)
-#define MAX_ANN_BACK_PROPAGATION_ERROR (1000.0)
 
 
 
