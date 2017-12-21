@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m8a 14-December-2017
+ * Project Version: 3m9a 16-December-2017
  *
  *******************************************************************************/
 
@@ -671,36 +671,11 @@ string SHAREDvarsClass::getFileContents(const string inputFileName, int* numberL
 			*numberLines = *numberLines + 1;
 		}
 	}
-
-	/*
-	string fileContents = "";
-	bool result = true;
-	ifstream parseFileObject(inputFileName.c_str());
-	if(!parseFileObject.rdbuf()->is_open())
-	{
-		// file does not exist in current directory.
-		cerr << "Error: input file does not exist in current directory: " << inputFileName << endl;
-		//exit(EXIT_ERROR);
-		result = false;
-	}
-	else
-	{
-		string currentLine = "";
-		int currentLineNumber = 0;
-		while(getline(parseFileObject, currentLine))
-		{
-			fileContents = fileContents + currentLine + CHAR_NEWLINE;
-			currentLineNumber++;
-		}
-		*numberLines = currentLineNumber;
-	}
-	*/
 	
 	#ifdef CS_DEBUG_GENERATE_OBJECT_ORIENTED_CODE
 	//cout << "fileContents = " << fileContents << endl;
 	#endif
 	
-
 	return fileContents;
 }
 
@@ -805,14 +780,20 @@ bool SHAREDvarsClass::getLinesFromFile(const string* fileContentsString, vector<
 
 void SHAREDvarsClass::writeStringListToFile(const string fileName, const vector<string>* stringList)
 {
-	string s = "";
+	ofstream writeFileObject(fileName.c_str());
+	/*
+	for(int i=0; i<stringList->size(); i++)
+	{
+		writeFileObject << stringList->at(i) << endl;
+	}
+	*/  
 	for(vector<string>::const_iterator stringListIter = stringList->begin(); stringListIter != stringList->end(); stringListIter++)
 	{		
 		string line = *stringListIter;
-		s = s + line + CHAR_NEWLINE;
+		writeFileObject << line << endl;
 	}
-	
-	writeStringToFile(fileName, &s);
+	writeFileObject.close();
+
 }
 
 

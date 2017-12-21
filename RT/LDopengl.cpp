@@ -25,7 +25,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m8a 14-December-2017
+ * Project Version: 3m9a 16-December-2017
  *
  *******************************************************************************/
 
