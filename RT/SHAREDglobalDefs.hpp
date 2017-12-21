@@ -50,7 +50,8 @@ class SHAREDglobalDefsClass
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
-#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
+//#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
+#define COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
@@ -119,6 +120,10 @@ class SHAREDglobalDefsClass
 #endif
 #ifdef COMPILE_GIA
 	#define USE_GIA
+#endif
+#ifdef COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE
+	#define USE_GIA
+	#define USE_ANN
 #endif
 #ifdef USE_GIA
 	#define USE_RT
