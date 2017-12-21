@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m4a 12-November-2017
+ * Project Version: 3m5a 07-December-2017
  *
  *******************************************************************************/
 
@@ -906,3 +906,12 @@ bool SHAREDvarsClass::openFileAndCopyDataIntoCurrentFileObject(const string file
 
 	return result;
 }
+
+void SHAREDvarsClass::copyStringArray(const string stringArrayToCopy[], string stringArray[], const int arraySize)
+{
+	for(int i=0; i<arraySize; i++)
+	{
+		stringArray[i] = stringArrayToCopy[i];
+	}
+}
+

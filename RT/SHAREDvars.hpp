@@ -25,7 +25,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m4a 12-November-2017
+ * Project Version: 3m5a 07-December-2017
  *
  *******************************************************************************/
 
@@ -158,6 +158,8 @@ class SHAREDvarsClass
 	public: void copyFiles(const string fileToCopyName, const string newFileName);
 	public: void copyFiles(const string folderToCopyName, const string fileToCopyName, const string newFolderName, const string newFileName);
 		public: bool openFileAndCopyDataIntoCurrentFileObject(const string fileToOpenName, ofstream* writeFileObject);
+		
+	public: void copyStringArray(const string stringArrayToCopy[], string stringArray[], const int arraySize);
 
 };
 
