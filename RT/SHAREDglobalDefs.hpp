@@ -25,7 +25,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  *
  *******************************************************************************/
@@ -44,14 +44,15 @@ class SHAREDglobalDefsClass
 	***********/
 
 	//current/active projects;
-//#define COMPILE_NLCI
+#define COMPILE_NLCI
 //#define COMPILE_GIAI
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
-#define COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
+//#define COMPILE_GIA_GENERATE_POS_TAGGER_DATABASE		//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
+//#define COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
 //#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
@@ -121,7 +122,11 @@ class SHAREDglobalDefsClass
 #ifdef COMPILE_GIA
 	#define USE_GIA
 #endif
+#ifdef COMPILE_GIA_GENERATE_POS_TAGGER_DATABASE
+	#define USE_GIA
+#endif
 #ifdef COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE
+	#define COMPILE_GIA_GENERATE_POS_TAGGER_DATABASE
 	#define USE_GIA
 	#define USE_ANN
 #endif
