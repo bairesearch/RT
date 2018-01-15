@@ -23,9 +23,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDvars.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m10a 16-December-2017
+ * Project Version: 3m11a 10-January-2018
  *
  *******************************************************************************/
 
@@ -933,4 +933,12 @@ bool SHAREDvarsClass::getBitValue(int number, int x)
 	bool result = value;
 	return result;
 }
+
+int SHAREDvarsClass::setBitValue(int number, int x, bool val) 
+{
+	number = number | (int(val) << x);	//CHECKTHIS
+	return number;
+}
+
+
 
