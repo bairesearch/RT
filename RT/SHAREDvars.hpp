@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m12a 15-January-2018
+ * Project Version: 3m12b 15-January-2018
  *
  *******************************************************************************/
 
@@ -163,9 +163,10 @@ class SHAREDvarsClass
 		
 	public: void copyStringArray(const string stringArrayToCopy[], string stringArray[], const int arraySize);
 	
-	public: bool getBitValue(int number, int x);
-	public: int setBitValue(int number, int x, bool val);
-
+	public: bool getBitValue(long number, int x);
+	public: long setBitValue(long number, int x, bool val);
+	
+	public: string removeFileNameExtension(const string fileName);
 
 };
 

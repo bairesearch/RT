@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m12a 15-January-2018
+ * Project Version: 3m12b 15-January-2018
  *
  *******************************************************************************/
 
@@ -928,18 +928,27 @@ void SHAREDvarsClass::copyStringArray(const string stringArrayToCopy[], string s
 	}
 }
 
-bool SHAREDvarsClass::getBitValue(int number, int x) 
+bool SHAREDvarsClass::getBitValue(long number, int x) 
 {
-	int value = (number >> x) & 1U;
+	long value = (number >> x) & 1U;
 	bool result = value;
 	return result;
 }
 
-int SHAREDvarsClass::setBitValue(int number, int x, bool val) 
+long SHAREDvarsClass::setBitValue(long number, int x, bool val) 
 {
-	number = number | (int(val) << x);	//CHECKTHIS
+	number = number | (long(val) << x);
 	return number;
 }
 
-
+string SHAREDvarsClass::removeFileNameExtension(const string fileName)
+{
+	string fileNameWithoutExtension = fileName;
+	int indexOfFirstFileExtension = fileName.find(STRING_FULLSTOP);
+	if(indexOfFirstFileExtension != CPP_STRING_FIND_RESULT_FAIL_VALUE)
+	{
+		fileNameWithoutExtension = fileName.substr(0, indexOfFirstFileExtension);
+	}
+	return fileNameWithoutExtension;
+}
 
