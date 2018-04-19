@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13b 22-February-2018
+ * Project Version: 3m13c 22-February-2018
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -233,6 +233,7 @@ using namespace std;
 #define STRING_INVERTEDCOMMAS "\""
 #define STRING_APOSTROPHE "'"
 #define STRING_INVERTED_COMMAS "\""
+#define STRING_QUESTIONMARK "?"
 
 #define TM_STRUCT_YEAR_OFFSET 1900
 
