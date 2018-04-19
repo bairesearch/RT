@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13a 22-February-2018
+ * Project Version: 3m13b 22-February-2018
  * /
  *******************************************************************************/
 
@@ -975,5 +975,13 @@ bool SHAREDvarsClass::isCapitalised(const string text)
 }
 
 
-
-
+void SHAREDvarsClass::printTime(const string startString, const string endString)
+{	
+	struct tm* current;
+	time_t now;
+	time(&now);
+	current = localtime(&now);
+	char timeAndDateString[100];
+	sprintf(timeAndDateString, "%02i:%02i:%02i %.2i/%.2i/%i", current->tm_hour, current->tm_min, current->tm_sec, current->tm_mday, (current->tm_mon+1), (current->tm_year + TM_STRUCT_YEAR_OFFSET));
+	cout << startString << timeAndDateString << endString << endl;
+}
