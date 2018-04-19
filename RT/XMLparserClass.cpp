@@ -26,9 +26,10 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
+
 
 #ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
 #include "ldrawVRv0.h"
@@ -36,25 +37,6 @@
 #include "XMLparserClass.hpp"
 
 #define XML_FILE_NAME "rules.xml"
-
-#define CHAR_TAG_OPEN '<'
-#define CHAR_TAG_OPEN_STR "<"
-#define CHAR_TAG_CLOSE '>'
-#define CHAR_TAG_CLOSE_STR ">"
-#define CHAR_TAG_END '/'
-#define CHAR_TAG_END_STR "/"
-#define CHAR_TAG_XML_DEF '$'
-#define CHAR_EXCLAMATION '!'
-#define CHAR_QUESTIONMARK '?'
-#define STRING_TAG_COMMENT_OPEN "--"
-#define STRING_TAG_COMMENT_CLOSE "--"
-#define STRING_TAG_XML_DEF_FULL "?xml version=\"1.0\" encoding=\"UTF-8\"?"
-#define CHAR_TAG_ATTRIBUTE_VAL_OPEN '"'
-#define CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR "\""
-#define CHAR_TAG_ATTRIBUTE_VAL_CLOSE '"'
-#define CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR "\""
-#define CHAR_TAG_ATTRIBUTE_VAL_EQUALS '='
-#define CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR "="
 
 
 static int charCount;
@@ -72,6 +54,11 @@ XMLparserAttribute::XMLparserAttribute(void)
 	name = "";
 	value = "";
 
+	#ifdef XML_DEBUG_LINECOUNT
+	charCount = 0;
+	lineCount = 0;
+	#endif
+	
 	nextAttribute = NULL;
 }
 
@@ -96,6 +83,11 @@ XMLparserTag::XMLparserTag(void)
 	nextTag = NULL;
 	firstLowerLevelTag = NULL;
 
+	#ifdef XML_DEBUG_LINECOUNT
+	charCount = 0;
+	lineCount = 0;
+	#endif
+	
 	firstAttribute = new XMLparserAttribute();
 	currentAttribute = firstAttribute;
 }
@@ -250,7 +242,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 
 		if(firstChar)
 		{
-			if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
+			if((currentToken == CHAR_EXCLAMATION_MARK) || (currentToken == CHAR_QUESTIONMARK))
 			{
 				if(!parseTagComment(parseFileObject, currentToken))
 				{
@@ -303,7 +295,7 @@ bool XMLparserClassClass::parseTagName(ifstream* parseFileObject, XMLparserTag* 
 				}
 				#endif
 			}
-			else if((currentToken == CHAR_EXCLAMATION) || (currentToken == CHAR_QUESTIONMARK))
+			else if((currentToken == CHAR_EXCLAMATION_MARK) || (currentToken == CHAR_QUESTIONMARK))
 			{
 				cout << "XML_PARSER_ERROR 4: invalid comment openining" << endl;
 				throwGenericXMLParseError();
@@ -481,6 +473,10 @@ bool XMLparserClassClass::parseTagAttributeValue(ifstream* parseFileObject, XMLp
 				#endif
 
 				currentTag->currentAttribute->value = attributeValue;
+				#ifdef XML_DEBUG_LINECOUNT
+				currentTag->currentAttribute->lineCount = lineCount;
+				currentTag->currentAttribute->charCount = charCount;
+				#endif
 				XMLparserAttribute* newAttribute = new XMLparserAttribute();
 				currentTag->currentAttribute->nextAttribute = newAttribute;
 				currentTag->currentAttribute = currentTag->currentAttribute->nextAttribute;
@@ -563,7 +559,7 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 	bool result = true;
 	char currentToken;
 
-	if(type == CHAR_EXCLAMATION)
+	if(type == CHAR_EXCLAMATION_MARK)
 	{
 		if(!(parseFileObject->get(currentToken)))
 		{
@@ -618,7 +614,7 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 
 			if(currentToken == CHAR_TAG_CLOSE)
 			{
-				if(type == CHAR_EXCLAMATION)
+				if(type == CHAR_EXCLAMATION_MARK)
 				{
 					if(foundSecondDash)
 					{
@@ -674,6 +670,10 @@ bool XMLparserClassClass::parseTagComment(ifstream* parseFileObject, const char 
 
 XMLparserTag* XMLparserClassClass::createNewTag(XMLparserTag* currentTag)
 {
+	#ifdef XML_DEBUG_LINECOUNT
+	currentTag->lineCount = lineCount;
+	currentTag->charCount = charCount;
+	#endif
 	XMLparserTag* newTag = new XMLparserTag();
 	currentTag->nextTag = newTag;
 	currentTag = currentTag->nextTag;

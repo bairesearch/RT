@@ -26,8 +26,8 @@
  * File Name: XMLparserClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
 
 
@@ -37,11 +37,29 @@
 #include "SHAREDglobalDefs.hpp"
 #include "SHAREDvars.hpp"	//required for writeByteArrayToFile/writeStringToFileObject
 
+#define CHAR_TAG_OPEN '<'
+#define CHAR_TAG_OPEN_STR "<"
+#define CHAR_TAG_CLOSE '>'
+#define CHAR_TAG_CLOSE_STR ">"
+#define CHAR_TAG_END '/'
+#define CHAR_TAG_END_STR "/"
+#define CHAR_TAG_XML_DEF '$'
+#define STRING_TAG_COMMENT_OPEN "--"
+#define STRING_TAG_COMMENT_CLOSE "--"
+#define STRING_TAG_XML_DEF_FULL "?xml version=\"1.0\" encoding=\"UTF-8\"?"
+#define CHAR_TAG_ATTRIBUTE_VAL_OPEN '"'
+#define CHAR_TAG_ATTRIBUTE_VAL_OPEN_STR "\""
+#define CHAR_TAG_ATTRIBUTE_VAL_CLOSE '"'
+#define CHAR_TAG_ATTRIBUTE_VAL_CLOSE_STR "\""
+#define CHAR_TAG_ATTRIBUTE_VAL_EQUALS '='
+#define CHAR_TAG_ATTRIBUTE_VAL_EQUALS_STR "="
+
 
 #define XML_WRITE_STANDARD_XML_HEADER
 
 //#define XML_PARSER_DISPLAY_COMMENTS_WHEN_PARSING
 
+#define XML_DEBUG_LINECOUNT
 //#define XML_DEBUG
 
 #ifdef USE_GIA
@@ -74,6 +92,11 @@ public:
 	string name;
 	string value;
 
+	#ifdef XML_DEBUG_LINECOUNT
+	int charCount;
+	int lineCount;
+	#endif
+	
 	XMLparserAttribute* nextAttribute;
 
 
@@ -97,7 +120,12 @@ public:
 
 	XMLparserTag* nextTag;
 	XMLparserTag* firstLowerLevelTag;
-
+	
+	#ifdef XML_DEBUG_LINECOUNT
+	int charCount;
+	int lineCount;
+	#endif
+	
 	XMLparserAttribute* firstAttribute;
 	XMLparserAttribute* currentAttribute;	//temporary variable used for attribute list creation
 

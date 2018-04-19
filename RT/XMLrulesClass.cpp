@@ -26,9 +26,10 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
+
 
 #ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
 #include "ldrawVRv0.h"
@@ -47,6 +48,8 @@ XMLparserTag* CSfirstTagInXMLfile;
 XMLrulesClass* GIArulesSprite;
 XMLrulesClass* GIArulesDraw;
 XMLparserTag* GIAfirstTagInXMLfile;
+XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
+XMLparserTag* GIAtxtRelTranslatorFirstTagInXMLfile;
 #endif
 #ifdef USE_OR
 XMLrulesClass* ORrulesObjectRecognition;
@@ -116,6 +119,18 @@ bool XMLrulesClassClass::parseGIArulesXMLfile()
 
  	GIAfirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
 	if(!XMLparserClass.readXMLfile(GIA_RULES_XML_FILE_NAME, GIAfirstTagInXMLfile))
+ 	{
+		result = false;
+	}
+	
+ 	GIAsynRelTranslatorFirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+	if(!XMLparserClass.readXMLfile(GIA_SYN_REL_TRANSLATOR_RULES_XML_FILE_NAME, GIAsynRelTranslatorFirstTagInXMLfile))
+ 	{
+		result = false;
+	}
+	
+ 	GIAtxtRelTranslatorFirstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
+	if(!XMLparserClass.readXMLfile(GIA_TXT_REL_TRANSLATOR_RULES_XML_FILE_NAME, GIAtxtRelTranslatorFirstTagInXMLfile))
  	{
 		result = false;
 	}

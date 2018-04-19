@@ -26,8 +26,8 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
 
 
@@ -119,6 +119,7 @@ class SHAREDvarsClass
 	public: string convertUnsignedIntToString(const int number);
 	public: string convertBoolToString(const bool number);
 	public: string convertLongToString(const long number);
+	public: string convertLongToString(const long number, const string format);
 
 	public: int convertStringToInt(const string number);
 	public: bool convertStringToBool(string number);
@@ -167,6 +168,9 @@ class SHAREDvarsClass
 	public: long setBitValue(long number, int x, bool val);
 	
 	public: string removeFileNameExtension(const string fileName);
+	
+	public: bool isCapitalised(const string text);
+
 
 };
 

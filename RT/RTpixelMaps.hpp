@@ -26,9 +26,10 @@
  * File Name: RTpixelMaps.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
+
 
 #ifndef HEADER_RT_PIXELMAPS
 #define HEADER_RT_PIXELMAPS

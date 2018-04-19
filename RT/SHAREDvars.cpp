@@ -26,9 +26,10 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m12b 15-January-2018
- *
+ * Project Version: 3m13a 22-February-2018
+ * /
  *******************************************************************************/
+
 
 #ifdef COMPILE_UNREAL_PROJECT //comment with COMPILE_UNREAL_PROJECT
 #include "ldrawVRv0.h"
@@ -436,6 +437,13 @@ string SHAREDvarsClass::convertLongToString(const long number)
 	sprintfSafeLong(tempString, "%ld", number);
 	return string(tempString);
 }
+string SHAREDvarsClass::convertLongToString(const long number, const string format)
+{
+	char tempString[100];
+	sprintfSafeLong(tempString, format.c_str(), number);
+	return string(tempString);
+}
+
 
 int SHAREDvarsClass::convertStringToInt(const string number)
 {
@@ -468,8 +476,9 @@ bool SHAREDvarsClass::convertStringToBool(string number)
 	}
 	else
 	{
-		cout << "convertStringToBool{} error: number != \"true\" or  \"false\" or  \"1\" or  \"0\"" << endl;
-		cout << "number = " << number << endl;
+		cerr << "convertStringToBool{} error: number != \"true\" or  \"false\" or  \"1\" or  \"0\"" << endl;
+		cerr << "number = " << number << endl;
+		exit(EXIT_ERROR);
 	}
 
 	return boolean;
@@ -951,4 +960,20 @@ string SHAREDvarsClass::removeFileNameExtension(const string fileName)
 	}
 	return fileNameWithoutExtension;
 }
+
+bool SHAREDvarsClass::isCapitalised(const string text)
+{
+	bool result = false;
+	if(text.length() > 0)
+	{
+		if(isupper(text[0]))
+		{
+			result = true;	
+		}
+	}
+	return result;
+}
+
+
+
 
