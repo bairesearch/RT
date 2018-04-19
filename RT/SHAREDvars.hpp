@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13d 22-February-2018
+ * Project Version: 3m13e 22-February-2018
  * /
  *******************************************************************************/
 
@@ -110,6 +110,7 @@ class SHAREDvarsClass
 
 	public: bool isWhiteSpace(const char c);
 	public: string convertStringToLowerCase(const string* arbitraryCaseString);
+	public: string convertStringToFirstUpperCase(const string* arbitraryCaseString);
 
 	public: string convertCharToString(char c);
 	public: string convertFloatToString(const float number, const string format);

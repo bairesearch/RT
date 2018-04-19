@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13d 22-February-2018
+ * Project Version: 3m13e 22-February-2018
  * /
  *******************************************************************************/
 
@@ -381,6 +381,16 @@ string SHAREDvarsClass::convertStringToLowerCase(const string* arbitraryCaseStri
 		lowerCaseString[i] = tolower((*arbitraryCaseString)[i]);
 	}
 	return lowerCaseString;
+}
+
+string SHAREDvarsClass::convertStringToFirstUpperCase(const string* arbitraryCaseString)
+{
+	string firstUpperCaseString = *arbitraryCaseString;
+	if(arbitraryCaseString->length() > 0)
+	{
+		firstUpperCaseString[0] = toupper((*arbitraryCaseString)[0]);
+	}
+	return firstUpperCaseString;
 }
 
 string SHAREDvarsClass::convertCharToString(char c)
