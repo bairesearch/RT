@@ -26,7 +26,7 @@
  * File Name: LDmysql.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *
  * to test sql connection;
@@ -117,7 +117,7 @@ bool LDmysqlClass::performSQLselectQuery(const char* sqlCommand)
 	return true;
 }
 
-bool LDmysqlClass::performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength)
+bool LDmysqlClass::performSQLrealSelectQuery(const char* sqlCommand, const uint64_t stringLength)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -134,8 +134,8 @@ bool LDmysqlClass::performSQLrealSelectQuery(const char* sqlCommand, const unsig
 
 
 
-//long performSQLgetNumRowsQuery(string tableName, string columnName)
-long LDmysqlClass::performSQLgetNumRowsQuery(const string tableName)
+//int64_t performSQLgetNumRowsQuery(string tableName, string columnName)
+int64_t LDmysqlClass::performSQLgetNumRowsQuery(const string tableName)
 {
 	MYSQL_ROW row;
 	int query_state;
@@ -157,15 +157,15 @@ long LDmysqlClass::performSQLgetNumRowsQuery(const string tableName)
 	}
 
 	int index = 0;
-	long numRowsInTable;
+	int64_t numRowsInTable;
 	result = mysql_store_result(connection);
 
 	if((row = mysql_fetch_row(result)) != NULL)
 	{
 		#ifdef SQL_MYSQL_VERSION_5_7_PLUS
-		numRowsInTable = long(atof(row[0]));
+		numRowsInTable = int64_t(atof(row[0]));
 		#else
-		numRowsInTable = long(atof(row[1]));
+		numRowsInTable = int64_t(atof(row[1]));
 		#endif
 	}
 
@@ -219,7 +219,7 @@ bool LDmysqlClass::performSQLinsertQuery(const char* sqlCommand)
 }
 
 
-bool LDmysqlClass::performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength)
+bool LDmysqlClass::performSQLrealInsertQuery(const char* sqlCommand, const uint64_t stringLength)
 {
 	int query_state;
 

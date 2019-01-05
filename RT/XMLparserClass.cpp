@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -902,8 +902,8 @@ bool XMLparserClassClass::writeXMLfileInefficient(const string xmlFileName, cons
 	charCount = 0;		//this variable needs to start being used
 	lineCount = 1;
 
-	long XMLfileByteArrayCurrentPosition = 0;
-	long XMLFileByteArraySize = XML_FILE_MAX_SIZE;
+	int64_t XMLfileByteArrayCurrentPosition = 0;
+	int64_t XMLFileByteArraySize = XML_FILE_MAX_SIZE;
 	char* XMLfileByteArray = new char[XMLFileByteArraySize];
 
 	if(!addTagLayerToByteArrayInefficient(firstTagInXMLfile, XMLfileByteArray, &XMLfileByteArrayCurrentPosition, 0))
@@ -1063,7 +1063,7 @@ void XMLparserClassClass::addTabsToFileObject(string* writeFileString, const int
 
 
 
-bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer)
+bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer)
 {
 	bool result = true;
 
@@ -1149,7 +1149,7 @@ bool XMLparserClassClass::addTagLayerToByteArrayInefficient(const XMLparserTag* 
 
 }
 
-void XMLparserClassClass::incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer)
+void XMLparserClassClass::incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer)
 {
 	XMLfileByteArray[*XMLfileByteArrayCurrentPosition] = CHAR_NEWLINE;
 	*XMLfileByteArrayCurrentPosition = (*XMLfileByteArrayCurrentPosition + 1);
@@ -1162,7 +1162,7 @@ void XMLparserClassClass::incrementLineAndAddTabsToByteArrayInefficient(char* XM
 
 }
 
-void XMLparserClassClass::addTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer)
+void XMLparserClassClass::addTabsToByteArrayInefficient(char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer)
 {
 	for(int i=0; i < treeLayer; i++)
 	{
@@ -1173,7 +1173,7 @@ void XMLparserClassClass::addTabsToByteArrayInefficient(char* XMLfileByteArray, 
 }
 
 
-void XMLparserClassClass::writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition)
+void XMLparserClassClass::writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition)
 {
 	for(int i=0; i < s.size(); i++)
 	{

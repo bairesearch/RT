@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -317,7 +317,7 @@ bool RTreferenceManipulationClass::write2DReferencesLayerToFileObjectRayTraceFor
 	return true;
 }
 
-//preconditions; submodelReferenceString must be long enough to store all reference information that is to be written to it
+//preconditions; submodelReferenceString must be int64_t enough to store all reference information that is to be written to it
 bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstream* writeFileObject, LDreference* currentReference)
 {
 

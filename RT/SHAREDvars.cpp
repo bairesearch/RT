@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -55,7 +55,7 @@
 using namespace std;
 
 
-long SHAREDvarsClass::getTimeAsLong()
+int64_t SHAREDvarsClass::getTimeAsLong()
 {
 	#ifdef LINUX
 	struct timeval tv;
@@ -63,7 +63,7 @@ long SHAREDvarsClass::getTimeAsLong()
 	struct tm* tm;
 	gettimeofday(&tv, &tz);
 	tm=localtime(&tv.tv_sec);
-	long timeAsLong = long(tm->tm_hour)* 60* 60* 1000000 + long(tm->tm_min)* 60* 1000000 + long(tm->tm_sec)* 1000000 + long(tv.tv_usec);	//time in microseconds
+	int64_t timeAsLong = int64_t(tm->tm_hour)* 60* 60* 1000000 + int64_t(tm->tm_min)* 60* 1000000 + int64_t(tm->tm_sec)* 1000000 + int64_t(tv.tv_usec);	//time in microseconds
 	return timeAsLong;
 
 	#else
@@ -439,7 +439,7 @@ string SHAREDvarsClass::convertBoolToString(const bool number)
 		return "false";
 	}
 }
-string SHAREDvarsClass::convertLongToString(const long number)
+string SHAREDvarsClass::convertLongToString(const int64_t number)
 {
 	//return to_string(number);	//C++11
 
@@ -447,7 +447,7 @@ string SHAREDvarsClass::convertLongToString(const long number)
 	sprintfSafeLong(tempString, "%ld", number);
 	return string(tempString);
 }
-string SHAREDvarsClass::convertLongToString(const long number, const string format)
+string SHAREDvarsClass::convertLongToString(const int64_t number, const string format)
 {
 	char tempString[100];
 	sprintfSafeLong(tempString, format.c_str(), number);
@@ -493,7 +493,7 @@ bool SHAREDvarsClass::convertStringToBool(string number)
 
 	return boolean;
 }
-long SHAREDvarsClass::convertStringToLong(const string number)
+int64_t SHAREDvarsClass::convertStringToLong(const string number)
 {
 	return atol(number.c_str());
 }
@@ -663,9 +663,12 @@ void SHAREDvarsClass::prependStringToFile(const string fileName, const string* s
 }
 
 string SHAREDvarsClass::getFileContents(const string inputFileName)
-{
-	string fileContents = "";
+{	
+	ifstream parseFileObject(inputFileName);
+	string fileContents(static_cast<stringstream const&>(stringstream() << parseFileObject.rdbuf()).str());
 	
+	/*
+	//not cross-platform compatible (as Windows uses multicharacter line endings CR+LF, binary cannot be used)  
 	ifstream parseFileObject(inputFileName, ios::in | ios::binary);
 	if(parseFileObject)
 	{
@@ -675,6 +678,7 @@ string SHAREDvarsClass::getFileContents(const string inputFileName)
 		parseFileObject.read(&fileContents[0], fileContents.size());
 		parseFileObject.close();
 	}
+	*/
   
     	return fileContents;
 }
@@ -873,7 +877,7 @@ void SHAREDvarsClass::sprintfSafeInt(char* stringCharStar, const char* type, int
 	#endif
 }
 
-void SHAREDvarsClass::sprintfSafeLong(char* stringCharStar, const char* type, long number)
+void SHAREDvarsClass::sprintfSafeLong(char* stringCharStar, const char* type, int64_t number)
 {
 	#ifdef LINUX
 	sprintf(stringCharStar, type, number);	//snprintf
@@ -947,16 +951,16 @@ void SHAREDvarsClass::copyStringArray(const string stringArrayToCopy[], string s
 	}
 }
 
-bool SHAREDvarsClass::getBitValue(long number, int x) 
+bool SHAREDvarsClass::getBitValue(int64_t number, int x) 
 {
-	long value = (number >> x) & 1U;
+	int64_t value = (number >> x) & 1U;
 	bool result = value;
 	return result;
 }
 
-long SHAREDvarsClass::setBitValue(long number, int x, bool val) 
+int64_t SHAREDvarsClass::setBitValue(int64_t number, int x, bool val) 
 {
-	number = number | (long(val) << x);
+	number = number | (int64_t(val) << x);
 	return number;
 }
 

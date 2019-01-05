@@ -26,7 +26,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -44,7 +44,7 @@ pixmap* RTppmClass::newPixmap(const int wide, const int high)
 
 	pm->wide = wide;
 	pm->high = high;
-	pm->pix = (unsigned char*) malloc((long)wide*high*3);
+	pm->pix = (unsigned char*) malloc((int64_t)wide*high*3);
 
 	if(!pm->pix)
 	{
@@ -108,7 +108,7 @@ pixmap* RTppmClass::loadPPM(const string fname)
 		return NULL;
 	}
 
-	if(fread(npm->pix, (long)wide*high*3,1, f) != 1)
+	if(fread(npm->pix, (int64_t)wide*high*3,1, f) != 1)
 	{
 		freePixmap(npm);
 		fclose(f);
@@ -137,13 +137,13 @@ void RTppmClass::writePPM(const string fname, const pixmap* pm)
 	}
 
 	fprintf(f, "P6 %i %i 255 ", pm->wide, pm->high);
-	fwrite(pm->pix, (long)pm->wide*pm->high*3, 1, f);
+	fwrite(pm->pix, (int64_t)pm->wide*pm->high*3, 1, f);
 	fclose(f);
 }
 
 unsigned char* RTppmClass::calcPixelAddress(const pixmap* pm, const int x, const int y)
 {
-	return &pm->pix[((long)pm->wide*y + x)*3];
+	return &pm->pix[((int64_t)pm->wide*y + x)*3];
 }
 
 void RTppmClass::placepointPPM(pixmap* pm, const int x, const int y, int r, int g, int b)

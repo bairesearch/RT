@@ -26,7 +26,7 @@
  * File Name: RTppm.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -85,7 +85,7 @@
 /*
   This structure represents a 24bit pixmap.
   The address of the pixel at (x, y) is calculated
-  with &pm->pix[((long)pm->wide*y + x)*3];
+  with &pm->pix[((int64_t)pm->wide*y + x)*3];
  */
 
 typedef struct{

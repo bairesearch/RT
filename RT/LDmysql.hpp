@@ -26,7 +26,7 @@
  * File Name: LDmysql.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -54,10 +54,10 @@ class LDmysqlClass
 	public: bool initiateMySQLserverConnection(const char* mysqlServerIpAddressAndPort, const char* username, const char* password, const char* databaseName);
 	private: bool performSQLselectQuery(const char* sqlCommand, const char* sqlCommandOutput);	//not complete - debug only
 	private: bool performSQLselectQuery(const char* sqlCommand);
-	private: bool performSQLrealSelectQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
+	private: bool performSQLrealSelectQuery(const char* sqlCommand, const uint64_t stringLength);	//ignores string escape character
 	public: bool performSQLinsertQuery(const char* sqlCommand);
-	public: bool performSQLrealInsertQuery(const char* sqlCommand, const unsigned long stringLength);	//ignores string escape character
-	public: long performSQLgetNumRowsQuery(const string tableName);
+	public: bool performSQLrealInsertQuery(const char* sqlCommand, const uint64_t stringLength);	//ignores string escape character
+	public: int64_t performSQLgetNumRowsQuery(const string tableName);
 	public: void performSQLdeleteAllRowsQuery(const string tableName);
 	public: void endMySQLserverConnection();
 };

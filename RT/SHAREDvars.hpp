@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -81,7 +81,7 @@ typedef struct { vec a; vec b; vec c; } mat;
 
 class SHAREDvarsClass
 {
-	public: long getTimeAsLong();
+	public: int64_t getTimeAsLong();
 
 	public: bool compareDoubles(const double a, const double b);
 	public: bool compareDoublesArbitraryError(const double a, const double b, const double error);
@@ -119,12 +119,12 @@ class SHAREDvarsClass
 	public: string convertIntToString(const int number, const string format);
 	public: string convertUnsignedIntToString(const int number);
 	public: string convertBoolToString(const bool number);
-	public: string convertLongToString(const long number);
-	public: string convertLongToString(const long number, const string format);
+	public: string convertLongToString(const int64_t number);
+	public: string convertLongToString(const int64_t number, const string format);
 
 	public: int convertStringToInt(const string number);
 	public: bool convertStringToBool(string number);
-	public: long convertStringToLong(const string number);
+	public: int64_t convertStringToLong(const string number);
 	public: float convertStringToFloat(const string number);
 	public: double convertStringToDouble(const string number);
 
@@ -157,7 +157,7 @@ class SHAREDvarsClass
 
 	public: void sprintfSafeDouble(char* stringCharStar, const char* type, double number);
 	public: void sprintfSafeInt(char* stringCharStar, const char* type, int number);
-	public: void sprintfSafeLong(char* stringCharStar, const char* type, long number);
+	public: void sprintfSafeLong(char* stringCharStar, const char* type, int64_t number);
 
 	public: void copyFiles(const string fileToCopyName, const string newFileName);
 	public: void copyFiles(const string folderToCopyName, const string fileToCopyName, const string newFolderName, const string newFileName);
@@ -165,8 +165,8 @@ class SHAREDvarsClass
 		
 	public: void copyStringArray(const string stringArrayToCopy[], string stringArray[], const int arraySize);
 	
-	public: bool getBitValue(long number, int x);
-	public: long setBitValue(long number, int x, bool val);
+	public: bool getBitValue(int64_t number, int x);
+	public: int64_t setBitValue(int64_t number, int x, bool val);
 	
 	public: string removeFileNameExtension(const string fileName);
 	

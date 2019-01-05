@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -72,6 +72,7 @@ class SHAREDglobalDefsClass
 #ifndef LINUX
 	//else assume windows (affects default parts directory only - this is ISO C++ so it should compile on any platform)
 	//#include <windows.h>	//incompatible with LDjpeg.hpp (must only include windows.h when need to)
+	#include <cstdint>
 #endif
 
 #define SQL_MYSQL_VERSION_5_7_PLUS

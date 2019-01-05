@@ -26,7 +26,7 @@
  * File Name: XMLparserClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -160,10 +160,10 @@ class XMLparserClassClass
 		public: bool addTagLayerToFileObject(const XMLparserTag* firstTagInCurrentLayer, string* writeFileString, const int treeLayer);
 			private: void incrementLineAndAddTabsToFileObject(string* writeFileString, const int treeLayer);
 			private: void addTabsToFileObject(string* writeFileString, const int treeLayer);
-		private: bool addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-			private: void incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-			private: void addTabsToByteArrayInefficient(char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition, const int treeLayer);
-			private: void writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, long* XMLfileByteArrayCurrentPosition);
+		private: bool addTagLayerToByteArrayInefficient(const XMLparserTag* firstTagInCurrentLayer, char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void incrementLineAndAddTabsToByteArrayInefficient(char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void addTabsToByteArrayInefficient(char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition, const int treeLayer);
+			private: void writeStringToByteArrayInefficient(string s, char* XMLfileByteArray, int64_t* XMLfileByteArrayCurrentPosition);
 };
 
 #endif

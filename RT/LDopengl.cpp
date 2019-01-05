@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * /
  *******************************************************************************/
 
@@ -363,7 +363,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 
 static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
-	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
+	int64_t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
@@ -485,7 +485,7 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 		{
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
-		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
+		int64_t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = SHAREDvarsClass().getTimeAsLong();
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
@@ -555,7 +555,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 //not required for 3D - can use viewport instead of rotating model
 static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperations()
 {
-	long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
+	int64_t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneStart;
 	if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS)
 	{
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
@@ -648,7 +648,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 		{
 			cout << "\t\t\t\t end: 3bi. normalised snapshot generation - raytrace or opengl snapshot - draw scene" << endl;
 		}
-		long time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
+		int64_t time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd;
 		time3biNormalisedSnapshotGenerationRaytraceOrOpenGLSnapshotDrawSceneEnd = SHAREDvarsClass().getTimeAsLong();
 		if(LD_OPENGL_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL)
 		{
