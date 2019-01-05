@@ -26,7 +26,7 @@
  * File Name: SHAREDvector.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m14a 20-April-2018
+ * Project Version: 3m15a 24-April-2018
  * /
  *******************************************************************************/
 
