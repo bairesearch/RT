@@ -49,8 +49,8 @@ class SHAREDglobalDefsClass
 //#define COMPILE_GIAI
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
-//#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-#define COMPILE_GIA		//makefile.GIA -> GIA.exe
+#define COMPILE_NLC		//makefile.NLC -> NLC.exe
+//#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_GIA_GENERATE_POS_TAGGER_DATABASE		//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
 //#define COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
