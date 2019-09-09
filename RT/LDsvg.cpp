@@ -26,7 +26,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n1a 10-August-2019
+ * Project Version: 3n1b 10-August-2019
  * /
  *******************************************************************************/
 
@@ -106,105 +106,25 @@ void LDsvgClass::writeSVGfooter(string* writeFileString)
 
 
 
-void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse)
-{
-	colour colourrgb;
- 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
-
-	string boxOutlineWidthString = SHAREDvars.convertDoubleToString(boxOutlineWidth, "%0.3f");
-	string xPosString = SHAREDvars.convertIntToString((int)(pos->x - (width/2)));	//%d
-	string yPosString = SHAREDvars.convertIntToString((int)(pos->y - (height/2)));
-	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
-	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
-	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
-	string widthString = SHAREDvars.convertIntToString((int)width);
-	string heightString = SHAREDvars.convertIntToString((int)height);
-
-	string svgText = "";
-
-	if(useEllipse)
-	{
-		XMLparserTag* currentTagInBlock = *currentTag;
-		currentTagInBlock->name = "ellipse";
-		XMLparserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
-		currentAttributeInBlock->name = "cx";
-		currentAttributeInBlock->value = xPosString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "cy";
-		currentAttributeInBlock->value = yPosString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "rx";
-		currentAttributeInBlock->value = widthString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "ry";
-		currentAttributeInBlock->value = heightString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "fill";
-		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "stroke";
-		currentAttributeInBlock->value = "black";
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "stroke-width";
-		currentAttributeInBlock->value = boxOutlineWidthString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-
-		(*currentTag)->nextTag = new XMLparserTag();
-		(*currentTag) = (*currentTag)->nextTag;
-
-		//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
-	}
-	else
-	{
-		XMLparserTag* currentTagInBlock = *currentTag;
-		currentTagInBlock->name = "rect";
-		XMLparserAttribute* currentAttributeInBlock = currentTagInBlock->firstAttribute;
-		currentAttributeInBlock->name = "x";
-		currentAttributeInBlock->value = xPosString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "y";
-		currentAttributeInBlock->value = yPosString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "width";
-		currentAttributeInBlock->value = widthString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "height";
-		currentAttributeInBlock->value = heightString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "fill";
-		currentAttributeInBlock->value = "rgb(" + rString + "," + gString + "," + bString + ")";
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "stroke";
-		currentAttributeInBlock->value = "black";
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "stroke-width";
-		currentAttributeInBlock->value = boxOutlineWidthString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-
-		(*currentTag)->nextTag = new XMLparserTag();
-		(*currentTag) = (*currentTag)->nextTag;
-
-		//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
-	}
-}
-
 void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, const double fillOpacity)
 {
+	bool transparent = true;
+	writeSVGbox(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacity);
+}
+void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse)
+{
+	bool transparent = false;
+	double fillOpacityNOTUSED;
+	writeSVGbox(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacityNOTUSED);
+}
+void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
+{
 	colour colourrgb;
  	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
-
+	writeSVGbox(currentTag, pos, width, height, colourrgb, boxOutlineWidth, useEllipse, transparent, fillOpacity);
+}
+void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const colour colourrgb, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
+{
 	string boxOutlineWidthString = SHAREDvars.convertDoubleToString(boxOutlineWidth, "%0.3f");
 	string xPosString = SHAREDvars.convertIntToString((int)(pos->x - (width/2)));	//%d
 	string yPosString = SHAREDvars.convertIntToString((int)(pos->y - (height/2)));
@@ -216,7 +136,11 @@ void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* po
 
 	string svgText = "";
 
-	string fillOpacityString = SHAREDvars.convertDoubleToString(fillOpacity, "%0.3f");
+	string fillOpacityString;
+	if(transparent)
+	{
+		SHAREDvars.convertDoubleToString(fillOpacity, "%0.3f");
+	}
 
 	if(useEllipse)
 	{
@@ -250,15 +174,27 @@ void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* po
 		currentAttributeInBlock->name = "stroke-width";
 		currentAttributeInBlock->value = boxOutlineWidthString;
 		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "fill-opacity";
-		currentAttributeInBlock->value = fillOpacityString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
+		if(transparent)
+		{
+			currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+			currentAttributeInBlock->name = "fill-opacity";
+			currentAttributeInBlock->value = fillOpacityString;
+			currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
+		}
 
 		(*currentTag)->nextTag = new XMLparserTag();
 		(*currentTag) = (*currentTag)->nextTag;
 
-		//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
+		/*
+		if(transparent)
+		{
+			//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
+		}
+		else
+		{
+			//svgText = "<ellipse cx=\"" + xPosString + "\" cy=\"" + yPosString + "\" rx=\"" + widthString + "\" ry=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";
+		}
+		*/
 	}
 	else
 	{
@@ -292,26 +228,41 @@ void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* po
 		currentAttributeInBlock->name = "stroke-width";
 		currentAttributeInBlock->value = boxOutlineWidthString;
 		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-		currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
-		currentAttributeInBlock->name = "fill-opacity";
-		currentAttributeInBlock->value = fillOpacityString;
-		currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
-
+		if(transparent)
+		{		
+			currentAttributeInBlock = currentAttributeInBlock->nextAttribute;
+			currentAttributeInBlock->name = "fill-opacity";
+			currentAttributeInBlock->value = fillOpacityString;
+			currentAttributeInBlock->nextAttribute = new XMLparserAttribute();
+		}
+		
 		(*currentTag)->nextTag = new XMLparserTag();
 		(*currentTag) = (*currentTag)->nextTag;
 
-		//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
+		/*
+		if(transparent)
+		{
+			//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" fill-opacity=\"" + fillOpacityString + "\" />";
+		}
+		else
+		{
+			//svgText = "<rect x=\"" + xPosString + "\" y=\"" + yPosString + "\" width=\"" + widthString + "\" height=\"" + heightString + "\" fill=\"rgb(" + rString + "," + gString + "," + bString + ")\" stroke=\"black\" stroke-width=\"" + boxOutlineWidthString + "\" />";		
+		}
+		*/
 	}
 }
-
 
 
 
 void LDsvgClass::writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col)
 {
 	colour colourrgb;
- 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
+ 	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);	
+	writeSVGline(currentTag, pos1, pos2, colourrgb);
+}
 
+void LDsvgClass::writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const colour colourrgb)
+{
 	string xPosString = SHAREDvars.convertIntToString((int)pos1->x);	//%d
 	string yPosString = SHAREDvars.convertIntToString((int)pos1->y);
 	string xPos2String = SHAREDvars.convertIntToString((int)pos2->x);
