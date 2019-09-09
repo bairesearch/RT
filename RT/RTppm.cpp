@@ -26,7 +26,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3m16c 24-April-2019
+ * Project Version: 3n1a 10-August-2019
  * /
  *******************************************************************************/
 
