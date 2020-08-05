@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: XMLrulesClass.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3n1c 10-August-2019
+ * Project Version: 3n2a 10-March-2020
  * /
  *******************************************************************************/
 
@@ -43,7 +43,7 @@
 #define OR_RULES_XML_FILE_NAME "ATORrules.xml"
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
 #define GIA_SYN_REL_TRANSLATOR_RULES_XML_FILE_NAME "GIAsynRelTranslatorRules.xml"
-#define GIA_TXT_REL_TRANSLATOR_RULES_XML_FILE_NAME "GIAtxtRelTranslatorRules.xml"
+#define GIA_POS_REL_TRANSLATOR_RULES_XML_FILE_NAME "GIAposRelTranslatorRules.xml"
 #define NLC_RULES_XML_FILE_NAME "NLCrules.xml"
 
 #define RULES_XML_TAG_rules ((string)"rules")
@@ -131,7 +131,7 @@ extern XMLrulesClass* GIArulesSprite;
 extern XMLrulesClass* GIArulesDraw;
 extern XMLparserTag* GIAfirstTagInXMLfile;
 extern XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
-extern XMLparserTag* GIAtxtRelTranslatorFirstTagInXMLfile;
+extern XMLparserTag* GIAposRelTranslatorFirstTagInXMLfile;
 #endif
 #ifdef USE_OR
 extern XMLrulesClass* ORrulesObjectRecognition;
