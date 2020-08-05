@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n4a 02-June-2020
+ * Project Version: 3n5a 23-July-2020
  * Description: Contains common sprite commands
  * /
  *******************************************************************************/
@@ -446,14 +446,14 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 		{
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS/2);
 		}
-		else if((spriteTextString[spriteTextIndex] == '?') || (spriteTextString[spriteTextIndex] == ',') || (spriteTextString[spriteTextIndex] == '\'') || (spriteTextString[spriteTextIndex] == ':')  || (spriteTextString[spriteTextIndex] == '$'))
-		{
-			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS/2);
-		}
 		else
 		{
+			#ifdef USE_GIA
+			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + (SPRITE_CHAR_SPACING_SIZE_IN_LDRAW_UNITS/2);
+			#else
 			cerr << "\nunknown character - system must exit (character = [index " << spriteTextIndex << "]: " <<  spriteTextString[spriteTextIndex] << ")" << endl;
 			exit(EXIT_ERROR);
+			#endif
 		}
 	}
 
