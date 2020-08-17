@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -51,7 +51,7 @@ class SHAREDglobalDefsClass
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
-#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
+//#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_GIA_GENERATE_POS_TAGGER_DATABASE		//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
 //#define COMPILE_GIA_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.GIAwithANNgeneratePOStaggerDatabase -> GIAgeneratePOStaggerDatabase.exe
 //#define COMPILE_OR		//makefile.ATOR -> ATOR.exe
@@ -61,6 +61,11 @@ class SHAREDglobalDefsClass
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
 //#define COMPILE_LRRC
+
+	//inactive tests;
+#define COMPILE_LRRC_WITH_ANN
+//#define COMPILE_TH_ANN_WITH_LRRC
+
 
 
 
@@ -159,8 +164,20 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
+
 #ifdef COMPILE_LRRC
 	#define USE_LRRC
+#endif
+#ifdef COMPILE_LRRC_WITH_ANN
+	#define USE_LRRC
+	#define USE_ANN
+	#define USE_RT
+#endif
+#ifdef COMPILE_TH_ANN_WITH_LRRC
+	#define USE_LRRC
+	#define USE_ANN
+	#define TH_USE_ANN_TEST_HARNESS
+	#define USE_RT
 #endif
 
 

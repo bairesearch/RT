@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * /
  *******************************************************************************/
 
@@ -40,7 +40,7 @@
 #include "SHAREDglobalDefs.hpp"
 #include "SHAREDvars.hpp"
 #ifdef USE_LRRC
-//#include "LRRCmodelClass.hpp"
+#include "LRRCmodelClass.hpp"
 #endif
 
 #ifdef USE_RT
@@ -267,9 +267,9 @@ public:
 
 class LDreferenceClassClass
 {
-	private: void copyReferencePosition(LDreference* r, LDreference* referenceToCopy);
+	public: void copyReferencePosition(LDreference* r, LDreference* referenceToCopy);
 
-	private: int obtainReferencePlayerID(const LDreference* referenceInThisPhaseStartSceneFile);
+	public: int obtainReferencePlayerID(const LDreference* referenceInThisPhaseStartSceneFile);
 
 	public: void convertLdrawColourToDatFileRGB(const int dataFileColour, colour* col);
 };

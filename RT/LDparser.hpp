@@ -26,7 +26,7 @@
  * File Name: LDparser.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * /
  *******************************************************************************/
 
@@ -36,6 +36,9 @@
 
 #include "LDreferenceClass.hpp"
 #include "SHAREDvector.hpp"
+#ifdef USE_LRRC
+#include "LRRCparser.hpp"
+#endif
 
 #ifndef COMPILE_UNREAL_PROJECT
 #ifdef LINUX
@@ -54,6 +57,10 @@ class LDparserClass
 {
 	private: SHAREDvarsClass SHAREDvars;
 	private: SHAREDvectorClass SHAREDvector;
+	#ifdef USE_LRRC
+	private: LRRCmodelClassClass LRRCmodelClass;
+	private: LRRCparserClass LRRCparser;
+	#endif
 	public: bool parseFile(string parseFileName, LDreference* initialReference, LDreference* parentReference, const bool recurseIntoPartsDir);
 
 	public: double calcModXPosBasedUponRotate(const vec* childRelativePosition, const mat* parentReferenceDeformationMatrix);

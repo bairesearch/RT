@@ -26,7 +26,7 @@
  * File Name: RTglobalsDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * Description: RT specific global definitions
  * /
  *******************************************************************************/
