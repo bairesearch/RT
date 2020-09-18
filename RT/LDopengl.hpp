@@ -26,7 +26,7 @@
  * File Name: LDopengl.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -60,7 +60,7 @@
 	#define OR_PRINT_ALGORITHM_PROGRESS (0)
 	#define OR_GENERATE_IMAGE_COMPARITOR_RESULTS_NO_EXPLICIT_CONFIDENTIAL_WARNINGS (0)
 
-#elif defined USE_OR
+#elif defined USE_ATOR
 	//black? magenta?
 	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)		//255 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
 	#define OPEN_GL_BACKGROUND_COLOUR_G (0.0)		//0 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)

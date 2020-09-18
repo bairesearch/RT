@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -55,7 +55,7 @@
 #ifdef USE_GIA
 #define RULES_XML_TAG_draw ((string)"draw")
 #endif
-#ifdef USE_OR
+#ifdef USE_ATOR
 #define RULES_XML_TAG_objectRecognition ((string)"objectRecognition")
 #endif
 
@@ -106,7 +106,7 @@ class XMLrulesClassClass
 		private: bool parseCSRulesTag(XMLparserTag* currentTag);
 	#endif
 
-	#ifdef USE_OR
+	#ifdef USE_ATOR
 	public: bool parseORrulesXMLfile();
 		private: bool parseORrulesTag(XMLparserTag* currentTag);
 	#endif
@@ -133,7 +133,7 @@ extern XMLparserTag* GIAfirstTagInXMLfile;
 extern XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
 extern XMLparserTag* GIAposRelTranslatorFirstTagInXMLfile;
 #endif
-#ifdef USE_OR
+#ifdef USE_ATOR
 extern XMLrulesClass* ORrulesObjectRecognition;
 #endif
 #ifdef USE_NLC

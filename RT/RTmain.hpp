@@ -26,7 +26,7 @@
  * File Name: RTmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 

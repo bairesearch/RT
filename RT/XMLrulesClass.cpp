@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -51,7 +51,7 @@ XMLparserTag* GIAfirstTagInXMLfile;
 XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
 XMLparserTag* GIAposRelTranslatorFirstTagInXMLfile;
 #endif
-#ifdef USE_OR
+#ifdef USE_ATOR
 XMLrulesClass* ORrulesObjectRecognition;
 #endif
 #ifdef USE_NLC
@@ -220,7 +220,7 @@ bool XMLrulesClassClass::parseCSRulesTag(XMLparserTag* currentTag)
 
 
 
-#ifdef USE_OR
+#ifdef USE_ATOR
 bool XMLrulesClassClass::parseORrulesXMLfile()
 {
 	bool result = true;

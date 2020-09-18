@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -34,7 +34,7 @@
 #include "RTpixelMaps.hpp"
 
 
-#ifdef USE_OR
+#ifdef USE_ATOR
 #include "ATORglobalDefs.hpp"
 #else
 int DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH;
@@ -52,7 +52,7 @@ double EDGE_LUMINOSITY_THRESHOLD;
 double ESTIMATE_MAX_DEPTH_T_REAL;
 #endif
 
-#ifndef USE_OR
+#ifndef USE_ATOR
 void RTpixelMapsClass::fillInRTRulesExternVariables()
 {
 	DEFAULT_CONTRAST_MAP_GENERATION_KERNEL_WIDTH = (CONTRAST_MAP_GENERATION_KERNEL_WIDTH_NO_INTERPIXEL);
@@ -609,7 +609,7 @@ void createBooleanDiffMapFromRGBMaps(bool* diffbooleanDiffMap, int imageWidth, i
 }
 */
 
-#ifdef USE_OR
+#ifdef USE_ATOR
 void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, const int imageHeight, unsigned char* rgbMap)
 {
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
@@ -782,7 +782,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
 			double contrast;
 			contrast = getLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastMap);
 			int contrastNormalised;
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(contrast != MAP_VALUE_OUT_OF_RANGE)
@@ -805,7 +805,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
 				#ifdef USE_CONTRAST_PIXMAP_INVERSE
 				contrastNormalised = -(contrastNormalised-MAX_RGB_VAL);
 				#endif
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			}
 			#endif
 			RTppm.placepointPPM(pm, x, y, contrastNormalised, contrastNormalised, contrastNormalised);
@@ -824,7 +824,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
 			double depthOrDepthContrastVal;
 			depthOrDepthContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 			int depthOrDepthContrastValNormalised;
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastVal != MAP_VALUE_OUT_OF_RANGE)
@@ -856,7 +856,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
 				#ifdef USE_CONTRAST_PIXMAP_INVERSE
 				depthOrDepthContrastValNormalised = -(depthOrDepthContrastValNormalised-MAX_RGB_VAL);
 				#endif
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			}
 			#endif
 
@@ -883,7 +883,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(cons
 			depthOrDepthContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 			int depthOrDepthContrastValNormalised;
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastVal != MAP_VALUE_OUT_OF_RANGE)
@@ -920,7 +920,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(cons
 				depthOrDepthContrastValNormalised = -(depthOrDepthContrastValNormalised-MAX_RGB_VAL);
 			#endif
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			}
 			#endif
 
@@ -951,7 +951,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMap(const string
 			double depthOrDepthContrastValue;
 			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastValue != MAP_VALUE_OUT_OF_RANGE)
@@ -991,7 +991,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMap(const string
 				depthOrDepthContrastValueNormalised = -(depthOrDepthContrastValueNormalised-MAX_RGB_VAL);
 				#endif
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			}
 			#endif
 
@@ -1018,7 +1018,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 			double depthOrDepthContrastValue;
 			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			if(OR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastValue != MAP_VALUE_OUT_OF_RANGE)
@@ -1054,7 +1054,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 				depthOrDepthContrastValueNormalised = -(depthOrDepthContrastValue-MAX_RGB_VAL);
 				#endif
 
-			#ifdef USE_OR
+			#ifdef USE_ATOR
 			}
 			#endif
 
@@ -1535,7 +1535,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 							//calc diff lum diff between centre pixel and current surrounding kernel pixel
 							double kernelCurrentPixelPositionInLummapLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
-							#ifdef USE_OR
+							#ifdef USE_ATOR
 							if(OR_USE_CONTRAST_CALC_METHOD_B)
 							{
 								contrastLevel = contrastLevel + currentContrastLevel;
@@ -1544,7 +1544,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 							{
 							#endif
 								contrastLevel = SHAREDvars.maxDouble(contrastLevel, currentContrastLevel);
-							#ifdef USE_OR
+							#ifdef USE_ATOR
 							}
 							#endif
 						}
@@ -1632,7 +1632,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 
 							double kernelCurrentPixelPositionInLummapLuminosity = getRGBMapValue(x, y, imageWidth, rgbComponent, rgbMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
-							#ifdef USE_OR
+							#ifdef USE_ATOR
 							if(OR_USE_CONTRAST_CALC_METHOD_B)
 							{
 								contrastLevel = contrastLevel + currentContrastLevel;
@@ -1641,7 +1641,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 							{
 							#endif
 								contrastLevel = SHAREDvars.maxDouble(contrastLevel, currentContrastLevel);
-							#ifdef USE_OR
+							#ifdef USE_ATOR
 							}
 							#endif
 						}
@@ -1721,7 +1721,7 @@ void RTpixelMapsClass::createLuminosityContrastBooleanMap(const int imageWidth, 
 
 			if(luminosityContrastVal > EDGE_LUMINOSITY_CONTRAST_THRESHOLD)
 			{
-				#ifdef USE_OR
+				#ifdef USE_ATOR
 				if(OR_USE_CONTRAST_CALC_METHOD_C)
 				{
 					if(luminosityContrastVal != MAP_VALUE_OUT_OF_RANGE)
@@ -1737,7 +1737,7 @@ void RTpixelMapsClass::createLuminosityContrastBooleanMap(const int imageWidth, 
 				{
 				#endif
 					luminosityContrastValPassedThreshold = true;
-				#ifdef USE_OR
+				#ifdef USE_ATOR
 				}
 				#endif
 			}

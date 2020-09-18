@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -75,7 +75,7 @@ void RTsceneClass::setSceneLightingConditions(const float lightingAmbientRedNew,
 
 int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
-	#ifndef USE_OR
+	#ifndef USE_ATOR
 	RTpixelMaps.fillInRTRulesExternVariables();
 	#endif
 

@@ -26,7 +26,7 @@
  * File Name: RTviewinfo.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -130,7 +130,7 @@
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Y -10
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z 20
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_COLOUR "white"
-#elif defined USE_OR_METHOD_3DOD
+#elif defined USE_ATOR_METHOD_3DOD
 		//adjusted for raytracing a neural network
 	#define TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_WIDTH 640	//320 or 640
 	#define TAL_FILE_HEADER_DEFAULT_IMAGE_SIZE_HEIGHT 480	//200 or 480

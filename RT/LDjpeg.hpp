@@ -26,7 +26,7 @@
  * File Name: LDjpeg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -35,7 +35,7 @@
 #define HEADER_LD_JPEG
 
 #include "SHAREDglobalDefs.hpp"
-#ifdef USE_OR
+#ifdef USE_ATOR
 	#include "ATORglobalDefs.hpp"
 #include "SHAREDvars.hpp"
 #include "jpeglib.h"

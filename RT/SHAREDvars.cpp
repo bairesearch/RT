@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -361,6 +361,18 @@ bool SHAREDvarsClass::directoryExists(const string* folder)
 		//printf( "%s is no directory\n", pathname )
 	}
 	return folderExists;
+}
+
+bool SHAREDvarsClass::checkIfFolderExistsAndIfNotMakeAndSetAsCurrent(const string* folderName)
+{
+	bool result = true;
+	if(!directoryExists(folderName))
+	{
+		createDirectory(folderName);
+	}
+	setCurrentDirectory(folderName);
+
+	return result;
 }
 
 bool SHAREDvarsClass::isWhiteSpace(const char c)

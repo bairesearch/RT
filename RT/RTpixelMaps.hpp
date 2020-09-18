@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * /
  *******************************************************************************/
 
@@ -134,7 +134,7 @@ class RTpixelMapsClass
 	public: void generatePixmapFromBooleanMap(const string imageFileName, const int imageWidth, const int imageHeight, const bool* booleanMap);
 	private: void generatePixmapFromEnumIntMap(const string filename, const int imageWidth, const int imageHeight, const int* intMap);
 	public: void generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap);
-	#ifdef USE_OR
+	#ifdef USE_ATOR
 		private: void normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, const int imageHeight, unsigned char* rgbMap);
 			private: double calculateAverageLuminosity(int imageWidth, const int imageHeight, unsigned char* rgbMap);
 	#endif
@@ -169,7 +169,7 @@ class RTpixelMapsClass
 	public: void createLuminosityContrastBooleanMap(const int imageWidth, const int imageHeight, const double* luminosityContrastMap, bool* luminosityContrastBooleanMap);
 	public: void createLuminosityBooleanMap(const int imageWidth, const int imageHeight, const double* luminosityMap, bool* luminosityBooleanMap);
 
-#ifndef USE_OR
+#ifndef USE_ATOR
 	public: void fillInRTRulesExternVariables();
 #endif
 
