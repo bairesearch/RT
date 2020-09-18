@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3n7e 17-August-2020
+ * Project Version: 3n8a 09-September-2020
  * /
  *******************************************************************************/
 
