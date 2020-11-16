@@ -26,7 +26,7 @@
  * File Name: LDopengl.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -37,8 +37,8 @@
 #include "SHAREDglobalDefs.hpp"
 #include "LDreferenceClass.hpp"
 
-#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also
-#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV		//this is used by ORmethod.cpp/ORmethod2DOD.cpp/ORmethod3DOD.cpp also
+#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS		//this is used by ATORmethod.cpp/ATORmethod2DOD.cpp/ATORmethod3DOD.cpp also
+#define USE_OPENGL_PREDEFINED_OD_MATRIX_OPERATIONS_ADV		//this is used by ATORmethod.cpp/ATORmethod2DOD.cpp/ATORmethod3DOD.cpp also
 
 #define RGB_RED (0)
 #define RGB_GREEN (1)
@@ -55,16 +55,16 @@
 	#define OPEN_GL_BACKGROUND_COLOUR_R (1.0)
 	#define OPEN_GL_BACKGROUND_COLOUR_G (1.0)
 	#define OPEN_GL_BACKGROUND_COLOUR_B (1.0)
-	#define OR_PRINT_ALGORITHM_AND_TIME_DETAILS (0)
-	#define OR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL (0)
-	#define OR_PRINT_ALGORITHM_PROGRESS (0)
+	#define ATOR_PRINT_ALGORITHM_AND_TIME_DETAILS (0)
+	#define ATOR_PRINT_ALGORITHM_AND_TIME_DETAILS_ALL (0)
+	#define ATOR_PRINT_ALGORITHM_PROGRESS (0)
 	#define OR_GENERATE_IMAGE_COMPARITOR_RESULTS_NO_EXPLICIT_CONFIDENTIAL_WARNINGS (0)
 
 #elif defined USE_ATOR
 	//black? magenta?
-	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)		//255 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
-	#define OPEN_GL_BACKGROUND_COLOUR_G (0.0)		//0 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
-	#define OPEN_GL_BACKGROUND_COLOUR_B (0.0)		//255 (ifdef OR_METHOD_USE_SPECIFIC_BG_COLOUR)
+	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)		//255 (ifdef ATOR_METHOD_USE_SPECIFIC_BG_COLOUR)
+	#define OPEN_GL_BACKGROUND_COLOUR_G (0.0)		//0 (ifdef ATOR_METHOD_USE_SPECIFIC_BG_COLOUR)
+	#define OPEN_GL_BACKGROUND_COLOUR_B (0.0)		//255 (ifdef ATOR_METHOD_USE_SPECIFIC_BG_COLOUR)
 #else
 	//black
 	#define OPEN_GL_BACKGROUND_COLOUR_R (0.0)
@@ -76,8 +76,8 @@
 
 
 
-#define OR_METHOD2DOD_DIMENSIONS (2)
-#define OR_METHOD3DOD_DIMENSIONS (3)
+#define ATOR_METHOD2DOD_DIMENSIONS (2)
+#define ATOR_METHOD3DOD_DIMENSIONS (3)
 
 #define PI (3.14159265)
 
@@ -112,12 +112,12 @@ class LDopenglClass
 	public: void setViewPort3Dortho(const double left, const double right, const double bottom, const double top, const double back, const double forward);
 
 
-	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations);
+	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, uchar* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations);
 	public: void drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations);
 
-	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap);
+	public: void drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, uchar* rgbMap);
 
-		public: void writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap);
+		public: void writeScreenToRGBMap(int width, const int height, uchar* rgbMap);
 		public: void writeScreenToDepthMap(int width, const int height, double* depthMap);
 		public: void updateScreen();
 

@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -97,7 +97,7 @@ class RTpixelMapsClass
 {
 	private: RTppmClass RTppm;
 	private: SHAREDvarsClass SHAREDvars;
-	public: void printRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap);
+	public: void printRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap);
 
 	private: double calculateLuminosityLevelFromColour(const colour* col);
 
@@ -107,10 +107,10 @@ class RTpixelMapsClass
 	public: void setIntMapValue(const int x, const int y, const int imageWidth, int intVal, int* intMap);
 	private: int getIntMapValue(const int x, const int y, const int imageWidth, const int* intMap);
 
-	public: unsigned char getRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, const unsigned char* rgbMap);
-	public: void getRGBMapValues(int x, int y, int imageWidth, unsigned char* rgbMap, colour* col);
-	public: void setRGBMapValues(const int x, const int y, const int imageWidth, colour* col, unsigned char* rgbMap);
-	public: void setRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, unsigned char* rgbMap, int rgbVal);
+	public: uchar getRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, const uchar* rgbMap);
+	public: void getRGBMapValues(int x, int y, int imageWidth, uchar* rgbMap, colour* col);
+	public: void setRGBMapValues(const int x, const int y, const int imageWidth, colour* col, uchar* rgbMap);
+	public: void setRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, uchar* rgbMap, int rgbVal);
 
 	public: void setNormalMapValue(const int x, const int y, const int imageWidth, vec* normalVal, double* normalMap);
 	public: void getNormalMapValue(int x, int y, int imageWidth, double* normalMap, vec* normalVal);
@@ -122,23 +122,23 @@ class RTpixelMapsClass
 	public: void setLumOrContrastOrDepthMapValue(const int x, const int y, const int imageWidth, double contrastVal, double* contrastMap);
 	public: double getLumOrContrastOrDepthMapValue(const int x, const int y, const int imageWidth, const double* contrastMap);
 
-	public: void generatePixmapFromRGBmap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap);
+	public: void generatePixmapFromRGBmap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap);
 	public: void generatePixmapFromLuminosityContrastMap(const string imageFileName, const int imageWidth, const int imageHeight, const double* contrastMap);
 	public: void generatePixmapFromDepthMapOrDepthContrastMap(const string imageFileName, const int imageWidth, const int imageHeight, const double* depthMap);
 	public: void generatePixmapFromDepthMapOrDepthContrastMapAdvanced(const string imageFileName, const int imageWidth, const int imageHeight, const double* depthMap, const double noHitDepth, const double estimateMaxDepth);
-	public: void generateRGBMapFromDepthMapOrDepthContrastMap(const int imageWidth, const int imageHeight, const double* depthMap, unsigned char* rgbMap);
-	public: void generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(const int imageWidth, const int imageHeight, const double* depthMap, unsigned char* rgbMap, const double noHitDepth, const double estimateMaxDepth);
+	public: void generateRGBMapFromDepthMapOrDepthContrastMap(const int imageWidth, const int imageHeight, const double* depthMap, uchar* rgbMap);
+	public: void generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(const int imageWidth, const int imageHeight, const double* depthMap, uchar* rgbMap, const double noHitDepth, const double estimateMaxDepth);
 	public: void generatePixmapFromNormalMap(const string imageFileName, int imageWidth, const int imageHeight, double* normalMap);
-	private: void generateRGBMapFromNormalMap(int imageWidth, const int imageHeight, double* normalMap, unsigned char* rgbMap);
+	private: void generateRGBMapFromNormalMap(int imageWidth, const int imageHeight, double* normalMap, uchar* rgbMap);
 	public: void generatePixmapFromLuminosityMap(const string imageFileName, const int imageWidth, const int imageHeight, const double* luminosityMap);
 	public: void generatePixmapFromBooleanMap(const string imageFileName, const int imageWidth, const int imageHeight, const bool* booleanMap);
 	private: void generatePixmapFromEnumIntMap(const string filename, const int imageWidth, const int imageHeight, const int* intMap);
-	public: void generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap);
+	public: void generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap);
 	#ifdef USE_ATOR
-		private: void normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, const int imageHeight, unsigned char* rgbMap);
-			private: double calculateAverageLuminosity(int imageWidth, const int imageHeight, unsigned char* rgbMap);
+		private: void normaliseRGBMapBasedOnAverageLuminosity(uchar* normalisedRgbMap, int imageWidth, const int imageHeight, uchar* rgbMap);
+			private: double calculateAverageLuminosity(int imageWidth, const int imageHeight, uchar* rgbMap);
 	#endif
-	public: void generateBooleanDiffMapFromRGBMaps(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap1, unsigned char* rgbMap2);
+	public: void generateBooleanDiffMapFromRGBMaps(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap1, uchar* rgbMap2);
 
 	public: void generatePixmapFromDepthMap24Bit(const string imageFileName, const int imageWidth, const int imageHeight, const double* depthMap, const double depthScale, const double depthOffset);
 	public: void calculate24BitDepthPixmapPixelFromDepth(const double depth, const double depthScale, const double depthOffset, colour* depthMap24BitPixelValue);
@@ -146,23 +146,23 @@ class RTpixelMapsClass
 
 
 	public: void writeImage(const string imageFileName, pixmap* pm);
-	public: void readImage(const string imageFileName, unsigned char* rgbMap);
+	public: void readImage(const string imageFileName, uchar* rgbMap);
 
-//methods taken from ORoperations.cpp;
-	public: void createRGBMapFromPixmapImage(pixmap* objectImage, unsigned char* rgbMap);
+//methods taken from ATORoperations.cpp;
+	public: void createRGBMapFromPixmapImage(pixmap* objectImage, uchar* rgbMap);
 		private: void calculateColourFromPixmapPixel(pixmap* pm, int pixelPositionInPixmap, colour* col);
 	public: void createDepthMapFromDepth24BitPixmapImage(pixmap* depth24BitPixMap, double* depthMap, const double depthScale, const double depthOffset);
 		public: double calculateDepthFrom24BitDepthValue(const colour* depthMap24BitPixelValue, const double depthScale, const double depthOffset);
 	private: void createLuminosityMapFromPixmapImage(pixmap* objectImage, double* luminosityMap);
 		private: double calculateLuminosityLevelFromPixmapPixel(const pixmap* pm, const int pixelPositionInPixmap);
-	public: void createLuminosityMapFromRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap, double* luminosityMap);
-		public: double calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, unsigned char* rgbMap);
+	public: void createLuminosityMapFromRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap, double* luminosityMap);
+		public: double calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, uchar* rgbMap);
 			public: double calculateLuminosityLevelFromRGBVal(const colour* rgbVal);
-	private: void createLuminosityContrastMapFromRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap, double* luminosityContrastMap);
+	private: void createLuminosityContrastMapFromRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap, double* luminosityContrastMap);
 	public: void createContrastMapFromMap(const int imageWidth, const int imageHeight, const double* luminosityMap, double* contrastMap);
 		private: double calculateContrastLevelWithinKernel(const int pixelX, const int pixelY, const double* luminosityMap, const int kernelWidth, const int kernelHeight, const int imageWidth, const int imageHeight);
 
-		private: double calculateContrastLevelWithinKernelRGBComponent(const int pixelX, const int pixelY, const unsigned char* rgbMap, const int rgbComponent, const int kernelWidth, const int kernelHeight, const int imageWidth, const int imageHeight);
+		private: double calculateContrastLevelWithinKernelRGBComponent(const int pixelX, const int pixelY, const uchar* rgbMap, const int rgbComponent, const int kernelWidth, const int kernelHeight, const int imageWidth, const int imageHeight);
 
 
 

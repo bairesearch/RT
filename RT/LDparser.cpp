@@ -26,7 +26,7 @@
  * File Name: LDparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -515,7 +515,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
 
-						currentReference->colour = (unsigned int)(SHAREDvars.convertStringToDouble(colour));
+						currentReference->colour = (uint32_t)(SHAREDvars.convertStringToDouble(colour));
 					#ifdef USE_LD_ABSOLUTE_COLOUR
 						if(currentReference->colour == DAT_FILE_DEFAULT_COLOUR)
 						{
@@ -762,7 +762,7 @@ bool LDparserClass::parseFile(string parseFileName, LDreference* initialReferenc
 
 						//3. Record LDreference information into current LDreference object
 						currentReference->type = type;
-						currentReference->colour = (unsigned int)(SHAREDvars.convertStringToDouble(colour));
+						currentReference->colour = (uint32_t)(SHAREDvars.convertStringToDouble(colour));
 						#ifdef USE_UNREAL
 						currentReference->relativeColourString = colour;
 						#endif

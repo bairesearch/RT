@@ -26,7 +26,7 @@
  * File Name: RTpixelMaps.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -72,7 +72,7 @@ void RTpixelMapsClass::fillInRTRulesExternVariables()
 }
 #endif
 
-void RTpixelMapsClass::printRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap)
+void RTpixelMapsClass::printRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap)
 {
 	cout << "printRGBMap{}" << endl;
 
@@ -123,19 +123,19 @@ int RTpixelMapsClass::getIntMapValue(const int x, const int y, const int imageWi
 
 
 
-unsigned char RTpixelMapsClass::getRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, const unsigned char* rgbMap)
+uchar RTpixelMapsClass::getRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, const uchar* rgbMap)
 {
 	return rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + rgb];
 }
 
-void RTpixelMapsClass::getRGBMapValues(int x, int y, int imageWidth, unsigned char* rgbMap, colour* col)
+void RTpixelMapsClass::getRGBMapValues(int x, int y, int imageWidth, uchar* rgbMap, colour* col)
 {
 	col->r = rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + RGB_RED];
 	col->g = rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + RGB_GREEN];
 	col->b = rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + RGB_BLUE];
 }
 
-void RTpixelMapsClass::setRGBMapValues(const int x, const int y, const int imageWidth, colour* col, unsigned char* rgbMap)
+void RTpixelMapsClass::setRGBMapValues(const int x, const int y, const int imageWidth, colour* col, uchar* rgbMap)
 {
 	/*
 	printf("\ncol->r = %d", col->r);
@@ -148,7 +148,7 @@ void RTpixelMapsClass::setRGBMapValues(const int x, const int y, const int image
 	rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + RGB_BLUE] = col->b;
 }
 
-void RTpixelMapsClass::setRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, unsigned char* rgbMap, int rgbVal)
+void RTpixelMapsClass::setRGBMapValue(const int x, const int y, const int imageWidth, const int rgb, uchar* rgbMap, int rgbVal)
 {
 	rgbMap[y*imageWidth*RGB_NUM + x*RGB_NUM + rgb] = rgbVal;
 }
@@ -208,14 +208,14 @@ double RTpixelMapsClass::getLumOrContrastOrDepthMapValue(const int x, const int 
 }
 
 
-#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_3_LUMINOSITY_ONLY
-void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap)
+#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_3_LUMINOSITY_ONLY
+void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap)
 {
 	int x,y;
 	pixmap* pm;
 
-	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
-	double* luminosityContrastMap = new double[imageWidth*imageHeight];	//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
+	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ATORmethod.cpp main loop for efficiency
+	double* luminosityContrastMap = new double[imageWidth*imageHeight];	//CHECK THIS; these maps need to be created inside ATORmethod.cpp main loop for efficiency
 	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
 	createContrastMapFromMap(imageWidth, imageHeight, luminosityMap, luminosityContrastMap);
 
@@ -246,8 +246,8 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 
 			int contrastThreshold;
 
-			#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
-			contrastThreshold = EDGE_LUMINOSITY_CONTRAST_THRESHOLD*OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//needs to be dynamic based upon normalisation based upon average rgb values in image
+			#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
+			contrastThreshold = EDGE_LUMINOSITY_CONTRAST_THRESHOLD*ATOR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//needs to be dynamic based upon normalisation based upon average rgb values in image
 			#else
 			contrastThreshold = 0;
 			#endif
@@ -266,8 +266,8 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 	writeImage(imageFileName, pm);
 }
 
-#elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_2_ALL_RGB_COMPONENTS
-void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap)
+#elif defined ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_2_ALL_RGB_COMPONENTS
+void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -302,8 +302,8 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 
 				int contrastThreshold;
 
-				#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
-				contrastThreshold = (EDGE_LUMINOSITY_CONTRAST_THRESHOLD*OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR)/RGB_NUM;	//needs to be dynamic based upon normalisation based upon average rgb values in image
+				#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
+				contrastThreshold = (EDGE_LUMINOSITY_CONTRAST_THRESHOLD*ATOR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR)/RGB_NUM;	//needs to be dynamic based upon normalisation based upon average rgb values in image
 				#else
 				contrastThreshold = 0;
 				#endif
@@ -339,15 +339,15 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 	writeImage(imageFileName, pm);
 }
 
-#elif defined OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_1_ALL_RGB_COMPONENTS_WITH_DIRECTION
-void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap)
+#elif defined ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD_METHOD_1_ALL_RGB_COMPONENTS_WITH_DIRECTION
+void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap)
 {
-	#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
+	#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
-	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
+	double averageNormalisedLuminosity = MAX_LUMINOSITY*ATOR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
 	double contrastThresholdNormalisationFactor = averageLuminosity/averageNormalisedLuminosity;
 	/*
-	unsigned char* normalisedRgbMap = new unsigned char[imageWidth*imageHeight*RGB_NUM];
+	uchar* normalisedRgbMap = new uchar[imageWidth*imageHeight*RGB_NUM];
 	void normaliseRGBMapBasedOnAverageLuminosity(normalisedRgbMap, imageWidth, imageHeight, rgbMap)
 	rgbMap = normalisedRgbMap;
 	*/
@@ -394,12 +394,12 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 				{
 					double contrastThreshold;
 
-					#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
-						#ifdef OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
-						contrastThreshold = (OR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL)*contrastThresholdNormalisationFactor;	//WRONG: normalisation should apply to entire image, not individual snapshots..
+					#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_APPLY_CONTRAST_THRESHOLD
+						#ifdef ATOR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP
+						contrastThreshold = (ATOR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL)*contrastThresholdNormalisationFactor;	//WRONG: normalisation should apply to entire image, not individual snapshots..
 						#else
-						contrastThreshold = (OR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL);
-						//contrastThreshold = (LUMINOSITY_CONTRAST_FRACTION_THRESHOLD*MAX_LUMINOSITY)*OR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//OLD
+						contrastThreshold = (ATOR_IMAGE_COMPARISON_DECISION_TREE_RGB_CONTRAST_THRESHOLD_FRACTION*MAX_RGB_VAL);
+						//contrastThreshold = (LUMINOSITY_CONTRAST_FRACTION_THRESHOLD*MAX_LUMINOSITY)*ATOR_IMAGE_COMPARISON_DECISION_TREE_CONTRAST_THRESHOLD_FACTOR;	//OLD
 						#endif
 					#else
 					contrastThreshold = 0.0;
@@ -469,7 +469,7 @@ void RTpixelMapsClass::generateBooleanContrastPixmapFromRGBMap(const string imag
 }
 #endif
 
-void RTpixelMapsClass::generateBooleanDiffMapFromRGBMaps(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap1, unsigned char* rgbMap2)
+void RTpixelMapsClass::generateBooleanDiffMapFromRGBMaps(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap1, uchar* rgbMap2)
 {
 	pixmap* pm;
 	pm = RTppm.newPixmap(imageWidth, imageHeight);
@@ -562,7 +562,7 @@ void RTpixelMapsClass::generateBooleanDiffMapFromRGBMaps(const string imageFileN
 }
 
 /*
-void createBooleanDiffMapFromRGBMaps(bool* diffbooleanDiffMap, int imageWidth, int imageHeight, unsigned char* rgbMap1, unsigned char* rgbMap2)
+void createBooleanDiffMapFromRGBMaps(bool* diffbooleanDiffMap, int imageWidth, int imageHeight, uchar* rgbMap1, uchar* rgbMap2)
 {
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -610,10 +610,10 @@ void createBooleanDiffMapFromRGBMaps(bool* diffbooleanDiffMap, int imageWidth, i
 */
 
 #ifdef USE_ATOR
-void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* normalisedRgbMap, int imageWidth, const int imageHeight, unsigned char* rgbMap)
+void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(uchar* normalisedRgbMap, int imageWidth, const int imageHeight, uchar* rgbMap)
 {
 	double averageLuminosity = calculateAverageLuminosity(imageWidth, imageHeight, rgbMap);
-	double averageNormalisedLuminosity = MAX_LUMINOSITY*OR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
+	double averageNormalisedLuminosity = MAX_LUMINOSITY*ATOR_IMAGE_COMPARISON_DECISION_TREE_NORMALISE_RGB_MAP_AVERAGED_NORMALISED_LUMINOSITY_FRACTION;
 	double normalisationFactor = averageNormalisedLuminosity/averageLuminosity;
 
 	for(int y = 0; y < imageHeight; y++)
@@ -633,9 +633,9 @@ void RTpixelMapsClass::normaliseRGBMapBasedOnAverageLuminosity(unsigned char* no
 	}
 }
 
-double RTpixelMapsClass::calculateAverageLuminosity(int imageWidth, const int imageHeight, unsigned char* rgbMap)
+double RTpixelMapsClass::calculateAverageLuminosity(int imageWidth, const int imageHeight, uchar* rgbMap)
 {
-	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ORmethod.cpp main loop for efficiency
+	double* luminosityMap = new double[imageWidth*imageHeight];		//CHECK THIS; these maps need to be created inside ATORmethod.cpp main loop for efficiency
 	createLuminosityMapFromRGBMap(imageWidth, imageHeight, rgbMap, luminosityMap);
 
 	double totalLuminosity = 0.0;
@@ -653,7 +653,7 @@ double RTpixelMapsClass::calculateAverageLuminosity(int imageWidth, const int im
 }
 #endif
 
-void RTpixelMapsClass::generatePixmapFromRGBmap(const string imageFileName, int imageWidth, const int imageHeight, unsigned char* rgbMap)
+void RTpixelMapsClass::generatePixmapFromRGBmap(const string imageFileName, int imageWidth, const int imageHeight, uchar* rgbMap)
 {
 	int x,y;
 	pixmap* pm;
@@ -783,7 +783,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
 			contrast = getLumOrContrastOrDepthMapValue(x, y, imageWidth, contrastMap);
 			int contrastNormalised;
 			#ifdef USE_ATOR
-			if(OR_USE_CONTRAST_CALC_METHOD_C)
+			if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(contrast != MAP_VALUE_OUT_OF_RANGE)
 				{
@@ -815,7 +815,7 @@ void RTpixelMapsClass::generatePixmapFromLuminosityContrastMap(const string imag
 	writeImage(imageFileName, pm);
 }
 
-void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int imageWidth, const int imageHeight, const double* depthMap, unsigned char* rgbMap)
+void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int imageWidth, const int imageHeight, const double* depthMap, uchar* rgbMap)
 {
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -825,7 +825,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
 			depthOrDepthContrastVal = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 			int depthOrDepthContrastValNormalised;
 			#ifdef USE_ATOR
-			if(OR_USE_CONTRAST_CALC_METHOD_C)
+			if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastVal != MAP_VALUE_OUT_OF_RANGE)
 				{
@@ -873,7 +873,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMap(const int im
 
 
 
-void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(const int imageWidth, const int imageHeight, const double* depthMap, unsigned char* rgbMap, const double noHitDepth, const double estimateMaxDepth)
+void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(const int imageWidth, const int imageHeight, const double* depthMap, uchar* rgbMap, const double noHitDepth, const double estimateMaxDepth)
 {
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -884,7 +884,7 @@ void RTpixelMapsClass::generateRGBMapFromDepthMapOrDepthContrastMapAdvanced(cons
 			int depthOrDepthContrastValNormalised;
 
 			#ifdef USE_ATOR
-			if(OR_USE_CONTRAST_CALC_METHOD_C)
+			if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastVal != MAP_VALUE_OUT_OF_RANGE)
 				{
@@ -952,7 +952,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMap(const string
 			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
 			#ifdef USE_ATOR
-			if(OR_USE_CONTRAST_CALC_METHOD_C)
+			if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastValue != MAP_VALUE_OUT_OF_RANGE)
 				{
@@ -1019,7 +1019,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 			depthOrDepthContrastValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth, depthMap);
 
 			#ifdef USE_ATOR
-			if(OR_USE_CONTRAST_CALC_METHOD_C)
+			if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 			{
 				if(depthOrDepthContrastValue != MAP_VALUE_OUT_OF_RANGE)
 				{
@@ -1067,7 +1067,7 @@ void RTpixelMapsClass::generatePixmapFromDepthMapOrDepthContrastMapAdvanced(cons
 
 
 
-void RTpixelMapsClass::generateRGBMapFromNormalMap(int imageWidth, const int imageHeight, double* normalMap, unsigned char* rgbMap)
+void RTpixelMapsClass::generateRGBMapFromNormalMap(int imageWidth, const int imageHeight, double* normalMap, uchar* rgbMap)
 {
 	for(int y = 0; y < imageHeight; y++)
 	{
@@ -1238,7 +1238,7 @@ void RTpixelMapsClass::writeImage(const string imageFileName, pixmap* pm)
 	RTppm.freePixmap(pm);
 }
 
-void RTpixelMapsClass::readImage(const string imageFileName, unsigned char* rgbMap)
+void RTpixelMapsClass::readImage(const string imageFileName, uchar* rgbMap)
 {
 	pixmap* rgbPixMap;
 	#ifdef RT_DEBUG
@@ -1366,7 +1366,7 @@ void RTpixelMapsClass::calculate24BitDepthPixmapPixelFromDepth(const double dept
 
 
 
-void RTpixelMapsClass::createRGBMapFromPixmapImage(pixmap* objectImage, unsigned char* rgbMap)
+void RTpixelMapsClass::createRGBMapFromPixmapImage(pixmap* objectImage, uchar* rgbMap)
 {
 
 	int imageWidth = objectImage->wide;
@@ -1416,9 +1416,9 @@ double RTpixelMapsClass::calculateLuminosityLevelFromPixmapPixel(const pixmap* p
 {
 	double luminosity;
 
-	unsigned char r = pm->pix[(int)pixelPositionInPixmap];
-	unsigned char g = pm->pix[(int)pixelPositionInPixmap+1];
-	unsigned char b = pm->pix[(int)pixelPositionInPixmap+2];
+	uchar r = pm->pix[(int)pixelPositionInPixmap];
+	uchar g = pm->pix[(int)pixelPositionInPixmap+1];
+	uchar b = pm->pix[(int)pixelPositionInPixmap+2];
 
 	luminosity = (r+g+b);
 
@@ -1426,7 +1426,7 @@ double RTpixelMapsClass::calculateLuminosityLevelFromPixmapPixel(const pixmap* p
 }
 
 
-void RTpixelMapsClass::createLuminosityMapFromRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap, double* luminosityMap)
+void RTpixelMapsClass::createLuminosityMapFromRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap, double* luminosityMap)
 {
 	//fill luminosityMap
 	for(int y = 0; y < imageHeight; y++)
@@ -1439,14 +1439,14 @@ void RTpixelMapsClass::createLuminosityMapFromRGBMap(int imageWidth, const int i
 	}
 }
 
-double RTpixelMapsClass::calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, unsigned char* rgbMap)
+double RTpixelMapsClass::calculateLuminosityLevelFromRGBMap(int x, int y, int imageWidth, uchar* rgbMap)
 {
 	double luminosity;
 
 	#ifdef OLDcalculateLuminosityLevelFromRGBMap
-		unsigned char r = getRGBMapValue(x, y, imageWidth, RGB_RED, rgbMap);
-		unsigned char g = getRGBMapValue(x, y, imageWidth, RGB_GREEN, rgbMap);
-		unsigned char b = getRGBMapValue(x, y, imageWidth, RGB_BLUE, rgbMap);
+		uchar r = getRGBMapValue(x, y, imageWidth, RGB_RED, rgbMap);
+		uchar g = getRGBMapValue(x, y, imageWidth, RGB_GREEN, rgbMap);
+		uchar b = getRGBMapValue(x, y, imageWidth, RGB_BLUE, rgbMap);
 		luminosity = (r+g+b);
 	#else
 		colour col;
@@ -1462,9 +1462,9 @@ double RTpixelMapsClass::calculateLuminosityLevelFromRGBVal(const colour* rgbVal
 {
 	double luminosity;
 
-	unsigned char r = rgbVal->r;
-	unsigned char g = rgbVal->g;
-	unsigned char b = rgbVal->b;
+	uchar r = rgbVal->r;
+	uchar g = rgbVal->g;
+	uchar b = rgbVal->b;
 
 	luminosity = (r+g+b);
 
@@ -1476,7 +1476,7 @@ double RTpixelMapsClass::calculateLuminosityLevelFromRGBVal(const colour* rgbVal
 
 
 	//WARNING; no depth check!
-void RTpixelMapsClass::createLuminosityContrastMapFromRGBMap(int imageWidth, const int imageHeight, unsigned char* rgbMap, double* luminosityContrastMap)
+void RTpixelMapsClass::createLuminosityContrastMapFromRGBMap(int imageWidth, const int imageHeight, uchar* rgbMap, double* luminosityContrastMap)
 {
 	double* luminosityMap = new double[imageWidth*imageHeight];
 
@@ -1536,7 +1536,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 							double kernelCurrentPixelPositionInLummapLuminosity = getLumOrContrastOrDepthMapValue(x, y, imageWidth, luminosityMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
 							#ifdef USE_ATOR
-							if(OR_USE_CONTRAST_CALC_METHOD_B)
+							if(ATOR_USE_CONTRAST_CALC_METHOD_B)
 							{
 								contrastLevel = contrastLevel + currentContrastLevel;
 							}
@@ -1604,7 +1604,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernel(const int pixelX, co
 
 
 
-double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const int pixelX, const int pixelY, const unsigned char* rgbMap, const int rgbComponent, const int kernelWidth, const int kernelHeight, const int imageWidth, const int imageHeight)
+double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const int pixelX, const int pixelY, const uchar* rgbMap, const int rgbComponent, const int kernelWidth, const int kernelHeight, const int imageWidth, const int imageHeight)
 {
 	double contrastLevel = 0.0;
 
@@ -1633,7 +1633,7 @@ double RTpixelMapsClass::calculateContrastLevelWithinKernelRGBComponent(const in
 							double kernelCurrentPixelPositionInLummapLuminosity = getRGBMapValue(x, y, imageWidth, rgbComponent, rgbMap);
 							double currentContrastLevel = SHAREDvars.absDouble(centrePixelPositionInLummapLuminosity - kernelCurrentPixelPositionInLummapLuminosity);
 							#ifdef USE_ATOR
-							if(OR_USE_CONTRAST_CALC_METHOD_B)
+							if(ATOR_USE_CONTRAST_CALC_METHOD_B)
 							{
 								contrastLevel = contrastLevel + currentContrastLevel;
 							}
@@ -1722,7 +1722,7 @@ void RTpixelMapsClass::createLuminosityContrastBooleanMap(const int imageWidth, 
 			if(luminosityContrastVal > EDGE_LUMINOSITY_CONTRAST_THRESHOLD)
 			{
 				#ifdef USE_ATOR
-				if(OR_USE_CONTRAST_CALC_METHOD_C)
+				if(ATOR_USE_CONTRAST_CALC_METHOD_C)
 				{
 					if(luminosityContrastVal != MAP_VALUE_OUT_OF_RANGE)
 					{

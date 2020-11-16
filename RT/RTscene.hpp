@@ -26,7 +26,7 @@
  * File Name: RTscene.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -119,8 +119,8 @@ class RTsceneClass
 	private: RToperationsClass RToperations;
 	private: RTraytracerClass RTraytracer;
 	private: SHAREDvectorClass SHAREDvector;
-	public: int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
-		private: int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap);
+	public: int rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap);
+		private: int rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap);
 
 	public: void setSceneLightingConditions(const float lightingAmbientRedNew, const float lightingAmbientGreenNew, const float lightingAmbientBlueNew, const float lightingSpecularNew, const float lightingDiffuseNew);
 	public: void setLightingMode(const int newLightingMode);
@@ -130,7 +130,7 @@ class RTsceneClass
 	private: RTlightingInfo* parseTalFileGetLightInfo(RTlightingInfo* li);
 	private: RTsceneInfo* parseTalFileGetSceneInfo(RTsceneInfo* si);
 
-	private: void createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li);
+	private: void createImage(const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li);
 
 	private: void calculateTransparencyColour(const RTviewInfo* vi, const RTsceneInfo* si, const RTlightingInfo* li, colour* rgb);
 

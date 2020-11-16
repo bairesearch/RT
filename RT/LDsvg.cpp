@@ -26,7 +26,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -109,28 +109,28 @@ void LDsvgClass::writeSVGfooter(string* writeFileString)
 void LDsvgClass::writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, const double fillOpacity)
 {
 	bool transparent = true;
-	writeSVGbox(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacity);
+	writeSVGbox2(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacity);
 }
 void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse)
 {
 	bool transparent = false;
 	double fillOpacityNOTUSED;
-	writeSVGbox(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacityNOTUSED);
+	writeSVGbox2(currentTag, pos, width, height, col, boxOutlineWidth, useEllipse, transparent, fillOpacityNOTUSED);
 }
-void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
+void LDsvgClass::writeSVGbox2(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
 {
 	colour colourrgb;
  	LDreferenceClass.convertLdrawColourToDatFileRGB(col, &colourrgb);
-	writeSVGbox(currentTag, pos, width, height, colourrgb, boxOutlineWidth, useEllipse, transparent, fillOpacity);
+	writeSVGbox3(currentTag, pos, width, height, colourrgb, boxOutlineWidth, useEllipse, transparent, fillOpacity);
 }
-void LDsvgClass::writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const colour colourrgb, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
+void LDsvgClass::writeSVGbox3(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const colour colourrgb, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity)
 {
 	string boxOutlineWidthString = SHAREDvars.convertDoubleToString(boxOutlineWidth, "%0.3f");
 	string xPosString = SHAREDvars.convertIntToString((int)(pos->x - (width/2)));	//%d
 	string yPosString = SHAREDvars.convertIntToString((int)(pos->y - (height/2)));
-	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
-	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
-	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
+	string rString = SHAREDvars.convertIntToString((uchar)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((uchar)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((uchar)colourrgb.b);
 	string widthString = SHAREDvars.convertIntToString((int)width);
 	string heightString = SHAREDvars.convertIntToString((int)height);
 
@@ -267,9 +267,9 @@ void LDsvgClass::writeSVGline(XMLparserTag** currentTag, const vec* pos1, const 
 	string yPosString = SHAREDvars.convertIntToString((int)pos1->y);
 	string xPos2String = SHAREDvars.convertIntToString((int)pos2->x);
 	string yPos2String = SHAREDvars.convertIntToString((int)pos2->y);
-	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
-	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
-	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
+	string rString = SHAREDvars.convertIntToString((uchar)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((uchar)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((uchar)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";
@@ -324,9 +324,9 @@ void LDsvgClass::writeSVGtext(XMLparserTag** currentTag, const string text, cons
 	string fontSizeString = SHAREDvars.convertIntToString(fontSize);
 	string xPosString = SHAREDvars.convertIntToString((int)pos->x);
 	string yPosString = SHAREDvars.convertIntToString((int)pos->y);
-	string rString = SHAREDvars.convertIntToString((unsigned char)colourrgb.r);
-	string gString = SHAREDvars.convertIntToString((unsigned char)colourrgb.g);
-	string bString = SHAREDvars.convertIntToString((unsigned char)colourrgb.b);
+	string rString = SHAREDvars.convertIntToString((uchar)colourrgb.r);
+	string gString = SHAREDvars.convertIntToString((uchar)colourrgb.g);
+	string bString = SHAREDvars.convertIntToString((uchar)colourrgb.b);
 
 	XMLparserTag* currentTagInBlock = *currentTag;
 	currentTagInBlock->name = "g";

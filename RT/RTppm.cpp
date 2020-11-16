@@ -26,7 +26,7 @@
  * File Name: RTppm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -44,7 +44,7 @@ pixmap* RTppmClass::newPixmap(const int wide, const int high)
 
 	pm->wide = wide;
 	pm->high = high;
-	pm->pix = (unsigned char*) malloc((int64_t)wide*high*3);
+	pm->pix = (uchar*) malloc((int64_t)wide*high*3);
 
 	if(!pm->pix)
 	{
@@ -141,7 +141,7 @@ void RTppmClass::writePPM(const string fname, const pixmap* pm)
 	fclose(f);
 }
 
-unsigned char* RTppmClass::calcPixelAddress(const pixmap* pm, const int x, const int y)
+uchar* RTppmClass::calcPixelAddress(const pixmap* pm, const int x, const int y)
 {
 	return &pm->pix[((int64_t)pm->wide*y + x)*3];
 }

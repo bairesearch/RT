@@ -26,7 +26,7 @@
  * File Name: LDopengl.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -203,9 +203,9 @@ void LDopenglClass::setViewPort3Dortho(const double left, const double right, co
 
 
 
-void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations)
+void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, uchar* rgbMap, const int dimension, const bool usePredefinedODmatrixOperations)
 {
-	if(dimension == OR_METHOD3DOD_DIMENSIONS)
+	if(dimension == ATOR_METHOD3DOD_DIMENSIONS)
 	{
 		if(usePredefinedODmatrixOperations)
 		{
@@ -218,7 +218,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDr
 			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGL);
 		}
 	}
-	else if(dimension == OR_METHOD2DOD_DIMENSIONS)
+	else if(dimension == ATOR_METHOD2DOD_DIMENSIONS)
 	{
 		if(usePredefinedODmatrixOperations)
 		{
@@ -249,7 +249,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmap(const LDr
 
 void LDopenglClass::drawPrimitivesReferenceListToOpenGL(const LDreference* firstReferenceInPrimitivesReferenceList, const int dimension, const bool usePredefinedODmatrixOperations)
 {
-	if(dimension == OR_METHOD3DOD_DIMENSIONS)
+	if(dimension == ATOR_METHOD3DOD_DIMENSIONS)
 	{
 		if(usePredefinedODmatrixOperations)
 		{
@@ -262,7 +262,7 @@ void LDopenglClass::drawPrimitivesReferenceListToOpenGL(const LDreference* first
 			glutDisplayFunc(draw3DtrisPrimitivesReferenceListToOpenGL);
 		}
 	}
-	else if(dimension == OR_METHOD2DOD_DIMENSIONS)
+	else if(dimension == ATOR_METHOD2DOD_DIMENSIONS)
 	{
 		if(usePredefinedODmatrixOperations)
 		{
@@ -318,11 +318,11 @@ static void draw2DquadsPrimitivesReferenceListToOpenGL()
 			}
 			else
 			{
-				unsigned int colourExtracted = currentReference->absoluteColour;
+				uint32_t colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-				r = ((unsigned int)(colourExtracted << 8) >> 24);
-				g = ((unsigned int)(colourExtracted << 16) >> 24);
-				b = ((unsigned int)(colourExtracted << 24) >> 24);
+				r = ((uint32_t)(colourExtracted << 8) >> 24);
+				g = ((uint32_t)(colourExtracted << 16) >> 24);
+				b = ((uint32_t)(colourExtracted << 24) >> 24);
 			}
 			r = r / 255.0;
 			g = g / 255.0;
@@ -437,11 +437,11 @@ static void draw2DquadsPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperat
 			}
 			else
 			{
-				unsigned int colourExtracted = currentReference->absoluteColour;
+				uint32_t colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-				r = ((unsigned int)(colourExtracted << 8) >> 24);
-				g = ((unsigned int)(colourExtracted << 16) >> 24);
-				b = ((unsigned int)(colourExtracted << 24) >> 24);
+				r = ((uint32_t)(colourExtracted << 8) >> 24);
+				g = ((uint32_t)(colourExtracted << 16) >> 24);
+				b = ((uint32_t)(colourExtracted << 24) >> 24);
 			}
 			r = r / 255.0;
 			g = g / 255.0;
@@ -528,11 +528,11 @@ static void draw3DtrisPrimitivesReferenceListToOpenGL()
 		}
 		else
 		{
-			unsigned int colourExtracted = currentReference->absoluteColour;
+			uint32_t colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-			r = ((unsigned int)(colourExtracted << 8) >> 24);
-			g = ((unsigned int)(colourExtracted << 16) >> 24);
-			b = ((unsigned int)(colourExtracted << 24) >> 24);
+			r = ((uint32_t)(colourExtracted << 8) >> 24);
+			g = ((uint32_t)(colourExtracted << 16) >> 24);
+			b = ((uint32_t)(colourExtracted << 24) >> 24);
 		}
 		r = r / 255.0;
 		g = g / 255.0;
@@ -618,11 +618,11 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 		}
 		else
 		{
-			unsigned int colourExtracted = currentReference->absoluteColour;
+			uint32_t colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-			r = ((unsigned int)(colourExtracted << 8) >> 24);
-			g = ((unsigned int)(colourExtracted << 16) >> 24);
-			b = ((unsigned int)(colourExtracted << 24) >> 24);
+			r = ((uint32_t)(colourExtracted << 8) >> 24);
+			g = ((uint32_t)(colourExtracted << 16) >> 24);
+			b = ((uint32_t)(colourExtracted << 24) >> 24);
 		}
 		r = r / 255.0;
 		g = g / 255.0;
@@ -667,7 +667,7 @@ static void draw3DtrisPrimitivesReferenceListToOpenGLwithPredefinedMatrixOperati
 
 
 
-void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, unsigned char* rgbMap)
+void LDopenglClass::drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(const LDreference* firstReferenceInPrimitivesReferenceList, int width, const int height, uchar* rgbMap)
 {
 	firstReferenceInPrimitivesReferenceListGlobal = firstReferenceInPrimitivesReferenceList;
 
@@ -729,11 +729,11 @@ static void draw3DprimitivesReferenceListToOpenGLrecurse(const LDreference* firs
 			}
 			else
 			{
-				unsigned int colourExtracted = currentReference->absoluteColour;
+				uint32_t colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-				r = ((unsigned int)(colourExtracted << 8) >> 24);
-				g = ((unsigned int)(colourExtracted << 16) >> 24);
-				b = ((unsigned int)(colourExtracted << 24) >> 24);
+				r = ((uint32_t)(colourExtracted << 8) >> 24);
+				g = ((uint32_t)(colourExtracted << 16) >> 24);
+				b = ((uint32_t)(colourExtracted << 24) >> 24);
 			}
 			r = r / 255.0;
 			g = g / 255.0;
@@ -823,11 +823,11 @@ static void draw3DprimitivesReferenceListToOpenGL()
 		}
 		else
 		{
-			unsigned int colourExtracted = currentReference->absoluteColour;
+			uint32_t colourExtracted = currentReference->absoluteColour;
 			colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-			r = ((unsigned int)(colourExtracted << 8) >> 24);
-			g = ((unsigned int)(colourExtracted << 16) >> 24);
-			b = ((unsigned int)(colourExtracted << 24) >> 24);
+			r = ((uint32_t)(colourExtracted << 8) >> 24);
+			g = ((uint32_t)(colourExtracted << 16) >> 24);
+			b = ((uint32_t)(colourExtracted << 24) >> 24);
 		}
 		r = r / 255.0;
 		g = g / 255.0;
@@ -902,11 +902,11 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 			}
 			else
 			{
-				unsigned int colourExtracted = currentReference->absoluteColour;
+				uint32_t colourExtracted = currentReference->absoluteColour;
 				colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
-				r = ((unsigned int)(colourExtracted << 8) >> 24);
-				g = ((unsigned int)(colourExtracted << 16) >> 24);
-				b = ((unsigned int)(colourExtracted << 24) >> 24);
+				r = ((uint32_t)(colourExtracted << 8) >> 24);
+				g = ((uint32_t)(colourExtracted << 16) >> 24);
+				b = ((uint32_t)(colourExtracted << 24) >> 24);
 			}
 			r = r / 255.0;
 			g = g / 255.0;
@@ -974,12 +974,12 @@ static void draw2DPrimitivesReferenceListToOpenGLSingleLayer()
 
 
 
-void LDopenglClass::writeScreenToRGBMap(int width, const int height, unsigned char* rgbMap)
+void LDopenglClass::writeScreenToRGBMap(int width, const int height, uchar* rgbMap)
 {
 	const int bytesPerPixel = 3;	// RGB
 	const int imageSizeInBytes = bytesPerPixel* width* height;
 
-	unsigned char* pixels = new unsigned char[imageSizeInBytes];
+	uchar* pixels = new uchar[imageSizeInBytes];
 
 		// glReadPixels takes the lower-left corner, while GetViewportOffset gets the top left corner
 		//const wxPoint topLeft = GetViewportOffset();
@@ -996,7 +996,7 @@ void LDopenglClass::writeScreenToRGBMap(int width, const int height, unsigned ch
 	// glReadPixels reads the given rectangle from bottom-left to top-right, so we must
 	// reverse it
 
-	//unsigned char* rgbMap = new unsigned char[imageSizeInBytes];
+	//uchar* rgbMap = new uchar[imageSizeInBytes];
 
 	for(int y = 0; y < height; y++)
 	{

@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -317,7 +317,7 @@ void SHAREDvarsClass::createDirectory(const string* folder)
 {
 	const char* folderCharStar = folder->c_str();
 	#ifdef LINUX
-	mkdir(folderCharStar, 0755);	//NB GIAdatabase.cpp and ORdatabaseFileIO uses 0755, ORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
+	mkdir(folderCharStar, 0755);	//NB GIAdatabase.cpp and ATORdatabaseFileIO uses 0755, ATORdatabaseDecisionTree.cpp use 0770 [CHECKTHIS]
 	#else
 	::CreateDirectoryA(folderCharStar, NULL);
 	#endif

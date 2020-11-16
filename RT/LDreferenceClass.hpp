@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -216,7 +216,7 @@ public:
 	vec absolutePosition;
 	mat deformationMatrix;
 	mat absoluteDeformationMatrix;
-	unsigned int colour;
+	uint32_t colour;
 	string name;
 	LDreference* next;
 
@@ -254,7 +254,7 @@ public:
 	int type;
 
 	#ifdef USE_LD_ABSOLUTE_COLOUR
-	unsigned int absoluteColour;
+	uint32_t absoluteColour;
 	#endif
 
 	/*Additional values used with recursive parser*/

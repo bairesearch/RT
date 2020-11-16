@@ -26,7 +26,7 @@
  * File Name: LDsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Description: Contains common sprite commands
  * /
  *******************************************************************************/
@@ -419,7 +419,7 @@ LDreference* LDspriteClass::LDaddTextualSpriteInfoStringToReferenceList(LDrefere
 
 		}
 		#ifdef USE_LRRC
-		else if(((unsigned char)spriteTextString[spriteTextIndex] > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)spriteTextString[spriteTextIndex] <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
+		else if(((uchar)spriteTextString[spriteTextIndex] > (uchar)SPRITE_CHARACTER_DICE_OFFSET) && ((uchar)spriteTextString[spriteTextIndex] <= (uchar)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
 		{
 			spriteCurrentCharacterSpacing = SPRITE_DICE_SPACING_SIZE_IN_LDRAW_UNITS;
 			spriteSubmodelCurrentReferencePosition.x = spriteSubmodelCurrentReferencePosition.x + spriteCurrentCharacterSpacing/2;
@@ -540,7 +540,7 @@ void LDspriteClass::LDspriteSubmodelFillTextualReference(LDreference* spriteSubm
 	string tempString = "";
 
 	#ifdef USE_LRRC
-	if(((unsigned char)characterToWrite > (unsigned char)SPRITE_CHARACTER_DICE_OFFSET) && ((unsigned char)characterToWrite <= (unsigned char)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
+	if(((uchar)characterToWrite > (uchar)SPRITE_CHARACTER_DICE_OFFSET) && ((uchar)characterToWrite <= (uchar)(SPRITE_CHARACTER_DICE_OFFSET+MAX_ATTACK_DEFENCE_LEVEL)))
 	{
 		/*no change to currentDeformationMatrix*/
 		SHAREDvector.createIdentityMatrix(&currentDeformationMatrix);
@@ -549,7 +549,7 @@ void LDspriteClass::LDspriteSubmodelFillTextualReference(LDreference* spriteSubm
 		spriteSubmodelCurrentReference->relativePosition.y = spriteSubmodelCurrentReference->relativePosition.y + SPRITE_TEXT_DICE_Y_OFFSET;
 		spriteSubmodelCurrentReference->colour = spriteSubmodelCurrentReference->colour + DAT_FILE_COLOUR_TRANPARENT_MOD;
 		tempString = "d";
-		int diceValue = ((unsigned char)characterToWrite - (unsigned char)SPRITE_CHARACTER_DICE_OFFSET)*2;
+		int diceValue = ((uchar)characterToWrite - (uchar)SPRITE_CHARACTER_DICE_OFFSET)*2;
 		if(diceValue > 9)
 		{
 			char tempChar = (1 + SPRITE_CHARACTER_NUM_OFFSET);

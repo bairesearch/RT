@@ -26,7 +26,7 @@
  * File Name: RTreferenceManipulation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -430,7 +430,7 @@ bool RTreferenceManipulationClass::addReferenceToFileObjectRayTraceFormat(ofstre
 	}
 	else if(currentReference->colour >= DAT_FILE_FIRST_RGB_COLOUR)
 	{
-		unsigned int colourExtracted = currentReference->colour;
+		uint32_t colourExtracted = currentReference->colour;
 		colourExtracted = colourExtracted - (DAT_FILE_FIRST_RGB_COLOUR << 24);
 		char colourValueString[100];
 		sprintf(colourValueString, "%06x", colourExtracted);

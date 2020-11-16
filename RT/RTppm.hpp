@@ -26,7 +26,7 @@
  * File Name: RTppm.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -90,7 +90,7 @@
 
 typedef struct{
 	int wide, high;
-	unsigned char* pix;
+	uchar* pix;
 }pixmap;
 
 class RTppmClass
@@ -105,7 +105,7 @@ class RTppmClass
 
 	public: void freePixmap(pixmap* pm);           /*free the memory occupied by a pixmap*/
 
-	private: unsigned char* calcPixelAddress(const pixmap* pm, const int x, const int y);
+	private: uchar* calcPixelAddress(const pixmap* pm, const int x, const int y);
 };	/*Calculate the address of the rgb pixel at (x, y) in the pixmap*/
 
 #endif

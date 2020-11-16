@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -40,7 +40,7 @@
 
 #define ANN_RULES_XML_FILE_NAME "ANNrules.xml"
 #define CS_RULES_XML_FILE_NAME "CSrules.xml"
-#define OR_RULES_XML_FILE_NAME "ATORrules.xml"
+#define ATOR_RULES_XML_FILE_NAME "ATORrules.xml"
 #define GIA_RULES_XML_FILE_NAME "GIArules.xml"
 #define GIA_SYN_REL_TRANSLATOR_RULES_XML_FILE_NAME "GIAsynRelTranslatorRules.xml"
 #define GIA_POS_REL_TRANSLATOR_RULES_XML_FILE_NAME "GIAposRelTranslatorRules.xml"
@@ -107,8 +107,8 @@ class XMLrulesClassClass
 	#endif
 
 	#ifdef USE_ATOR
-	public: bool parseORrulesXMLfile();
-		private: bool parseORrulesTag(XMLparserTag* currentTag);
+	public: bool parseATORrulesXMLfile();
+		private: bool parseATORrulesTag(XMLparserTag* currentTag);
 	#endif
 
 	#ifdef USE_ANN
@@ -134,7 +134,7 @@ extern XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
 extern XMLparserTag* GIAposRelTranslatorFirstTagInXMLfile;
 #endif
 #ifdef USE_ATOR
-extern XMLrulesClass* ORrulesObjectRecognition;
+extern XMLrulesClass* ATORrulesObjectRecognition;
 #endif
 #ifdef USE_NLC
 extern XMLparserTag* NLCfirstTagInXMLfile;

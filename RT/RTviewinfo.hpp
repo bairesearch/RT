@@ -26,7 +26,7 @@
  * File Name: RTviewinfo.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -146,7 +146,7 @@
 	#define TAL_FILE_HEADER_DEFAULT_FOCAL 6.0
 	#define TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH 4
 	#define TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT 3
-	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE "-20 20 20 white"	//only thing used by OR
+	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE "-20 20 20 white"	//only thing used by ATOR
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_X 20
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Y -10
 	#define TAL_FILE_HEADER_DEFAULT_POINTSOURCE_Z 20

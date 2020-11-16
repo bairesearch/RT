@@ -26,7 +26,7 @@
  * File Name: XMLrulesClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: XML Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -52,7 +52,7 @@ XMLparserTag* GIAsynRelTranslatorFirstTagInXMLfile;
 XMLparserTag* GIAposRelTranslatorFirstTagInXMLfile;
 #endif
 #ifdef USE_ATOR
-XMLrulesClass* ORrulesObjectRecognition;
+XMLrulesClass* ATORrulesObjectRecognition;
 #endif
 #ifdef USE_NLC
 XMLparserTag* NLCfirstTagInXMLfile;
@@ -221,21 +221,21 @@ bool XMLrulesClassClass::parseCSRulesTag(XMLparserTag* currentTag)
 
 
 #ifdef USE_ATOR
-bool XMLrulesClassClass::parseORrulesXMLfile()
+bool XMLrulesClassClass::parseATORrulesXMLfile()
 {
 	bool result = true;
 
  	XMLparserTag* firstTagInXMLfile = new XMLparserTag();	//the firstTagInXMLfile object must be initialised here (in XMLrulesClass.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
- 	if(!XMLparserClass.readXMLfile(OR_RULES_XML_FILE_NAME, firstTagInXMLfile))
+ 	if(!XMLparserClass.readXMLfile(ATOR_RULES_XML_FILE_NAME, firstTagInXMLfile))
  	{
 		result = false;
 	}
 
 	XMLparserTag* currentTag = firstTagInXMLfile;
 
-	ORrulesObjectRecognition = new XMLrulesClass();
+	ATORrulesObjectRecognition = new XMLrulesClass();
 
-	if(!parseORrulesTag(currentTag))
+	if(!parseATORrulesTag(currentTag))
 	{
 		result = false;
 	}
@@ -245,7 +245,7 @@ bool XMLrulesClassClass::parseORrulesXMLfile()
 
 	return result;
 }
-bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
+bool XMLrulesClassClass::parseATORrulesTag(XMLparserTag* currentTag)
 {
 	bool result = true;
 
@@ -253,7 +253,7 @@ bool XMLrulesClassClass::parseORrulesTag(XMLparserTag* currentTag)
 	currentTagUpdated = XMLparserClass.parseTagDownALevel(currentTagUpdated, RULES_XML_TAG_rules, &result);
 	if(result)
 	{
-		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
+		if(!addRulesClassObjectsBasedOnSectionTag(currentTagUpdated, RULES_XML_TAG_objectRecognition, ATORrulesObjectRecognition, RULES_XML_TAG_miscellaneousItem, 3, RULES_XML_ATTRIBUTE_name, RULES_XML_ATTRIBUTE_stringValue, RULES_XML_ATTRIBUTE_fractionalValue, nullString, nullString, nullString, nullString, nullString))
 		{
 			result = false;
 		}

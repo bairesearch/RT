@@ -26,7 +26,7 @@
  * File Name: RTraytracer.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -85,7 +85,7 @@ class RTraytracerClass
 #ifndef RT_T_TRANSFORM_TEST
 	private: void drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm);
 #else
-//void drawPointTest(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1);
+	//private: void drawPointTest(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1);
 #endif
 
 	private: void drawPointNoLighting(RTsceneInfo* si, const advancedMat* reverseMatrix, double tIn, double tOut, const vec* p0, const vec* p1, const vec* norm);

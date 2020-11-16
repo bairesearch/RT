@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -61,11 +61,11 @@
 #define REALLY_LARGE_INT (1000000)
 #define REALLY_SMALL_DOUBLE (-1000000.0)
 
-#define OR_METHOD2DOD_DIMENSIONS (2)
-#define OR_METHOD3DOD_DIMENSIONS (3)
+#define ATOR_METHOD2DOD_DIMENSIONS (2)
+#define ATOR_METHOD3DOD_DIMENSIONS (3)
 
 /* common definitions*/
-typedef struct { unsigned char r, g, b; } colour;
+typedef struct { uchar r, g, b; } colour;
 typedef struct { double x, y, z; } vec;
 typedef struct { vec a; vec b; vec c; } mat;
 

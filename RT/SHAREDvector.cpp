@@ -26,7 +26,7 @@
  * File Name: SHAREDvector.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -357,7 +357,7 @@ double SHAREDvectorClass::findMagnitudeOfVector(const vec* vect1)
 void SHAREDvectorClass::normaliseVector(vec* vect1)
 {
 	double magnitude = findMagnitudeOfVector(vect1);
-#ifdef OR_DO_NOT_CHECK_FOR_ZERO_DIVISION_DURING_POINT_NORMAL_CALC
+#ifdef ATOR_DO_NOT_CHECK_FOR_ZERO_DIVISION_DURING_POINT_NORMAL_CALC
 	vect1->x = (vect1->x)/magnitude;
 	vect1->y = (vect1->y)/magnitude;
 	vect1->z = (vect1->z)/magnitude;

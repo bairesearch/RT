@@ -26,7 +26,7 @@
  * File Name: RTraytracer.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Description: contains methods to raytrace a primitive through a given point (x, y)
  *              on the screen with the given RTsceneInfo structure and accompanying
  *              perspective information.
@@ -303,7 +303,7 @@ void RTraytracerClass::rayTrace(const RTviewInfo* vi, RTsceneInfo* si, mat* tild
 			#ifndef RT_T_TRANSFORM_TEST
 			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm);
 			#else
-			drawPoint(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
+			drawPointTest(si, &relevantFinalReverseMatrix, tInOutDash[0], tInOutDash[1], p0Dash, p1Dash, &norm, p0, p1);
 			#endif
 		}
 		else if(si->pi.type == PRIM_TRI)
@@ -1681,7 +1681,6 @@ void RTraytracerClass::drawPoint(RTsceneInfo* si, advancedMat* reverseMatrix, do
 //void drawPointTest(RTsceneInfo* si, advancedMat* reverseMatrix, double tInDash, double tOutDash, vec* p0Dash, vec* p1Dash, vec* norm, vec* p0, vec* p1)
 #endif
 {
-
 	advancedMat reverseMatrixCopy;
 	advancedMat standardMatrixCopy;
 

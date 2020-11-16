@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -287,7 +287,11 @@ extern string exeFolder;
 extern string inputFolder;
 extern string outputFolder;
 
+//required for CS:
 #define constEffective
+#define uchar unsigned char
+#define schar signed char
+
 
 #endif
 

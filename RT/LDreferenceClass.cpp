@@ -26,7 +26,7 @@
  * File Name: LDreferenceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Ldraw Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -251,9 +251,9 @@ int LDreferenceClassClass::obtainReferencePlayerID(const LDreference* referenceI
 
 void LDreferenceClassClass::convertLdrawColourToDatFileRGB(const int dataFileColour, colour* col)
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	uchar r;
+	uchar g;
+	uchar b;
 
 
 	if(dataFileColour == DAT_FILE_COLOUR_BLACK)

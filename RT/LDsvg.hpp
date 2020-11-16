@@ -26,7 +26,7 @@
  * File Name: LDsvg.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -52,8 +52,8 @@ class LDsvgClass
 
 	public: void writeSVGboxTransparent(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, const double fillOpacity);
 	public: void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse);
-		public: void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity);
-			public: void writeSVGbox(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const colour colourRGB, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity);
+		public: void writeSVGbox2(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const int col, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity);
+			public: void writeSVGbox3(XMLparserTag** currentTag, const vec* pos, const double width, const double height, const colour colourrgb, const double boxOutlineWidth, const bool useEllipse, bool transparent, const double fillOpacity);
 	public: void writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const int col);
 		public: void writeSVGline(XMLparserTag** currentTag, const vec* pos1, const vec* pos2, const colour colourrgb);
 	public: void writeSVGtext(XMLparserTag** currentTag, const string text, const vec* pos, const int fontSize, const int col);	

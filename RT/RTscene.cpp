@@ -26,7 +26,7 @@
  * File Name: RTscene.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * /
  *******************************************************************************/
 
@@ -73,7 +73,7 @@ void RTsceneClass::setSceneLightingConditions(const float lightingAmbientRedNew,
 
 	/*used to store the original scene in the list*/
 
-int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	#ifndef USE_ATOR
 	RTpixelMaps.fillInRTRulesExternVariables();
@@ -116,13 +116,13 @@ int RTsceneClass::rayTraceScene(const string talFileName, string imageFileName, 
 
 }
 
-int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap)
+int RTsceneClass::rayTraceSceneWithoutParse(RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li, string imageFileName, const int outputImageFiles, const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap)
 {
 	int result = TRUE;
 
 	if(!setRGBAndDepthAndNormalAndPointMaps)
 	{
-		rgbMap = new unsigned char[(vi->imageWidth)*(vi->imageHeight)*(RGB_NUM)];
+		rgbMap = new uchar[(vi->imageWidth)*(vi->imageHeight)*(RGB_NUM)];
 	#ifdef TEST_DEPTH_NORMAL_MAP_CREATION
 		depthMap = new double[vi->imageWidth*vi->imageHeight];
 		normalMap = new double[vi->imageWidth*vi->imageHeight*VEC_MAP_VEC_NUM_DIMENSIONS];
@@ -471,7 +471,7 @@ RTsceneInfo* RTsceneClass::parseTalFileGetSceneInfo(RTsceneInfo* si)
 	return si;
 }
 
-void RTsceneClass::createImage(const int setRGBAndDepthAndNormalAndPointMaps, unsigned char* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li)
+void RTsceneClass::createImage(const int setRGBAndDepthAndNormalAndPointMaps, uchar* rgbMap, double* depthMap, double* normalMap, double* pointMap, RTviewInfo* vi, RTsceneInfo* si, const RTlightingInfo* li)
 {
 
 
@@ -994,9 +994,9 @@ void RTsceneClass::calculateAmbientDiffuseSpecular(RTviewInfo* vi, const RTscene
 			if (col.b > 1.0) col.b = 1.0;
 
 			/*
-			rgb->r = (unsigned char)((col.r)*MAX_COLOUR);
-			rgb->g = (unsigned char)((col.g)*MAX_COLOUR);
-			rgb->b = (unsigned char)((col.b)*MAX_COLOUR);
+			rgb->r = (uchar)((col.r)*MAX_COLOUR);
+			rgb->g = (uchar)((col.g)*MAX_COLOUR);
+			rgb->b = (uchar)((col.b)*MAX_COLOUR);
 			*/
 
 			rgb->r = col.r*MAX_COLOUR;
