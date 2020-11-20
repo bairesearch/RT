@@ -26,7 +26,7 @@
  * File Name: RTmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o4b 17-November-2020
+ * Project Version: 3o4c 17-November-2020
  * /
  *******************************************************************************/
 
@@ -267,7 +267,7 @@ int main(const int argc, const char** argv)
 
 		if(SHAREDvarsClass().argumentExists(argc,argv,"-version"))
 		{
-			cout << "RT.exe - Project Version: 3o4b 17-November-2020" << endl;
+			cout << "RT.exe - Project Version: 3o4c 17-November-2020" << endl;
 			exit(EXIT_OK);
 		}
 	}

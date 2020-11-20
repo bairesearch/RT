@@ -26,7 +26,7 @@
  * File Name: RToperations.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3o4b 17-November-2020
+ * Project Version: 3o4c 17-November-2020
  * /
  *******************************************************************************/
 
