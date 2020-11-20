@@ -26,7 +26,7 @@
  * File Name: LDsvg.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o4c 17-November-2020
+ * Project Version: 3o4d 17-November-2020
  * /
  *******************************************************************************/
 
@@ -139,7 +139,7 @@ void LDsvgClass::writeSVGbox3(XMLparserTag** currentTag, const vec* pos, const d
 	string fillOpacityString;
 	if(transparent)
 	{
-		SHAREDvars.convertDoubleToString(fillOpacity, "%0.3f");
+		fillOpacityString = SHAREDvars.convertDoubleToString(fillOpacity, "%0.3f");
 	}
 
 	if(useEllipse)
