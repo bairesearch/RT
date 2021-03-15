@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDglobalDefs.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o3b 16-November-2020
+ * Project Version: 3p1a 04-March-2021
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -50,13 +50,13 @@ class SHAREDglobalDefsClass
 //#define COMPILE_UNREAL_PROJECT
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-//#define COMPILE_SANI		//makefile.SANI -> SANI.exe
+#define COMPILE_SANI		//makefile.SANI -> SANI.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_LRP_GENERATE_POS_TAGGER_DATABASE		//makefile.LRPgeneratePOStaggerDatabase -> LRPgeneratePOStaggerDatabase.exe
 //#define COMPILE_LRP_WITH_ANN_GENERATE_POS_TAGGER_DATABASE	//makefile.LRPwithANNgeneratePOStaggerDatabase -> LRPgeneratePOStaggerDatabase.exe
 //#define COMPILE_ATOR		//makefile.ATOR -> ATOR.exe
-#define COMPILE_CS		//makefile.CS -> CS.exe
+//#define COMPILE_CS		//makefile.CS -> CS.exe
 //#define COMPILE_RT		//makefile.RT -> RT.exe
 //#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANN.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
@@ -291,6 +291,9 @@ extern string outputFolder;
 #define constEffective
 #define uchar unsigned char
 #define schar signed char
+
+//required for SANI:
+#define ordered_map map
 
 
 #endif
