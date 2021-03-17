@@ -26,7 +26,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p1a 04-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -294,6 +294,28 @@ extern string outputFolder;
 
 //required for SANI:
 #define ordered_map map
+
+//required for multiple projects (based on LD specification, see LDreferenceClass.hpp):
+#define SHARED_COLOUR_UNDEFINED (0)
+#define SHARED_COLOUR_BLACK (0)
+#define SHARED_COLOUR_BLUE (1)
+#define SHARED_COLOUR_GREEN (2)
+#define SHARED_COLOUR_CYAN (11)
+#define SHARED_COLOUR_RED (4)
+#define SHARED_COLOUR_MAGENTA (5)
+#define SHARED_COLOUR_BROWN (6)
+#define SHARED_COLOUR_LIGHTGREY (7)
+#define SHARED_COLOUR_DARKGREY (8)
+#define SHARED_COLOUR_YELLOW (14)
+#define SHARED_COLOUR_WHITE (15)
+#define SHARED_COLOUR_ORANGE (25)
+#define SHARED_COLOUR_PURPLE (22)
+#define SHARED_COLOUR_DARKBLUE (272)
+#define SHARED_COLOUR_DARKGREEN (288)
+#define SHARED_COLOUR_DARKRED (320)
+#define SHARED_COLOUR_DARKYELLOW (84)
+#define SHARED_COLOUR_AQUA (3)
+
 
 
 #endif
