@@ -26,7 +26,7 @@
  * File Name: RTviewinfo.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Raytracer Functions
- * Project Version: 3p2a 17-March-2021
+ * Project Version: 3p3a 19-March-2021
  * /
  *******************************************************************************/
 
