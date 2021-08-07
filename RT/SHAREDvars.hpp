@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p3a 19-March-2021
+ * Project Version: 3p4a 07-August-2021
  * /
  *******************************************************************************/
 
@@ -142,8 +142,8 @@ class SHAREDvarsClass
 
 	public: void writeByteArrayToFile(const string fileName, char* fileByteArray, int fileByteArraySize);
 	public: void writeStringToFileObject(string s, ofstream* writeFileObject);
-	public: void writeStringToFile(const string fileName, string* s);
-	public: void appendStringToFile(const string fileName, string* s);
+	public: void writeStringToFile(const string fileName, const string* s);
+	public: void appendStringToFile(const string fileName, const string* s);
 	public: void prependStringToFile(const string fileName, const string* s);
 
 	public: string getFileContents(const string inputFileName);

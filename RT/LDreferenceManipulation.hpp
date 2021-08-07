@@ -26,7 +26,7 @@
  * File Name: LDreferenceManipulation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p3a 19-March-2021
+ * Project Version: 3p4a 07-August-2021
  * /
  *******************************************************************************/
 
@@ -81,7 +81,7 @@ class LDreferenceManipulationClass
 
 	public: bool writeReferencesToFile(const string fileName, LDreference* firstReference);
 	public: bool addReferenceToFileObject(ofstream* writeFileObject, LDreference* currentReference);
-		private: bool convertReferenceToString(LDreference* currentReference, string* referenceString);
+		public: bool convertReferenceToString(LDreference* currentReference, string* referenceString);
 
 	public: bool readFileIntoString(const string fileName, string* fileContentsString, int* fileNumberOfLines, int* fileByteArraySize);
 
