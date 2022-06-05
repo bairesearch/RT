@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: SHAREDglobalDefs.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2022 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p4c 07-August-2021
+ * Project Version: 3p5a 14-March-2022
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -49,7 +49,7 @@ class SHAREDglobalDefsClass
 //#define COMPILE_GIAI		//QTcreator GIAI.pro -> GIAI.exe
 //#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-//#define COMPILE_SANI		//makefile.SANI -> SANI.exe
+#define COMPILE_SANI		//makefile.SANI -> SANI.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_LRP_GENERATE_POS_TAGGER_DATABASE		//makefile.LRPgeneratePOStaggerDatabase -> LRPgeneratePOStaggerDatabase.exe
@@ -60,7 +60,7 @@ class SHAREDglobalDefsClass
 //#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANN.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
 
-#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
+//#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
 //#define COMPILE_LRRC	//makefile.LRRC -> LRRC.exe
 //#define COMPILE_UNREAL_PROJECT
 
@@ -316,6 +316,17 @@ extern string outputFolder;
 #define SHARED_COLOUR_DARKRED (320)
 #define SHARED_COLOUR_DARKYELLOW (84)
 #define SHARED_COLOUR_AQUA (3)
+
+#define SHARED_COLOUR_LIGHT_BLUE (9)
+#define SHARED_COLOUR_LIGHT_GREEN (17)
+#define SHARED_COLOUR_LIGHT_CYAN (323)
+#define SHARED_COLOUR_LIGHT_RED (13)
+#define SHARED_COLOUR_LIGHT_MAGENTA (29)
+#define SHARED_COLOUR_LIGHT_BROWN (86)
+#define SHARED_COLOUR_LIGHT_YELLOW (18)
+#define SHARED_COLOUR_LIGHT_ORANGE (125)
+#define SHARED_COLOUR_LIGHT_PURPLE (31)
+#define SHARED_COLOUR_LIGHT_AQUA (118)
 
 
 
