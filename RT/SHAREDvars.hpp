@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p4b 07-August-2021
+ * Project Version: 3p4c 07-August-2021
  * /
  *******************************************************************************/
 
@@ -175,6 +175,7 @@ class SHAREDvarsClass
 	
 	public: void printTime(const string startString, const string endString);
 
+	public: void getLinesFromFileCSV(const string fileName, vector<vector<string>>* CSVdatasetFile, int* CSVdatasetFileSize, const char delimiter, const bool expectFirstLineHeader);
 
 
 };

@@ -26,7 +26,7 @@
  * File Name: SHAREDvars.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p4b 07-August-2021
+ * Project Version: 3p4c 07-August-2021
  * /
  *******************************************************************************/
 
@@ -1011,3 +1011,52 @@ void SHAREDvarsClass::printTime(const string startString, const string endString
 	sprintf(timeAndDateString, "%02i:%02i:%02i %.2i/%.2i/%i", current->tm_hour, current->tm_min, current->tm_sec, current->tm_mday, (current->tm_mon+1), (current->tm_year + TM_STRUCT_YEAR_OFFSET));
 	cout << startString << timeAndDateString << endString << endl;
 }
+
+void SHAREDvarsClass::getLinesFromFileCSV(const string fileName, vector<vector<string>>* CSVdatasetFile, int* CSVdatasetFileSize, const char delimiter, const bool expectFirstLineHeader)
+{
+	vector<string> dataSetFile;
+	int dataSetFileSize = 0;
+	getLinesFromFile(fileName, &dataSetFile, &dataSetFileSize);
+	
+	bool firstLine = true;
+	
+	for(int i=0; i<dataSetFileSize; i++)
+	{
+		vector<string> lineContentsVector;
+		string lineContents = dataSetFile[i];
+		string fieldContents = "";
+		int fieldIndex = 0;
+		for(int charIndex=0; charIndex<lineContents.length(); charIndex++)
+		{
+			if(lineContents[charIndex] == delimiter)
+			{	
+				//cout << "fieldContents = " << fieldContents << endl;
+				lineContentsVector.push_back(fieldContents);
+				fieldContents = "";
+				fieldIndex++;
+			}
+			else
+			{
+				fieldContents = fieldContents+lineContents[charIndex];
+			}
+		}
+		//fill final field on line;
+		lineContentsVector.push_back(fieldContents);	
+		fieldContents = "";
+		fieldIndex++;
+		
+		if(expectFirstLineHeader && firstLine)
+		{
+			//ignore first line header
+		}
+		else
+		{
+			CSVdatasetFile->push_back(lineContentsVector);
+		}
+		
+		firstLine = false;
+	}
+	
+	*CSVdatasetFileSize = CSVdatasetFile->size();
+}
+
