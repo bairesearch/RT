@@ -1,23 +1,6 @@
-/*******************************************************************************
+ /*******************************************************************************
  *
- * No License
- * 
- * This work is under exclusive copyright (c) Baxter AI (baxterai.com). 
- * Nobody else can use, copy, distribute, or modify this work without being 
- * at risk of take-downs, shake-downs, or litigation. 
- * 
- * By publishing this source code in a public repository on GitHub, Terms of 
- * Service have been accepted by which Baxter AI have allowed others to view 
- * and fork their repository.
- * 
- * If you find software that doesn't have a license, that generally means you 
- * have no permission from the creators of the software to use, modify, or 
- * share the software. Although a code host such as GitHub may allow you to 
- * view and fork the code, this does not imply that you are permitted to use, 
- * modify, or share the software for any purpose.
- *
- * This notice has been derived from https://choosealicense.com/no-permission 
- * (https://web.archive.org/web/20180312144938/https://choosealicense.com/no-permission)
+ * License: GNU Affero General Public License version 3 (AGPLv3)
  *
  *******************************************************************************/
 
@@ -26,7 +9,7 @@
  * File Name: SHAREDglobalDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2022 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p5a 14-March-2022
+ * Project Version: 3q1a 05-June-2022
  * Description: Generic Construct Functions: shared global definitions (configure to compile different BAI projects)
  * /
  *******************************************************************************/
@@ -45,11 +28,23 @@ class SHAREDglobalDefsClass
 	***********/
 
 	//current/active projects;
+
+//OpenBAI:
+#define COMPILE_OPEN_NLCI		//QTcreator OpenNLCI.pro -> NLCI.exe
+//#define COMPILE_OPEN_GIAI		//QTcreator OpenGIAI.pro -> GIAI.exe
+//#define COMPILE_OPEN_NLC		//makefile.OpenNLC -> NLC.exe
+//#define COMPILE_OPEN_GIA		//makefile.OpenGIA -> GIA.exe
+//#define COMPILE_OPEN_GIA_WITH_ANN	//makefile.OpenGIAwithANN -> GIA.exe
+//#define COMPILE_OPEN_ATOR		//makefile.OpenATOR -> ATOR.exe
+//#define COMPILE_OPEN_CS		//makefile.OpenCS -> CS.exe
+//#define COMPILE_OPEN_RT		//makefile.OpenRT -> RT.exe
+//#define COMPILE_OPEN_ANN_WITH_RT	//makefile.OpenANNwithRT -> ANN.exe
+//#define COMPILE_OPEN_ANN		//makefile.OpenANN -> ANN.exe
+
+//Proprietary:
 //#define COMPILE_NLCI		//QTcreator NLCI.pro -> NLCI.exe
 //#define COMPILE_GIAI		//QTcreator GIAI.pro -> GIAI.exe
-//#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_NLC		//makefile.NLC -> NLC.exe
-#define COMPILE_SANI		//makefile.SANI -> SANI.exe
 //#define COMPILE_GIA		//makefile.GIA -> GIA.exe
 //#define COMPILE_GIA_WITH_ANN	//makefile.GIAwithANN -> GIA.exe
 //#define COMPILE_LRP_GENERATE_POS_TAGGER_DATABASE		//makefile.LRPgeneratePOStaggerDatabase -> LRPgeneratePOStaggerDatabase.exe
@@ -59,7 +54,8 @@ class SHAREDglobalDefsClass
 //#define COMPILE_RT		//makefile.RT -> RT.exe
 //#define COMPILE_ANN_WITH_RT	//makefile.ANNwithRT -> ANN.exe
 //#define COMPILE_ANN		//makefile.ANN -> ANN.exe
-
+//#define COMPILE_SANI		//makefile.SANI -> SANI.exe
+//#define COMPILE_CF		//compileCF.bat -> CF.exe
 //#define COMPILE_OLC		//compileOLC.bat -> OLC.exe
 //#define COMPILE_LRRC	//makefile.LRRC -> LRRC.exe
 //#define COMPILE_UNREAL_PROJECT
@@ -68,7 +64,6 @@ class SHAREDglobalDefsClass
 //#define COMPILE_LRRC_WITH_ANN
 //#define COMPILE_TH_ANN_WITH_LRRC
 //#define COMPILE_LRP_WITH_SANI_MASS_INPUT	//makefile.LRPwithSANImassInput -> LRPexecuteSANImassInput.exe
-
 
 
 
@@ -101,10 +96,12 @@ class SHAREDglobalDefsClass
 	#endif
 #endif
 
-#ifdef COMPILE_CF
-	#define USE_CF
+#ifdef COMPILE_OPEN_NLCI
+	#define USE_NLCI
+	#define USE_NLC
+	#define USE_GIA
+	#define USE_LRP
 #endif
-
 #ifdef COMPILE_NLCI
 	#define USE_NLCI
 	#define USE_NLC
@@ -113,6 +110,11 @@ class SHAREDglobalDefsClass
 	#define USE_LRP
 #endif
 
+#ifdef COMPILE_OPEN_GIAI
+	#define USE_GIAI
+	#define USE_GIA
+	#define USE_LRP
+#endif
 #ifdef COMPILE_GIAI
 	#define USE_GIAI
 	#define USE_GIA
@@ -120,6 +122,11 @@ class SHAREDglobalDefsClass
 	#define USE_LRP
 #endif
 
+#ifdef COMPILE_OPEN_NLC
+	#define USE_NLC
+	#define USE_GIA
+	#define USE_LRP
+#endif
 #ifdef COMPILE_NLC
 	#define USE_NLC
 	#define USE_GIA
@@ -133,6 +140,15 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 	#define USE_LRP
 #endif
+
+#ifdef COMPILE_OPEN_GIA_WITH_ANN
+	#define COMPILE_OPEN_GIA
+	#define USE_ANN
+#endif
+#ifdef COMPILE_OPEN_GIA
+	#define USE_GIA
+	#define USE_LRP
+#endif
 #ifdef COMPILE_GIA_WITH_ANN
 	#define COMPILE_GIA
 	#define USE_ANN
@@ -142,6 +158,7 @@ class SHAREDglobalDefsClass
 	#define USE_SANI	//required for GIA_POS_REL_TRANSLATOR
 	#define USE_LRP
 #endif
+
 #ifdef COMPILE_LRP_WITH_ANN_GENERATE_POS_TAGGER_DATABASE
 	#define COMPILE_LRP_GENERATE_POS_TAGGER_DATABASE
 	//#define USE_GIA
@@ -152,10 +169,14 @@ class SHAREDglobalDefsClass
 	#define USE_LRP
 	//#define USE_GIA
 #endif
+
 #ifdef USE_GIA
 	#define USE_RT
 #endif
 
+#ifdef COMPILE_OPEN_CS
+	#define COMPILE_CS
+#endif
 #ifdef COMPILE_CS
 	#define USE_CS
 #endif
@@ -163,6 +184,9 @@ class SHAREDglobalDefsClass
 	#define USE_RT
 #endif
 
+#ifdef COMPILE_OPEN_ATOR
+	#define COMPILE_ATOR
+#endif
 #ifdef COMPILE_ATOR
 	#define USE_ATOR
 #endif
@@ -171,6 +195,12 @@ class SHAREDglobalDefsClass
 #endif
 
 
+#ifdef COMPILE_OPEN_ANN_WITH_RT
+	#define COMPILE_ANN_WITH_RT
+#endif
+#ifdef COMPILE_OPEN_ANN
+	#define ANN
+#endif
 #ifdef COMPILE_ANN_WITH_RT
 	#define COMPILE_ANN
 	#define USE_RT
@@ -179,10 +209,17 @@ class SHAREDglobalDefsClass
 	#define USE_ANN
 #endif
 
+#ifdef COMPILE_OPEN_RT
+	#define COMPILE_RT
+#endif
 #ifdef COMPILE_RT
 	#define USE_RT
 #endif
 
+
+#ifdef COMPILE_CF
+	#define USE_CF
+#endif
 
 #ifdef COMPILE_LRRC
 	#define USE_LRRC
@@ -290,8 +327,10 @@ extern string outputFolder;
 
 //required for CS:
 #define constEffective
-#define uchar unsigned char
-#define schar signed char
+//#define uchar unsigned char
+//#define schar signed char
+typedef unsigned char uchar;
+typedef signed char schar;
 
 //required for SANI:
 #define ordered_map map
